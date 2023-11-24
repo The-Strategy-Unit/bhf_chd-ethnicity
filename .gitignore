@@ -47,3 +47,9 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Secret folder
+secret/
+
+#csv files
+*.csv
