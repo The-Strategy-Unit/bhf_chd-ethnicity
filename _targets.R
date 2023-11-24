@@ -80,8 +80,11 @@ list(
   tar_target(gp_reg_pat_prac_lsoa,read_csv_file(data_path14)),
   tar_target(data_path15, "data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv", format = "file"), #lookup
   tar_target(lsoa_lookup,read_csv_file(data_path15)),
-  tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22"))
-
+  tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")),
+  tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")),
+  tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")),
+  tar_target(metric8,get_my_fingertips_gp_data(848,"2021/22"))
+  
   #sample targets 
   # tar_target(
   #   name = data,
