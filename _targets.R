@@ -50,7 +50,6 @@ tar_source()
 
 # Replace the target list below with your own:
 list(
-  
   tar_target(data_path1, "data/metric14.csv", format = "file"), # SUS data metric 14
   tar_target(metric14,read_csv_file(data_path1)),
   tar_target(data_path2, "data/metric15.csv", format = "file"), # SUS data metric 15
@@ -80,9 +79,9 @@ list(
   tar_target(data_path14, "data/gp-reg-pat-prac-lsoa-all.csv", format = "file"), #GP Reg Pat Prac LSOA
   tar_target(gp_reg_pat_prac_lsoa,read_csv_file(data_path14)),
   tar_target(data_path15, "data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv", format = "file"), #lookup
-  tar_target(lsoa_lookup,read_csv_file(data_path15))
+  tar_target(lsoa_lookup,read_csv_file(data_path15)),
+  tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22"))
 
-  
   #sample targets 
   # tar_target(
   #   name = data,
