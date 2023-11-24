@@ -53,3 +53,6 @@ secret/
 
 #csv files
 *.csv
+
+#csv files in data folder
+data/*.csv
