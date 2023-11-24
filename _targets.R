@@ -83,7 +83,13 @@ list(
   tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")),
   tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")),
   tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")),
-  tar_target(metric8,get_my_fingertips_gp_data(848,"2021/22"))
+  tar_target(metric8,get_my_fingertips_gp_data(848,"2021/22")),
+  tar_target(metric16,get_my_fingertips_gp_data(90999,"2021/22")),
+  tar_target(metric17,get_my_fingertips_gp_data(91000,"2020/21")),
+  tar_target(metric9,get_my_fingertips_gp_data(92589,"2019/20")),
+  tar_target(metric10,get_my_fingertips_gp_data(91248,"2019/20")),
+  tar_target(metric11,get_my_fingertips_gp_data(90619,"2021/22"))
+  
   
   #sample targets 
   # tar_target(
