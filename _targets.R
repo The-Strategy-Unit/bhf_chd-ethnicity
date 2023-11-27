@@ -80,15 +80,25 @@ list(
   tar_target(gp_reg_pat_prac_lsoa,read_csv_file(data_path14)),
   tar_target(data_path15, "data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv", format = "file"), #lookup
   tar_target(lsoa_lookup,read_csv_file(data_path15)),
-  tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")),
-  tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")),
-  tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")),
-  tar_target(metric8,get_my_fingertips_gp_data(848,"2021/22")),
-  tar_target(metric16,get_my_fingertips_gp_data(90999,"2021/22")),
-  tar_target(metric17,get_my_fingertips_gp_data(91000,"2020/21")),
-  tar_target(metric9,get_my_fingertips_gp_data(92589,"2019/20")),
-  tar_target(metric10,get_my_fingertips_gp_data(91248,"2019/20")),
-  tar_target(metric11,get_my_fingertips_gp_data(90619,"2021/22"))
+  tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")), # metric 13
+  tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")), # metric 6
+  tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")), # metric 7
+  tar_target(metric8,get_my_fingertips_gp_data(848,"2021/22")), # metric 8
+  tar_target(metric16,get_my_fingertips_gp_data(90999,"2021/22")), # metric 16
+  tar_target(metric17,get_my_fingertips_gp_data(91000,"2020/21")), # metric 17
+  tar_target(metric9,get_my_fingertips_gp_data(92589,"2019/20")), # metric 9
+  tar_target(metric10,get_my_fingertips_gp_data(91248,"2019/20")), # metric 10
+  tar_target(metric11,get_my_fingertips_gp_data(90619,"2021/22")), # metric 11
+  tar_target(data_path16, "data/QOF_CHD_2022_23.xlsx", format = "file"), #QOF CHD005
+  tar_target(qof_chd_2223,read_qof_excel_file(data_path16)),
+  tar_target(metric31,
+             qof_chd_2223 |> 
+               select(1,2,3,6,7,32,33,35,38)|>
+               clean_names() |>
+               filter(practice_code != "NA")
+  )
+  
+  
   
   
   #sample targets 

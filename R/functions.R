@@ -17,8 +17,9 @@ get_my_fingertips_gp_data <- function(ind,year){
     select(AreaCode,Value)
 }
 
-# 
-# 
-# 
-# colnames(Metric01)[colnames(Metric01) == 'Value'] <- 'Metric01Prev'
-# #View(Metric01)
+#Get QOF via Excel file
+read_qof_excel_file <- function(file){
+  excel_qof_data <- read_xlsx(file,skip=11,.name_repair = "unique_quiet") 
+}
+
+
