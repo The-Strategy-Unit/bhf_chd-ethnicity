@@ -54,5 +54,9 @@ secret/
 #csv files
 *.csv
 
+#xlsx files
+*.xlsx
+data/*.xlsx
+
 #csv files in data folder
 data/*.csv
