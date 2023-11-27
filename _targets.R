@@ -9,7 +9,7 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","readr","visNetwork"), # packages that your targets need to run
+  packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","readr","visNetwork","odbc"), # packages that your targets need to run
   format = "rds"
   # format = "qs", # Optionally set the default storage format. qs is fast.
   #
@@ -89,31 +89,30 @@ list(
   tar_target(metric9,get_my_fingertips_gp_data(92589,"2019/20")), # metric 9
   tar_target(metric10,get_my_fingertips_gp_data(91248,"2019/20")), # metric 10
   tar_target(metric11,get_my_fingertips_gp_data(90619,"2021/22")), # metric 11
-  tar_target(data_path16, "data/QOF_CHD_2022_23.xlsx", format = "file"), #QOF CHD005
-  tar_target(qof_chd_2223,read_qof_excel_file(data_path16)),
-  tar_target(metric31,
-             qof_chd_2223 |> 
-               select(1,2,3,6,7,32,33,35,38)|>
+  tar_target(data_path16, "data/QOF_CHD_2022_23.xlsx", format = "file"), #QOF CHD indicators
+  tar_target(qof_chd_2223,read_qof_excel_file(data_path16) |>
+               select(1,2,3,6,7,15,32,35,37,38,46)|>
                clean_names() |>
-               filter(practice_code != "NA")
+               filter(practice_code != "NA")),
+  tar_target(metric16b,
+            qof_chd_2223 |> 
+            select(4,10) |>
+            rename(value=patients_receiving_intervention_percent_38)), # metric 16b 22/23
+  tar_target(metric31,
+            qof_chd_2223 |> 
+            select(4,8) |>
+            rename(value=pc_as_35)), # metric 31 22/23
+  tar_target(metric25b,
+             qof_chd_2223 |> 
+               select(4,11) |>
+               rename(value=patients_receiving_intervention_percent_46)),   # metric 25b 22/23
+  tar_target(metric32,get_data_via_server()), # metric 32 20/21
+  tar_target(metric13b,
+             qof_chd_2223 |> 
+               select(4,6) |>
+               rename(value=prevalence_percent_15)) # metric 13b 22/23
   )
   
-  
-  
-  
-  #sample targets 
-  # tar_target(
-  #   name = data,
-  #   command = tibble(x = rnorm(100), y = rnorm(100))
-  #   # format = "feather" # efficient storage for large data frames
-  # ),
-  # tar_target(
-  #   name = model,
-  #   command = coefficients(lm(y ~ x, data = data))
-  # )
-)
-
-
 
 
 #-----------------------------------------------------------------------------
