@@ -1,0 +1,22 @@
+---
+title: "Methods"
+author: "Jacqueline Grout"
+format: html
+editor: visual
+---
+
+## GP Survey
+
+Technical annex:
+
+Q55 base: Smoking habits - Total responses
+
+Q55_1pct: Smoking habits - % Never smoked
+
+Q55_2pct: Smoking habits - % Former smoker
+
+Q55_3pct: Smoking habits - % Occasional smoker
+
+Q55_4pct: Smoking habits - % Regular smoker
+
+<https://gp-patient.co.uk/downloads/2023/GPPS_2023_Technical_Annex_PUBLIC.pdf>

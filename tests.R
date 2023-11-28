@@ -28,3 +28,10 @@ metric25b <- tar_read(metric25b) |> as_tibble()
 
 metric32 <- tar_read(metric32) |> as_tibble()
 
+indid <- 92304
+smok <- fingertips_data(IndicatorID = indid,AreaTypeID ="All")
+Metric05 <- Metric05 |> filter(AreaType=="GPs")
+Metric05 <- Metric05 %>% select(AreaCode,Value, Count)
+colnames(Metric05)[colnames(Metric05) == 'Value'] <- 'Metric05Prev'
+colnames(Metric05)[colnames(Metric05) == 'Count'] <- 'Metric05Count'
+#View(Metric05)
