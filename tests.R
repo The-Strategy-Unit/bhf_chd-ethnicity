@@ -20,7 +20,7 @@ new_metric_16_short <-new_metric_16 |> select(1,2,3,6,7,32,33,35,38)
 new_metric_16$patients_receiving_intervention_percent_38
 
 
-metric31 <- tar_read(metric31) |> as_tibble()
+lsoa_eth_sum <- tar_read(lsoa_eth_sum) |> as_tibble()
 
 metric13b <- tar_read(metric13b) |> as_tibble()
 

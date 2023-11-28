@@ -9,7 +9,7 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","readr","visNetwork","odbc"), # packages that your targets need to run
+  packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","readr","visNetwork","odbc","stringr","MLID"), # packages that your targets need to run
   format = "rds"
   # format = "qs", # Optionally set the default storage format. qs is fast.
   #
@@ -107,7 +107,11 @@ list(
   tar_target(metric13b,
              qof_chd_2223 |> 
                select(4,6) |>
-               rename(value=prevalence_percent_15)) # metric 13b 22/23
+               rename(value=prevalence_percent_15)), # metric 13b 22/23
+  #process ethnicity data
+  tar_target(lsoa_eth_sum,process_census21data(eth_lsoa_census)),
+  tar_target(gp_lsoa,process_gpdata(gp_reg_pat_prac_lsoa)),
+  tar_target(joined,join_gp_and_eth(lsoa_eth_sum,gp_lsoa))
   )
   
 
