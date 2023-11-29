@@ -15,10 +15,12 @@ metric_13 <- tar_read(metric13) |> as_tibble()
 
 new_metric_16_short <-new_metric_16 |> select(1,2,3,6,7,32,33,35,38)
 
+joined <- tar_read(joined) |> as_tibble()
 
 
 new_metric_16$patients_receiving_intervention_percent_38
 
+gp_lsoa <- tar_read(gp_lsoa) |> as_tibble()
 
 lsoa_eth_sum <- tar_read(lsoa_eth_sum) |> as_tibble()
 

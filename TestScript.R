@@ -55,23 +55,49 @@ Test_Eth <- Test_join |>
   mutate(OtherEst = (sum_other/sum_persons)*NUMBER_OF_PATIENTS) |>
   na.omit()
 
-Test_Eth_by_gp <- Test_Eth |>
-  group_by(PRACTICE_CODE) |> 
-  summarise(gp_sum_whitebritish = sum(WhiteBritishEst),
-            gp_sum_irish = sum(IrishEst),
-            gp_sum_otherwhite = sum(OtherWhiteEst),
-            gp_sum_othermixed = sum(OtherMixedEst),
-            gp_sum_otherindian = sum(OtherIndianEst),
-            gp_sum_otherpakistani = sum(OtherPakistaniEst),
-            gp_sum_otherbangladeshi = sum(OtherBangladeshiEst),
-            gp_sum_chinese = sum(ChineseEst),
-            gp_sum_otherasian = sum(OtherAsianEst),
-            gp_sum_blkafrican = sum(BlackAfricanEst),
-            gp_sum_blkcaribbean = sum(BlackCaribbeanEst),
-            gp_sum_otherblk = sum(OtherBlackEst),
-            gp_sum_arab = sum(ArabEst),
-            gp_sum_other = sum(OtherEst)
+Test_Eth_by_gp <- joined |>
+  na.omit() |>
+  group_by(practice_code) |> 
+  summarise(gp_sum_est_all_asian = sum(est_all_asian),
+            gp_sum_est_bangladeshi = sum(est_bangladeshi),
+            gp_sum_est_chinese = sum(est_chinese),
+            gp_sum_est_indian = sum(est_indian),
+            gp_sum_est_pakistani = sum(est_pakistani),
+            gp_sum_est_other_asian = sum(est_other_asian),
+            gp_sum_est_all_black = sum(est_all_black),
+            gp_sum_est_blk_african = sum(est_blk_african),
+            gp_sum_est_blk_caribbean = sum(est_blk_caribbean),
+            gp_sum_est_other_blk = sum(est_other_blk),
+            gp_sum_est_all_mixed = sum(est_all_mixed),
+            gp_sum_est_mixed_other = sum(est_mixed_other),
+            gp_sum_est_mixed_white_asian = sum(est_mixed_white_asian),
+            gp_sum_est_mixed_white_blk_african = sum(est_mixed_white_blk_african),
+            gp_sum_est_mixed_white_blk_caribbean = sum(est_mixed_white_blk_caribbean),
+            gp_sum_est_all_white = sum(est_all_white),
+            gp_sum_est_white_british = sum(est_white_british),
+            gp_sum_est_white_irish = sum(est_white_irish),
+            gp_sum_est_white_gypsy_or_irish_traveller = sum(est_white_gypsy_or_irish_traveller),
+            gp_sum_est_white_roma = sum(est_white_roma),
+            gp_sum_est_white_other_white = sum(est_white_other_white),
+            gp_sum_est_all_other = sum(est_all_other),
+            gp_sum_est_other_arab = sum(est_other_arab),
+            gp_sum_est_other_other = sum(est_other_other),
+            gp_sum_est_white_other = sum(est_white_other)
   ) |> 
   arrange() 
 
+Test_Eth_by_gp2 <-Test_Eth_by_gp |>
+  select(-gp_sum_est_all_asian,-gp_sum_est_all_black,-gp_sum_est_all_white,-gp_sum_est_mixed_other,
+         -gp_sum_est_mixed_white_asian,-gp_sum_est_mixed_white_blk_african,-gp_sum_est_mixed_white_blk_caribbean,
+         -gp_sum_est_white_gypsy_or_irish_traveller,-gp_sum_est_white_roma,-gp_sum_est_white_other_white,
+         -gp_sum_est_all_other
+         ) |>
+  mutate(gp_sum_total=gp_sum_est_bangladeshi+gp_sum_est_chinese+gp_sum_est_indian+
+           gp_sum_est_pakistani+gp_sum_est_other_asian+gp_sum_est_blk_african+gp_sum_est_blk_caribbean+
+           gp_sum_est_other_blk+gp_sum_est_all_mixed+gp_sum_est_white_british+gp_sum_est_white_irish+
+           gp_sum_est_white_other+gp_sum_est_other_arab+gp_sum_est_other_other
+           )
 
+gp_lsoa2 <- gp_lsoa |>
+  group_by(practice_code) |>
+  summarise(number_of_patients=sum(number_of_patients))
