@@ -120,9 +120,17 @@ list(
   
   tar_target(joined,join_gp_and_eth(lsoa_eth_sum,gp_lsoa)),
   tar_target(lsoa_lookup_eng,lsoa_lookup |>
-               filter(str_detect(lsoa21cd, '^E')))
+               filter(str_detect(lsoa21cd, '^E'))),
+  tar_target(eth_joined,sum_eth_by_lsoa11(lsoa_lookup_eng,lsoa_eth_sum)),
+  #join the gp list to this via the 2011 lsoa column
+  #and calculate the number for each ethnicity based on ethnicity and list size
+  tar_target(gp_lsoa_with_eth,join_gp_and_eth(eth_joined,gp_lsoa)),
+  tar_target(gp_lsoa_with_eth_sum,sum_ethnicities(gp_lsoa_with_eth))
   )
   
+
+
+
 
 
 #-----------------------------------------------------------------------------
