@@ -81,8 +81,7 @@ data |>
 }
 
 
-
-# join census ethnicity data to gp lists by lsoa
+# Join census ethnicity data to gp lists by lsoa
 join_gp_and_eth <- function(eth,gp){
   gp |> 
     left_join(eth) |>
@@ -155,11 +154,11 @@ sum_eth_by_lsoa11 <- function(lookup,eth){
 
 #######
 
-sum_ethnicities <- function(gp_eth){
+sum_ethnicities <- function(data){
 
 # add up and check the total matches the number of patients
 
-  gp_eth |>
+  data |>
   group_by(practice_code) |> 
   summarise(gp_sum_est_all_asian = sum(est_all_asian),
             gp_sum_est_bangladeshi = sum(est_bangladeshi),

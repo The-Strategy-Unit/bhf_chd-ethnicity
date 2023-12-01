@@ -54,3 +54,5 @@ Have decided to use October 2022 and also downloaded the GP to icb mapping file 
 ## Clustering
 
 ### Attempt 1
+
+<https://www.statology.org/k-medoids-in-r/>

@@ -265,5 +265,55 @@ lsoa_lookup |>
   filter(sum_n>1)
 
 
+##### Clustering tests#####
+library(factoextra)
+library(cluster)
+gp_reg_pat_prac <- tar_read(gp_reg_pat_prac_lsoa) |> as_tibble() |>
+  group_by(practice_code) |>
+  summarise(list_tot= sum(number_of_patients))
+
+gp_lsoa_with_eth_sum <- tar_read(gp_lsoa_with_eth_sum) |> as_tibble()
+
+full_cats <- gp_lsoa_with_eth_sum |>
+  select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
+           gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
+           gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
+           gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other,gp_sum_total)
+  
+five_cats <- gp_lsoa_with_eth_sum |>
+  select(practice_code,gp_sum_est_all_asian,gp_sum_est_all_black, gp_sum_est_all_mixed, gp_sum_est_all_white,gp_sum_est_all_other,gp_sum_total2)
+
+full_cats_numeric <- full_cats |>
+  mutate(gp_sum_est_bangladeshi=as.numeric(gp_sum_est_bangladeshi),
+         gp_sum_est_chinese=as.numeric(gp_sum_est_chinese),
+         gp_sum_est_indian=as.numeric(gp_sum_est_indian),
+         gp_sum_est_pakistani=as.numeric(gp_sum_est_pakistani),
+         gp_sum_est_other_asian=as.numeric(gp_sum_est_other_asian),
+         gp_sum_est_blk_african=as.numeric(gp_sum_est_blk_african),
+         gp_sum_est_blk_caribbean=as.numeric(gp_sum_est_blk_caribbean),
+         gp_sum_est_other_blk=as.numeric(gp_sum_est_other_blk),
+         gp_sum_est_all_mixed=as.numeric(gp_sum_est_all_mixed),
+         gp_sum_est_white_british=as.numeric(gp_sum_est_white_british),
+         gp_sum_est_white_irish=as.numeric(gp_sum_est_white_irish),
+         gp_sum_est_white_other=as.numeric(gp_sum_est_white_other),
+         gp_sum_est_other_arab=as.numeric(gp_sum_est_other_arab),
+         gp_sum_est_other_other=as.numeric(gp_sum_est_other_other)
+         ) |>
+  select(-gp_sum_total)
+options(scipen = 999)
+#options(scipen = 0)
+
+full_cats2 <- full_cats_numeric |> select(-practice_code)
+scaled_five_cats <- scale(five_cats$gp_sum_est_all_asian)
 
 
+
+df <- USArrests
+
+#remove rows with missing values
+df <- na.omit(df)
+
+#scale each variable to have a mean of 0 and sd of 1
+df <- scale(df)
+
+pam(df, k, metric = “euclidean”, stand = FALSE)
