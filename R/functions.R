@@ -86,7 +86,8 @@ data |>
 join_gp_and_eth <- function(eth,gp){
   gp |> 
     left_join(eth) |>
-    mutate(est_all_asian = (all_asian/sum_all)*number_of_patients,
+    mutate(est_all = (sum_all/sum_all)*number_of_patients,
+           est_all_asian = (all_asian/sum_all)*number_of_patients,
            est_bangladeshi = (bangladeshi/sum_all)*number_of_patients,
            est_chinese = (chinese/sum_all)*number_of_patients,          
            est_indian = (indian/sum_all)*number_of_patients,   
@@ -112,5 +113,4 @@ join_gp_and_eth <- function(eth,gp){
            est_other_other = (other_other/sum_all)*number_of_patients,
            est_white_other = (white_other/sum_all)*number_of_patients
            ) 
-#  |>  na.omit()
 }

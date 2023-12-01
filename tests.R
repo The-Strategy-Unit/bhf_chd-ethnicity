@@ -1,6 +1,6 @@
 # load packages
 library(targets)
-
+library(dplyr)
 
 source("R/functions.R")
 
@@ -24,6 +24,10 @@ gp_lsoa <- tar_read(gp_lsoa) |> as_tibble()
 
 lsoa_eth_sum <- tar_read(lsoa_eth_sum) |> as_tibble()
 
+lsoa_lookup <- tar_read(lsoa_lookup) |> as_tibble()
+
+
+
 metric13b <- tar_read(metric13b) |> as_tibble()
 
 metric25b <- tar_read(metric25b) |> as_tibble()
@@ -37,3 +41,6 @@ Metric05 <- Metric05 %>% select(AreaCode,Value, Count)
 colnames(Metric05)[colnames(Metric05) == 'Value'] <- 'Metric05Prev'
 colnames(Metric05)[colnames(Metric05) == 'Count'] <- 'Metric05Count'
 #View(Metric05)
+
+
+

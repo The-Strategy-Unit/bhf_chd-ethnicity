@@ -20,3 +20,31 @@ Q55_3pct: Smoking habits - % Occasional smoker
 Q55_4pct: Smoking habits - % Regular smoker
 
 <https://gp-patient.co.uk/downloads/2023/GPPS_2023_Technical_Annex_PUBLIC.pdf>
+
+## CHD synthetic prevalence estimates
+
+CHD synthetic prevalence estimates data has been removed from Fingertips by OHID.
+
+OHID have sent the archived data. This is for 7564 practices from 2015, of which 6297 are current practices.
+
+Need to identify practices with missing data and work out how to get a prevalence for them.
+
+Also have file from previous project - checked data is the same but need to check practices included - maybe there are more?
+
+## Census 2021 Ethnicity by LSOA
+
+Some LSOAs that have gp list population assigned to them do not feature in the census data of ethnicity by lsoa. Need to check if these are the changes from 2011 to 2021 census.
+
+Possible solution would be to work out the average proportions for all the other LSOAs for the practice and distribute the gp list population for the lsoas that have no match proportionally across the ethnic groups.
+
+Another option would be where lsoas in 2021 have a parent lsoa in 2011 then apply the average ethnicity % for the child lsoas to the parent (this is when one 2011 lsoa has been split into multiple 2021 lsoas.) Where the lsoas in 2021 have a child lsoa in 2011 then apply the ethnicity % for the 2021 parent to the 2011 children (this is when several lsoas have been combined into one new lsoa)
+
+join lsoa_lookup to census 21eth using the 2021 lsoa code in the lookup dataset.
+
+## Which date should be used for the gp list size dataset?
+
+Data mainly 2022/23 could take April 22 or April 23 file. Will try both. April 2023 is still using census 2011 lsoas.
+
+<https://digital.nhs.uk/data-and-information/publications/statistical/patients-registered-at-a-gp-practice/october-2022>
+
+Have decided to use October 2022 and also downloaded the GP to icb mapping file from the same period

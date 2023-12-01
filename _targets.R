@@ -69,14 +69,18 @@ list(
   tar_target(metric28,read_csv_file(data_path10)),
   tar_target(data_path11, "data/metric29.csv", format = "file"), # SUS data metric 29
   tar_target(metric29,read_csv_file(data_path11)),
-  tar_target(data_path12, "data/April22GPListLSOA.csv", format = "file"), #GP list size
-  tar_target(gp_list_lsoa,read_csv_file(data_path12)),
+  # tar_target(data_path12, "data/April22GPListLSOA.csv", format = "file"), #GP list size
+  # tar_target(gp_list_lsoa,read_csv_file(data_path12)),
   tar_target(data_path13, "data/EthnicityByLSOACensus21.csv", format = "file"), #Ethnicity by LSOA Census 2021
   tar_target(eth_lsoa_census,read_csv_file(data_path13)),
-  tar_target(data_path14, "data/gp-reg-pat-prac-lsoa-all.csv", format = "file"), #GP Reg Pat Prac LSOA
+  tar_target(data_path14, "data/gp-reg-pat-prac-lsoa-all.csv", format = "file"), #GP Reg Pat Prac LSOA April 2023
   tar_target(gp_reg_pat_prac_lsoa,read_csv_file(data_path14)),
   tar_target(data_path15, "data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv", format = "file"), #lookup
   tar_target(lsoa_lookup,read_csv_file(data_path15)),
+  tar_target(data_path17,"data/gp-reg-pat-prac-map.csv", format = "file"),
+  tar_target(gp_icb_mapping,read_csv_file(data_path17)|> 
+               select(practice_code,practice_name,sub_icb_location_code, sub_icb_location_name,
+                      icb_code,icb_name,comm_region_code,comm_region_name)),  
   tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")), # metric 13
   tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")), # metric 6
   tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")), # metric 7
@@ -110,8 +114,13 @@ list(
                rename(value=prevalence_percent_15)), # metric 13b 22/23
   #process ethnicity data
   tar_target(lsoa_eth_sum,process_census21data(eth_lsoa_census)),
-  tar_target(gp_lsoa,process_gpdata(gp_reg_pat_prac_lsoa)),
-  tar_target(joined,join_gp_and_eth(lsoa_eth_sum,gp_lsoa))
+  tar_target(gp_lsoa,process_gpdata(gp_reg_pat_prac_lsoa) |>
+               left_join(gp_icb_mapping)
+             ),
+  
+  tar_target(joined,join_gp_and_eth(lsoa_eth_sum,gp_lsoa)),
+  tar_target(lsoa_lookup_eng,lsoa_lookup |>
+               filter(str_detect(lsoa21cd, '^E')))
   )
   
 
