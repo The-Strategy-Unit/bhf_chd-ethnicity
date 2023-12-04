@@ -24,7 +24,7 @@ gp_icb_mapping|stem|d3d260057196aa18|5c9853d423e3c296|af8d0926f38aa9ef|-19370532
 gp_list_lsoa|stem|f55a2a609c6981da|a5092ed5e7385f93|c770505e001fe2a8|1323561029||t19685.7660666359s|bf2ec3bc4d7cc45b|2687783|rds|local|vector|||0.67||
 gp_lsoa|stem|6fd29974b09366f9|93bb7d82e142693b|f2c23aae2705ccc6|-2053033604||t19692.6117642612s|c3b428e42758184a|3078881|rds|local|vector|||0.65||
 gp_lsoa_with_eth|stem|3e2f2b7924f97c1b|83a6e5d5033f4d7e|2bce5876d2e858ad|-286229311||t19692.7023831665s|253bbe9bbcd5058e|133600620|rds|local|vector|||0.43||
-gp_lsoa_with_eth_sum|stem|89527ca5746bdd0f|3fb6338cd6bf4dd7|4262ec51a9acd1e3|437544063||t19692.7023959195s|649682fe5d192d8a|1281570|rds|local|vector|||0.5||
+gp_lsoa_with_eth_sum|stem|89527ca5746bdd0f|3fb6338cd6bf4dd7|42f68cb736f7a87a|437544063||t19695.4205878681s|649682fe5d192d8a|1281570|rds|local|vector|||0.73||
 gp_lsoa22|stem|57f48f5429c07e6a|cf61c99ab9067767|9352939fddaf6145|1774700467||t19691.5414866321s|e2e531ee5318b149|2685514|rds|local|vector|||0.22||
 gp_reg_pat_prac_lsoa|stem|79c68c31967a37db|7f1951eaacacc5d8|4101d168c19880d7|-620301967||t19691.698627679s|68d4964e7abcb33a|2694148|rds|local|vector|||0.85||
 gp_reg_pat_prac_lsoa_22|stem|548aeaba3f787468|59f7a16889c8881f|5c2940540b2a3cdd|899549116||t19691.5291153029s|ff46a6ddfdf16698|2703658|rds|local|vector|||0.92||
@@ -67,4 +67,4 @@ read_csv_file|function|dcd254c5bba0254b|||||||||||||||
 read_excel_file|function|061c16961cfbd703|||||||||||||||
 read_qof_excel_file|function|53d417490cd71d74|||||||||||||||
 sum_eth_by_lsoa11|function|09d98eedc1fbb58f|||||||||||||||
-sum_ethnicities|function|f3338d54de76b7f1|||||||||||||||
+sum_ethnicities|function|bb48a8ef2dcef8b1|||||||||||||||

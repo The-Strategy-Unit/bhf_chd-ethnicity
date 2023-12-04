@@ -1,6 +1,7 @@
 library(dplyr)
 library(stringr)
 library(MLID)
+library(tidyverse)
 
 lsoa_eth_sum <- ethnicities |>  
   filter(str_detect(LSOA, '^E'))|> 
@@ -268,6 +269,8 @@ lsoa_lookup |>
 ##### Clustering tests#####
 library(factoextra)
 library(cluster)
+library(dplyr)
+library(targets)
 gp_reg_pat_prac <- tar_read(gp_reg_pat_prac_lsoa) |> as_tibble() |>
   group_by(practice_code) |>
   summarise(list_tot= sum(number_of_patients))
@@ -278,42 +281,87 @@ full_cats <- gp_lsoa_with_eth_sum |>
   select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
            gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
            gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
-           gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other,gp_sum_total)
+           gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other)
   
 five_cats <- gp_lsoa_with_eth_sum |>
-  select(practice_code,gp_sum_est_all_asian,gp_sum_est_all_black, gp_sum_est_all_mixed, gp_sum_est_all_white,gp_sum_est_all_other,gp_sum_total2)
-
-full_cats_numeric <- full_cats |>
-  mutate(gp_sum_est_bangladeshi=as.numeric(gp_sum_est_bangladeshi),
-         gp_sum_est_chinese=as.numeric(gp_sum_est_chinese),
-         gp_sum_est_indian=as.numeric(gp_sum_est_indian),
-         gp_sum_est_pakistani=as.numeric(gp_sum_est_pakistani),
-         gp_sum_est_other_asian=as.numeric(gp_sum_est_other_asian),
-         gp_sum_est_blk_african=as.numeric(gp_sum_est_blk_african),
-         gp_sum_est_blk_caribbean=as.numeric(gp_sum_est_blk_caribbean),
-         gp_sum_est_other_blk=as.numeric(gp_sum_est_other_blk),
-         gp_sum_est_all_mixed=as.numeric(gp_sum_est_all_mixed),
-         gp_sum_est_white_british=as.numeric(gp_sum_est_white_british),
-         gp_sum_est_white_irish=as.numeric(gp_sum_est_white_irish),
-         gp_sum_est_white_other=as.numeric(gp_sum_est_white_other),
-         gp_sum_est_other_arab=as.numeric(gp_sum_est_other_arab),
-         gp_sum_est_other_other=as.numeric(gp_sum_est_other_other)
-         ) |>
-  select(-gp_sum_total)
-options(scipen = 999)
-#options(scipen = 0)
-
-full_cats2 <- full_cats_numeric |> select(-practice_code)
-scaled_five_cats <- scale(five_cats$gp_sum_est_all_asian)
+  select(practice_code,gp_sum_est_all_asian,gp_sum_est_all_black, gp_sum_est_all_mixed, gp_sum_est_all_white,gp_sum_est_all_other)
 
 
+full_cats <-
+full_cats |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
 
-df <- USArrests
+five_cats <-
+  five_cats |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
+
 
 #remove rows with missing values
-df <- na.omit(df)
+full_cats <- na.omit(full_cats)
+five_cats <- na.omit(five_cats)
 
 #scale each variable to have a mean of 0 and sd of 1
-df <- scale(df)
+# full_cats <- scale(full_cats)
+# five_cats <- scale(five_cats)
 
-pam(df, k, metric = “euclidean”, stand = FALSE)
+scale_full_cats <- scale(full_cats)
+scale_five_cats <- scale(five_cats)
+
+# v <- prcomp(scale_full_cats)$x[,1]
+# scale_full_cats <- scale_full_cats[order(v),]
+# 
+# v <- prcomp(scale_five_cats)$x[,1]
+# scale_five_cats <- scale_five_cats[order(v),]
+
+head(scale_full_cats)
+head(scale_five_cats)
+
+pams_full_cats <- pam(scale_full_cats, 5, metric = 'euclidean', stand = FALSE)
+pams_five_cats <- pam(scale_five_cats, 4, metric = 'euclidean', stand = FALSE)
+
+full_cats_plot <- fviz_nbclust(scale_full_cats, pam, method = "wss")
+five_cats_plot <- fviz_nbclust(scale_five_cats, pam, method = "wss")
+
+#calculate gap statistic based on number of clusters
+gap_stat_full_cats <- clusGap(scale_full_cats,
+                    FUN = pam,
+                    K.max = 15, #max clusters to consider
+                    B = 50) #total bootstrapped iterations
+
+gap_stat_five_cats <- clusGap(scale_five_cats,
+                              FUN = pam,
+                              K.max = 15, #max clusters to consider
+                              B = 50) #total bootstrapped iterations
+
+#plot number of clusters vs. gap statistic
+full_cats_gap_plot <- fviz_gap_stat(gap_stat_full_cats)
+five_cats_gap_plot <- fviz_gap_stat(gap_stat_five_cats)
+
+#make this example reproducible
+set.seed(1)
+#perform k-medoids clustering with k = 4 clusters
+pams_five_cats <- pam(scale_five_cats, 4, metric = 'euclidean', stand = FALSE)
+#view results
+pams_five_cats
+
+#plot results of final k-medoids model
+fviz_cluster(pams_five_cats, data = five_cats)
+
+#add cluster assignment to original data
+final_data <- cbind(five_cats, cluster = pams_five_cats$cluster)
+
+#view final data
+head(final_data)
+
+
+N81115 
+D82048 
+K81026 
+M85058
+
+five_cats |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("N81115","D82048","K81026","M85058")) |>
+  ggplot(aes(x=practice_code),) |>
+  geom_col()
