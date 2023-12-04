@@ -56,3 +56,8 @@ Have decided to use October 2022 and also downloaded the GP to icb mapping file 
 ### Attempt 1
 
 <https://www.statology.org/k-medoids-in-r/>
+
+https://www.rdocumentation.org/packages/cluster/versions/2.1.6
+
+look at 18:50 in this video:
+https://www.youtube.com/watch?v=dKXTNxNDpMA
