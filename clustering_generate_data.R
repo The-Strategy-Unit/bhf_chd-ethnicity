@@ -205,6 +205,18 @@ scale_five_cats_percents <- scale(five_cats_percents)
 full_cats_percents_plot <- fviz_nbclust(scale_full_cats_percents, pam, method = "wss")
 five_cats_percents_plot <- fviz_nbclust(scale_five_cats_percents, pam, method = "wss")
 
+#calculate gap statistic based on number of clusters for percent based data
+gap_stat_full_cats_percent <- clusGap(scale_full_cats_percents,
+                              FUN = pam,
+                              K.max = 15, #max clusters to consider
+                              B = 50) #total bootstrapped iterations
+
+gap_stat_five_cats_percent <- clusGap(scale_five_cats_percents,
+                              FUN = pam,
+                              K.max = 15, #max clusters to consider
+                              B = 50) #total bootstrapped iterations
+
+
 #FULL CATS WITH 15 CLUSTERS PERCENT BASED
 #make this example reproducible
 set.seed(10)
