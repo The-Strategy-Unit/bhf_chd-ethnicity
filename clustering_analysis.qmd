@@ -50,12 +50,44 @@ load("cluster_analysis_v1.Rdata")
 full_cats_plot
 ```
 
+::: panel-tabset
+## Actual Numbers
+
+```{r}
+#| echo: false
+full_cats_plot
+```
+
+## Percent
+
+```{r}
+#| echo: false
+full_cats_percents_plot
+```
+:::
+
 ### Five Categories
 
 ```{r}
 #| echo: false
 five_cats_plot
 ```
+
+::: panel-tabset
+## Actual numbers
+
+```{r}
+#| echo: false
+five_cats_plot
+```
+
+## Percent
+
+```{r}
+#| echo: false
+five_cats_percents_plot
+```
+:::
 
 ## All Categories Gap Plot
 
