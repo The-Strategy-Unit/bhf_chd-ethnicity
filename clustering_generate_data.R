@@ -221,13 +221,32 @@ gap_stat_five_cats_percent <- clusGap(scale_five_cats_percents,
 #make this example reproducible
 set.seed(10)
 #perform k-medoids clustering with k = 15 clusters
-pams_full_cats_percents <- pam(scale_full_cats, 15, metric = 'euclidean', stand = FALSE)
+pams_full_cats_percents <- pam(scale_full_cats_percents, 6, metric = 'euclidean', stand = FALSE)
 #view results
 pams_full_cats_percents
 
 #plot results of final k-medoids model
-pams_full_cats_percents15_clusters_plot <- fviz_cluster(pams_full_cats_percents, data = full_cats)
-pams_full_cats_percents8_clusters_plot <- fviz_cluster(pams_full_cats_percents, data = full_cats)
-pams_full_cats_percents6_clusters_plot <- fviz_cluster(pams_full_cats_percents, data = full_cats)
+pams_full_cats_percents15_clusters_plot <- fviz_cluster(pams_full_cats_percents, data = full_cats) # 15 cluster using percents
+pams_full_cats_percents8_clusters_plot <- fviz_cluster(pams_full_cats_percents, data = full_cats) # 8 cluster using percents
+pams_full_cats_percents6_clusters_plot <- fviz_cluster(pams_full_cats_percents, data = full_cats) # 6 cluster using percents
+pams_full_cats_percents4_clusters_plot <- fviz_cluster(pams_full_cats_percents, data = full_cats) # 4 cluster using percents
 
-pams_full_cats_6_clusters_plot <- fviz_cluster(pams_full_cats_6, data = full_cats)
+pams_full_cats_6_clusters_plot <- fviz_cluster(pams_full_cats_6, data = full_cats) # 6 cluster without percents
+
+
+#add cluster assignment to original data
+final_data_full_cats_percent_6_clusters <- cbind(full_cats, cluster = pams_full_cats_percents$cluster)
+
+final_data_full_cats_percent_6_clusters |>
+  rownames_to_column(var = 'practice_code') |>
+  group_by(cluster)|>
+  count("practice_code")
+
+#These are the 4 cluster medoids for full cats with percents
+full_cats |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("J81626","G81059","H81048","F86018"))
+
+#These are the 6 cluster medoids for full cats with percents
+full_cats |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("N84617","M83738","C81036","F86612","E85649","G85083"))
+rm(temp)
