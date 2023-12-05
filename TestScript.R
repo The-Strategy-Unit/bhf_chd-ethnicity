@@ -328,12 +328,12 @@ five_cats_plot <- fviz_nbclust(scale_five_cats, pam, method = "wss")
 gap_stat_full_cats <- clusGap(scale_full_cats,
                     FUN = pam,
                     K.max = 15, #max clusters to consider
-                    B = 50) #total bootstrapped iterations
+                    B = 500) #total bootstrapped iterations
 
 gap_stat_five_cats <- clusGap(scale_five_cats,
                               FUN = pam,
                               K.max = 15, #max clusters to consider
-                              B = 50) #total bootstrapped iterations
+                              B = 500) #total bootstrapped iterations
 
 #plot number of clusters vs. gap statistic
 full_cats_gap_plot <- fviz_gap_stat(gap_stat_full_cats)
