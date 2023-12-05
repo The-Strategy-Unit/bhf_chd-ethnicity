@@ -328,17 +328,26 @@ five_cats_plot <- fviz_nbclust(scale_five_cats, pam, method = "wss")
 gap_stat_full_cats <- clusGap(scale_full_cats,
                     FUN = pam,
                     K.max = 15, #max clusters to consider
-                    B = 500) #total bootstrapped iterations
+                    B = 50) #total bootstrapped iterations
 
 gap_stat_five_cats <- clusGap(scale_five_cats,
                               FUN = pam,
                               K.max = 15, #max clusters to consider
-                              B = 500) #total bootstrapped iterations
+                              B = 50) #total bootstrapped iterations
 
 #plot number of clusters vs. gap statistic
 full_cats_gap_plot <- fviz_gap_stat(gap_stat_full_cats)
 five_cats_gap_plot <- fviz_gap_stat(gap_stat_five_cats)
 
+#FULL CATS WITH 15 CLUSTERS
+#make this example reproducible
+set.seed(1)
+#perform k-medoids clustering with k = 15 clusters
+pams_full_cats <- pam(scale_full_cats, 15, metric = 'euclidean', stand = FALSE)
+#view results
+pams_full_cats
+
+#FIVE CATS WITH 4 CLUSTERS
 #make this example reproducible
 set.seed(1)
 #perform k-medoids clustering with k = 4 clusters
@@ -347,21 +356,49 @@ pams_five_cats <- pam(scale_five_cats, 4, metric = 'euclidean', stand = FALSE)
 pams_five_cats
 
 #plot results of final k-medoids model
+fviz_cluster(pams_full_cats, data = full_cats)
 fviz_cluster(pams_five_cats, data = five_cats)
 
 #add cluster assignment to original data
-final_data <- cbind(five_cats, cluster = pams_five_cats$cluster)
+final_data_full_cats <- cbind(full_cats, cluster = pams_full_cats$cluster)
+final_data_five_cats <- cbind(five_cats, cluster = pams_five_cats$cluster)
 
 #view final data
-head(final_data)
+head(final_data_full_cats)
+head(final_data_five_cats)
 
 
-N81115 
-D82048 
-K81026 
-M85058
+#These are the 15 cluster medoids for full cats
+# N81115 
+# D82048 
+# K81026 
+# M85058
+
+plot_data <- full_cats |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("C81022 ","J82145","G81059","J83053","C81036 ","E85735",
+                              "K81030","F81083","K84009 ","B83657","F82011","E85058",
+                              "E85033","F84105","F84025"))
+
+#These are the 4 cluster medoids for five cats
+# N81115 
+# D82048 
+# K81026 
+# M85058
 
 five_cats |>   rownames_to_column(var = 'practice_code') |>
-  filter(practice_code %in% c("N81115","D82048","K81026","M85058")) |>
-  ggplot(aes(x=practice_code),) |>
-  geom_col()
+  filter(practice_code %in% c("N81115","D82048","K81026","M85058"))
+
+#FULL CATS WITH 8 CLUSTERS
+#make this example reproducible
+set.seed(1)
+#perform k-medoids clustering with k = 8 clusters
+pams_full_cats_8_clusters <- pam(scale_full_cats, 8, metric = 'euclidean', stand = FALSE)
+#view results
+pams_full_cats_8_clusters
+
+#plot results of final k-medoids model
+fviz_cluster(pams_full_cats_8_clusters, data = full_cats)
+
+plot_data_8_clusters <- full_cats |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("P92621","N81062","M82060","L81669","E86009","E86015",
+                              "B83657","G85086"))
