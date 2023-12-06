@@ -216,12 +216,15 @@ gap_stat_five_cats_percent <- clusGap(scale_five_cats_percents,
                               K.max = 15, #max clusters to consider
                               B = 50) #total bootstrapped iterations
 
+#plot number of clusters vs. gap statistic
+full_cats_percent_gap_plot <- fviz_gap_stat(gap_stat_full_cats_percent)
+five_cats_percent_gap_plot <- fviz_gap_stat(gap_stat_five_cats_percent)
 
 #FULL CATS WITH 15 CLUSTERS PERCENT BASED
 #make this example reproducible
 set.seed(10)
 #perform k-medoids clustering with k = 15 clusters
-pams_full_cats_percents <- pam(scale_full_cats_percents, 6, metric = 'euclidean', stand = FALSE)
+pams_full_cats_percents <- pam(scale_full_cats_percents, 14, metric = 'euclidean', stand = FALSE)
 #view results
 pams_full_cats_percents
 
@@ -231,8 +234,20 @@ pams_full_cats_percents8_clusters_plot <- fviz_cluster(pams_full_cats_percents, 
 pams_full_cats_percents6_clusters_plot <- fviz_cluster(pams_full_cats_percents, data = full_cats) # 6 cluster using percents
 pams_full_cats_percents4_clusters_plot <- fviz_cluster(pams_full_cats_percents, data = full_cats) # 4 cluster using percents
 
+pams_full_cats_percents14_clusters_plot <- fviz_cluster(pams_full_cats_percents, data = full_cats) # 14 cluster using percents
+
 pams_full_cats_6_clusters_plot <- fviz_cluster(pams_full_cats_6, data = full_cats) # 6 cluster without percents
 
+
+#FIVE CATS WITH 5 CLUSTERS PERCENT BASED
+#make this example reproducible
+set.seed(10)
+#perform k-medoids clustering with k = 5 clusters
+pams_five_cats_percents <- pam(scale_five_cats_percents, 5, metric = 'euclidean', stand = FALSE)
+#view results
+pams_five_cats_percents
+
+pams_five_cats_percents5_clusters_plot <- fviz_cluster(pams_five_cats_percents, data = full_cats) # 5 cluster using percents
 
 #add cluster assignment to original data
 final_data_full_cats_percent_6_clusters <- cbind(full_cats, cluster = pams_full_cats_percents$cluster)
@@ -249,4 +264,4 @@ full_cats |>   rownames_to_column(var = 'practice_code') |>
 #These are the 6 cluster medoids for full cats with percents
 full_cats |>   rownames_to_column(var = 'practice_code') |>
   filter(practice_code %in% c("N84617","M83738","C81036","F86612","E85649","G85083"))
-rm(temp)
+
