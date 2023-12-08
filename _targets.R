@@ -81,6 +81,16 @@ list(
   tar_target(gp_icb_mapping,read_csv_file(data_path17)|> 
                select(practice_code,practice_name,sub_icb_location_code, sub_icb_location_name,
                       icb_code,icb_name,comm_region_code,comm_region_name)),  
+  tar_target(data_path18,"data/CVDP003.csv", format = "file"),  
+  tar_target(cvdp003,read_csv_file(data_path18)),
+  tar_target(data_path19,"data/CVDP006.csv", format = "file"), 
+  tar_target(cvdp006,read_csv_file(data_path19)),  
+  tar_target(data_path20,"data/CVDP007.csv", format = "file"), 
+  tar_target(cvdp007,read_csv_file(data_path20)),  
+  tar_target(data_path21,"data/CVDP008.csv", format = "file"), 
+  tar_target(cvdp008,read_csv_file(data_path21)), 
+  tar_target(data_path22,"data/CVDP009.csv", format = "file"), 
+  tar_target(cvdp009,read_csv_file(data_path22), 
   tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")), # metric 13
   tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")), # metric 6
   tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")), # metric 7
