@@ -90,7 +90,7 @@ list(
   tar_target(data_path21,"data/CVDP008.csv", format = "file"), 
   tar_target(cvdp008,read_csv_file(data_path21)), 
   tar_target(data_path22,"data/CVDP009.csv", format = "file"), 
-  tar_target(cvdp009,read_csv_file(data_path22), 
+  tar_target(cvdp009,read_csv_file(data_path22)), 
   tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")), # metric 13
   tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")), # metric 6
   tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")), # metric 7

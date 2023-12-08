@@ -1,4 +1,9 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+cvdp003|stem|e50aea8aea0c2a60|309494db7f338fa5|e80bced767dba21c|-757974744||t19699.5229280442s|87cce51087824dee|150165|rds|local|vector|||0.11||
+cvdp006|stem|4038867d6a42c0e3|c9cb3c92ae5f71cd|ccb021a8790981c1|1887794316||t19699.5229297325s|4469ea95b74c7e3a|152106|rds|local|vector|||0.1||
+cvdp007|stem|b17387a6d3eac612|e3b2b8d6c0b0ee6e|ebbb9fbfe6f95cc2|1542474594||t19699.5229221512s|d1f142aaf8237399|150254|rds|local|vector|||0.42||
+cvdp008|stem|96bd08c536d644aa|0759995904d5035e|a8b0eb207010f044|-1926484519||t19699.5229241655s|a498f5e24c550dd4|156030|rds|local|vector|||0.11||
+cvdp009|stem|b1010f3344b845cd|ea0bfdf025bf48f3|ac6bd4cade08682c|1994522949||t19699.5229262151s|95e88fa2cb70768e|147141|rds|local|vector|||0.11||
 data_path1|stem|53c19839b811f907|61e9da2aaa8acf6d|ef46db3751d8e999|-591494753|data/metric14.csv|t19676.7132190447s|676b800d1d7efe82|12989|file|local|vector|||1.27||
 data_path10|stem|54e96ff7fdf73461|3bde74f32e90cf4d|ef46db3751d8e999|720080806|data/metric28.csv|t19676.7821046923s|d913eaef418bd16a|34200|file|local|vector|||0||
 data_path11|stem|45f823d4ba0e8ef5|2376ab56e0b93135|ef46db3751d8e999|952511323|data/metric29.csv|t19677.3972709645s|1c9329407360f3c3|69965|file|local|vector|||0||
@@ -8,7 +13,12 @@ data_path14|stem|efd867b4129f1bbb|ecc550d59026ea43|ef46db3751d8e999|-1698926786|
 data_path15|stem|e354be723757858c|f006082b3caca2f6|ef46db3751d8e999|687475643|data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv|t19444.4298281067s|2dfa8eddb9df0acf|3030574|file|local|vector|||0||
 data_path16|stem|adeb35da98acd839|3d3d7063067a4a0d|ef46db3751d8e999|2095100807|data/QOF_CHD_2022_23.xlsx|t19688.5455902778s|e95a9135af77896e|3028988|file|local|vector|||1.17|package visNetwork was built under R version 4.3.2|
 data_path17|stem|a63418159811d834|63ceec6f8c52026f|ef46db3751d8e999|-1960423406|data/gp-reg-pat-prac-map.csv|t19691.6787142247s|0c9d0253ecc0bc0e|1551138|file|local|vector|||1.61|package visNetwork was built under R version 4.3.2|
+data_path18|stem|ca1dec2d87a774db|2669725f8597195e|ef46db3751d8e999|-508166864|data/CVDP003.csv|t19699.5008259343s|274f0191b7a2469d|1842764|file|local|vector|||0||
+data_path19|stem|037bb22373abc916|af373ae5f943d4ca|ef46db3751d8e999|1877973413|data/CVDP006.csv|t19699.4996059871s|e616c290eeb39a40|1847179|file|local|vector|||0||
 data_path2|stem|28352e90a5ceea6a|a819e9b2fa091f61|ef46db3751d8e999|1241406493|data/metric15.csv|t19676.7148857456s|b6828351a7a8f164|6540|file|local|vector|||0||
+data_path20|stem|888f45acee45978d|84d1b8912caa50d9|ef46db3751d8e999|175525324|data/CVDP007.csv|t19699.5053231969s|64b5bd0e6bcb7a7a|2469022|file|local|vector|||2.22|package visNetwork was built under R version 4.3.2|
+data_path21|stem|10624f0f45dddce0|b179230bbd3b1396|ef46db3751d8e999|379676194|data/CVDP008.csv|t19699.5057712187s|afe79be209ff2720|2592672|file|local|vector|||0||
+data_path22|stem|ed34629804bd5790|d265fedd8c72fd91|ef46db3751d8e999|1557492361|data/CVDP009.csv|t19699.5089289773s|9034718a0231ab45|1763037|file|local|vector|||0||
 data_path3|stem|2c42f991bd4b46cf|8a969e7282c3efc3|ef46db3751d8e999|22104772|data/metric18.csv|t19677.4290195977s|6833527d5267de4b|89871|file|local|vector|||0||
 data_path4|stem|b7cc946932ede1fe|b828d36b9b97d3cf|ef46db3751d8e999|-293133008|data/metric19.csv|t19677.4296193447s|86075df8ff8c4e6f|73221|file|local|vector|||0||
 data_path5|stem|bbf92bb42d38857b|a72d2f9a4b889877|ef46db3751d8e999|-1519578359|data/metric20.csv|t19676.725866652s|21e7b5c5881d5a74|54335|file|local|vector|||0||
