@@ -28,7 +28,7 @@ lsoa_lookup <- tar_read(lsoa_lookup) |> as_tibble()
 
 
 
-metric13b <- tar_read(metric13b) |> as_tibble()
+metric40 <- tar_read(metric40) |> as_tibble()
 
 metric25b <- tar_read(metric25b) |> as_tibble()
 

@@ -91,6 +91,14 @@ list(
   tar_target(cvdp008,read_csv_file(data_path21)), 
   tar_target(data_path22,"data/CVDP009.csv", format = "file"), 
   tar_target(cvdp009,read_csv_file(data_path22)), 
+  tar_target(data_path23,"data/NCDesMarch23.csv", format = "file"), 
+  tar_target(ncdes_data,read_csv_file(data_path23)|>
+               filter(ind_code %in% c("NCD002","NCD003"),
+                      measure %in% c("Denominator", "Numerator")) |>
+               pivot_wider(names_from=c(ind_code,measure),
+                           names_sep="_",
+                           values_from = value)), 
+  
   tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")), # metric 13
   tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")), # metric 6
   tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")), # metric 7
@@ -122,6 +130,16 @@ list(
              qof_chd_2223 |> 
                select(4,6) |>
                rename(value=prevalence_percent_15)), # metric 13b 22/23
+  tar_target(metric39,
+             ncdes_data|>
+               mutate(ncd002_percent =(NCD002_Numerator / NCD002_Denominator)*100) |>
+               select(practice_code,ncd002_percent)|>
+               rename(value=ncd002_percent)), # metric 39 march 23
+  tar_target(metric40,
+             ncdes_data|>
+               mutate(ncd003_percent =(NCD003_Numerator / NCD003_Denominator)*100) |>
+               select(practice_code,ncd003_percent)|>
+               rename(value=ncd003_percent)), # metric 40 march 23
   #process ethnicity data
   tar_target(lsoa_eth_sum,process_census21data(eth_lsoa_census)),
   tar_target(gp_lsoa,process_gpdata(gp_reg_pat_prac_lsoa) |>

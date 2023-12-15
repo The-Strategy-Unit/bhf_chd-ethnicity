@@ -4,6 +4,7 @@ library(factoextra)
 library(cluster)
 library(dplyr)
 library(targets)
+library(tidyverse)
 gp_reg_pat_prac <- tar_read(gp_reg_pat_prac_lsoa) |> as_tibble() |>
   group_by(practice_code) |>
   summarise(list_tot= sum(number_of_patients))
@@ -58,7 +59,13 @@ pams_five_cats <- pam(scale_five_cats, 4, metric = 'euclidean', stand = FALSE)
 full_cats_plot <- fviz_nbclust(scale_full_cats, pam, method = "wss")
 five_cats_plot <- fviz_nbclust(scale_five_cats, pam, method = "wss")
 
-#calculate gap statistic based on number of clusters
+# full_cats_plot <- fviz_nbclust(scale_full_cats, pam, method = "silhouette")
+# 
+# five_cats_plot <- fviz_nbclust(scale_five_cats, pam, method = "silhouette")
+
+
+
+#calculate gap statistic based on number of clusters THIS TAKES AN AGE TO RUN
 gap_stat_full_cats <- clusGap(scale_full_cats,
                               FUN = pam,
                               K.max = 15, #max clusters to consider
@@ -264,4 +271,197 @@ full_cats |>   rownames_to_column(var = 'practice_code') |>
 #These are the 6 cluster medoids for full cats with percents
 full_cats |>   rownames_to_column(var = 'practice_code') |>
   filter(practice_code %in% c("N84617","M83738","C81036","F86612","E85649","G85083"))
+
+
+#Correlation Matrix
+library(GGally)
+ggcorr(full_cats,
+       method = "pairwise",
+       nbreaks = 10,
+       hjust = 0.9,
+       label = TRUE,
+       label_size = 3,
+       layout.exp = 3)+
+  theme(legend.position = c(0.25,0.65))
+
+# Experiment with removal of White British completely but leave all practices in the dataset
+full_cats_percents_ex_whitebritish <- gp_lsoa_with_eth_sum |>
+  select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
+         gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
+         gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
+         gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other,gp_sum_total) |>
+  mutate(gp_perc_est_bangladeshi=(gp_sum_est_bangladeshi/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_chinese=(gp_sum_est_chinese/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_indian=(gp_sum_est_indian/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_pakistani=(gp_sum_est_pakistani/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_other_asian=(gp_sum_est_other_asian/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_blk_african=(gp_sum_est_blk_african/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_blk_caribbean=(gp_sum_est_blk_caribbean/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_other_blk=(gp_sum_est_other_blk/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_all_mixed=(gp_sum_est_all_mixed/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_white_irish=(gp_sum_est_white_irish/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_white_other=(gp_sum_est_white_other/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_other_arab=(gp_sum_est_other_arab/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_other_other=(gp_sum_est_other_other/(gp_sum_total-gp_sum_est_white_british))*100
+  ) |>
+  select(-gp_sum_est_bangladeshi,-gp_sum_est_chinese,-gp_sum_est_indian,
+         -gp_sum_est_pakistani,-gp_sum_est_other_asian,-gp_sum_est_blk_african,-gp_sum_est_blk_caribbean,
+         -gp_sum_est_other_blk,-gp_sum_est_all_mixed,-gp_sum_est_white_british,-gp_sum_est_white_irish,
+         -gp_sum_est_white_other,-gp_sum_est_other_arab,-gp_sum_est_other_other,-gp_sum_total) |>
+  mutate(total=gp_perc_est_bangladeshi+gp_perc_est_chinese+gp_perc_est_indian+gp_perc_est_pakistani+gp_perc_est_other_asian+
+           gp_perc_est_blk_african+gp_perc_est_blk_caribbean+gp_perc_est_other_blk+gp_perc_est_all_mixed+gp_perc_est_white_irish+
+           gp_perc_est_white_other+gp_perc_est_other_arab+gp_perc_est_other_other)
+
+
+full_cats_percents_ex_whitebritish <-
+  full_cats_percents_ex_whitebritish |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
+
+five_cats_percents_ex_whitebritish <-
+  five_cats_percents_ex_whitebritish |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
+
+#remove rows with missing values
+full_cats_percents_ex_whitebritish <- na.omit(full_cats_percents_ex_whitebritish)
+five_cats_percents_ex_whitebritish <- na.omit(five_cats_percents_ex_whitebritish)
+
+#scale each variable to have a mean of 0 and sd of 1
+scale_full_cats_percents_ex_whitebritish <- scale(full_cats_percents_ex_whitebritish)
+scale_five_cats_percents_ex_whitebritish <- scale(five_cats_percents_ex_whitebritish)
+
+full_cats_percents_ex_whitebritish_plot <- fviz_nbclust(scale_full_cats_percents_ex_whitebritish, pam, method = "wss")
+five_cats_percents_ex_whitebritish_plot <- fviz_nbclust(scale_five_cats_percents_ex_whitebritish, pam, method = "wss")
+
+#FULL CATS WITH 15 CLUSTERS PERCENT BASED
+#make this example reproducible
+set.seed(5)
+#perform k-medoids clustering with k = 15 clusters
+pams_full_cats_percents_ex_whitebritish <- pam(scale_full_cats_percents_ex_whitebritish, 8, metric = 'euclidean', stand = FALSE)
+#view results
+pams_full_cats_percents_ex_whitebritish
+#plot results
+pams_full_cats_percents_ex_whitebritish8_clusters_plot <- fviz_cluster(pams_full_cats_percents_ex_whitebritish, data = full_cats) 
+pams_full_cats_percents_ex_whitebritish8_clusters_plot
+
+#add cluster assignment to original data
+final_data_full_cats_percents_ex_whitebritish8_clusters <- cbind(full_cats, cluster = pams_full_cats_percents_ex_whitebritish$cluster)
+
+final_data_full_cats_percents_ex_whitebritish8_clusters |>
+  rownames_to_column(var = 'practice_code') |>
+  group_by(cluster)|>
+  count("practice_code")
+
+#These are the 8 cluster medoids for full cats with percents
+output_data <- full_cats |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("B83010","E86004","M82060","F83055","F81083","H81103","F84740","C84018"))
+##############################################################################################################################
+# Experiment with removal of White British completely but remove predominantly white (85%+) manually into their own group (2876 removed)
+full_cats_percents_ex_85whitebritish <- gp_lsoa_with_eth_sum |>
+  select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
+         gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
+         gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
+         gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other,gp_sum_total) |>
+  mutate(gp_perc_est_bangladeshi=(gp_sum_est_bangladeshi/(gp_sum_total))*100,
+         gp_perc_est_chinese=(gp_sum_est_chinese/(gp_sum_total))*100,
+         gp_perc_est_indian=(gp_sum_est_indian/(gp_sum_total))*100,
+         gp_perc_est_pakistani=(gp_sum_est_pakistani/(gp_sum_total))*100,
+         gp_perc_est_other_asian=(gp_sum_est_other_asian/(gp_sum_total))*100,
+         gp_perc_est_blk_african=(gp_sum_est_blk_african/(gp_sum_total))*100,
+         gp_perc_est_blk_caribbean=(gp_sum_est_blk_caribbean/(gp_sum_total))*100,
+         gp_perc_est_other_blk=(gp_sum_est_other_blk/(gp_sum_total))*100,
+         gp_perc_est_all_mixed=(gp_sum_est_all_mixed/(gp_sum_total))*100,
+         gp_perc_est_white_british=(gp_sum_est_white_british/(gp_sum_total))*100,         
+         gp_perc_est_white_irish=(gp_sum_est_white_irish/(gp_sum_total))*100,
+         gp_perc_est_white_other=(gp_sum_est_white_other/(gp_sum_total))*100,
+         gp_perc_est_other_arab=(gp_sum_est_other_arab/(gp_sum_total))*100,
+         gp_perc_est_other_other=(gp_sum_est_other_other/(gp_sum_total))*100
+  ) |>
+  select(-gp_sum_est_bangladeshi,-gp_sum_est_chinese,-gp_sum_est_indian,
+         -gp_sum_est_pakistani,-gp_sum_est_other_asian,-gp_sum_est_blk_african,-gp_sum_est_blk_caribbean,
+         -gp_sum_est_other_blk,-gp_sum_est_all_mixed,-gp_sum_est_white_british,-gp_sum_est_white_irish,
+         -gp_sum_est_white_other,-gp_sum_est_other_arab,-gp_sum_est_other_other,-gp_sum_total) |>
+  filter(gp_perc_est_white_british <85) |>
+  select(-gp_perc_est_white_british)
+
+
+full_cats_percents_ex_85whitebritish <-
+  full_cats_percents_ex_85whitebritish |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
+
+five_cats_percents_ex_85whitebritish <-
+  five_cats_percents_ex_85whitebritish |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
+
+#remove rows with missing values
+full_cats_percents_ex_85whitebritish <- na.omit(full_cats_percents_ex_85whitebritish)
+five_cats_percents_ex_85whitebritish <- na.omit(five_cats_percents_ex_85whitebritish)
+
+#scale each variable to have a mean of 0 and sd of 1
+scale_full_cats_percents_ex_85whitebritish <- scale(full_cats_percents_ex_85whitebritish)
+scale_five_cats_percents_ex_85whitebritish <- scale(five_cats_percents_ex_85whitebritish)
+
+full_cats_percents_ex_85whitebritish_plot <- fviz_nbclust(scale_full_cats_percents_ex_85whitebritish, pam, method = "wss")
+five_cats_percents_ex_85whitebritish_plot <- fviz_nbclust(scale_five_cats_percents_ex_85whitebritish, pam, method = "wss")
+
+#FULL CATS WITH 15 CLUSTERS PERCENT BASED
+#make this example reproducible
+set.seed(5)
+#perform k-medoids clustering with k = 15 clusters
+pams_full_cats_percents_ex_85whitebritish <- pam(scale_full_cats_percents_ex_85whitebritish, 7, metric = 'euclidean', stand = FALSE)
+#view results
+pams_full_cats_percents_ex_85whitebritish
+#plot results
+pams_full_cats_percents_ex_85whitebritish7_clusters_plot <- fviz_cluster(pams_full_cats_percents_ex_85whitebritish, data = full_cats) 
+pams_full_cats_percents_ex_85whitebritish7_clusters_plot
+
+#add cluster assignment to original data
+#remove the 85% from the original
+
+full_cats_percents_ex_85whitebritish_wb <- gp_lsoa_with_eth_sum |>
+  select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
+         gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
+         gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
+         gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other,gp_sum_total) |>
+  mutate(gp_perc_est_bangladeshi=(gp_sum_est_bangladeshi/(gp_sum_total))*100,
+         gp_perc_est_chinese=(gp_sum_est_chinese/(gp_sum_total))*100,
+         gp_perc_est_indian=(gp_sum_est_indian/(gp_sum_total))*100,
+         gp_perc_est_pakistani=(gp_sum_est_pakistani/(gp_sum_total))*100,
+         gp_perc_est_other_asian=(gp_sum_est_other_asian/(gp_sum_total))*100,
+         gp_perc_est_blk_african=(gp_sum_est_blk_african/(gp_sum_total))*100,
+         gp_perc_est_blk_caribbean=(gp_sum_est_blk_caribbean/(gp_sum_total))*100,
+         gp_perc_est_other_blk=(gp_sum_est_other_blk/(gp_sum_total))*100,
+         gp_perc_est_all_mixed=(gp_sum_est_all_mixed/(gp_sum_total))*100,
+         gp_perc_est_white_british=(gp_sum_est_white_british/(gp_sum_total))*100,         
+         gp_perc_est_white_irish=(gp_sum_est_white_irish/(gp_sum_total))*100,
+         gp_perc_est_white_other=(gp_sum_est_white_other/(gp_sum_total))*100,
+         gp_perc_est_other_arab=(gp_sum_est_other_arab/(gp_sum_total))*100,
+         gp_perc_est_other_other=(gp_sum_est_other_other/(gp_sum_total))*100
+  ) |>
+  select(-gp_sum_est_bangladeshi,-gp_sum_est_chinese,-gp_sum_est_indian,
+         -gp_sum_est_pakistani,-gp_sum_est_other_asian,-gp_sum_est_blk_african,-gp_sum_est_blk_caribbean,
+         -gp_sum_est_other_blk,-gp_sum_est_all_mixed,-gp_sum_est_white_british,-gp_sum_est_white_irish,
+         -gp_sum_est_white_other,-gp_sum_est_other_arab,-gp_sum_est_other_other,-gp_sum_total) |>
+  filter(gp_perc_est_white_british <85) |>
+  select(practice_code)
+
+
+final_data_full_cats_percents_ex_85whitebritish7_clusters <- cbind(full_cats_percents_ex_85whitebritish_wb, cluster = pams_full_cats_percents_ex_85whitebritish$cluster)
+
+pams_full_cats_percents_ex_85whitebritish |>
+  rownames_to_column(var = 'practice_code') |>
+  group_by(cluster)|>
+  count("practice_code")
+
+#These are the 7 cluster medoids for full cats with percents
+output_data <- full_cats |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("F81117","Y02973","F81165","F86612","E85003","P86002","G85083"))
+
+
+##############################################################################################################################
+# Experiment with removal of White British by leaving % whiteB as a variable and then creating % for other groups based on white excluded
+
 
