@@ -98,7 +98,10 @@ list(
                pivot_wider(names_from=c(ind_code,measure),
                            names_sep="_",
                            values_from = value)), 
-  
+  tar_target(data_path24,"data/20231201_92847.xlsx", format="file"), #CHD synthetic prevalence metric 1
+  tar_target(metric1,read_excel_file(data_path24)), 
+  tar_target(data_path25,"data/epraccur_gp.csv", format="file"), #All practices
+  tar_target(gp_history,read_csv_file(data_path25)), 
   tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")), # metric 13
   tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")), # metric 6
   tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")), # metric 7

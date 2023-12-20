@@ -59,5 +59,42 @@ Have decided to use October 2022 and also downloaded the GP to icb mapping file 
 
 https://www.rdocumentation.org/packages/cluster/versions/2.1.6
 
-look at 18:50 in this video:
-https://www.youtube.com/watch?v=dKXTNxNDpMA
+look at 18:50 in this video: https://www.youtube.com/watch?v=dKXTNxNDpMA
+
+## Mapping new GP practices to old
+
+### To obtain CHD prevalence for as many new practices as possible
+
+```{r}
+library(stringr)
+gp_lsoa_with_eth_sum <- tar_read(gp_lsoa_with_eth_sum) |> as_tibble()
+
+metric1 <- tar_read(metric1) |> as_tibble()
+
+gp_history <- tar_read(gp_history) |> as_tibble()
+
+match_gps <- gp_lsoa_with_eth_sum |> left_join(metric1, join_by(practice_code==AreaCode)) |>
+  mutate(chdprev=case_when(Value>0 ~ Value))
+
+#select just gps with missing data
+missing_data_gps <- match_gps |> 
+  filter(Value<0|is.na(Value)==TRUE) |>
+  select(practice_code)
+
+#get the postcodes
+missing_data_gps <- missing_data_gps |> 
+  left_join(gp_history, join_by(practice_code==org_code))|>
+  select(practice_code,postcode)|>
+  mutate(part_practice_code=substr(postcode,1,str_length(postcode)-1))
+
+#remove active practices from the gp_history and attach the CHD prevalence(metric1)
+gp_history <- gp_history |> 
+  mutate(part_practice_code=substr(postcode,1,str_length(postcode)-1)) |>
+  filter(status_code!="A") |>
+  inner_join(metric1, join_by(org_code==AreaCode))
+
+test <- missing_data_gps |> left_join(gp_history, join_by(part_practice_code==part_practice_code))
+                     
+
+
+```

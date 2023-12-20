@@ -38,6 +38,10 @@ library(factoextra)
 library(cluster)
 library(dplyr)
 library(targets)
+library(GGally)
+library(gt)
+library(tidyverse)
+
 load("cluster_analysis_v1.Rdata")
 ```
 
@@ -107,6 +111,40 @@ Plot to show number of clusters vs. gap statistic for 15 clusters maximum after 
 five_cats_gap_plot
 ```
 
+## Correlation Matrix
+
+```{r}
+#Correlation Matrix
+ggcorr(full_cats,
+       method = "pairwise",
+       nbreaks = 10,
+       hjust = 0.9,
+       label = TRUE,
+       label_size = 3,
+       layout.exp = 3)+
+  theme(legend.position = c(0.25,0.65))
+```
+
+## Scree Plots
+
+::: panel-tabset
+## All categories
+
+```{r}
+pca <- princomp(scale_full_cats)
+
+screeplot(pca, npcs=14)
+```
+
+## Excluding White British
+
+```{r}
+pca2 <- princomp(scale_full_cats_percents_ex_whitebritish)
+
+screeplot(pca2, npcs=14)
+```
+:::
+
 ## Results of k-medoids model
 
 All categories with 15 clusters
@@ -140,11 +178,36 @@ Visualisation of the ethnic groups of the 8 medoid practices :
 
 ![](secret/Picture3.png){fig-align="center"}
 
+### Alternative K-Medoid models
+
+#### Experiment with removal of White British completely but leave all practices in the dataset
+
+```{r}
+pams_full_cats_percents_ex_whitebritish8_clusters_plot
+```
+
+```{r}
+final_data_full_cats_percents_ex_whitebritish8_clusters |>
+  rownames_to_column(var = 'practice_code') |>
+  group_by(cluster)|>
+  count("practice_code")|>
+  select(cluster,n) |>
+  gt()
+```
+
+![](secret/Picture4.png){fig-align="center"}
+
+#### Experiment with removal of practice with \> 85% White British manually into their own group
+
+```{r}
+pams_full_cats_percents_ex_85whitebritish7_clusters_plot
+```
+
+![](secret/Picture5.png){fig-align="center"}
+
 ## Next steps?
 
 I wondered about including total list size as a variable?
-
-Should I break the practices up some how by taking out white?
 
 Other clustering methods?
 

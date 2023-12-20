@@ -26,7 +26,9 @@ lsoa_eth_sum <- tar_read(lsoa_eth_sum) |> as_tibble()
 
 lsoa_lookup <- tar_read(lsoa_lookup) |> as_tibble()
 
+gp_lsoa_with_eth_sum <- tar_read(gp_lsoa_with_eth_sum) |> as_tibble()
 
+metric1 <- tar_read(metric1) |> as_tibble()
 
 metric40 <- tar_read(metric40) |> as_tibble()
 

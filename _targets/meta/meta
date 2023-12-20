@@ -1,4 +1,9 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+activity_long|object|6d996349ed808a4a|||||||||||||||
+activity_type_decile|object|c4f420f33fb96dec|||||||||||||||
+by_list_regex|object|b81599c6154011e2|||||||||||||||
+by_list_total|object|7ed9b03a918f8618|||||||||||||||
+confLevel|object|4dc430958329d776|||||||||||||||
 cvdp003|stem|e50aea8aea0c2a60|309494db7f338fa5|e80bced767dba21c|-757974744||t19699.5229280442s|87cce51087824dee|150165|rds|local|vector|||0.11||
 cvdp006|stem|4038867d6a42c0e3|c9cb3c92ae5f71cd|ccb021a8790981c1|1887794316||t19699.5229297325s|4469ea95b74c7e3a|152106|rds|local|vector|||0.1||
 cvdp007|stem|b17387a6d3eac612|e3b2b8d6c0b0ee6e|ebbb9fbfe6f95cc2|1542474594||t19699.5229221512s|d1f142aaf8237399|150254|rds|local|vector|||0.42||
@@ -20,6 +25,8 @@ data_path20|stem|888f45acee45978d|84d1b8912caa50d9|ef46db3751d8e999|175525324|da
 data_path21|stem|10624f0f45dddce0|b179230bbd3b1396|ef46db3751d8e999|379676194|data/CVDP008.csv|t19699.5057712187s|afe79be209ff2720|2592672|file|local|vector|||0||
 data_path22|stem|ed34629804bd5790|d265fedd8c72fd91|ef46db3751d8e999|1557492361|data/CVDP009.csv|t19699.5089289773s|9034718a0231ab45|1763037|file|local|vector|||0||
 data_path23|stem|c0f512ffd4f2e1c5|01f3fd459367bbaf|ef46db3751d8e999|-80826563|data/NCDesMarch23.csv|t19703.6946075603s|f2a00f5171ac4897|172265636|file|local|vector|||2.14|package visNetwork was built under R version 4.3.2|
+data_path24|stem|7c5b062aa49ef422|c5f584ef158f94c4|ef46db3751d8e999|1126940470|data/20231201_92847.xlsx|t19692.5600013174s|a12e39dd86b2d9e4|962035|file|local|vector|||1.76|package visNetwork was built under R version 4.3.2|
+data_path25|stem|c9e8426e17a8c7c0|1f419fb299fe19a6|ef46db3751d8e999|1364810641|data/epraccur_gp.csv|t19711.7237592967s|fd3e5d08c0bed0de|1379048|file|local|vector|||1|package visNetwork was built under R version 4.3.2|
 data_path3|stem|2c42f991bd4b46cf|8a969e7282c3efc3|ef46db3751d8e999|22104772|data/metric18.csv|t19677.4290195977s|6833527d5267de4b|89871|file|local|vector|||0||
 data_path4|stem|b7cc946932ede1fe|b828d36b9b97d3cf|ef46db3751d8e999|-293133008|data/metric19.csv|t19677.4296193447s|86075df8ff8c4e6f|73221|file|local|vector|||0||
 data_path5|stem|bbf92bb42d38857b|a72d2f9a4b889877|ef46db3751d8e999|-1519578359|data/metric20.csv|t19676.725866652s|21e7b5c5881d5a74|54335|file|local|vector|||0||
@@ -31,6 +38,7 @@ eth_joined|stem|ce635eac1797d5ca|d1e076bb1d44e270|8c6f44233d4b6b45|285540028||t1
 eth_lsoa_census|stem|f50f0c8ec35d8f3a|b48da214d17cfb00|24eea00ddd160309|810133713||t19685.7660411897s|8bca8a9f21a8268a|2489852|rds|local|vector|||0.43||
 get_data_via_server|function|9c10f73bd4a34656|||||||||||||||
 get_my_fingertips_gp_data|function|c1da8d293777399c|||||||||||||||
+gp_history|stem|8d50744e338a31af|a5dbb6dab1e5cd2a|26a449f823ca1f75|-530018174||t19711.72693883s|04ea618897b81445|378179|rds|local|vector|||0.41||
 gp_icb_mapping|stem|d3d260057196aa18|5c9853d423e3c296|af8d0926f38aa9ef|-1937053284||t19692.6017644895s|e6b407606665c5e3|84527|rds|local|vector|||0.22||
 gp_list_lsoa|stem|f55a2a609c6981da|a5092ed5e7385f93|c770505e001fe2a8|1323561029||t19685.7660666359s|bf2ec3bc4d7cc45b|2687783|rds|local|vector|||0.67||
 gp_lsoa|stem|6fd29974b09366f9|93bb7d82e142693b|f2c23aae2705ccc6|-2053033604||t19692.6117642612s|c3b428e42758184a|3078881|rds|local|vector|||0.65||
@@ -39,11 +47,13 @@ gp_lsoa_with_eth_sum|stem|89527ca5746bdd0f|3fb6338cd6bf4dd7|42f68cb736f7a87a|437
 gp_lsoa22|stem|57f48f5429c07e6a|cf61c99ab9067767|9352939fddaf6145|1774700467||t19691.5414866321s|e2e531ee5318b149|2685514|rds|local|vector|||0.22||
 gp_reg_pat_prac_lsoa|stem|79c68c31967a37db|7f1951eaacacc5d8|4101d168c19880d7|-620301967||t19691.698627679s|68d4964e7abcb33a|2694148|rds|local|vector|||0.85||
 gp_reg_pat_prac_lsoa_22|stem|548aeaba3f787468|59f7a16889c8881f|5c2940540b2a3cdd|899549116||t19691.5291153029s|ff46a6ddfdf16698|2703658|rds|local|vector|||0.92||
+i|object|3a9a7d4ce430bc57|||||||||||||||
 join_gp_and_eth|function|2e6f63ec4d88ce4e|||||||||||||||
 joined|stem|343ea30f2937b593|1e83b25e5fd8905c|aa795cc46d063825|-2051793385||t19692.7022239829s|1dd98009e53b64fb|130216935|rds|local|vector|||0.92||
 lsoa_eth_sum|stem|c8c18f256d20b71f|e63e8f2b3f256fb7|c66260566e8a151c|42188744||t19689.7485101861s|99ebb12d92c87c1d|1274477|rds|local|vector|||1.78||
 lsoa_lookup|stem|1736111fc0399a32|9acee986817b1f5a|a6c339bcfca11384|1785093852||t19685.7660443142s|8a385497a377b8b9|508877|rds|local|vector|||0.14||
 lsoa_lookup_eng|stem|8f899d4df37cdbdd|b2c1f2397e947008|ed04d27a1878bee1|733074821||t19692.5993018894s|ba6831c1f978ec90|484186|rds|local|vector|||0.02||
+metric1|stem|8528d444c31cc548|5a68dfab37b97117|6514b6b0028c4cc2|-855656661||t19710.451315747s|4fe209558f9aa7a3|310405|rds|local|vector|||0.12||
 metric10|stem|b2a1ac1a8004c4a5|073f744c48e9dd35|99b71f0bf10e73bf|975451462||t19685.8373073505s|c99668f1d32ab0a5|24336|rds|local|vector|||39.97|package visNetwork was built under R version 4.3.2|
 metric11|stem|2643bace2b1c33f4|24e48710a91a67f9|99b71f0bf10e73bf|-1832098155||t19685.8374790869s|b8bee5f63ba074e7|53197|rds|local|vector|||14.81||
 metric12|stem|5f58868a79a460c8|a7955ff229232a27|99b71f0bf10e73bf|-1601502702||t19685.7964470411s|1b1823daab5397be|53072|rds|local|vector|||11.26|package visNetwork was built under R version 4.3.2|
@@ -72,7 +82,12 @@ metric6|stem|1e8ec507b4c9aeb1|3a1f7a0b5a19d0fd|99b71f0bf10e73bf|1485589994||t196
 metric7|stem|4ddeae60127f3d0d|a9d30103b44b9a39|99b71f0bf10e73bf|1712580857||t19685.8127318842s|90987c95e5a81f7d|53519|rds|local|vector|||23.05||
 metric8|stem|c50279bf2428459c|792af637a2cab262|99b71f0bf10e73bf|-1393461581||t19685.8128202053s|62534a3620737479|53796|rds|local|vector|||7.59||
 metric9|stem|7d1b105210395588|0c3bd178f7075b51|99b71f0bf10e73bf|2055311828||t19685.8377880396s|e7d44d14c94bcd4e|65540|rds|local|vector|||26.64||
+mod|object|c18c110e89c6bf32|||||||||||||||
+mod_df|object|c42c2875b9e9c8aa|||||||||||||||
+mod_results|object|bb4195ec873c4e52|||||||||||||||
+model_df_all_variables|object|36269b5ffad90ea2|||||||||||||||
 ncdes_data|stem|f5be308d097c3649|a5d362f152775310|7501dfc52f463647|-1043310607||t19704.3041584498s|ef4becb719a310a6|126111|rds|local|vector|||3.02|1m22mOne or more parsing issues, call problems on your data frame for details,e.g.  dat  vroom...  problemsdat|
+pred_df|object|11c6e02b16e28fe5|||||||||||||||
 process_census21data|function|03e15213a3a00e1c|||||||||||||||
 process_gpdata|function|06e3f8cced409ee3|||||||||||||||
 qof_chd_2223|stem|675e2ccd65a2ba90|03a5a540e2cbb3b5|0b7c922ca4deb35a|1100172128||t19688.9632709834s|3f197f3f123493ed|221810|rds|local|vector|||0.34|Expecting numeric in I1186  R1186C9 got . Expecting numeric in X1186  R1186C24 got . Expecting numeric in AB1186  R1186C28 got . Expecting numeric in H1465  R1465C8 got . Expecting numeric in I1465  R1465C9 got . Expecting numeric in J1465  R1465C10 got . Expecting numeric in P1465  R1465C16 got . Expecting numeric in X1465  R1465C24 got . Expecting numeric in AB1465  R1465C28 got . Expecting numeric in AP2518  R2518C42 got . Expecting numeric in AR2518  R2518C44 got . Expecting numeric in AT2518  R2518C46 got . Expecting numeric in H2690  R2690C8 got . Expecting numeric in I2690  R2690C9 got . Expecting numeric in J2690  R2690C10 got . Expecting numeric in P2690  R2690C16 got . Expecting numeric in Q2690  R2690C17 got . Expecting numeric in R2690  R2690C18 got . Expecting numeric in V2690  R2690C22 got . Expecting numeric in W2690  R2690C23 got . Expecting numeric in X2690  R2690C24 got . Expecting numeric in AB2690  R2690C28 got . Expecting numeric in AA3064  R3064C27 got . Expecting numeric in AB3064  R3064C28 got . Expecting numeric in AH3064  R3064C34 got . Expecting numeric in AJ3064  R3064C36 got . Expecting numeric in AL3064  R3064C38 got . Expecting numeric in AP3064  R3064C42 got . Expecting numeric in AR3064  R3064C44 got . Expecting numeric in AT3064  R3064C46 got . Expecting numeric in H3378  R3378C8 got . Expecting numeric in I3378  R3378C9 got . Expecting numeric in J3378  R3378C10 got . Expecting numeric in P3378  R3378C16 got . Expecting numeric in Q3378  R3378C17 got . Expecting numeric in R3378  R3378C18 got . Expecting numeric in V3378  R3378C22 got . Expecting numeric in W3378  R3378C23 got . Expecting numeric in X3378  R3378C24 got . Expecting numeric in AA3378  R3378C27 got . Expecting numeric in AB3378  R3378C28 got . Expecting numeric in AH3378  R3378C34 got . Expecting numeric in A|
@@ -80,5 +95,10 @@ qof_chd005_2223|stem|b4438337a822b598|0040225005ba3df9|0b7c922ca4deb35a|11249444
 read_csv_file|function|dcd254c5bba0254b|||||||||||||||
 read_excel_file|function|061c16961cfbd703|||||||||||||||
 read_qof_excel_file|function|53d417490cd71d74|||||||||||||||
+sii_results|object|72fd275138e5d4b4|||||||||||||||
+sii_staging|object|b1ee2bddd8c3ebc8|||||||||||||||
+sii_table|object|3ca04292ef3f83a7|||||||||||||||
 sum_eth_by_lsoa11|function|09d98eedc1fbb58f|||||||||||||||
 sum_ethnicities|function|bb48a8ef2dcef8b1|||||||||||||||
+test_data|object|b2e38604ec1666d4|||||||||||||||
+variables|object|eafbb505685dd05d|||||||||||||||

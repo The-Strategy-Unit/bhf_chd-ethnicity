@@ -258,6 +258,7 @@ pams_five_cats_percents5_clusters_plot <- fviz_cluster(pams_five_cats_percents, 
 
 #add cluster assignment to original data
 final_data_full_cats_percent_6_clusters <- cbind(full_cats, cluster = pams_full_cats_percents$cluster)
+final_data_five_cats_percent_5_clusters <- cbind(five_cats, cluster = pams_five_cats_percents$cluster)
 
 final_data_full_cats_percent_6_clusters |>
   rownames_to_column(var = 'practice_code') |>
@@ -267,6 +268,10 @@ final_data_full_cats_percent_6_clusters |>
 #These are the 4 cluster medoids for full cats with percents
 full_cats |>   rownames_to_column(var = 'practice_code') |>
   filter(practice_code %in% c("J81626","G81059","H81048","F86018"))
+
+#These are the 5 cluster medoids for full cats with percents
+output_data <- five_cats |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("P83007","D82034","H82088","K81089","P84669"))
 
 #These are the 6 cluster medoids for full cats with percents
 full_cats |>   rownames_to_column(var = 'practice_code') |>
@@ -284,6 +289,28 @@ ggcorr(full_cats,
        layout.exp = 3)+
   theme(legend.position = c(0.25,0.65))
 
+pca <- princomp(scale_full_cats)
+pca$loadings
+
+loadings <- pca$loadings
+ggplot(data=full_cats,aes(x=gp_sum_est_blk_caribbean, y=gp_sum_est_blk_african)) +
+  geom_point(apha=.3) +
+  stat_ellipse(type='norm',level=.99)+
+  geom_abline(intercept=0,slope=loadings[2,1]/loadings[1,1]) +
+  geom_abline(intercept=0,slope=loadings[2,2]/loadings[1,2])
+
+screeplot(pca, npcs=14)
+
+pca2 <- princomp(scale_full_cats_percents_ex_whitebritish)
+
+pca2$loadings
+
+screeplot(pca2, npcs=14)
+
+
+
+################################################################################
+  
 # Experiment with removal of White British completely but leave all practices in the dataset
 full_cats_percents_ex_whitebritish <- gp_lsoa_with_eth_sum |>
   select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
@@ -332,6 +359,7 @@ scale_full_cats_percents_ex_whitebritish <- scale(full_cats_percents_ex_whitebri
 scale_five_cats_percents_ex_whitebritish <- scale(five_cats_percents_ex_whitebritish)
 
 full_cats_percents_ex_whitebritish_plot <- fviz_nbclust(scale_full_cats_percents_ex_whitebritish, pam, method = "wss")
+
 five_cats_percents_ex_whitebritish_plot <- fviz_nbclust(scale_five_cats_percents_ex_whitebritish, pam, method = "wss")
 
 #FULL CATS WITH 15 CLUSTERS PERCENT BASED
@@ -463,5 +491,83 @@ output_data <- full_cats |>   rownames_to_column(var = 'practice_code') |>
 
 ##############################################################################################################################
 # Experiment with removal of White British by leaving % whiteB as a variable and then creating % for other groups based on white excluded
+full_cats_percents_sep_whitebritish <- gp_lsoa_with_eth_sum |>
+  select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
+         gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
+         gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
+         gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other,gp_sum_total) |>
+  mutate(gp_perc_est_bangladeshi=(gp_sum_est_bangladeshi/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_chinese=(gp_sum_est_chinese/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_indian=(gp_sum_est_indian/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_pakistani=(gp_sum_est_pakistani/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_other_asian=(gp_sum_est_other_asian/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_blk_african=(gp_sum_est_blk_african/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_blk_caribbean=(gp_sum_est_blk_caribbean/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_other_blk=(gp_sum_est_other_blk/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_all_mixed=(gp_sum_est_all_mixed/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_white_british=(gp_sum_est_white_british/(gp_sum_total))*100,
+         gp_perc_est_white_irish=(gp_sum_est_white_irish/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_white_other=(gp_sum_est_white_other/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_other_arab=(gp_sum_est_other_arab/(gp_sum_total-gp_sum_est_white_british))*100,
+         gp_perc_est_other_other=(gp_sum_est_other_other/(gp_sum_total-gp_sum_est_white_british))*100
+  ) |>
+  select(-gp_sum_est_bangladeshi,-gp_sum_est_chinese,-gp_sum_est_indian,
+         -gp_sum_est_pakistani,-gp_sum_est_other_asian,-gp_sum_est_blk_african,-gp_sum_est_blk_caribbean,
+         -gp_sum_est_other_blk,-gp_sum_est_all_mixed,-gp_sum_est_white_british,-gp_sum_est_white_irish,
+         -gp_sum_est_white_other,-gp_sum_est_other_arab,-gp_sum_est_other_other,-gp_sum_total)
 
+full_cats_percents_sep_whitebritish <-
+  full_cats_percents_sep_whitebritish |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
 
+five_cats_percents_sep_whitebritish <-
+  five_cats_percents_sep_whitebritish |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
+
+#remove rows with missing values
+full_cats_percents_sep_whitebritish <- na.omit(full_cats_percents_sep_whitebritish)
+five_cats_percents_sep_whitebritish <- na.omit(five_cats_percents_sep_whitebritish)
+
+#scale each variable to have a mean of 0 and sd of 1
+scale_full_cats_percents_sep_whitebritish <- scale(full_cats_percents_sep_whitebritish)
+scale_five_cats_percents_sep_whitebritish <- scale(five_cats_percents_sep_whitebritish)
+
+full_cats_percents_sep_whitebritish_plot <- fviz_nbclust(scale_full_cats_percents_sep_whitebritish, pam, method = "wss")
+five_cats_percents_sep_whitebritish_plot <- fviz_nbclust(scale_five_cats_percents_sep_whitebritish, pam, method = "wss")
+
+#FULL CATS WITH 6 CLUSTERS PERCENT BASED
+#make this example reproducible
+set.seed(5)
+#perform k-medoids clustering with k = 15 clusters
+pams_full_cats_percents_sep_whitebritish <- pam(scale_full_cats_percents_sep_whitebritish, 6, metric = 'euclidean', stand = FALSE)
+#view results
+pams_full_cats_percents_sep_whitebritish
+#plot results
+pams_full_cats_percents_sep_whitebritish6_clusters_plot <- fviz_cluster(pams_full_cats_percents_sep_whitebritish, data = full_cats) 
+pams_full_cats_percents_sep_whitebritish6_clusters_plot
+
+#add cluster assignment to original data
+
+final_data_full_cats_percents_sep_whitebritish_clusters <- cbind(full_cats, cluster = pams_full_cats_percents_sep_whitebritish$cluster)
+
+pams_full_cats_percents_sep_whitebritish |>
+  rownames_to_column(var = 'practice_code') |>
+  group_by(cluster)|>
+  count("practice_code")
+
+#These are the 6 cluster medoids for full cats with percents
+output_data <- full_cats |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("M85736","G82802","H81016","C81064","E86004","C84018"))
+
+#############################################################################
+d <- dist(full_cats)
+
+hcl <-hclust(d, method="complete", members=NULL)
+plot(hcl)
+
+hcl$labels
+
+cut <- cutree(hcl, k = 10, h = NULL)
+df_cut <- as.data.frame(cut)
