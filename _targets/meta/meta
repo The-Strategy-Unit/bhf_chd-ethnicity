@@ -37,7 +37,10 @@ data_path9|stem|5419292de42fe630|a1cfb21b83d0eb7c|ef46db3751d8e999|-883106084|da
 eth_joined|stem|ce635eac1797d5ca|d1e076bb1d44e270|8c6f44233d4b6b45|285540028||t19692.7022540379s|51a98603cbbd641f|1249460|rds|local|vector|||1.78||
 eth_lsoa_census|stem|f50f0c8ec35d8f3a|b48da214d17cfb00|24eea00ddd160309|810133713||t19685.7660411897s|8bca8a9f21a8268a|2489852|rds|local|vector|||0.43||
 get_data_via_server|function|9c10f73bd4a34656|||||||||||||||
+get_geocoded_data|function|c5734896836326ce|||||||||||||||
+get_missing_chd_prevalence|function|72374b0c0a0765d6|||||||||||||||
 get_my_fingertips_gp_data|function|c1da8d293777399c|||||||||||||||
+gp_geocoded|stem|463ceb111b831f65|cbb042ba561010c0|e07acfb8e0e53f9c|-532098644||t19732.9239729885s|86377e0903fe1200|195015|rds|local|vector|||5984.2||
 gp_history|stem|8d50744e338a31af|a5dbb6dab1e5cd2a|26a449f823ca1f75|-530018174||t19711.72693883s|04ea618897b81445|378179|rds|local|vector|||0.41||
 gp_icb_mapping|stem|d3d260057196aa18|5c9853d423e3c296|af8d0926f38aa9ef|-1937053284||t19692.6017644895s|e6b407606665c5e3|84527|rds|local|vector|||0.22||
 gp_list_lsoa|stem|f55a2a609c6981da|a5092ed5e7385f93|c770505e001fe2a8|1323561029||t19685.7660666359s|bf2ec3bc4d7cc45b|2687783|rds|local|vector|||0.67||
@@ -54,6 +57,7 @@ lsoa_eth_sum|stem|c8c18f256d20b71f|e63e8f2b3f256fb7|c66260566e8a151c|42188744||t
 lsoa_lookup|stem|1736111fc0399a32|9acee986817b1f5a|a6c339bcfca11384|1785093852||t19685.7660443142s|8a385497a377b8b9|508877|rds|local|vector|||0.14||
 lsoa_lookup_eng|stem|8f899d4df37cdbdd|b2c1f2397e947008|ed04d27a1878bee1|733074821||t19692.5993018894s|ba6831c1f978ec90|484186|rds|local|vector|||0.02||
 metric1|stem|8528d444c31cc548|5a68dfab37b97117|6514b6b0028c4cc2|-855656661||t19710.451315747s|4fe209558f9aa7a3|310405|rds|local|vector|||0.12||
+metric1_updated|stem||4ba271935ac56c71|248180c7b12b395f|271646605||t19732.9574154245s||0|rds|local|vector|||2.06||1m22m36mℹ39m In argument chd_prev_to_use  case_whenValue  0  Value, .default   prev_est.1mCaused by error in case_when22m1m22m33m39m Failed to evaluate the lefthand side of formula 1.1mCaused by error22m33m39m object Value not found
 metric10|stem|b2a1ac1a8004c4a5|073f744c48e9dd35|99b71f0bf10e73bf|975451462||t19685.8373073505s|c99668f1d32ab0a5|24336|rds|local|vector|||39.97|package visNetwork was built under R version 4.3.2|
 metric11|stem|2643bace2b1c33f4|24e48710a91a67f9|99b71f0bf10e73bf|-1832098155||t19685.8374790869s|b8bee5f63ba074e7|53197|rds|local|vector|||14.81||
 metric12|stem|5f58868a79a460c8|a7955ff229232a27|99b71f0bf10e73bf|-1601502702||t19685.7964470411s|1b1823daab5397be|53072|rds|local|vector|||11.26|package visNetwork was built under R version 4.3.2|

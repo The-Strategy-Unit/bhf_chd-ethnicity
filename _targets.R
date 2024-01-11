@@ -9,7 +9,7 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","readr","visNetwork","odbc","stringr","MLID"), # packages that your targets need to run
+  packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder"), # packages that your targets need to run
   format = "rds"
   # format = "qs", # Optionally set the default storage format. qs is fast.
   #
@@ -73,7 +73,7 @@ list(
   # tar_target(gp_list_lsoa,read_csv_file(data_path12)),
   tar_target(data_path13, "data/EthnicityByLSOACensus21.csv", format = "file"), #Ethnicity by LSOA Census 2021
   tar_target(eth_lsoa_census,read_csv_file(data_path13)),
-  tar_target(data_path14, "data/gp-reg-pat-prac-lsoa-all.csv", format = "file"), #GP Reg Pat Prac LSOA April 2023
+  tar_target(data_path14, "data/gp-reg-pat-prac-lsoa-all.csv", format = "file"), #GP Reg Pat Prac LSOA October 2022
   tar_target(gp_reg_pat_prac_lsoa,read_csv_file(data_path14)),
   tar_target(data_path15, "data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv", format = "file"), #lookup
   tar_target(lsoa_lookup,read_csv_file(data_path15)),
@@ -156,7 +156,13 @@ list(
   #join the gp list to this via the 2011 lsoa column
   #and calculate the number for each ethnicity based on ethnicity and list size
   tar_target(gp_lsoa_with_eth,join_gp_and_eth(eth_joined,gp_lsoa)),
-  tar_target(gp_lsoa_with_eth_sum,sum_ethnicities(gp_lsoa_with_eth))
+  tar_target(gp_lsoa_with_eth_sum,sum_ethnicities(gp_lsoa_with_eth)),
+  #where chd synthetic prevalence is missing, calculate an estimate
+  tar_target(gp_history_short,get_gp_history_short(gp_history)),
+  tar_target(gp_list_summary,get_gp_list_summary(gp_reg_pat_prac_lsoa,gp_history_short)),
+  tar_target(),
+  tar_target(gp_geocoded,get_geocoded_data(metric1,gp_history,gp_list_summary)),
+  tar_target(metric1_updated,get_missing_chd_prevalence(metric1,gp_history,gp_list_summary,gp_geocoded)) #151 with no chd prev
   )
   
 
