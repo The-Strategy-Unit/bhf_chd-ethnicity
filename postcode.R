@@ -8,6 +8,10 @@ library(leaflet)
 metric1 <- tar_read(metric1) |> as_tibble()
 gp_history <- tar_read(gp_history) |> as_tibble()
 gp_reg_pat_prac_lsoa <- tar_read(gp_reg_pat_prac_lsoa) |> as_tibble()
+gp_history_short <- tar_read(gp_history_short) |> as_tibble()
+joined_gp_history_and_chd_prev <- tar_read(joined_gp_history_and_chd_prev) |> as_tibble()
+gp_list_summary <- tar_read(gp_list_summary) |> as_tibble()
+gp_geocoded <- tar_read(gp_geocoded) |> as_tibble()
 
 gp_list_summary <- gp_reg_pat_prac_lsoa |> 
   filter(sex=="ALL") |>
@@ -62,7 +66,7 @@ orig_with_geocode <- joined |>
 
 saveRDS(orig_with_geocode,"data/orig_with_geocode.rds")
 
-orig_with_geocode_and_id <- orig_with_geocode |>
+orig_with_geocode_and_id <- gp_geocoded |>
   select(org_code,practice_name,postcode,has_orig_prev,geometry) |>
   mutate(id=row_number())
 
@@ -77,14 +81,14 @@ no_prev <- orig_with_geocode_and_id |>
 with_prev <- orig_with_geocode_and_id |>
   filter(has_orig_prev == 1)
 
-no_prev |>
+st_sf(no_prev) |>
   select(no_prev_postcode = postcode) |>
-  st_join(with_prev, st_nearest_feature)
+  st_join(st_sf(with_prev), st_nearest_feature)
 
-no_prev_with_neighbours <-  no_prev |>
+no_prev_with_neighbours <-  st_sf(no_prev) |>
   select(no_prev_postcode = postcode,no_prev_org_code=org_code) |>
   # finds all the gp's in 1.5 km
-  st_join(with_prev, st_is_within_distance, 1500)
+  st_join(st_sf(with_prev), st_is_within_distance, 1500)
 
 no_prev_with_neighbours_and_neighbours_prev <- no_prev_with_neighbours |>
   left_join(orig, join_by(org_code)) |>
@@ -103,3 +107,52 @@ metric1_updated <- joined |>
 
 still_missing_prev <- full_list |>
   filter(is.na(chd_pre_to_use)==TRUE)
+
+
+
+get_missing_chd_prevalence <- function(metric1,gp_history_short,joined_gp_history_and_chd_prev,gp_list_summary,gp_geocoded){
+  
+  
+  joined <- gp_list_summary |>
+    left_join(joined_gp_history_and_chd_prev) |>
+    #where there is no matching value from orig in the gp list summary then flag these 
+    mutate(has_orig_prev=case_when(Value>=0 ~ 1, .default =  0))
+  
+  orig_with_geocode_and_id <- gp_geocoded |>
+    select(org_code,practice_name,postcode,has_orig_prev,geometry) |>
+    mutate(id=row_number())
+  
+  no_prev <- orig_with_geocode_and_id |>
+    filter(has_orig_prev == 0)
+  
+  with_prev <- orig_with_geocode_and_id |>
+    filter(has_orig_prev == 1)
+  
+  no_prev |>
+    select(no_prev_postcode = postcode) |>
+    st_join(with_prev, st_nearest_feature)
+  
+  no_prev_with_neighbours <-  st_sf(no_prev) |>
+    select(no_prev_postcode = postcode,no_prev_org_code=org_code) |>
+    # finds all the gp's in 1.5 km
+    st_join(st_sf(with_prev), st_is_within_distance, 1500)
+  
+  no_prev_with_neighbours_and_neighbours_prev <- no_prev_with_neighbours |>
+    left_join(joined, join_by(org_code)) |>
+    group_by(no_prev_org_code) |>
+    summarise(prev_est=mean(Value)) |>
+    st_drop_geometry(select(no_prev_org_code,prev_est))
+  
+  #xxxx estimates out of xxx so just xx practices missing *******
+  
+
+  metric1_updated <- joined |>
+    left_join(no_prev_with_neighbours_and_neighbours_prev,join_by(org_code==no_prev_org_code)) |>
+    mutate(chd_prev_to_use = case_when(Value>=0 ~ Value,
+                                       .default = prev_est)
+    ) |>
+    select(org_code,chd_prev_to_use)
+  
+  return(metric1_updated)
+}
+

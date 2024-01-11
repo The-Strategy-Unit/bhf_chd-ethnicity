@@ -157,12 +157,13 @@ list(
   #and calculate the number for each ethnicity based on ethnicity and list size
   tar_target(gp_lsoa_with_eth,join_gp_and_eth(eth_joined,gp_lsoa)),
   tar_target(gp_lsoa_with_eth_sum,sum_ethnicities(gp_lsoa_with_eth)),
+  
   #where chd synthetic prevalence is missing, calculate an estimate
   tar_target(gp_history_short,get_gp_history_short(gp_history)),
   tar_target(gp_list_summary,get_gp_list_summary(gp_reg_pat_prac_lsoa,gp_history_short)),
-  tar_target(),
-  tar_target(gp_geocoded,get_geocoded_data(metric1,gp_history,gp_list_summary)),
-  tar_target(metric1_updated,get_missing_chd_prevalence(metric1,gp_history,gp_list_summary,gp_geocoded)) #151 with no chd prev
+  tar_target(joined_gp_history_and_chd_prev,get_joined_gp_history_and_chd_prev(metric1,gp_history_short)),
+  tar_target(gp_geocoded,get_geocoded_data(gp_list_summary,orig,joined_gp_history_and_chd_prev)),
+  tar_target(metric1_updated,get_missing_chd_prevalence(metric1,gp_history_short,joined_gp_history_and_chd_prev,gp_list_summary,gp_geocoded)) #151 with no chd prev
   )
   
 

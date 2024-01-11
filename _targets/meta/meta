@@ -37,13 +37,18 @@ data_path9|stem|5419292de42fe630|a1cfb21b83d0eb7c|ef46db3751d8e999|-883106084|da
 eth_joined|stem|ce635eac1797d5ca|d1e076bb1d44e270|8c6f44233d4b6b45|285540028||t19692.7022540379s|51a98603cbbd641f|1249460|rds|local|vector|||1.78||
 eth_lsoa_census|stem|f50f0c8ec35d8f3a|b48da214d17cfb00|24eea00ddd160309|810133713||t19685.7660411897s|8bca8a9f21a8268a|2489852|rds|local|vector|||0.43||
 get_data_via_server|function|9c10f73bd4a34656|||||||||||||||
-get_geocoded_data|function|c5734896836326ce|||||||||||||||
-get_missing_chd_prevalence|function|72374b0c0a0765d6|||||||||||||||
+get_geocoded_data|function|f006eab941f5e1dc|||||||||||||||
+get_gp_history_short|function|e1407f28485fa4ff|||||||||||||||
+get_gp_list_summary|function|23ecea55354c20f0|||||||||||||||
+get_joined_gp_history_and_chd_prev|function|a138ff6200577514|||||||||||||||
+get_missing_chd_prevalence|function|1890b29cbc6c2b67|||||||||||||||
 get_my_fingertips_gp_data|function|c1da8d293777399c|||||||||||||||
-gp_geocoded|stem|463ceb111b831f65|cbb042ba561010c0|e07acfb8e0e53f9c|-532098644||t19732.9239729885s|86377e0903fe1200|195015|rds|local|vector|||5984.2||
+gp_geocoded|stem|daeba4e799bb19c6|53bc939475281336|87cc7939f9f3ec30|-532098644||t19733.7593047305s|f62e04121dfb601b|195145|rds|local|vector|||5978.19||
 gp_history|stem|8d50744e338a31af|a5dbb6dab1e5cd2a|26a449f823ca1f75|-530018174||t19711.72693883s|04ea618897b81445|378179|rds|local|vector|||0.41||
+gp_history_short|stem|742b2a1b46694d29|bc6641e666f32179|29a869ff0ecd3cca|1452184410||t19733.6869284132s|156725d0d700bb75|147324|rds|local|vector|||0||
 gp_icb_mapping|stem|d3d260057196aa18|5c9853d423e3c296|af8d0926f38aa9ef|-1937053284||t19692.6017644895s|e6b407606665c5e3|84527|rds|local|vector|||0.22||
 gp_list_lsoa|stem|f55a2a609c6981da|a5092ed5e7385f93|c770505e001fe2a8|1323561029||t19685.7660666359s|bf2ec3bc4d7cc45b|2687783|rds|local|vector|||0.67||
+gp_list_summary|stem|610aaa3782da4e3f|c4cd5b369319c954|16585f272551aa6c|1161711570||t19733.6869423412s|71319a7aaf5584a3|209001|rds|local|vector|||0.33||
 gp_lsoa|stem|6fd29974b09366f9|93bb7d82e142693b|f2c23aae2705ccc6|-2053033604||t19692.6117642612s|c3b428e42758184a|3078881|rds|local|vector|||0.65||
 gp_lsoa_with_eth|stem|3e2f2b7924f97c1b|83a6e5d5033f4d7e|2bce5876d2e858ad|-286229311||t19692.7023831665s|253bbe9bbcd5058e|133600620|rds|local|vector|||0.43||
 gp_lsoa_with_eth_sum|stem|89527ca5746bdd0f|3fb6338cd6bf4dd7|42f68cb736f7a87a|437544063||t19695.4205878681s|649682fe5d192d8a|1281570|rds|local|vector|||0.73||
@@ -53,11 +58,12 @@ gp_reg_pat_prac_lsoa_22|stem|548aeaba3f787468|59f7a16889c8881f|5c2940540b2a3cdd|
 i|object|3a9a7d4ce430bc57|||||||||||||||
 join_gp_and_eth|function|2e6f63ec4d88ce4e|||||||||||||||
 joined|stem|343ea30f2937b593|1e83b25e5fd8905c|aa795cc46d063825|-2051793385||t19692.7022239829s|1dd98009e53b64fb|130216935|rds|local|vector|||0.92||
+joined_gp_history_and_chd_prev|stem|b2a5c0170e817394|904070e3a7a8662e|6d3a29deaec2a244|-324007856||t19733.6869435133s|3f40158957365008|247869|rds|local|vector|||0.03||
 lsoa_eth_sum|stem|c8c18f256d20b71f|e63e8f2b3f256fb7|c66260566e8a151c|42188744||t19689.7485101861s|99ebb12d92c87c1d|1274477|rds|local|vector|||1.78||
 lsoa_lookup|stem|1736111fc0399a32|9acee986817b1f5a|a6c339bcfca11384|1785093852||t19685.7660443142s|8a385497a377b8b9|508877|rds|local|vector|||0.14||
 lsoa_lookup_eng|stem|8f899d4df37cdbdd|b2c1f2397e947008|ed04d27a1878bee1|733074821||t19692.5993018894s|ba6831c1f978ec90|484186|rds|local|vector|||0.02||
 metric1|stem|8528d444c31cc548|5a68dfab37b97117|6514b6b0028c4cc2|-855656661||t19710.451315747s|4fe209558f9aa7a3|310405|rds|local|vector|||0.12||
-metric1_updated|stem||4ba271935ac56c71|248180c7b12b395f|271646605||t19732.9574154245s||0|rds|local|vector|||2.06||1m22m36mℹ39m In argument chd_prev_to_use  case_whenValue  0  Value, .default   prev_est.1mCaused by error in case_when22m1m22m33m39m Failed to evaluate the lefthand side of formula 1.1mCaused by error22m33m39m object Value not found
+metric1_updated|stem|4f08041632269843|a0a07db92b8585fd|fb8c8ea71adae519|271646605||t19733.8891706719s|df0ff02606f9ce87|102045|rds|local|vector|||2.49||
 metric10|stem|b2a1ac1a8004c4a5|073f744c48e9dd35|99b71f0bf10e73bf|975451462||t19685.8373073505s|c99668f1d32ab0a5|24336|rds|local|vector|||39.97|package visNetwork was built under R version 4.3.2|
 metric11|stem|2643bace2b1c33f4|24e48710a91a67f9|99b71f0bf10e73bf|-1832098155||t19685.8374790869s|b8bee5f63ba074e7|53197|rds|local|vector|||14.81||
 metric12|stem|5f58868a79a460c8|a7955ff229232a27|99b71f0bf10e73bf|-1601502702||t19685.7964470411s|1b1823daab5397be|53072|rds|local|vector|||11.26|package visNetwork was built under R version 4.3.2|
