@@ -114,9 +114,8 @@ join_gp_and_eth <- function(eth,gp){
            ) 
 }
 
+#join the lookup to the ethnicity data
 sum_eth_by_lsoa11 <- function(lookup,eth){
-  #join the lookup to the ethnicity data
-
   lookup |> 
   left_join(eth, join_by(lsoa21cd==lsoa_code)) |>
   #sum the ethnicity in the dataframe with 2011 lsoa group by
@@ -154,10 +153,9 @@ sum_eth_by_lsoa11 <- function(lookup,eth){
 
 #######
 
-sum_ethnicities <- function(data){
 
 # add up and check the total matches the number of patients
-
+sum_ethnicities <- function(data){
   data |>
   group_by(practice_code) |> 
   summarise(gp_sum_est_all_asian = sum(est_all_asian),
@@ -197,12 +195,14 @@ sum_ethnicities <- function(data){
   )
 }
 
+#get selected fields from gp_history
 get_gp_history_short <- function(gp_history){
   gp_history_short <- gp_history |> 
     select(org_code, name, postcode,open_date,close_date,join_date,left_date)
   return(gp_history_short)
 }
 
+#summarise the gp list size file to just a simple list of all practices
 get_gp_list_summary <- function(gp_reg_pat_prac_lsoa,gp_history_short){
   gp_list_summary <- gp_reg_pat_prac_lsoa |> 
     filter(sex=="ALL") |>
@@ -213,18 +213,16 @@ get_gp_list_summary <- function(gp_reg_pat_prac_lsoa,gp_history_short){
   return(gp_list_summary)
 }
 
+
+#join the chd prev to gp history
 get_joined_gp_history_and_chd_prev <- function (metric1,gp_history_short){
-  
-  orig <- metric1 |> select(AreaCode,AreaName, Value, IsCurrent) |>
+    orig <- metric1 |> select(AreaCode,AreaName, Value, IsCurrent) |>
     rename(org_code=AreaCode) |>
     left_join(gp_history_short)
-  
-
   return(orig)
 }
 
-
-
+# joins gp list to the prevalence and geocodes all practices
 get_geocoded_data <- function(gp_list_summary,orig,joined_gp_history_and_chd_prev){
   
   joined <- gp_list_summary |>
@@ -241,8 +239,10 @@ get_geocoded_data <- function(gp_list_summary,orig,joined_gp_history_and_chd_pre
   return(orig_with_geocode)
 }
 
+
+# splits practices into those with and those without prev, finds neighbours
+# of those missing prev and populates with mean of neighbours
 get_missing_chd_prevalence <- function(metric1,gp_history_short,joined_gp_history_and_chd_prev,gp_list_summary,gp_geocoded){
-  
 
   joined <- gp_list_summary |>
     left_join(joined_gp_history_and_chd_prev) |>
@@ -273,9 +273,7 @@ get_missing_chd_prevalence <- function(metric1,gp_history_short,joined_gp_histor
     group_by(no_prev_org_code) |>
     summarise(prev_est=mean(Value)) |>
     st_drop_geometry(select(no_prev_org_code,prev_est))
-  
-  #125 estimates out of 151 so just 26 practices missing *******
-  
+
   metric1_updated <- joined |>
     left_join(no_prev_with_neighbours_and_neighbours_prev,join_by(org_code==no_prev_org_code)) |>
     mutate(chd_prev_to_use = case_when(Value>=0 ~ Value,
