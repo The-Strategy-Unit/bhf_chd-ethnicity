@@ -43,6 +43,10 @@ join lsoa_lookup to census 21eth using the 2021 lsoa code in the lookup dataset.
 
 Have opted for the latter solution.
 
+Imputing data in Census 2021:
+
+<https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/itemeditingandimputationprocessforcensus2021englandandwales>
+
 ## Which date should be used for the gp list size dataset?
 
 Data mainly 2022/23 could take April 22 or April 23 file. Will try both. April 2023 is still using census 2011 lsoas.

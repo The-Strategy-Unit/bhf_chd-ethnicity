@@ -1,38 +1,15 @@
 # Created by use_targets().
-# Follow the comments below to fill in this target script.
-# Then follow the manual to check and run the pipeline:
-#   https://books.ropensci.org/targets/walkthrough.html#inspect-the-pipeline
 
 # Load packages required to define the pipeline:
 library(targets)
+
 # library(tarchetypes) # Load other packages as needed.
 
 # Set target options:
 tar_option_set(
   packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder"), # packages that your targets need to run
   format = "rds"
-  # format = "qs", # Optionally set the default storage format. qs is fast.
-  #
-  # For distributed computing in tar_make(), supply a {crew} controller
-  # as discussed at https://books.ropensci.org/targets/crew.html.
-  # Choose a controller that suits your needs. For example, the following
-  # sets a controller with 2 workers which will run as local R processes:
-  #
-  #   controller = crew::crew_controller_local(workers = 2)
-  #
-  # Alternatively, if you want workers to run on a high-performance computing
-  # cluster, select a controller from the {crew.cluster} package. The following
-  # example is a controller for Sun Grid Engine (SGE).
-  # 
-  #   controller = crew.cluster::crew_controller_sge(
-  #     workers = 50,
-  #     # Many clusters install R as an environment module, and you can load it
-  #     # with the script_lines argument. To select a specific verison of R,
-  #     # you may need to include a version string, e.g. "module load R/4.3.0".
-  #     # Check with your system administrator if you are unsure.
-  #     script_lines = "module load R"
-  #   )
-  #
+
   # Set other options as needed.
 )
 
@@ -45,8 +22,9 @@ options(clustermq.scheduler = "multiprocess")
 tar_source()
 # source("other_functions.R") # Source other scripts as needed.
 
-# Replace the target list below with your own:
+# Target list:
 list(
+  #Get data
   tar_target(data_path1, "data/metric14.csv", format = "file"), # SUS data metric 14
   tar_target(metric14,read_csv_file(data_path1)),
   tar_target(data_path2, "data/metric15.csv", format = "file"), # SUS data metric 15
@@ -113,45 +91,38 @@ list(
   tar_target(metric11,get_my_fingertips_gp_data(90619,"2021/22")), # metric 11
   tar_target(data_path16, "data/QOF_CHD_2022_23.xlsx", format = "file"), #QOF CHD indicators
   tar_target(qof_chd_2223,read_qof_excel_file(data_path16) |>
-               select(1,2,3,6,7,15,32,35,37,38,46)|>
-               clean_names() |>
-               filter(practice_code != "NA")),
-  tar_target(metric16b,
-            qof_chd_2223 |> 
-            select(4,10) |>
-            rename(value=patients_receiving_intervention_percent_38)), # metric 16b 22/23
-  tar_target(metric31,
-            qof_chd_2223 |> 
-            select(4,8) |>
-            rename(value=pc_as_35)), # metric 31 22/23
-  tar_target(metric25b,
-             qof_chd_2223 |> 
-               select(4,11) |>
-               rename(value=patients_receiving_intervention_percent_46)),   # metric 25b 22/23
+                            select(1,2,3,6,7,15,32,35,37,38,46)|>
+                            clean_names() |>
+                            filter(practice_code != "NA")),
+  tar_target(metric16b, qof_chd_2223 |> 
+                          select(4,10) |>
+                          rename(value=patients_receiving_intervention_percent_38)), # metric 16b 22/23
+  tar_target(metric31, qof_chd_2223 |> 
+                          select(4,8) |>
+                          rename(value=pc_as_35)), # metric 31 22/23
+  tar_target(metric25b, qof_chd_2223 |> 
+                          select(4,11) |>
+                          rename(value=patients_receiving_intervention_percent_46)),   # metric 25b 22/23
   tar_target(metric32,get_data_via_server()), # metric 32 20/21
-  tar_target(metric13b,
-             qof_chd_2223 |> 
-               select(4,6) |>
-               rename(value=prevalence_percent_15)), # metric 13b 22/23
-  tar_target(metric39,
-             ncdes_data|>
-               mutate(ncd002_percent =(NCD002_Numerator / NCD002_Denominator)*100) |>
-               select(practice_code,ncd002_percent)|>
-               rename(value=ncd002_percent)), # metric 39 march 23
-  tar_target(metric40,
-             ncdes_data|>
-               mutate(ncd003_percent =(NCD003_Numerator / NCD003_Denominator)*100) |>
-               select(practice_code,ncd003_percent)|>
-               rename(value=ncd003_percent)), # metric 40 march 23
+  tar_target(metric13b,qof_chd_2223 |> 
+                          select(4,6) |>
+                          rename(value=prevalence_percent_15)), # metric 13b 22/23
+  tar_target(metric39, ncdes_data|>
+                          mutate(ncd002_percent =(NCD002_Numerator / NCD002_Denominator)*100) |>
+                          select(practice_code,ncd002_percent)|>
+                          rename(value=ncd002_percent)), # metric 39 march 23
+  tar_target(metric40, ncdes_data|>
+                          mutate(ncd003_percent =(NCD003_Numerator / NCD003_Denominator)*100) |>
+                          select(practice_code,ncd003_percent)|>
+                          rename(value=ncd003_percent)), # metric 40 march 23
   #process ethnicity data
   tar_target(lsoa_eth_sum,process_census21data(eth_lsoa_census)),
   tar_target(gp_lsoa,process_gpdata(gp_reg_pat_prac_lsoa) |>
                left_join(gp_icb_mapping)
              ),
-  
   tar_target(joined,join_gp_and_eth(lsoa_eth_sum,gp_lsoa)),
   tar_target(lsoa_lookup_eng,lsoa_lookup |>
-               filter(str_detect(lsoa21cd, '^E'))),
+                                filter(str_detect(lsoa21cd, '^E'))),
   tar_target(eth_joined,sum_eth_by_lsoa11(lsoa_lookup_eng,lsoa_eth_sum)),
   #join the gp list to this via the 2011 lsoa column
   #and calculate the number for each ethnicity based on ethnicity and list size
@@ -165,7 +136,8 @@ list(
   tar_target(gp_geocoded,get_geocoded_data(gp_list_summary,orig,joined_gp_history_and_chd_prev)),
   tar_target(metric1_updated,get_missing_chd_prevalence(metric1,gp_history_short,joined_gp_history_and_chd_prev,gp_list_summary,gp_geocoded)) #151 with no chd prev
   )
-  
+  #cluster the practices
+
 
 
 
@@ -178,4 +150,7 @@ list(
 #tar_read(<name of target>) |> as_tibble()
 #tar_visnetwork()
 #tar_meta()
+#meta <- tar_meta() 
+#diagram <- tar_visnetwork()
+#diagram |> visInteraction(navigationButtons=TRUE) |> visOptions(manipulation=TRUE) |> visHierarchicalLayout(direction="UD")
 #-----------------------------------------------------------------------------
