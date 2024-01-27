@@ -31,6 +31,8 @@ Need to identify practices with missing data and work out how to get a prevalenc
 
 Also have file from previous project - checked data is the same but need to check practices included - maybe there are more?
 
+nearest neighbours to impute chd prevalence
+
 ## Census 2021 Ethnicity by LSOA
 
 Some LSOAs that have gp list population assigned to them do not feature in the census data of ethnicity by lsoa. Need to check if these are the changes from 2011 to 2021 census.
@@ -55,6 +57,8 @@ Data mainly 2022/23 could take April 22 or April 23 file. Will try both. April 2
 
 Have decided to use October 2022 and also downloaded the GP to icb mapping file from the same period and joined to the gp list size to easily create analysis by icb/sub-icb.
 
+Used October 2022 gp list size by age and gender to calculate % of list size aged 45+
+
 ## Clustering
 
 ### Attempt 1
@@ -69,36 +73,8 @@ look at 18:50 in this video: https://www.youtube.com/watch?v=dKXTNxNDpMA
 
 ### To obtain CHD prevalence for as many new practices as possible
 
-```{r}
-library(stringr)
-gp_lsoa_with_eth_sum <- tar_read(gp_lsoa_with_eth_sum) |> as_tibble()
+link to to the blog
 
-metric1 <- tar_read(metric1) |> as_tibble()
+<https://the-strategy-unit.github.io/data_science/blogs/posts/2024-01-17_nearest_neighbour.html>
 
-gp_history <- tar_read(gp_history) |> as_tibble()
-
-match_gps <- gp_lsoa_with_eth_sum |> left_join(metric1, join_by(practice_code==AreaCode)) |>
-  mutate(chdprev=case_when(Value>0 ~ Value))
-
-#select just gps with missing data
-missing_data_gps <- match_gps |> 
-  filter(Value<0|is.na(Value)==TRUE) |>
-  select(practice_code)
-
-#get the postcodes
-missing_data_gps <- missing_data_gps |> 
-  left_join(gp_history, join_by(practice_code==org_code))|>
-  select(practice_code,postcode)|>
-  mutate(part_practice_code=substr(postcode,1,str_length(postcode)-1))
-
-#remove active practices from the gp_history and attach the CHD prevalence(metric1)
-gp_history <- gp_history |> 
-  mutate(part_practice_code=substr(postcode,1,str_length(postcode)-1)) |>
-  filter(status_code!="A") |>
-  inner_join(metric1, join_by(org_code==AreaCode))
-
-test <- missing_data_gps |> left_join(gp_history, join_by(part_practice_code==part_practice_code))
-                     
-
-
-```
+151 missing and this finds all but 26 using a 1.5km radius - more or less?

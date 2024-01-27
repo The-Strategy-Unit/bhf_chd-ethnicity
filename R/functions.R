@@ -282,3 +282,46 @@ get_missing_chd_prevalence <- function(metric1,gp_history_short,joined_gp_histor
     select(org_code,chd_prev_to_use)
   return(metric1_updated)
 }
+
+
+# get_full_cats <- function(gp_lsoa_with_eth_sum){
+# full_cats <-gp_lsoa_with_eth_sum |>
+#     select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
+#            gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
+#            gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
+#            gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other)
+# return(full_cats)
+# }
+
+get_over45_perc <- function(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)
+{gp_over45_perc <- gp_reg_pat_prac_sing_age_male |>
+    rbind(gp_reg_pat_prac_sing_age_female)|>
+    filter(age != "ALL") |>
+    group_by(org_code,age) |>
+    summarise(number_of_patients=sum(number_of_patients)) |>
+    dplyr::mutate(age=as.numeric(case_when(age=="95+" ~ 95,
+                                           .default = as.numeric(age))
+    )) |>
+    mutate(over_45=case_when(age>= 45 ~1,
+                             .default = 0)) |>
+    group_by(org_code,over_45)|>
+    summarise(number_of_patients=sum(number_of_patients))|>
+    group_by(org_code) |>
+    mutate(total_patients=sum(number_of_patients))|>
+    ungroup() |>
+    mutate(perc=(number_of_patients/total_patients)*100)|>
+    filter(over_45==1) |>
+    select(org_code,perc)|>
+    rename(practice_code=org_code,perc_over45=perc)
+
+
+return(gp_over45_perc)
+
+}
+
+
+join_over45_to_gp_lsoa_with_eth_sum <- function(gp_lsoa_with_eth_sum,gp_over45_perc){
+  gp_lsoa_with_eth_sum_over45perc <- gp_lsoa_with_eth_sum |>
+    left_join(gp_over45_perc)
+  return(gp_lsoa_with_eth_sum_over45perc)
+}

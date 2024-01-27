@@ -53,7 +53,15 @@ list(
   tar_target(eth_lsoa_census,read_csv_file(data_path13)),
   tar_target(data_path14, "data/gp-reg-pat-prac-lsoa-all.csv", format = "file"), #GP Reg Pat Prac LSOA October 2022
   tar_target(gp_reg_pat_prac_lsoa,read_csv_file(data_path14)),
-  tar_target(data_path15, "data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv", format = "file"), #lookup
+  tar_target(data_path26, "data/gp-reg-pat-prac-sing-age-female.csv", format = "file"), #GP Reg Pat Prac Females October 2022
+  tar_target(gp_reg_pat_prac_sing_age_female, read_csv_file(data_path26)|>
+                                                select(org_code,age,number_of_patients)), 
+  tar_target(data_path27, "data/gp-reg-pat-prac-sing-age-male.csv", format = "file"), #GP Reg Pat Prac Males October 2022
+  tar_target(gp_reg_pat_prac_sing_age_male,read_csv_file(data_path27)|>
+               select(org_code,age,number_of_patients)), 
+  tar_target(gp_over45_perc,get_over45_perc(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)),
+ 
+   tar_target(data_path15, "data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv", format = "file"), #lookup
   tar_target(lsoa_lookup,read_csv_file(data_path15)),
   tar_target(data_path17,"data/gp-reg-pat-prac-map.csv", format = "file"),
   tar_target(gp_icb_mapping,read_csv_file(data_path17)|> 
@@ -128,6 +136,8 @@ list(
   #and calculate the number for each ethnicity based on ethnicity and list size
   tar_target(gp_lsoa_with_eth,join_gp_and_eth(eth_joined,gp_lsoa)),
   tar_target(gp_lsoa_with_eth_sum,sum_ethnicities(gp_lsoa_with_eth)),
+  #add the perc over 45 on the gp list
+  tar_target(gp_lsoa_with_eth_sum_over45perc,join_over45_to_gp_lsoa_with_eth_sum(gp_lsoa_with_eth_sum,gp_over45_perc)),
   
   #where chd synthetic prevalence is missing, calculate an estimate
   tar_target(gp_history_short,get_gp_history_short(gp_history)),
@@ -135,10 +145,10 @@ list(
   tar_target(joined_gp_history_and_chd_prev,get_joined_gp_history_and_chd_prev(metric1,gp_history_short)),
   tar_target(gp_geocoded,get_geocoded_data(gp_list_summary,orig,joined_gp_history_and_chd_prev)),
   tar_target(metric1_updated,get_missing_chd_prevalence(metric1,gp_history_short,joined_gp_history_and_chd_prev,gp_list_summary,gp_geocoded)) #151 with no chd prev
-  )
+  
   #cluster the practices
-
-
+# tar_target(full_cats,get_full_cats(gp_lsoa_with_eth_sum))
+)
 
 
 
@@ -153,4 +163,5 @@ list(
 #meta <- tar_meta() 
 #diagram <- tar_visnetwork()
 #diagram |> visInteraction(navigationButtons=TRUE) |> visOptions(manipulation=TRUE) |> visHierarchicalLayout(direction="UD")
+#tar_prune()
 #-----------------------------------------------------------------------------

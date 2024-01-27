@@ -5,6 +5,7 @@ library(cluster)
 library(dplyr)
 library(targets)
 library(tidyverse)
+
 gp_reg_pat_prac <- tar_read(gp_reg_pat_prac_lsoa) |> as_tibble() |>
   group_by(practice_code) |>
   summarise(list_tot= sum(number_of_patients))
@@ -571,3 +572,73 @@ hcl$labels
 
 cut <- cutree(hcl, k = 10, h = NULL)
 df_cut <- as.data.frame(cut)
+
+##############################################################################
+
+gp_lsoa_with_eth_sum_over45perc <- tar_read(gp_lsoa_with_eth_sum_over45perc) |> as_tibble()
+
+full_cats <- gp_lsoa_with_eth_sum_over45perc |>
+  select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
+         gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
+         gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
+         gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other,perc_over45)
+
+five_cats <- gp_lsoa_with_eth_sum_over45perc |>
+  select(practice_code,gp_sum_est_all_asian,gp_sum_est_all_black, gp_sum_est_all_mixed, 
+         gp_sum_est_all_white,gp_sum_est_all_other,perc_over45)
+
+#Move the practice code into row names
+full_cats <-
+  full_cats |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
+
+#Move the practice code into row names
+five_cats <-
+  five_cats |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
+
+
+#remove rows with missing values
+full_cats <- na.omit(full_cats)
+five_cats <- na.omit(five_cats)
+
+#scale each variable to have a mean of 0 and sd of 1
+# full_cats <- scale(full_cats)
+# five_cats <- scale(five_cats)
+
+scale_full_cats <- scale(full_cats)
+scale_five_cats <- scale(five_cats)
+
+head(scale_full_cats)
+head(scale_five_cats)
+
+pams_full_cats <- pam(scale_full_cats, 5, metric = 'euclidean', stand = FALSE)
+pams_five_cats <- pam(scale_five_cats, 5, metric = 'euclidean', stand = FALSE)
+
+full_cats_plot <- fviz_nbclust(scale_full_cats, pam, method = "wss")
+five_cats_plot <- fviz_nbclust(scale_five_cats, pam, method = "wss")
+
+# full_cats_plot <- fviz_nbclust(scale_full_cats, pam, method = "silhouette")
+# 
+# five_cats_plot <- fviz_nbclust(scale_five_cats, pam, method = "silhouette")
+
+
+
+#calculate gap statistic based on number of clusters THIS TAKES AN AGE TO RUN
+gap_stat_full_cats <- clusGap(scale_full_cats,
+                              FUN = pam,
+                              K.max = 15, #max clusters to consider
+                              B = 50) #total bootstrapped iterations
+
+gap_stat_five_cats <- clusGap(scale_five_cats,
+                              FUN = pam,
+                              K.max = 15, #max clusters to consider
+                              B = 50) #total bootstrapped iterations
+
+#plot number of clusters vs. gap statistic
+full_cats_gap_plot <- fviz_gap_stat(gap_stat_full_cats)
+five_cats_gap_plot <- fviz_gap_stat(gap_stat_five_cats)
+
+#up to row 83 above
