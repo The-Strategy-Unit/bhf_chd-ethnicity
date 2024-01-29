@@ -37,8 +37,12 @@ data_path8|stem|c7f020f0dc782c6f|65544542a85333e3|ef46db3751d8e999|-1273253786|d
 data_path9|stem|5419292de42fe630|a1cfb21b83d0eb7c|ef46db3751d8e999|-883106084|data/metric27.csv|t19676.7489753362s|9e9b4f714b37d001|73895|file|local|vector|||0||
 eth_joined|stem|ce635eac1797d5ca|d1e076bb1d44e270|8c6f44233d4b6b45|285540028||t19692.7022540379s|51a98603cbbd641f|1249460|rds|local|vector|||1.78||
 eth_lsoa_census|stem|f50f0c8ec35d8f3a|b48da214d17cfb00|24eea00ddd160309|810133713||t19685.7660411897s|8bca8a9f21a8268a|2489852|rds|local|vector|||0.43||
+final_data_full_cats_percent_over45_5_clusters|stem|4037fd300ba1c593|f09556938cf36e7f|9a85b6683c364679|-49620028||t19751.9641753539s|1fd864fcccc07a7b|777079|rds|local|vector|||17.03||
+full_cats_percents_over45|stem|5c70be79861d362d|96a1c76dab8166bc|a708397a40fc3b14|-1904529831||t19751.9639764597s|c0cd703751d83a4a|756022|rds|local|vector|||0.06||
+get_clusters|function|1d28a8fb5aa2a45b|||||||||||||||
 get_data_via_server|function|9c10f73bd4a34656|||||||||||||||
 get_full_cats|function|1981bd884e76e625|||||||||||||||
+get_full_cats_percents_over45|function|9abcd05abb788dbf|||||||||||||||
 get_geocoded_data|function|f006eab941f5e1dc|||||||||||||||
 get_gp_history_short|function|e1407f28485fa4ff|||||||||||||||
 get_gp_list_summary|function|23ecea55354c20f0|||||||||||||||
@@ -46,6 +50,7 @@ get_joined_gp_history_and_chd_prev|function|a138ff6200577514|||||||||||||||
 get_missing_chd_prevalence|function|1890b29cbc6c2b67|||||||||||||||
 get_my_fingertips_gp_data|function|c1da8d293777399c|||||||||||||||
 get_over45_perc|function|eac7e0de845aeffa|||||||||||||||
+get_scale_full_cats_percents_over45|function|de63cfed36141b5e|||||||||||||||
 gp_geocoded|stem|daeba4e799bb19c6|53bc939475281336|87cc7939f9f3ec30|-532098644||t19733.7593047305s|f62e04121dfb601b|195145|rds|local|vector|||5978.19||
 gp_history|stem|8d50744e338a31af|a5dbb6dab1e5cd2a|26a449f823ca1f75|-530018174||t19711.72693883s|04ea618897b81445|378179|rds|local|vector|||0.41||
 gp_history_short|stem|742b2a1b46694d29|bc6641e666f32179|29a869ff0ecd3cca|1452184410||t19733.6869284132s|156725d0d700bb75|147324|rds|local|vector|||0||
@@ -109,6 +114,7 @@ qof_chd_2223|stem|675e2ccd65a2ba90|03a5a540e2cbb3b5|0b7c922ca4deb35a|1100172128|
 read_csv_file|function|dcd254c5bba0254b|||||||||||||||
 read_excel_file|function|061c16961cfbd703|||||||||||||||
 read_qof_excel_file|function|53d417490cd71d74|||||||||||||||
+scale_full_cats_percents_over45|stem|536fe1e2f9e8ae0c|7d25f20735d19a15|ccd2e3d8b5e934d9|-2145464109||t19751.9639773171s|e2d0f8d2c005d40e|757236|rds|local|vector|||0.02||
 sii_results|object|72fd275138e5d4b4|||||||||||||||
 sii_staging|object|b1ee2bddd8c3ebc8|||||||||||||||
 sii_table|object|3ca04292ef3f83a7|||||||||||||||

@@ -641,4 +641,185 @@ gap_stat_five_cats <- clusGap(scale_five_cats,
 full_cats_gap_plot <- fviz_gap_stat(gap_stat_full_cats)
 five_cats_gap_plot <- fviz_gap_stat(gap_stat_five_cats)
 
-#up to row 83 above
+#up to row 83 above##############################################
+
+#plot results of final k-medoids model
+fviz_cluster(pams_full_cats, data = full_cats)
+fviz_cluster(pams_five_cats, data = five_cats)
+
+#add cluster assignment to original data
+final_data_full_cats <- cbind(full_cats, cluster = pams_full_cats$cluster)
+final_data_five_cats <- cbind(five_cats, cluster = pams_five_cats$cluster)
+
+final_data_full_cats |>
+  rownames_to_column(var = 'practice_code') |>
+  group_by(cluster)|>
+  count("practice_code")
+
+
+final_data_five_cats |>
+  rownames_to_column(var = 'practice_code') |>
+  group_by(cluster)|>
+  count("practice_code")
+
+#view final data
+head(final_data_full_cats)
+head(final_data_five_cats)
+
+
+#These are the 5 cluster medoids for full cats
+plot_data <- full_cats |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("L85046","N81029","C81652","K84048","H85111"))
+
+
+#These are the 5 cluster medoids for five cats
+plot_data <- five_cats |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("P82607","L84047","N85620","F86062", "F86607"))
+
+# re-run using percerntage data for the ethnicities
+
+#########################################################################
+full_cats_percents_over45 <- gp_lsoa_with_eth_sum_over45perc |>
+  select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
+         gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
+         gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
+         gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other,gp_sum_total,perc_over45) |>
+  mutate(gp_perc_est_bangladeshi=(gp_sum_est_bangladeshi/gp_sum_total)*100,
+         gp_perc_est_chinese=(gp_sum_est_chinese/gp_sum_total)*100,
+         gp_perc_est_indian=(gp_sum_est_indian/gp_sum_total)*100,
+         gp_perc_est_pakistani=(gp_sum_est_pakistani/gp_sum_total)*100,
+         gp_perc_est_other_asian=(gp_sum_est_other_asian/gp_sum_total)*100,
+         gp_perc_est_blk_african=(gp_sum_est_blk_african/gp_sum_total)*100,
+         gp_perc_est_blk_caribbean=(gp_sum_est_blk_caribbean/gp_sum_total)*100,
+         gp_perc_est_other_blk=(gp_sum_est_other_blk/gp_sum_total)*100,
+         gp_perc_est_all_mixed=(gp_sum_est_all_mixed/gp_sum_total)*100,
+         gp_perc_est_white_british=(gp_sum_est_white_british/gp_sum_total)*100,
+         gp_perc_est_white_irish=(gp_sum_est_white_irish/gp_sum_total)*100,
+         gp_perc_est_white_other=(gp_sum_est_white_other/gp_sum_total)*100,
+         gp_perc_est_other_arab=(gp_sum_est_other_arab/gp_sum_total)*100,
+         gp_perc_est_other_other=(gp_sum_est_other_other/gp_sum_total)*100
+  ) |>
+  select(-gp_sum_est_bangladeshi,-gp_sum_est_chinese,-gp_sum_est_indian,
+         -gp_sum_est_pakistani,-gp_sum_est_other_asian,-gp_sum_est_blk_african,-gp_sum_est_blk_caribbean,
+         -gp_sum_est_other_blk,-gp_sum_est_all_mixed,-gp_sum_est_white_british,-gp_sum_est_white_irish,
+         -gp_sum_est_white_other,-gp_sum_est_other_arab,-gp_sum_est_other_other,-gp_sum_total)
+
+
+
+full_cats_percents_over45 <-
+  full_cats_percents_over45 |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
+
+
+
+#remove rows with missing values
+full_cats_percents_over45 <- na.omit(full_cats_percents_over45)
+
+
+#scale each variable to have a mean of 0 and sd of 1
+scale_full_cats_percents_over45 <- scale(full_cats_percents_over45)
+
+
+full_cats_percents_plot_over45 <- fviz_nbclust(scale_full_cats_percents_over45, pam, method = "wss")
+
+
+#calculate gap statistic based on number of clusters for percent based data
+gap_stat_full_cats_percent_over45 <- clusGap(scale_full_cats_percents_over45,
+                                             FUN = pam,
+                                             K.max = 15, #max clusters to consider
+                                             B = 50) #total bootstrapped iterations
+
+
+
+#plot number of clusters vs. gap statistic
+full_cats_percent_gap_plot_over45 <- fviz_gap_stat(gap_stat_full_cats_percent_over45)
+
+
+#FULL CATS WITH 15 CLUSTERS PERCENT BASED
+#make this example reproducible
+set.seed(10)
+#perform k-medoids clustering with k = 15 clusters
+pams_full_cats_percents_over45 <- pam(scale_full_cats_percents_over45, 5, metric = 'euclidean', stand = FALSE)
+#view results
+pams_full_cats_percents_over45
+
+#plot results of final k-medoids model
+
+pams_full_cats_percents_over45_5_clusters_plot <- fviz_cluster(pams_full_cats_percents_over45, data = full_cats) # 5 cluster using percents
+
+
+
+#add cluster assignment to original data
+final_data_full_cats_percent_over45_5_clusters <- cbind(full_cats_percents_over45, cluster = pams_full_cats_percents_over45$cluster)
+
+
+final_data_full_cats_percent_over45_5_clusters |>
+  rownames_to_column(var = 'practice_code') |>
+  group_by(cluster)|>
+  count("practice_code")
+
+#These are the 5 cluster medoids for full cats with percents
+full_cats_percents_over45_medoids <-  full_cats_percents_over45 |>   rownames_to_column(var = 'practice_code') |>
+  filter(practice_code %in% c("G81059","C81036","M91613","E86009", "F84063"))
+
+
+final_data_full_cats_percent_over45_5_clusters |>
+  rownames_to_column(var = 'practice_code') |>
+  select(-perc_over45) |>
+  ggplot(aes(practice_code,cluster)) +
+  geom_boxplot() +
+  facet_wrap()
+
+final_data_full_cats_percent_over45_5_clusters |> 
+  rownames_to_column(var = 'practice_code') |>
+  select(-perc_over45) |>
+  filter(cluster ==5)|>
+  pivot_longer(
+    cols = starts_with("gp"),
+    names_to = "ethnicity",
+    values_to = "percent"
+  ) |>
+  ggplot(aes(x=fct_rev(factor(ethnicity)) , y=percent, fill=factor(ethnicity))) +
+  geom_boxplot(outlier.shape = NA) +
+  guides(fill = FALSE) +
+  coord_flip() +
+  xlab("Ethnicity") +
+  ylab("Percent") 
+
+titles <-final_data_full_cats_percent_over45_5_clusters |> 
+  rownames_to_column(var = 'practice_code') |>
+  select(-perc_over45) |>
+  pivot_longer(
+    cols = starts_with("gp"),
+    names_to = "ethnicity",
+    values_to = "percent"
+  ) |>
+  group_by(cluster,ethnicity) |>
+  summarise(med_percent = median(percent)) |>
+  mutate(title= case_when(ethnicity=="gp_perc_est_white_british" ~ paste0("Cluster ",cluster, " - ", round(med_percent, digits = 0), "% White British")),
+  ) |>
+  filter(ethnicity =="gp_perc_est_white_british")|>
+  select(cluster,title)
+
+median_ethnicities_by_cluster <- final_data_full_cats_percent_over45_5_clusters |> 
+  rownames_to_column(var = 'practice_code') |>
+  select(-perc_over45) |>
+  pivot_longer(
+    cols = starts_with("gp"),
+    names_to = "ethnicity",
+    values_to = "percent"
+  ) |>
+  group_by(cluster,ethnicity) |>
+  summarise(med_percent = median(percent)) |>
+  filter(ethnicity !="gp_perc_est_white_british")|>
+  left_join(titles)|>
+  ggplot(aes(x=fct_rev(factor(ethnicity)) , y=med_percent, fill=factor(ethnicity))) +
+  geom_col() +
+  coord_flip() +
+  ylab("Median Percent of GP Lists") +
+  xlab("") +
+  facet_wrap(cluster ~ title) +
+  ylim(0,25) +
+  labs(title="Ethnicity Median Percent by Cluster") +
+  guides(fill = FALSE) 

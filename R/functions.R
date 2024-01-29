@@ -325,3 +325,64 @@ join_over45_to_gp_lsoa_with_eth_sum <- function(gp_lsoa_with_eth_sum,gp_over45_p
     left_join(gp_over45_perc)
   return(gp_lsoa_with_eth_sum_over45perc)
 }
+
+
+
+########################################################################
+
+get_full_cats_percents_over45 <- function(gp_lsoa_with_eth_sum_over45perc)
+{
+  full_cats_percents_over45 <- gp_lsoa_with_eth_sum_over45perc |>
+    select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
+           gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
+           gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
+           gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other,gp_sum_total,perc_over45) |>
+    mutate(gp_perc_est_bangladeshi=(gp_sum_est_bangladeshi/gp_sum_total)*100,
+           gp_perc_est_chinese=(gp_sum_est_chinese/gp_sum_total)*100,
+           gp_perc_est_indian=(gp_sum_est_indian/gp_sum_total)*100,
+           gp_perc_est_pakistani=(gp_sum_est_pakistani/gp_sum_total)*100,
+           gp_perc_est_other_asian=(gp_sum_est_other_asian/gp_sum_total)*100,
+           gp_perc_est_blk_african=(gp_sum_est_blk_african/gp_sum_total)*100,
+           gp_perc_est_blk_caribbean=(gp_sum_est_blk_caribbean/gp_sum_total)*100,
+           gp_perc_est_other_blk=(gp_sum_est_other_blk/gp_sum_total)*100,
+           gp_perc_est_all_mixed=(gp_sum_est_all_mixed/gp_sum_total)*100,
+           gp_perc_est_white_british=(gp_sum_est_white_british/gp_sum_total)*100,
+           gp_perc_est_white_irish=(gp_sum_est_white_irish/gp_sum_total)*100,
+           gp_perc_est_white_other=(gp_sum_est_white_other/gp_sum_total)*100,
+           gp_perc_est_other_arab=(gp_sum_est_other_arab/gp_sum_total)*100,
+           gp_perc_est_other_other=(gp_sum_est_other_other/gp_sum_total)*100
+    ) |>
+    select(-gp_sum_est_bangladeshi,-gp_sum_est_chinese,-gp_sum_est_indian,
+           -gp_sum_est_pakistani,-gp_sum_est_other_asian,-gp_sum_est_blk_african,-gp_sum_est_blk_caribbean,
+           -gp_sum_est_other_blk,-gp_sum_est_all_mixed,-gp_sum_est_white_british,-gp_sum_est_white_irish,
+           -gp_sum_est_white_other,-gp_sum_est_other_arab,-gp_sum_est_other_other,-gp_sum_total)
+  return(full_cats_percents_over45)
+}
+
+
+
+
+get_scale_full_cats_percents_over45 <- function(full_cats_percents_over45){
+  scale_full_cats_percents_over45 <- full_cats_percents_over45 |>
+    remove_rownames() |>
+    column_to_rownames(var = 'practice_code') |>
+    na.omit() |>
+    scale()
+  
+  return(scale_full_cats_percents_over45)
+  
+}
+
+get_clusters <- function(scale_full_cats_percents_over45,full_cats_percents_over45){
+  #FULL CATS WITH 15 CLUSTERS PERCENT BASED
+  #make this example reproducible
+  set.seed(10)
+  #perform k-medoids clustering with k = 15 clusters
+  pams_full_cats_percents_over45 <- pam(scale_full_cats_percents_over45, 5, metric = 'euclidean', stand = FALSE)
+  
+  final_data_full_cats_percent_over45_5_clusters <- cbind(full_cats_percents_over45, cluster = pams_full_cats_percents_over45$cluster)
+  
+  return(final_data_full_cats_percent_over45_5_clusters)
+}
+
+

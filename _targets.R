@@ -7,7 +7,8 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder"), # packages that your targets need to run
+  packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor",
+               "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder","cluster","factoextra"), # packages that your targets need to run
   format = "rds"
 
   # Set other options as needed.
@@ -144,11 +145,20 @@ list(
   tar_target(gp_list_summary,get_gp_list_summary(gp_reg_pat_prac_lsoa,gp_history_short)),
   tar_target(joined_gp_history_and_chd_prev,get_joined_gp_history_and_chd_prev(metric1,gp_history_short)),
   tar_target(gp_geocoded,get_geocoded_data(gp_list_summary,orig,joined_gp_history_and_chd_prev)),
-  tar_target(metric1_updated,get_missing_chd_prevalence(metric1,gp_history_short,joined_gp_history_and_chd_prev,gp_list_summary,gp_geocoded)) #151 with no chd prev
+  tar_target(metric1_updated,get_missing_chd_prevalence(metric1,gp_history_short,joined_gp_history_and_chd_prev,gp_list_summary,gp_geocoded)), #151 with no chd prev
   
   #cluster the practices
-# tar_target(full_cats,get_full_cats(gp_lsoa_with_eth_sum))
-)
+  tar_target(full_cats_percents_over45,get_full_cats_percents_over45(gp_lsoa_with_eth_sum_over45perc)),
+ tar_target(scale_full_cats_percents_over45,get_scale_full_cats_percents_over45(full_cats_percents_over45)),
+tar_target(final_data_full_cats_percent_over45_5_clusters,get_clusters(scale_full_cats_percents_over45,full_cats_percents_over45))
+ )
+#add a second clustering option
+
+#join the metrics together - use previous code
+
+#join the clusters to the metrics
+
+#calculate RII
 
 
 
