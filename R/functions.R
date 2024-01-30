@@ -284,15 +284,6 @@ get_missing_chd_prevalence <- function(metric1,gp_history_short,joined_gp_histor
 }
 
 
-# get_full_cats <- function(gp_lsoa_with_eth_sum){
-# full_cats <-gp_lsoa_with_eth_sum |>
-#     select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
-#            gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
-#            gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
-#            gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other)
-# return(full_cats)
-# }
-
 get_over45_perc <- function(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)
 {gp_over45_perc <- gp_reg_pat_prac_sing_age_male |>
     rbind(gp_reg_pat_prac_sing_age_female)|>
@@ -328,8 +319,6 @@ join_over45_to_gp_lsoa_with_eth_sum <- function(gp_lsoa_with_eth_sum,gp_over45_p
 
 
 
-########################################################################
-
 get_full_cats_percents_over45 <- function(gp_lsoa_with_eth_sum_over45perc)
 {
   full_cats_percents_over45 <- gp_lsoa_with_eth_sum_over45perc |>
@@ -360,8 +349,6 @@ get_full_cats_percents_over45 <- function(gp_lsoa_with_eth_sum_over45perc)
 }
 
 
-
-
 get_scale_full_cats_percents_over45 <- function(full_cats_percents_over45){
   scale_full_cats_percents_over45 <- full_cats_percents_over45 |>
     remove_rownames() |>
@@ -380,9 +367,40 @@ get_clusters <- function(scale_full_cats_percents_over45,full_cats_percents_over
   #perform k-medoids clustering with k = 15 clusters
   pams_full_cats_percents_over45 <- pam(scale_full_cats_percents_over45, 5, metric = 'euclidean', stand = FALSE)
   
-  final_data_full_cats_percent_over45_5_clusters <- cbind(full_cats_percents_over45, cluster = pams_full_cats_percents_over45$cluster)
+  final_data_full_cats_percent_over45_5_clusters <- 
+    cbind(full_cats_percents_over45, cluster = pams_full_cats_percents_over45$cluster)|>
+    rename(gp_practice_code=practice_code)
   
   return(final_data_full_cats_percent_over45_5_clusters)
+}
+
+add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,
+                            metric1_updated,
+                            metric14,metric15,metric18,metric19,metric20){
+  clustered_gp_and_metrics <-
+    final_data_full_cats_percent_over45_5_clusters |>
+    left_join(metric1_updated)|>
+    #2
+    #3
+    #4
+    #5
+    #6
+    #7
+    #8
+    #9
+    #10
+    #11
+    #12
+    #13
+    left_join(metric14)|>
+    left_join(metric15)|>
+    #16
+    #17
+    left_join(metric18)|>
+    left_join(metric19)|>
+    left_join(metric20)
+    
+  return(clustered_gp_and_metrics)
 }
 
 

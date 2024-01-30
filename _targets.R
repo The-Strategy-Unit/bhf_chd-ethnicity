@@ -8,7 +8,8 @@ library(targets)
 # Set target options:
 tar_option_set(
   packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor",
-               "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder","cluster","factoextra"), # packages that your targets need to run
+               "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder",
+               "cluster","factoextra"), # packages that your targets need to run
   format = "rds"
 
   # Set other options as needed.
@@ -27,27 +28,40 @@ tar_source()
 list(
   #Get data
   tar_target(data_path1, "data/metric14.csv", format = "file"), # SUS data metric 14
-  tar_target(metric14,read_csv_file(data_path1)),
+  tar_target(metric14,read_csv_file(data_path1)|> 
+               rename(metric14=number_ct_angiography)),
   tar_target(data_path2, "data/metric15.csv", format = "file"), # SUS data metric 15
-  tar_target(metric15,read_csv_file(data_path2)),
+  tar_target(metric15,read_csv_file(data_path2)|> 
+               rename(metric15=number_electrocardiography)),
   tar_target(data_path3, "data/metric18.csv", format = "file"), # SUS data metric 18
-  tar_target(metric18,read_csv_file(data_path3)),
+  tar_target(metric18,read_csv_file(data_path3)|> 
+               rename(metric18=cardi_op_attend)),
   tar_target(data_path4, "data/metric19.csv", format = "file"), # SUS data metric 19
-  tar_target(metric19,read_csv_file(data_path4)),
+  tar_target(metric19,read_csv_file(data_path4)|> 
+               rename(metric19=cardi_opdna)),
   tar_target(data_path5, "data/metric20.csv", format = "file"), # SUS data metric 20
-  tar_target(metric20,read_csv_file(data_path5)),
+  tar_target(metric20,read_csv_file(data_path5)|> 
+               rename(metric20=elective_pci)),
   tar_target(data_path6, "data/metric21.csv", format = "file"), # SUS data metric 21
-  tar_target(metric21,read_csv_file(data_path6)),
+  tar_target(metric21,read_csv_file(data_path6)|> 
+               rename(metric21=elective_cabg)),
+  
   tar_target(data_path7, "data/metric22.csv", format = "file"), # SUS data metric 22
   tar_target(metric22,read_csv_file(data_path7)),
+  
   tar_target(data_path8, "data/metric23.csv", format = "file"), # SUS data metric 23
   tar_target(metric23,read_csv_file(data_path8)),
+  
   tar_target(data_path9, "data/metric27.csv", format = "file"), # SUS data metric 27
-  tar_target(metric27,read_csv_file(data_path9)),
+  tar_target(metric27,read_csv_file(data_path9)|> 
+               rename(metric27=number_chd_emerg_admits)),
   tar_target(data_path10, "data/metric28.csv", format = "file"), # SUS data metric 28
-  tar_target(metric28,read_csv_file(data_path10)),
+  tar_target(metric28,read_csv_file(data_path10)|> 
+               rename(metric28=number_chd_deaths)),
   tar_target(data_path11, "data/metric29.csv", format = "file"), # SUS data metric 29
-  tar_target(metric29,read_csv_file(data_path11)),
+  tar_target(metric29,read_csv_file(data_path11)|> 
+               rename(metric29=deaths)),
+  
   # tar_target(data_path12, "data/April22GPListLSOA.csv", format = "file"), #GP list size
   # tar_target(gp_list_lsoa,read_csv_file(data_path12)),
   tar_target(data_path13, "data/EthnicityByLSOACensus21.csv", format = "file"), #Ethnicity by LSOA Census 2021
@@ -68,36 +82,64 @@ list(
   tar_target(gp_icb_mapping,read_csv_file(data_path17)|> 
                select(practice_code,practice_name,sub_icb_location_code, sub_icb_location_name,
                       icb_code,icb_name,comm_region_code,comm_region_name)),  
+  
   tar_target(data_path18,"data/CVDP003.csv", format = "file"),  
   tar_target(cvdp003,read_csv_file(data_path18)),
+  
   tar_target(data_path19,"data/CVDP006.csv", format = "file"), 
-  tar_target(cvdp006,read_csv_file(data_path19)),  
+  tar_target(cvdp006,read_csv_file(data_path19)), 
+  
   tar_target(data_path20,"data/CVDP007.csv", format = "file"), 
   tar_target(cvdp007,read_csv_file(data_path20)),  
+  
   tar_target(data_path21,"data/CVDP008.csv", format = "file"), 
   tar_target(cvdp008,read_csv_file(data_path21)), 
+  
   tar_target(data_path22,"data/CVDP009.csv", format = "file"), 
   tar_target(cvdp009,read_csv_file(data_path22)), 
+  
   tar_target(data_path23,"data/NCDesMarch23.csv", format = "file"), 
   tar_target(ncdes_data,read_csv_file(data_path23)|>
                filter(ind_code %in% c("NCD002","NCD003"),
                       measure %in% c("Denominator", "Numerator")) |>
                pivot_wider(names_from=c(ind_code,measure),
                            names_sep="_",
-                           values_from = value)), 
+                           values_from = value)),
+  
   tar_target(data_path24,"data/20231201_92847.xlsx", format="file"), #CHD synthetic prevalence metric 1
-  tar_target(metric1,read_excel_file(data_path24)), 
+  tar_target(metric1,read_excel_file(data_path24)), #updated later in pipeline
   tar_target(data_path25,"data/epraccur_gp.csv", format="file"), #All practices
   tar_target(gp_history,read_csv_file(data_path25)), 
-  tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")), # metric 13
-  tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")), # metric 6
-  tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")), # metric 7
-  tar_target(metric8,get_my_fingertips_gp_data(848,"2021/22")), # metric 8
-  tar_target(metric16,get_my_fingertips_gp_data(90999,"2021/22")), # metric 16
-  tar_target(metric17,get_my_fingertips_gp_data(91000,"2020/21")), # metric 17
-  tar_target(metric9,get_my_fingertips_gp_data(92589,"2019/20")), # metric 9
-  tar_target(metric10,get_my_fingertips_gp_data(91248,"2019/20")), # metric 10
-  tar_target(metric11,get_my_fingertips_gp_data(90619,"2021/22")), # metric 11
+  
+  tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")|>
+               rename(gp_practice_code=AreaCode,
+                      metric13=Value)), # metric 13
+  tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")|>
+               rename(gp_practice_code=AreaCode,
+                      metric6=Value)), # metric 6
+  tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")|>
+               rename(gp_practice_code=AreaCode,
+                      metric7=Value)), # metric 7
+  tar_target(metric8,get_my_fingertips_gp_data(848,"2021/22")|>
+               rename(gp_practice_code=AreaCode,
+                      metric8=Value)), # metric 8
+  
+  tar_target(metric16,get_my_fingertips_gp_data(90999,"2021/22")|>
+               rename(gp_practice_code=AreaCode,
+                      metric16=Value)), # metric 16
+  tar_target(metric17,get_my_fingertips_gp_data(91000,"2020/21")|>
+               rename(gp_practice_code=AreaCode,
+                      metric17=Value)), # metric 17
+  
+# tar_target(metric9,get_my_fingertips_gp_data(92589,"2019/20")), # metric 9
+# tar_target(metric10,get_my_fingertips_gp_data(91248,"2019/20")|>
+#  rename(gp_practice_code=AreaCode,
+#         metric10=Value)), # metric 10
+
+  tar_target(metric11,get_my_fingertips_gp_data(90619,"2021/22")|>
+  rename(gp_practice_code=AreaCode,
+         metric11=Value)), # metric 11
+
   tar_target(data_path16, "data/QOF_CHD_2022_23.xlsx", format = "file"), #QOF CHD indicators
   tar_target(qof_chd_2223,read_qof_excel_file(data_path16) |>
                             select(1,2,3,6,7,15,32,35,37,38,46)|>
@@ -105,25 +147,34 @@ list(
                             filter(practice_code != "NA")),
   tar_target(metric16b, qof_chd_2223 |> 
                           select(4,10) |>
-                          rename(value=patients_receiving_intervention_percent_38)), # metric 16b 22/23
+                          rename(gp_practice_code=practice_code,
+                                 metric16b=patients_receiving_intervention_percent_38)), # metric 16b 22/23
   tar_target(metric31, qof_chd_2223 |> 
                           select(4,8) |>
-                          rename(value=pc_as_35)), # metric 31 22/23
+                          rename(gp_practice_code=practice_code,
+                                 metric31=pc_as_35)), # metric 31 22/23
   tar_target(metric25b, qof_chd_2223 |> 
                           select(4,11) |>
-                          rename(value=patients_receiving_intervention_percent_46)),   # metric 25b 22/23
-  tar_target(metric32,get_data_via_server()), # metric 32 20/21
+                          rename(gp_practice_code=practice_code,
+                                 metric25b=patients_receiving_intervention_percent_46)),   # metric 25b 22/23
+  tar_target(metric32,get_data_via_server() |>
+               rename(gp_practice_code=practice_code,
+                      metric32=value)), # metric 32 20/21
   tar_target(metric13b,qof_chd_2223 |> 
                           select(4,6) |>
-                          rename(value=prevalence_percent_15)), # metric 13b 22/23
+                          rename(gp_practice_code=practice_code,
+                                 metric13b=prevalence_percent_15)), # metric 13b 22/23
   tar_target(metric39, ncdes_data|>
                           mutate(ncd002_percent =(NCD002_Numerator / NCD002_Denominator)*100) |>
                           select(practice_code,ncd002_percent)|>
-                          rename(value=ncd002_percent)), # metric 39 march 23
+                          rename(gp_practice_code=practice_code,
+                                 metric39=ncd002_percent)), # metric 39 march 23
   tar_target(metric40, ncdes_data|>
                           mutate(ncd003_percent =(NCD003_Numerator / NCD003_Denominator)*100) |>
                           select(practice_code,ncd003_percent)|>
-                          rename(value=ncd003_percent)), # metric 40 march 23
+                          rename(gp_practice_code=practice_code,
+                                 metric40=ncd003_percent)), # metric 40 march 23
+
   #process ethnicity data
   tar_target(lsoa_eth_sum,process_census21data(eth_lsoa_census)),
   tar_target(gp_lsoa,process_gpdata(gp_reg_pat_prac_lsoa) |>
@@ -145,22 +196,25 @@ list(
   tar_target(gp_list_summary,get_gp_list_summary(gp_reg_pat_prac_lsoa,gp_history_short)),
   tar_target(joined_gp_history_and_chd_prev,get_joined_gp_history_and_chd_prev(metric1,gp_history_short)),
   tar_target(gp_geocoded,get_geocoded_data(gp_list_summary,orig,joined_gp_history_and_chd_prev)),
-  tar_target(metric1_updated,get_missing_chd_prevalence(metric1,gp_history_short,joined_gp_history_and_chd_prev,gp_list_summary,gp_geocoded)), #151 with no chd prev
+  tar_target(metric1_updated,get_missing_chd_prevalence(metric1,gp_history_short,joined_gp_history_and_chd_prev,gp_list_summary,gp_geocoded)|>
+               rename(gp_practice_code=org_code,metric1=chd_prev_to_use)), #imputes some of the 151 with no chd prev
   
   #cluster the practices
   tar_target(full_cats_percents_over45,get_full_cats_percents_over45(gp_lsoa_with_eth_sum_over45perc)),
- tar_target(scale_full_cats_percents_over45,get_scale_full_cats_percents_over45(full_cats_percents_over45)),
-tar_target(final_data_full_cats_percent_over45_5_clusters,get_clusters(scale_full_cats_percents_over45,full_cats_percents_over45))
- )
+  tar_target(scale_full_cats_percents_over45,get_scale_full_cats_percents_over45(full_cats_percents_over45)),
+  tar_target(final_data_full_cats_percent_over45_5_clusters,get_clusters(scale_full_cats_percents_over45,full_cats_percents_over45)),
+ 
 #add a second clustering option
 
 #join the metrics together - use previous code
-
+tar_target(clustered_gp_and_metrics,
+           add_all_metrics(final_data_full_cats_percent_over45_5_clusters,
+                           metric1_updated,metric14,metric15,metric18,metric19,
+                           metric20))
 #join the clusters to the metrics
 
 #calculate RII
-
-
+)
 
 
 #-----------------------------------------------------------------------------
