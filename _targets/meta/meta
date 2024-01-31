@@ -1,10 +1,10 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
 activity_long|object|6d996349ed808a4a|||||||||||||||
 activity_type_decile|object|c4f420f33fb96dec|||||||||||||||
-add_all_metrics|function|befa6449e5c02df2|||||||||||||||
+add_all_metrics|function|dc70e7a002ff4d99|||||||||||||||
 by_list_regex|object|b81599c6154011e2|||||||||||||||
 by_list_total|object|7ed9b03a918f8618|||||||||||||||
-clustered_gp_and_metrics|stem|c5e63cf906f5ee53|4988854bffc60fdc|fea3c3c67db0388e|-1308542845||t19752.5015603014s|608aa9871f36e88d|839509|rds|local|vector|||0.22||
+clustered_gp_and_metrics|stem|ff4c666d10128eed|69719d50b7464b2a|8672ba7ceb4e96ce|-1308542845||t19753.0422129517s|15bab685444f949c|1313910|rds|local|vector|||0.57||
 confLevel|object|4dc430958329d776|||||||||||||||
 cvdp003|stem|e50aea8aea0c2a60|309494db7f338fa5|e80bced767dba21c|-757974744||t19699.5229280442s|87cce51087824dee|150165|rds|local|vector|||0.11||
 cvdp006|stem|4038867d6a42c0e3|c9cb3c92ae5f71cd|ccb021a8790981c1|1887794316||t19699.5229297325s|4469ea95b74c7e3a|152106|rds|local|vector|||0.1||
@@ -30,6 +30,7 @@ data_path24|stem|7c5b062aa49ef422|c5f584ef158f94c4|ef46db3751d8e999|1126940470|d
 data_path25|stem|c9e8426e17a8c7c0|1f419fb299fe19a6|ef46db3751d8e999|1364810641|data/epraccur_gp.csv|t19711.7237592967s|fd3e5d08c0bed0de|1379048|file|local|vector|||1|package visNetwork was built under R version 4.3.2|
 data_path26|stem|57f37d62e26187bf|f7e4eae6302c9eef|ef46db3751d8e999|-1778326305|data/gp-reg-pat-prac-sing-age-female.csv|t19747.8034010173s|6c539b356afda9e2|33600934|file|local|vector|||3.22|package visNetwork was built under R version 4.3.2|
 data_path27|stem|bebea67b6ad9654e|0bbe3cdc44f5bfbd|ef46db3751d8e999|600998020|data/gp-reg-pat-prac-sing-age-male.csv|t19747.803369722s|a2706d47dd6d3c24|32337490|file|local|vector|||0||
+data_path28|stem|0803366c04fc2a54|2d2679de8119af2e|ef46db3751d8e999|2020420024|data/metric9.csv|t19752.7405453059s|c6bc163109e32b9a|155646|file|local|vector|||3.59|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
 data_path3|stem|2c42f991bd4b46cf|8a969e7282c3efc3|ef46db3751d8e999|22104772|data/metric18.csv|t19677.4290195977s|6833527d5267de4b|89871|file|local|vector|||0||
 data_path4|stem|b7cc946932ede1fe|b828d36b9b97d3cf|ef46db3751d8e999|-293133008|data/metric19.csv|t19677.4296193447s|86075df8ff8c4e6f|73221|file|local|vector|||0||
 data_path5|stem|bbf92bb42d38857b|a72d2f9a4b889877|ef46db3751d8e999|-1519578359|data/metric20.csv|t19676.725866652s|21e7b5c5881d5a74|54335|file|local|vector|||0||
@@ -100,10 +101,10 @@ metric31|stem|c81b6bbb122e3dec|5eef3f6a4c196030|cb93e4882fc7a192|1219074981||t19
 metric32|stem|af16afe5d464271d|cadd027d66029c75|65f5c6806f006a48|-1831456771||t19752.3684038836s|ed3f7a57debdda5c|27996|rds|local|vector|||10.19|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
 metric39|stem|8ef2d6c203622606|06277412ca046a1b|91e09333414dca83|-661767312||t19752.4948827874s|e42e66bfa4ee5182|59142|rds|local|vector|||0||
 metric40|stem|24f5b7f5406fdc4e|3a4e193735571783|91e09333414dca83|-1385797443||t19752.4948822756s|87bbdf84ef8b5782|58173|rds|local|vector|||0.02||
-metric6|stem|36f2fa1acdcd0217|93118ffbcc44c08b|99b71f0bf10e73bf|1485589994||t19752.3589162783s|094cdf8ee71e1e88|135|rds|local|vector|||12.52||
-metric7|stem|323ee838dc3b03c3|def4850911369bb5|99b71f0bf10e73bf|1712580857||t19752.3591512903s|58036957e3259f9e|52777|rds|local|vector|||20.29||
-metric8|stem|f1afa1504e182f9d|32abf44defa8b38f|99b71f0bf10e73bf|-1393461581||t19752.3593991192s|edf79037afc0546d|53045|rds|local|vector|||21.41||
-metric9|stem|7d1b105210395588|0c3bd178f7075b51|99b71f0bf10e73bf|2055311828||t19685.8377880396s||65540|rds|local|vector|||4.69|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|ERROR_WINHTTP_UNRECOGNIZED_SCHEME
+metric6|stem|36f2fa1acdcd0217|e8952e717ed75292|99b71f0bf10e73bf|1485589994||t19752.9495084836s|094cdf8ee71e1e88|135|rds|local|vector|||8.47|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
+metric7|stem|5b3f49e15fcbad1d|299acd6656314d6f|99b71f0bf10e73bf|1712580857||t19753.0422027863s|988c56cf3368c0ec|52796|rds|local|vector|||9.79|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
+metric8|stem|293f8b74ffad7d4e|d5f14f5e8b520c94|99b71f0bf10e73bf|-1393461581||t19752.751431577s|5c2da841e646212f|53021|rds|local|vector|||27.11||
+metric9|stem|6591682be2dd0dfb|37ade003005de2bf|640eeea7b4501e9c|2055311828||t19752.7995569045s|26dc87a4e5fb6b70|65763|rds|local|vector|||0.44||
 mod|object|c18c110e89c6bf32|||||||||||||||
 mod_df|object|c42c2875b9e9c8aa|||||||||||||||
 mod_results|object|bb4195ec873c4e52|||||||||||||||

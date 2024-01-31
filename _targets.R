@@ -114,13 +114,13 @@ list(
   tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")|>
                rename(gp_practice_code=AreaCode,
                       metric13=Value)), # metric 13
-  tar_target(metric6,get_my_fingertips_gp_data(93088,"2021/22")|>
+  tar_target(metric6,get_my_fingertips_gp_data(93088,"2022/23")|>
                rename(gp_practice_code=AreaCode,
                       metric6=Value)), # metric 6
-  tar_target(metric7,get_my_fingertips_gp_data(241,"2021/22")|>
+  tar_target(metric7,get_my_fingertips_gp_data(241,"2022/23")|>
                rename(gp_practice_code=AreaCode,
                       metric7=Value)), # metric 7
-  tar_target(metric8,get_my_fingertips_gp_data(848,"2021/22")|>
+  tar_target(metric8,get_my_fingertips_gp_data(848,"2022/23")|>
                rename(gp_practice_code=AreaCode,
                       metric8=Value)), # metric 8
   
@@ -130,8 +130,19 @@ list(
   tar_target(metric17,get_my_fingertips_gp_data(91000,"2020/21")|>
                rename(gp_practice_code=AreaCode,
                       metric17=Value)), # metric 17
-  
+
+# metric 9 has been removed from Fingertips :-(  this was the original code
 # tar_target(metric9,get_my_fingertips_gp_data(92589,"2019/20")), # metric 9
+# had already extracted a copy so now need to use this code to pull into the pipeline
+  tar_target(data_path28,"data/metric9.csv", format = "file"),  
+  tar_target(metric9,read_csv_file(data_path28)|>
+               rename(gp_practice_code=area_code,
+                      metric9=value)),# metric 9
+
+
+
+
+# metric 10 has been removed from Fingertips :-(
 # tar_target(metric10,get_my_fingertips_gp_data(91248,"2019/20")|>
 #  rename(gp_practice_code=AreaCode,
 #         metric10=Value)), # metric 10
@@ -206,19 +217,23 @@ list(
  
 #add a second clustering option
 
-#join the metrics together - use previous code
+#join the metrics together with the clusters
 tar_target(clustered_gp_and_metrics,
            add_all_metrics(final_data_full_cats_percent_over45_5_clusters,
-                           metric1_updated,metric14,metric15,metric18,metric19,
-                           metric20))
-#join the clusters to the metrics
+                           metric1_updated,metric6,metric7,metric8,metric9,metric11,
+                           metric13,metric13b,metric14,metric15,metric16,
+                           metric16b,metric17,metric18,metric19,metric20,
+                           metric21,metric25b,metric27,metric28,
+                           metric29,metric31,metric32,metric39,metric40))
 
 #calculate RII
+
 )
 
 
 #-----------------------------------------------------------------------------
 #Useful commands:
+#targets::tar_meta(fields = error, complete_only = TRUE)
 #tar_make()
 #tar_read(<name of target>) e.g. tar_read(LSOAPopMales)
 #tar_read(<name of target>) |> as_tibble()

@@ -375,30 +375,47 @@ get_clusters <- function(scale_full_cats_percents_over45,full_cats_percents_over
 }
 
 add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,
-                            metric1_updated,
-                            metric14,metric15,metric18,metric19,metric20){
+                            metric1_updated,metric6,metric7,metric8,metric9,metric11,metric13,metric13b,
+                            metric14,metric15,metric16,metric16b,metric17,metric18,metric19,metric20,
+                            metric21,metric25b,metric27,metric28,
+                            metric29,metric31,metric32,metric39,metric40){
   clustered_gp_and_metrics <-
     final_data_full_cats_percent_over45_5_clusters |>
     left_join(metric1_updated)|>
+    
     #2
-    #3
-    #4
+    #3 - deleted
+    #4 - deleted
     #5
-    #6
-    #7
-    #8
-    #9
+    
+    left_join(metric6)|>
+    left_join(metric7)|>
+    left_join(metric8)|>
+    left_join(metric9)|>    
+
     #10
-    #11
+    
+    left_join(metric11)|>
     #12
-    #13
+    left_join(metric13)|>
+    left_join(metric13b)|>
     left_join(metric14)|>
     left_join(metric15)|>
-    #16
-    #17
+    left_join(metric16)|>
+    left_join(metric16b)|>
+    left_join(metric17)|>
     left_join(metric18)|>
     left_join(metric19)|>
-    left_join(metric20)
+    left_join(metric20)|>
+    left_join(metric21)|>
+  left_join(metric25b)|>
+  left_join(metric27)|>
+  left_join(metric28)|>
+  left_join(metric29)|>
+  left_join(metric31)|>
+  left_join(metric32)|>
+  left_join(metric39)|>
+  left_join(metric40)
     
   return(clustered_gp_and_metrics)
 }
