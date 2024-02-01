@@ -5,6 +5,13 @@ library(cluster)
 library(dplyr)
 library(targets)
 library(tidyverse)
+library(sf)
+library(tidygeocoder)
+library(leaflet)
+library(viridisLite)
+library(RColorBrewer)
+
+
 
 gp_reg_pat_prac <- tar_read(gp_reg_pat_prac_lsoa) |> as_tibble() |>
   group_by(practice_code) |>
@@ -764,19 +771,13 @@ full_cats_percents_over45_medoids <-  full_cats_percents_over45 |>   rownames_to
   filter(practice_code %in% c("G81059","C81036","M91613","E86009", "F84063"))
 
 
-final_data_full_cats_percent_over45_5_clusters |>
-  rownames_to_column(var = 'practice_code') |>
-  select(-perc_over45) |>
-  ggplot(aes(practice_code,cluster)) +
-  geom_boxplot() +
-  facet_wrap()
-
+#Plots to view the clusters
 final_data_full_cats_percent_over45_5_clusters |> 
-  rownames_to_column(var = 'practice_code') |>
+#  rownames_to_column(var = 'practice_code') |>
   select(-perc_over45) |>
-  filter(cluster ==5)|>
+  filter(cluster ==4)|>
   pivot_longer(
-    cols = starts_with("gp"),
+    cols = starts_with("gp_perc"),
     names_to = "ethnicity",
     values_to = "percent"
   ) |>
@@ -788,10 +789,10 @@ final_data_full_cats_percent_over45_5_clusters |>
   ylab("Percent") 
 
 titles <-final_data_full_cats_percent_over45_5_clusters |> 
-  rownames_to_column(var = 'practice_code') |>
+ # rownames_to_column(var = 'practice_code') |>
   select(-perc_over45) |>
   pivot_longer(
-    cols = starts_with("gp"),
+    cols = starts_with("gp_perc"),
     names_to = "ethnicity",
     values_to = "percent"
   ) |>
@@ -803,10 +804,10 @@ titles <-final_data_full_cats_percent_over45_5_clusters |>
   select(cluster,title)
 
 median_ethnicities_by_cluster <- final_data_full_cats_percent_over45_5_clusters |> 
-  rownames_to_column(var = 'practice_code') |>
+#  rownames_to_column(var = 'practice_code') |>
   select(-perc_over45) |>
   pivot_longer(
-    cols = starts_with("gp"),
+    cols = starts_with("gp_perc"),
     names_to = "ethnicity",
     values_to = "percent"
   ) |>
@@ -823,3 +824,26 @@ median_ethnicities_by_cluster <- final_data_full_cats_percent_over45_5_clusters 
   ylim(0,25) +
   labs(title="Ethnicity Median Percent by Cluster") +
   guides(fill = FALSE) 
+
+# Map the clusters
+# get domain of numeric data
+domain <- range(final_data_full_cats_percent_over45_5_clusters$cluster)
+# make a colour palette
+pal <- colorNumeric(palette = brewer.pal(5, "Set1"), domain = domain)
+
+map_data <- final_data_full_cats_percent_over45_5_clusters |>
+  select(gp_practice_code,cluster) |>
+
+  left_join(gp_geocoded |>
+              mutate(id = row_number()), join_by(gp_practice_code==org_code)) |>
+  filter(postcode != "NA") |>
+  mutate(lon = sf::st_coordinates(geometry)[,1],
+                lat = sf::st_coordinates(geometry)[,2])
+
+map_plot <- leaflet(map_data) |>
+  addTiles() |>
+  addCircleMarkers(color = ~pal(cluster),radius=3.5,
+                   label = ~as.character(paste0(gp_practice_code,"- Cluster: ",cluster)),
+                   stroke = FALSE, fillOpacity = 0.75
+                   )
+ 

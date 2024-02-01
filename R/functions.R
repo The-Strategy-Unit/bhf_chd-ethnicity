@@ -374,29 +374,53 @@ get_clusters <- function(scale_full_cats_percents_over45,full_cats_percents_over
   return(final_data_full_cats_percent_over45_5_clusters)
 }
 
-add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,
+#proccess metric 23 to work out whether los of cabg and pci is below trimpoint
+metric23_below_trimpoint <- function(metric23,metric23trimpoints){
+  #Join the PCI and CABG spells to the trim point data by HRG, flag those with a spell duration less than relevant trim point
+  #(take average spell duration for the HRG where spell duration is missing and remove data where still null spell duration
+  #eg no average available)
+  
+  metric23_updated <- metric23 |>
+  left_join(select(metric23trimpoints,hrg_code,ordinary_elective_long_stay_trim_point_days), by = c("pb_r_spell_id" = "hrg_code")) |>
+  filter(!is.na(adjusted_spel_dur))|> 
+  filter(!is.na(ordinary_elective_long_stay_trim_point_days))|>
+  mutate (below_trimpoint = adjusted_spel_dur-ordinary_elective_long_stay_trim_point_days) |>
+  filter(below_trimpoint<0) |>
+  group_by (gp_practice_code ) |> 
+  summarise(numbelow_trimpoint = sum(number_pcicabg)) |> 
+  arrange() |>
+    rename(metric23 = numbelow_trimpoint)
+
+return(metric23_updated)
+}
+
+
+
+
+add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,gp_lsoa_with_eth_sum,
                             metric1_updated,metric6,metric7,metric8,metric9,metric11,metric13,metric13b,
                             metric14,metric15,metric16,metric16b,metric17,metric18,metric19,metric20,
-                            metric21,metric25b,metric27,metric28,
+                            metric21,metric22,metric23_updated,metric25b,metric27,metric28,
                             metric29,metric31,metric32,metric39,metric40){
   clustered_gp_and_metrics <-
     final_data_full_cats_percent_over45_5_clusters |>
+    left_join(gp_lsoa_with_eth_sum|>select(gp_practice_code=practice_code,list_size=gp_sum_total)) |>
     left_join(metric1_updated)|>
     
-    #2
+    #2 - to do
     #3 - deleted
     #4 - deleted
-    #5
+    #5 - to do
     
     left_join(metric6)|>
     left_join(metric7)|>
     left_join(metric8)|>
     left_join(metric9)|>    
 
-    #10
+    #10 - might not be available
     
     left_join(metric11)|>
-    #12
+    #12 - to do
     left_join(metric13)|>
     left_join(metric13b)|>
     left_join(metric14)|>
@@ -408,16 +432,114 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,
     left_join(metric19)|>
     left_join(metric20)|>
     left_join(metric21)|>
+    left_join(metric22)|>
+    left_join(metric23_updated)|>
+    #24b - NACR
+    #24c - NACR
   left_join(metric25b)|>
+    #26 - to do
   left_join(metric27)|>
   left_join(metric28)|>
   left_join(metric29)|>
+    #30 - might not be available
   left_join(metric31)|>
   left_join(metric32)|>
+    #33 - to do
+    #34 - cvd prevent - to sort
+    #35 - cvd prevent - to sort
+    #36 - cvd prevent - to sort
+    #37 - cvd prevent - to sort
+    #38 - cvd prevent - to sort
   left_join(metric39)|>
   left_join(metric40)
     
   return(clustered_gp_and_metrics)
 }
 
+##############################################
+process_metrics <-function(clustered_gp_and_metrics){
+activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
+  filter(metric1 != "NA") |>
+  mutate(list_size_total = replace_na(list_size, 0)) |>
+  
+  mutate(metric1_total = replace_na(metric1, 0)) |>
+  #mutate(metric2_total = replace_na(metric2, 0)) |>
+  #  mutate(metric3_total = replace_na(metric3, 0)) |>
+  #  mutate(metric4_total = replace_na(metric4, 0)) |>
+  #mutate(metric5_total = replace_na(metric5, 0)) |>
+  mutate(metric6_total = replace_na(metric6, 0)) |>
+  mutate(metric7_total = replace_na(metric7, 0)) |>
+  mutate(metric8_total = replace_na(metric8, 0)) |>
+  mutate(metric9_total = replace_na(metric9, 0)) |>
+  #mutate(metric10_total = replace_na(metric10, 0)) |>
+  #mutate(metric30_total = replace_na(metric30, 0)) |> 
+  mutate(metric11_total = replace_na(metric11, 0)) |> 
+  #mutate(metric12_total = replace_na(metric12, 0)) |> 
+  mutate(metric13_total = replace_na(metric13, 0)) |>
+  mutate(metric13b_total = replace_na(metric13b, 0)) |>
+  mutate(metric14_total = replace_na(metric14, 0)) |> 
+  mutate(metric15_total = replace_na(metric15, 0)) |> 
+  mutate(metric16_total = replace_na(metric16, 0)) |>
+  mutate(metric16b_total = replace_na(metric16b, 0)) |>
+  mutate(metric17_total = replace_na(metric17, 0)) |>
+  mutate(metric18_total = replace_na(metric18, 0)) |> 
+  mutate(metric19_total = replace_na(metric19, 0)) |>
+  mutate(metric20_total = replace_na(metric20, 0)) |>
+  mutate(metric21_total = replace_na(metric21, 0)) |> 
+  mutate(metric22_total = replace_na(metric22, 0)) |> 
+  mutate(metric23_total = replace_na(metric23, 0)) |>
+  #24
+  mutate(metric25b_total = replace_na(metric25b, 0)) |>
+  #mutate(Metric26_total = replace_na(`Metric26`, 0)) |>
+  mutate(metric27_total = replace_na(metric27, 0)) |>
+  mutate(metric28_total = replace_na(metric28, 0)) |>
+  mutate(metric29_total = replace_na(metric29, 0)) |>
+  #mutate(metric30_total = replace_na(metric30, 0)) |>  
+  mutate(metric31_total = replace_na(metric31, 0)) |>
+  mutate(metric32_total = replace_na(metric32, 0)) |>
+  #22 to 38
+  mutate(metric39_total = replace_na(metric39, 0)) |>
+  mutate(metric40_total = replace_na(metric40, 0)) |>
+  
+  group_by (cluster)|>
+  
+  summarise(list_size_total = sum(list_size_total) ,
+            #metric2_total = sum(metric2_total) ,
+            #metric5_total = sum(metric5_total) , 
+            metric6_total = sum(metric6_total) , 
+            metric7_total = sum(metric7_total) , 
+            metric8_total = sum(metric8_total) , 
+            metric9_total = sum(metric9_total) , 
+            #10
+            metric11_total = sum(metric11_total) , 
+            #12
+            metric13_total = sum(metric13_total) , 
+            metric13b_total = sum(metric13b_total) , 
+            metric14_total = sum(metric14_total) , 
+            metric15_total = sum(metric15_total) , 
+            metric16_total = sum(metric16_total) , 
+            metric16b_total = sum(metric16b_total) , 
+            metric17_total = sum(metric17_total) , 
+            metric18_total = sum(metric18_total) , 
+            metric19_total = sum(metric19_total) , 
+            metric20_total = sum(metric20_total) , 
+            metric21_total = sum(metric21_total) , 
+            metric22_total = sum(metric22_total) , 
+            metric23_total = sum(metric23_total) , 
+            #24
+            metric25b_total = sum(metric25b_total) , 
+            #26
+            metric27_total = sum(metric27_total) ,            
+            metric28_total = sum(metric28_total) ,   
+            metric29_total = sum(metric29_total) ,   
+            #30
+            metric31_total = sum(metric31_total) ,            
+            metric32_total = sum(metric32_total) ,  
+            #22 to 38
+            metric39_total = sum(metric39_total) ,            
+            metric40_total = sum(metric40_total) ,  
+            metric1_total = sum(metric1_total) )|> 
+  arrange()
 
+return(activity_by_type_clusters_stg1)
+}

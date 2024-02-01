@@ -47,7 +47,9 @@ list(
                rename(metric21=elective_cabg)),
   
   tar_target(data_path7, "data/metric22.csv", format = "file"), # SUS data metric 22
-  tar_target(metric22,read_csv_file(data_path7)),
+  tar_target(metric22,read_csv_file(data_path7)|>
+               group_by(gp_practice_code) |>
+               summarise(metric22=median(der_spell_lo_s))),
   
   tar_target(data_path8, "data/metric23.csv", format = "file"), # SUS data metric 23
   tar_target(metric23,read_csv_file(data_path8)),
@@ -109,12 +111,16 @@ list(
   tar_target(data_path24,"data/20231201_92847.xlsx", format="file"), #CHD synthetic prevalence metric 1
   tar_target(metric1,read_excel_file(data_path24)), #updated later in pipeline
   tar_target(data_path25,"data/epraccur_gp.csv", format="file"), #All practices
-  tar_target(gp_history,read_csv_file(data_path25)), 
+  tar_target(gp_history,read_csv_file(data_path25)),
+  tar_target(data_path29,"data/2223_trimpoints.xlsx", format="file"), #TrimPoint
+  tar_target(metric23trimpoints,read_excel_file(data_path29)|>
+               clean_names()),
+  tar_target(metric23_updated,metric23_below_trimpoint(metric23,metric23trimpoints)), #process metric 23
   
-  tar_target(metric13,get_my_fingertips_gp_data(273,"2021/22")|>
+  tar_target(metric13,get_my_fingertips_gp_data(273,"2022/23")|>
                rename(gp_practice_code=AreaCode,
                       metric13=Value)), # metric 13
-  tar_target(metric6,get_my_fingertips_gp_data(93088,"2022/23")|>
+  tar_target(metric6,get_my_fingertips_gp_data(92588,"2022/23")|>
                rename(gp_practice_code=AreaCode,
                       metric6=Value)), # metric 6
   tar_target(metric7,get_my_fingertips_gp_data(241,"2022/23")|>
@@ -217,15 +223,23 @@ list(
  
 #add a second clustering option
 
+#make sure list size is with the gp data if not add it
+# ***what about list size should it be 16+? What about ethnicity calcs% should they be 16+?***
+
+#add in the missing metrics
+
 #join the metrics together with the clusters
 tar_target(clustered_gp_and_metrics,
-           add_all_metrics(final_data_full_cats_percent_over45_5_clusters,
+           add_all_metrics(final_data_full_cats_percent_over45_5_clusters, gp_lsoa_with_eth_sum,
                            metric1_updated,metric6,metric7,metric8,metric9,metric11,
                            metric13,metric13b,metric14,metric15,metric16,
                            metric16b,metric17,metric18,metric19,metric20,
-                           metric21,metric25b,metric27,metric28,
-                           metric29,metric31,metric32,metric39,metric40))
+                           metric21,metric22,metric23_updated,
+                           metric25b,metric27,metric28,
+                           metric29,metric31,metric32,metric39,metric40)),
 
+#process the data into the correct format inc dividing some things etc
+tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics))
 #calculate RII
 
 )
