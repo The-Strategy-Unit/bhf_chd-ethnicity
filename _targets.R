@@ -239,7 +239,9 @@ tar_target(clustered_gp_and_metrics,
                            metric29,metric31,metric32,metric39,metric40)),
 
 #process the data into the correct format inc dividing some things etc
-tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics))
+tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics)),
+tar_target(activity_by_type_clusters_stg2,process_metrics_part_2(activity_by_type_clusters_stg1))
+
 #calculate RII
 
 )

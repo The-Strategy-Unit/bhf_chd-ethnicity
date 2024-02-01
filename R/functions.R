@@ -456,7 +456,7 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,gp_ls
   return(clustered_gp_and_metrics)
 }
 
-##############################################
+
 process_metrics <-function(clustered_gp_and_metrics){
 activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
   filter(metric1 != "NA") |>
@@ -535,11 +535,65 @@ activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
             #30
             metric31_total = sum(metric31_total) ,            
             metric32_total = sum(metric32_total) ,  
-            #22 to 38
+            #32 to 38
             metric39_total = sum(metric39_total) ,            
             metric40_total = sum(metric40_total) ,  
             metric1_total = sum(metric1_total) )|> 
   arrange()
 
 return(activity_by_type_clusters_stg1)
+}
+
+
+process_metrics_part_2 <-function(activity_by_type_clusters_stg1){
+activity_by_type_clusters_stg2<-activity_by_type_clusters_stg1 |>
+#  mutate(metric2_total_ratio = metric2_total/list_size_total*1000) |>
+#  mutate(metric5_total_ratio = metric5_total/list_size_total*1000) |>
+  mutate(metric6_total_ratio = metric6_total/list_size_total*1000) |> 
+  mutate(metric7_total_ratio = metric7_total/list_size_total*1000) |> 
+  mutate(metric8_total_ratio = metric8_total/list_size_total*1000) |> 
+  mutate(metric9_total_ratio = metric9_total/list_size_total*1000) |>
+  # Above metrics 2 - 9 use GP list size 16+ as denominator rather than CHD prevalence######
+ # mutate(metric10_total_ratio = metric10_total/metric1_total*1000) |>
+  mutate(metric11_total_ratio = metric11_total/metric1_total*1000) |>
+#  mutate(metric12_total_ratio = metric12_total/metric1_total*1000) |>
+  mutate(metric13_total_ratio = metric13_total/metric1_total*1000) |>
+  mutate(metric13b_total_ratio = metric13b_total/metric1_total*1000) |>
+  mutate(metric14_total_ratio = metric14_total/metric1_total*1000) |>
+  mutate(metric15_total_ratio = metric15_total/metric1_total*1000) |>
+  mutate(metric16_total_ratio = metric16_total/metric1_total*1000) |>
+  mutate(metric16b_total_ratio = metric16b_total/metric1_total*1000) |>
+  mutate(metric17_total_ratio = metric17_total/metric1_total*1000) |>
+  mutate(metric18_total_ratio = metric18_total/metric1_total*1000) |>
+  mutate(metric19_total_ratio = metric19_total/metric1_total*1000) |>
+  mutate(metric20_total_ratio = metric20_total/metric1_total*1000) |>
+  mutate(metric21_total_ratio = metric21_total/metric1_total*1000) |>
+  mutate(metric22_total_ratio = metric22_total/metric1_total*1000) |>
+  mutate(metric23_total_ratio = metric23_total/metric1_total*1000) |>
+
+  # mutate(Metric24a19_total_ratio = Metric24a19_total/Metric01_total*1000) |>
+  # mutate(Metric24b19_total_ratio = Metric24b19_total/Metric01_total*1000) |>
+  # mutate(Metric24c19_total_ratio = Metric24c19_total/Metric01_total*1000) |>
+  # mutate(Metric24a20_total_ratio = Metric24a20_total/Metric01_total*1000) |>
+  # mutate(Metric24b20_total_ratio = Metric24b20_total/Metric01_total*1000) |>
+  # mutate(Metric24c20_total_ratio = Metric24c20_total/Metric01_total*1000) |>
+  
+#  mutate(metric24a_total_ratio = metric24a_total/metric1_total*1000) |>
+ # mutate(metric24b_total_ratio = metric24b_total/metric1_total*1000) |>
+  #mutate(metric24c_total_ratio = metric24c_total/metric1_total*1000) |>
+  
+  mutate(metric25b_total_ratio = metric25b_total/metric1_total*1000) |>
+ # mutate(metric26_total_ratio = metric26_total/metric1_total*1000) |>
+  mutate(metric27_total_ratio = metric27_total/metric1_total*1000) |>
+  mutate(metric28_total_ratio = metric28_total/metric1_total*1000) |>
+  mutate(metric29_total_ratio = metric29_total/metric1_total*1000) |>
+  #30
+  mutate(metric31_total_ratio = metric31_total/metric1_total*1000) |>
+  mutate(metric32_total_ratio = metric32_total/metric1_total*1000) |>
+  #32-38
+  mutate(metric39_total_ratio = metric39_total/metric1_total*1000) |>
+  mutate(metric40_total_ratio = metric40_total/metric1_total*1000)
+
+return(activity_by_type_clusters_stg2)
+
 }
