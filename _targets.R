@@ -219,21 +219,23 @@ tar_target(metric40, ncdes_data|>
   tar_target(metric1_updated,get_missing_chd_prevalence(metric1,gp_history_short,joined_gp_history_and_chd_prev,gp_list_summary,gp_geocoded)|>
                rename(gp_practice_code=org_code,metric1=chd_prev_to_use)), #imputes some of the 151 with no chd prev
   
-  #cluster the practices
+  #cluster the practices 1
   tar_target(full_cats_percents_over45,get_full_cats_percents_over45(gp_lsoa_with_eth_sum_over45perc)),
   tar_target(scale_full_cats_percents_over45,get_scale_full_cats_percents_over45(full_cats_percents_over45)),
   tar_target(final_data_full_cats_percent_over45_5_clusters,get_clusters(scale_full_cats_percents_over45,full_cats_percents_over45)),
- 
-#add a second clustering option
+  #cluster the practices 2
+  tar_target(full_cats_percents,get_full_cats_percents(gp_lsoa_with_eth_sum)),
+  tar_target(scale_full_cats_percents,get_scale_full_cats_percents(full_cats_percents)),
+  tar_target(final_data_full_cats_percent_5_clusters,get_clusters(scale_full_cats_percents,full_cats_percents)),
 
-#make sure list size is with the gp data if not add it
-# ***what about list size should it be 16+? What about ethnicity calcs% should they be 16+?***
-# gp_16andover_pop
-#add in the missing metrics
+
+#add in the missing metrics*******
 
 #join the metrics together with the clusters
 tar_target(clustered_gp_and_metrics,
-           add_all_metrics(final_data_full_cats_percent_over45_5_clusters, gp_16andover_pop,
+           add_all_metrics(final_data_full_cats_percent_over45_5_clusters, 
+                           final_data_full_cats_percent_5_clusters,
+                           gp_16andover_pop,
                            metric1_updated,metric6,metric7,metric8,metric9,metric11,
                            metric13,metric13b,metric14,metric15,metric16,
                            metric16b,metric17,metric18,metric19,metric20,

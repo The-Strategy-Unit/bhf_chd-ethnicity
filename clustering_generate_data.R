@@ -847,3 +847,151 @@ map_plot <- leaflet(map_data) |>
                    stroke = FALSE, fillOpacity = 0.75
                    )
  
+######################################################################################
+full_cats_percents <- gp_lsoa_with_eth_sum |>
+  select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
+         gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
+         gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
+         gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other,gp_sum_total) |>
+  mutate(gp_perc_est_bangladeshi=(gp_sum_est_bangladeshi/gp_sum_total)*100,
+         gp_perc_est_chinese=(gp_sum_est_chinese/gp_sum_total)*100,
+         gp_perc_est_indian=(gp_sum_est_indian/gp_sum_total)*100,
+         gp_perc_est_pakistani=(gp_sum_est_pakistani/gp_sum_total)*100,
+         gp_perc_est_other_asian=(gp_sum_est_other_asian/gp_sum_total)*100,
+         gp_perc_est_blk_african=(gp_sum_est_blk_african/gp_sum_total)*100,
+         gp_perc_est_blk_caribbean=(gp_sum_est_blk_caribbean/gp_sum_total)*100,
+         gp_perc_est_other_blk=(gp_sum_est_other_blk/gp_sum_total)*100,
+         gp_perc_est_all_mixed=(gp_sum_est_all_mixed/gp_sum_total)*100,
+         gp_perc_est_white_british=(gp_sum_est_white_british/gp_sum_total)*100,
+         gp_perc_est_white_irish=(gp_sum_est_white_irish/gp_sum_total)*100,
+         gp_perc_est_white_other=(gp_sum_est_white_other/gp_sum_total)*100,
+         gp_perc_est_other_arab=(gp_sum_est_other_arab/gp_sum_total)*100,
+         gp_perc_est_other_other=(gp_sum_est_other_other/gp_sum_total)*100
+  ) |>
+  select(-gp_sum_est_bangladeshi,-gp_sum_est_chinese,-gp_sum_est_indian,
+         -gp_sum_est_pakistani,-gp_sum_est_other_asian,-gp_sum_est_blk_african,-gp_sum_est_blk_caribbean,
+         -gp_sum_est_other_blk,-gp_sum_est_all_mixed,-gp_sum_est_white_british,-gp_sum_est_white_irish,
+         -gp_sum_est_white_other,-gp_sum_est_other_arab,-gp_sum_est_other_other,-gp_sum_total)
+
+
+
+full_cats_percents <-
+  full_cats_percents |>
+  remove_rownames() |>
+  column_to_rownames(var = 'practice_code')
+
+
+#remove rows with missing values
+full_cats_percents <- na.omit(full_cats_percents)
+
+#scale each variable to have a mean of 0 and sd of 1
+scale_full_cats_percents <- scale(full_cats_percents)
+
+
+full_cats_percents_plot <- fviz_nbclust(scale_full_cats_percents, pam, method = "wss")
+
+#calculate gap statistic based on number of clusters for percent based data
+gap_stat_full_cats_percent <- clusGap(scale_full_cats_percents,
+                                      FUN = pam,
+                                      K.max = 15, #max clusters to consider
+                                      B = 50) #total bootstrapped iterations
+
+#plot number of clusters vs. gap statistic
+full_cats_percent_gap_plot <- fviz_gap_stat(gap_stat_full_cats_percent)
+
+
+#FULL CATS WITH 5 CLUSTERS PERCENT BASED
+#make this example reproducible
+set.seed(99)
+#perform k-medoids clustering with k = 5 clusters
+pams_full_cats_percents <- pam(scale_full_cats_percents, 5, metric = 'euclidean', stand = FALSE)
+#view results
+pams_full_cats_percents
+
+#plot results of final k-medoids model
+pams_full_cats_percents5_clusters_plot <- fviz_cluster(pams_full_cats_percents, data = full_cats) # 5 cluster using percents
+
+
+#add cluster assignment to original data
+final_data_full_cats_percent_5_clusters <- cbind(full_cats_percents, cluster = pams_full_cats_percents$cluster)
+
+final_data_full_cats_percent_5_clusters |>
+  rownames_to_column(var = 'practice_code') |>
+  group_by(cluster)|>
+  count("practice_code")
+
+
+
+#Plots to view the clusters
+final_data_full_cats_percent_5_clusters |> 
+   rownames_to_column(var = 'practice_code') |>
+  filter(cluster ==5)|>
+  pivot_longer(
+    cols = starts_with("gp_perc"),
+    names_to = "ethnicity",
+    values_to = "percent"
+  ) |>
+  ggplot(aes(x=fct_rev(factor(ethnicity)) , y=percent, fill=factor(ethnicity))) +
+  geom_boxplot(outlier.shape = NA) +
+  guides(fill = FALSE) +
+  coord_flip() +
+  xlab("Ethnicity") +
+  ylab("Percent") 
+
+titles <-final_data_full_cats_percent_5_clusters |> 
+   rownames_to_column(var = 'practice_code') |>
+  pivot_longer(
+    cols = starts_with("gp_perc"),
+    names_to = "ethnicity",
+    values_to = "percent"
+  ) |>
+  group_by(cluster,ethnicity) |>
+  summarise(med_percent = median(percent)) |>
+  mutate(title= case_when(ethnicity=="gp_perc_est_white_british" ~ paste0("Cluster ",cluster, " - ", round(med_percent, digits = 0), "% White British")),
+  ) |>
+  filter(ethnicity =="gp_perc_est_white_british")|>
+  select(cluster,title)
+
+median_ethnicities_by_cluster <- final_data_full_cats_percent_5_clusters |> 
+    rownames_to_column(var = 'practice_code') |>
+  pivot_longer(
+    cols = starts_with("gp_perc"),
+    names_to = "ethnicity",
+    values_to = "percent"
+  ) |>
+  group_by(cluster,ethnicity) |>
+  summarise(med_percent = median(percent)) |>
+  filter(ethnicity !="gp_perc_est_white_british")|>
+  left_join(titles)|>
+  ggplot(aes(x=fct_rev(factor(ethnicity)) , y=med_percent, fill=factor(ethnicity))) +
+  geom_col() +
+  coord_flip() +
+  ylab("Median Percent of GP Lists") +
+  xlab("") +
+  facet_wrap(cluster ~ title) +
+  ylim(0,25) +
+  labs(title="Ethnicity Median Percent by Cluster") +
+  guides(fill = FALSE) 
+
+# Map the clusters
+# get domain of numeric data
+domain <- range(final_data_full_cats_percent_5_clusters$cluster)
+# make a colour palette
+pal <- colorNumeric(palette = brewer.pal(5, "Set1"), domain = domain)
+
+map_data <- final_data_full_cats_percent_5_clusters |>
+  rownames_to_column(var = 'practice_code') |>
+  select(gp_practice_code=practice_code,cluster) |>
+  
+  left_join(gp_geocoded |>
+              mutate(id = row_number()), join_by(gp_practice_code==org_code)) |>
+  filter(postcode != "NA") |>
+  mutate(lon = sf::st_coordinates(geometry)[,1],
+         lat = sf::st_coordinates(geometry)[,2])
+
+map_plot <- leaflet(map_data) |>
+  addTiles() |>
+  addCircleMarkers(color = ~pal(cluster),radius=3.5,
+                   label = ~as.character(paste0(gp_practice_code,"- Cluster: ",cluster)),
+                   stroke = FALSE, fillOpacity = 0.75
+  )

@@ -401,6 +401,66 @@ get_clusters <- function(scale_full_cats_percents_over45,full_cats_percents_over
   return(final_data_full_cats_percent_over45_5_clusters)
 }
 
+
+get_full_cats_percents <- function(gp_lsoa_with_eth_sum)
+{
+ 
+  full_cats_percents <- gp_lsoa_with_eth_sum |>
+    select(practice_code,gp_sum_est_bangladeshi,gp_sum_est_chinese,gp_sum_est_indian,
+           gp_sum_est_pakistani,gp_sum_est_other_asian,gp_sum_est_blk_african,gp_sum_est_blk_caribbean,
+           gp_sum_est_other_blk,gp_sum_est_all_mixed,gp_sum_est_white_british,gp_sum_est_white_irish,
+           gp_sum_est_white_other,gp_sum_est_other_arab,gp_sum_est_other_other,gp_sum_total) |>
+    mutate(gp_perc_est_bangladeshi=(gp_sum_est_bangladeshi/gp_sum_total)*100,
+           gp_perc_est_chinese=(gp_sum_est_chinese/gp_sum_total)*100,
+           gp_perc_est_indian=(gp_sum_est_indian/gp_sum_total)*100,
+           gp_perc_est_pakistani=(gp_sum_est_pakistani/gp_sum_total)*100,
+           gp_perc_est_other_asian=(gp_sum_est_other_asian/gp_sum_total)*100,
+           gp_perc_est_blk_african=(gp_sum_est_blk_african/gp_sum_total)*100,
+           gp_perc_est_blk_caribbean=(gp_sum_est_blk_caribbean/gp_sum_total)*100,
+           gp_perc_est_other_blk=(gp_sum_est_other_blk/gp_sum_total)*100,
+           gp_perc_est_all_mixed=(gp_sum_est_all_mixed/gp_sum_total)*100,
+           gp_perc_est_white_british=(gp_sum_est_white_british/gp_sum_total)*100,
+           gp_perc_est_white_irish=(gp_sum_est_white_irish/gp_sum_total)*100,
+           gp_perc_est_white_other=(gp_sum_est_white_other/gp_sum_total)*100,
+           gp_perc_est_other_arab=(gp_sum_est_other_arab/gp_sum_total)*100,
+           gp_perc_est_other_other=(gp_sum_est_other_other/gp_sum_total)*100
+    ) |>
+    select(-gp_sum_est_bangladeshi,-gp_sum_est_chinese,-gp_sum_est_indian,
+           -gp_sum_est_pakistani,-gp_sum_est_other_asian,-gp_sum_est_blk_african,-gp_sum_est_blk_caribbean,
+           -gp_sum_est_other_blk,-gp_sum_est_all_mixed,-gp_sum_est_white_british,-gp_sum_est_white_irish,
+           -gp_sum_est_white_other,-gp_sum_est_other_arab,-gp_sum_est_other_other,-gp_sum_total)
+  
+  
+  return(full_cats_percents)
+}
+
+
+get_scale_full_cats_percents<- function(full_cats_percents){
+  scale_full_cats_percents <- full_cats_percents |>
+    remove_rownames() |>
+    column_to_rownames(var = 'practice_code') |>
+    na.omit() |>
+    scale()
+  
+  return(scale_full_cats_percents)
+}
+
+get_clusters <- function(scale_full_cats_percents,full_cats_percents){
+  #FULL CATS WITH 5 CLUSTERS PERCENT BASED
+  #make this example reproducible
+  set.seed(99)
+  #perform k-medoids clustering with k = 5 clusters
+  pams_full_cats_percents <- pam(scale_full_cats_percents, 5, metric = 'euclidean', stand = FALSE)
+  
+  final_data_full_cats_percent_5_clusters <- 
+    cbind(full_cats_percents, cluster = pams_full_cats_percents$cluster)|>
+    rename(gp_practice_code=practice_code)
+  
+  return(final_data_full_cats_percent_5_clusters)
+}
+
+
+
 #proccess metric 23 to work out whether los of cabg and pci is below trimpoint
 metric23_below_trimpoint <- function(metric23,metric23trimpoints){
   #Join the PCI and CABG spells to the trim point data by HRG, flag those with a spell duration less than relevant trim point
@@ -424,14 +484,16 @@ return(metric23_updated)
 
 
 
-add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,gp_16andover_pop,
+add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final_data_full_cats_percent_5_clusters,
+                            gp_16andover_pop,
                             metric1_updated,metric6,metric7,metric8,metric9,metric11,metric13,metric13b,
                             metric14,metric15,metric16,metric16b,metric17,metric18,metric19,metric20,
                             metric21,metric22,metric23_updated,metric25b,metric27,metric28,
                             metric29,metric31,metric32,metric34,metric38,
                             metric39,metric40){
   clustered_gp_and_metrics <-
-    final_data_full_cats_percent_over45_5_clusters |>
+    final_data_full_cats_percent_over45_5_clusters |> rename(cluster1=cluster)|>
+    left_join(final_data_full_cats_percent_5_clusters |> select(gp_practice_code,cluster2=cluster)) |>
     left_join(gp_16andover_pop|>select(gp_practice_code=practice_code,list_size=number_of_patients16andover)) |>
     left_join(metric1_updated)|>
     
@@ -493,7 +555,6 @@ process_metrics <-function(clustered_gp_and_metrics){
 activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
   filter(metric1 != "NA") |>
   mutate(list_size_total = replace_na(list_size, 0)) |>
-  
   mutate(metric1_total = replace_na(metric1, 0)) |>
   #mutate(metric2_total = replace_na(metric2, 0)) |>
   #  mutate(metric3_total = replace_na(metric3, 0)) |>
@@ -535,7 +596,7 @@ activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
   mutate(metric39_total = replace_na(metric39, 0)) |>
   mutate(metric40_total = replace_na(metric40, 0)) |>
   
-  group_by (cluster)|>
+  group_by (cluster2)|>
   
   summarise(list_size_total = sum(list_size_total) ,
             #metric2_total = sum(metric2_total) ,
