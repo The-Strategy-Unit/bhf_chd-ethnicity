@@ -10,11 +10,18 @@ read_csv_file <- function(file){
 }
 
 
-#Get Fingertips data
+#Get Fingertips data Value
 get_my_fingertips_gp_data <- function(ind,year){
   Metric <- fingertips_data(IndicatorID = ind,AreaTypeID = "All") |>
     filter(AreaType=="GPs", Timeperiod==year) |>
     select(AreaCode,Value)
+}
+
+#Get Fingertips data count
+get_my_fingertips_gp_data_count <- function(ind,year){
+  Metric <- fingertips_data(IndicatorID = ind,AreaTypeID = "All") |>
+    filter(AreaType=="GPs", Timeperiod==year) |>
+    select(AreaCode,Count)
 }
 
 #Get QOF via Excel file
@@ -310,6 +317,26 @@ return(gp_over45_perc)
 
 }
 
+get_gp_16andover_pop <- function(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)
+{gp_16andover_pop <- gp_reg_pat_prac_sing_age_male |>
+  rbind(gp_reg_pat_prac_sing_age_female)|>
+  filter(age != "ALL") |>
+  group_by(org_code,age) |>
+  summarise(number_of_patients=sum(number_of_patients)) |>
+  dplyr::mutate(age=as.numeric(case_when(age=="95+" ~ 95,
+                                         .default = as.numeric(age))
+  )) |>
+  filter(as.numeric(age) >= 16) |>
+  group_by(org_code) |>
+  summarise(number_of_patients16andover=sum(number_of_patients)) |>
+  ungroup() |>
+  select(org_code,number_of_patients16andover)|>
+  rename(practice_code=org_code)
+
+return(gp_16andover_pop)
+
+}
+
 
 join_over45_to_gp_lsoa_with_eth_sum <- function(gp_lsoa_with_eth_sum,gp_over45_perc){
   gp_lsoa_with_eth_sum_over45perc <- gp_lsoa_with_eth_sum |>
@@ -397,14 +424,15 @@ return(metric23_updated)
 
 
 
-add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,gp_lsoa_with_eth_sum,
+add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,gp_16andover_pop,
                             metric1_updated,metric6,metric7,metric8,metric9,metric11,metric13,metric13b,
                             metric14,metric15,metric16,metric16b,metric17,metric18,metric19,metric20,
                             metric21,metric22,metric23_updated,metric25b,metric27,metric28,
-                            metric29,metric31,metric32,metric39,metric40){
+                            metric29,metric31,metric32,metric34,metric38,
+                            metric39,metric40){
   clustered_gp_and_metrics <-
     final_data_full_cats_percent_over45_5_clusters |>
-    left_join(gp_lsoa_with_eth_sum|>select(gp_practice_code=practice_code,list_size=gp_sum_total)) |>
+    left_join(gp_16andover_pop|>select(gp_practice_code=practice_code,list_size=number_of_patients16andover)) |>
     left_join(metric1_updated)|>
     
     #2 - to do
@@ -413,16 +441,21 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,gp_ls
     #5 - to do
     
     left_join(metric6)|>
+    mutate(metric6=(metric6/100)*list_size)|>
     left_join(metric7)|>
+    mutate(metric7=(metric7/100)*list_size)|>
     left_join(metric8)|>
+    mutate(metric8=(metric8/100)*list_size)|>
     left_join(metric9)|>    
-
+    mutate(metric9=(metric9/100)*list_size)|>
     #10 - might not be available
     
     left_join(metric11)|>
     #12 - to do
     left_join(metric13)|>
+    mutate(metric13=(metric13/100)*list_size)|>
     left_join(metric13b)|>
+    mutate(metric13b=(metric13b/100)*list_size)|>
     left_join(metric14)|>
     left_join(metric15)|>
     left_join(metric16)|>
@@ -445,11 +478,9 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,gp_ls
   left_join(metric31)|>
   left_join(metric32)|>
     #33 - to do
-    #34 - cvd prevent - to sort
-    #35 - cvd prevent - to sort
-    #36 - cvd prevent - to sort
-    #37 - cvd prevent - to sort
-    #38 - cvd prevent - to sort
+  left_join(metric34)|>
+ #35-37 removed not needed
+  left_join(metric38)|>
   left_join(metric39)|>
   left_join(metric40)
     
@@ -458,6 +489,7 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,gp_ls
 
 
 process_metrics <-function(clustered_gp_and_metrics){
+
 activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
   filter(metric1 != "NA") |>
   mutate(list_size_total = replace_na(list_size, 0)) |>
@@ -497,7 +529,9 @@ activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
   #mutate(metric30_total = replace_na(metric30, 0)) |>  
   mutate(metric31_total = replace_na(metric31, 0)) |>
   mutate(metric32_total = replace_na(metric32, 0)) |>
-  #22 to 38
+  #33
+  mutate(metric34_total = replace_na(metric34, 0)) |>
+  mutate(metric38_total = replace_na(metric38, 0)) |>
   mutate(metric39_total = replace_na(metric39, 0)) |>
   mutate(metric40_total = replace_na(metric40, 0)) |>
   
@@ -535,7 +569,9 @@ activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
             #30
             metric31_total = sum(metric31_total) ,            
             metric32_total = sum(metric32_total) ,  
-            #32 to 38
+            #33
+            metric34_total = sum(metric34_total) ,  
+            metric38_total = sum(metric38_total) ,
             metric39_total = sum(metric39_total) ,            
             metric40_total = sum(metric40_total) ,  
             metric1_total = sum(metric1_total) )|> 
@@ -544,56 +580,3 @@ activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
 return(activity_by_type_clusters_stg1)
 }
 
-
-process_metrics_part_2 <-function(activity_by_type_clusters_stg1){
-activity_by_type_clusters_stg2<-activity_by_type_clusters_stg1 |>
-#  mutate(metric2_total_ratio = metric2_total/list_size_total*1000) |>
-#  mutate(metric5_total_ratio = metric5_total/list_size_total*1000) |>
-  mutate(metric6_total_ratio = metric6_total/list_size_total*1000) |> 
-  mutate(metric7_total_ratio = metric7_total/list_size_total*1000) |> 
-  mutate(metric8_total_ratio = metric8_total/list_size_total*1000) |> 
-  mutate(metric9_total_ratio = metric9_total/list_size_total*1000) |>
-  # Above metrics 2 - 9 use GP list size 16+ as denominator rather than CHD prevalence######
- # mutate(metric10_total_ratio = metric10_total/metric1_total*1000) |>
-  mutate(metric11_total_ratio = metric11_total/metric1_total*1000) |>
-#  mutate(metric12_total_ratio = metric12_total/metric1_total*1000) |>
-  mutate(metric13_total_ratio = metric13_total/metric1_total*1000) |>
-  mutate(metric13b_total_ratio = metric13b_total/metric1_total*1000) |>
-  mutate(metric14_total_ratio = metric14_total/metric1_total*1000) |>
-  mutate(metric15_total_ratio = metric15_total/metric1_total*1000) |>
-  mutate(metric16_total_ratio = metric16_total/metric1_total*1000) |>
-  mutate(metric16b_total_ratio = metric16b_total/metric1_total*1000) |>
-  mutate(metric17_total_ratio = metric17_total/metric1_total*1000) |>
-  mutate(metric18_total_ratio = metric18_total/metric1_total*1000) |>
-  mutate(metric19_total_ratio = metric19_total/metric1_total*1000) |>
-  mutate(metric20_total_ratio = metric20_total/metric1_total*1000) |>
-  mutate(metric21_total_ratio = metric21_total/metric1_total*1000) |>
-  mutate(metric22_total_ratio = metric22_total/metric1_total*1000) |>
-  mutate(metric23_total_ratio = metric23_total/metric1_total*1000) |>
-
-  # mutate(Metric24a19_total_ratio = Metric24a19_total/Metric01_total*1000) |>
-  # mutate(Metric24b19_total_ratio = Metric24b19_total/Metric01_total*1000) |>
-  # mutate(Metric24c19_total_ratio = Metric24c19_total/Metric01_total*1000) |>
-  # mutate(Metric24a20_total_ratio = Metric24a20_total/Metric01_total*1000) |>
-  # mutate(Metric24b20_total_ratio = Metric24b20_total/Metric01_total*1000) |>
-  # mutate(Metric24c20_total_ratio = Metric24c20_total/Metric01_total*1000) |>
-  
-#  mutate(metric24a_total_ratio = metric24a_total/metric1_total*1000) |>
- # mutate(metric24b_total_ratio = metric24b_total/metric1_total*1000) |>
-  #mutate(metric24c_total_ratio = metric24c_total/metric1_total*1000) |>
-  
-  mutate(metric25b_total_ratio = metric25b_total/metric1_total*1000) |>
- # mutate(metric26_total_ratio = metric26_total/metric1_total*1000) |>
-  mutate(metric27_total_ratio = metric27_total/metric1_total*1000) |>
-  mutate(metric28_total_ratio = metric28_total/metric1_total*1000) |>
-  mutate(metric29_total_ratio = metric29_total/metric1_total*1000) |>
-  #30
-  mutate(metric31_total_ratio = metric31_total/metric1_total*1000) |>
-  mutate(metric32_total_ratio = metric32_total/metric1_total*1000) |>
-  #32-38
-  mutate(metric39_total_ratio = metric39_total/metric1_total*1000) |>
-  mutate(metric40_total_ratio = metric40_total/metric1_total*1000)
-
-return(activity_by_type_clusters_stg2)
-
-}

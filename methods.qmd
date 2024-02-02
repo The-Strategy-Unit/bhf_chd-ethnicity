@@ -49,6 +49,12 @@ Imputing data in Census 2021:
 
 <https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/itemeditingandimputationprocessforcensus2021englandandwales>
 
+Variation in age groups for different ethnicities:
+
+<https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/>
+
+<https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/#download-the-data>
+
 ## Which date should be used for the gp list size dataset?
 
 Data mainly 2022/23 could take April 22 or April 23 file. Will try both. April 2023 is still using census 2011 lsoas.
@@ -78,3 +84,7 @@ link to to the blog
 <https://the-strategy-unit.github.io/data_science/blogs/posts/2024-01-17_nearest_neighbour.html>
 
 151 missing and this finds all but 26 using a 1.5km radius - more or less?
+
+## Disparity
+
+<https://www.health.state.mn.us/data/mchs/pubs/raceethn/rankingbyratio20032007.pdf>

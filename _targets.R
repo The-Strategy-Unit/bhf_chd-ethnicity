@@ -9,7 +9,7 @@ library(targets)
 tar_option_set(
   packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor",
                "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder",
-               "cluster","factoextra"), # packages that your targets need to run
+               "cluster","factoextra","purrr","broom","glue"), # packages that your targets need to run
   format = "rds"
 
   # Set other options as needed.
@@ -77,28 +77,23 @@ list(
   tar_target(gp_reg_pat_prac_sing_age_male,read_csv_file(data_path27)|>
                select(org_code,age,number_of_patients)), 
   tar_target(gp_over45_perc,get_over45_perc(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)),
+  tar_target(gp_16andover_pop,get_gp_16andover_pop(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)),
  
-   tar_target(data_path15, "data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv", format = "file"), #lookup
+  tar_target(data_path15, "data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv", format = "file"), #lookup
   tar_target(lsoa_lookup,read_csv_file(data_path15)),
   tar_target(data_path17,"data/gp-reg-pat-prac-map.csv", format = "file"),
   tar_target(gp_icb_mapping,read_csv_file(data_path17)|> 
                select(practice_code,practice_name,sub_icb_location_code, sub_icb_location_name,
                       icb_code,icb_name,comm_region_code,comm_region_name)),  
   
-  tar_target(data_path18,"data/CVDP003.csv", format = "file"),  
-  tar_target(cvdp003,read_csv_file(data_path18)),
-  
-  tar_target(data_path19,"data/CVDP006.csv", format = "file"), 
-  tar_target(cvdp006,read_csv_file(data_path19)), 
-  
-  tar_target(data_path20,"data/CVDP007.csv", format = "file"), 
-  tar_target(cvdp007,read_csv_file(data_path20)),  
   
   tar_target(data_path21,"data/CVDP008.csv", format = "file"), 
-  tar_target(cvdp008,read_csv_file(data_path21)), 
+  tar_target(metric38,read_csv_file(data_path21) |>
+               select(gp_practice_code=area_code,metric38=numerator)),  #metric38
   
   tar_target(data_path22,"data/CVDP009.csv", format = "file"), 
-  tar_target(cvdp009,read_csv_file(data_path22)), 
+  tar_target(metric34,read_csv_file(data_path22) |>
+               select(gp_practice_code=area_code,metric34=numerator)),  #metric34
   
   tar_target(data_path23,"data/NCDesMarch23.csv", format = "file"), 
   tar_target(ncdes_data,read_csv_file(data_path23)|>
@@ -153,7 +148,7 @@ list(
 #  rename(gp_practice_code=AreaCode,
 #         metric10=Value)), # metric 10
 
-  tar_target(metric11,get_my_fingertips_gp_data(90619,"2021/22")|>
+  tar_target(metric11,get_my_fingertips_gp_data(90619,"2022/23")|>
   rename(gp_practice_code=AreaCode,
          metric11=Value)), # metric 11
 
@@ -181,16 +176,24 @@ list(
                           select(4,6) |>
                           rename(gp_practice_code=practice_code,
                                  metric13b=prevalence_percent_15)), # metric 13b 22/23
-  tar_target(metric39, ncdes_data|>
-                          mutate(ncd002_percent =(NCD002_Numerator / NCD002_Denominator)*100) |>
-                          select(practice_code,ncd002_percent)|>
-                          rename(gp_practice_code=practice_code,
-                                 metric39=ncd002_percent)), # metric 39 march 23
-  tar_target(metric40, ncdes_data|>
-                          mutate(ncd003_percent =(NCD003_Numerator / NCD003_Denominator)*100) |>
-                          select(practice_code,ncd003_percent)|>
-                          rename(gp_practice_code=practice_code,
-                                 metric40=ncd003_percent)), # metric 40 march 23
+  # tar_target(metric39, ncdes_data|>
+  #                         mutate(ncd002_percent =(NCD002_Numerator / NCD002_Denominator)*100) |>
+  #                         select(practice_code,ncd002_percent)|>
+  #                         rename(gp_practice_code=practice_code,
+  #                                metric39=ncd002_percent)), # metric 39 march 23
+tar_target(metric39, ncdes_data|>
+             select(practice_code,NCD002_Numerator)|>
+             rename(gp_practice_code=practice_code,
+                    metric39=NCD002_Numerator)), # metric 39 march 23
+  # tar_target(metric40, ncdes_data|>
+  #                         mutate(ncd003_percent =(NCD003_Numerator / NCD003_Denominator)*100) |>
+  #                         select(practice_code,ncd003_percent)|>
+  #                         rename(gp_practice_code=practice_code,
+  #                                metric40=ncd003_percent)), # metric 40 march 23
+tar_target(metric40, ncdes_data|>
+             select(practice_code,NCD003_Numerator)|>
+             rename(gp_practice_code=practice_code,
+                    metric40=NCD003_Numerator)), # metric 40 march 23
 
   #process ethnicity data
   tar_target(lsoa_eth_sum,process_census21data(eth_lsoa_census)),
@@ -225,24 +228,27 @@ list(
 
 #make sure list size is with the gp data if not add it
 # ***what about list size should it be 16+? What about ethnicity calcs% should they be 16+?***
-
+# gp_16andover_pop
 #add in the missing metrics
 
 #join the metrics together with the clusters
 tar_target(clustered_gp_and_metrics,
-           add_all_metrics(final_data_full_cats_percent_over45_5_clusters, gp_lsoa_with_eth_sum,
+           add_all_metrics(final_data_full_cats_percent_over45_5_clusters, gp_16andover_pop,
                            metric1_updated,metric6,metric7,metric8,metric9,metric11,
                            metric13,metric13b,metric14,metric15,metric16,
                            metric16b,metric17,metric18,metric19,metric20,
                            metric21,metric22,metric23_updated,
-                           metric25b,metric27,metric28,
-                           metric29,metric31,metric32,metric39,metric40)),
+                           metric25b,metric27,metric28, metric29,metric31,
+                           metric32,metric34,metric38,
+                           metric39,metric40)),
 
 #process the data into the correct format inc dividing some things etc
-tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics)),
-tar_target(activity_by_type_clusters_stg2,process_metrics_part_2(activity_by_type_clusters_stg1))
+tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics))
 
-#calculate RII
+#######################################################################################
+#calculate Disparity Ratio
+#tar_target(activity_long,get_disparity_ratio(activity_by_type_clusters_stg1))
+
 
 )
 
