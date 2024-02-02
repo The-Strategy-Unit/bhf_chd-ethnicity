@@ -9,9 +9,10 @@ library(targets)
 tar_option_set(
   packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor",
                "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder",
-               "cluster","factoextra","purrr","broom","glue"), # packages that your targets need to run
+               "cluster","factoextra","purrr","broom","glue","RColorBrewer","leaflet"), # packages that your targets need to run
   format = "rds"
 
+ 
   # Set other options as needed.
 )
 
@@ -222,11 +223,17 @@ tar_target(metric40, ncdes_data|>
   #cluster the practices 1
   tar_target(full_cats_percents_over45,get_full_cats_percents_over45(gp_lsoa_with_eth_sum_over45perc)),
   tar_target(scale_full_cats_percents_over45,get_scale_full_cats_percents_over45(full_cats_percents_over45)),
-  tar_target(final_data_full_cats_percent_over45_5_clusters,get_clusters(scale_full_cats_percents_over45,full_cats_percents_over45)),
+  tar_target(pams_full_cats_percents_over45,get_pams(scale_full_cats_percents_over45)),
+  tar_target(final_data_full_cats_percent_over45_5_clusters,get_clusters(pams_full_cats_percents_over45,full_cats_percents_over45)),
+  tar_target(elbow_plot_over45,get_elbow_plot(scale_full_cats_percents_over45)),
+  tar_target(cluster_plot_over45,get_cluster_plot(pams_full_cats_percents_over45)),
   #cluster the practices 2
   tar_target(full_cats_percents,get_full_cats_percents(gp_lsoa_with_eth_sum)),
   tar_target(scale_full_cats_percents,get_scale_full_cats_percents(full_cats_percents)),
-  tar_target(final_data_full_cats_percent_5_clusters,get_clusters(scale_full_cats_percents,full_cats_percents)),
+  tar_target(pams_full_cats_percents,get_pams(scale_full_cats_percents)),
+  tar_target(final_data_full_cats_percent_5_clusters,get_clusters(pams_full_cats_percents,full_cats_percents)),
+  tar_target(elbow_plot,get_elbow_plot(scale_full_cats_percents)),
+  tar_target(cluster_plot,get_cluster_plot(pams_full_cats_percents)),
 
 
 #add in the missing metrics*******
@@ -243,6 +250,11 @@ tar_target(clustered_gp_and_metrics,
                            metric25b,metric27,metric28, metric29,metric31,
                            metric32,metric34,metric38,
                            metric39,metric40)),
+#plot clusters
+tar_target(cluster2_map,get_cluster2_map(clustered_gp_and_metrics,gp_geocoded)),
+tar_target(cluster1_map,get_cluster1_map(clustered_gp_and_metrics,gp_geocoded)),
+tar_target(cluster2_chart,get_cluster2_chart(clustered_gp_and_metrics)),
+tar_target(cluster1_chart,get_cluster1_chart(clustered_gp_and_metrics)),
 
 #process the data into the correct format inc dividing some things etc
 tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics))

@@ -445,20 +445,41 @@ get_scale_full_cats_percents<- function(full_cats_percents){
   return(scale_full_cats_percents)
 }
 
-get_clusters <- function(scale_full_cats_percents,full_cats_percents){
-  #FULL CATS WITH 5 CLUSTERS PERCENT BASED
-  #make this example reproducible
-  set.seed(99)
-  #perform k-medoids clustering with k = 5 clusters
-  pams_full_cats_percents <- pam(scale_full_cats_percents, 5, metric = 'euclidean', stand = FALSE)
+get_clusters <- function(pams_full_cats_percents,full_cats_percents){
   
-  final_data_full_cats_percent_5_clusters <- 
+  
+  final_data <- 
     cbind(full_cats_percents, cluster = pams_full_cats_percents$cluster)|>
-    rename(gp_practice_code=practice_code)
+    rename(gp_practice_code=practice_code)|>
+    mutate(cluster_renum=case_when(cluster==2~1,
+                                    cluster==1~2,
+                                    cluster==3~3,
+                                    cluster==5~4,
+                                    cluster==4~5))|>
+    select(-cluster)|>
+    rename(cluster=cluster_renum)
   
-  return(final_data_full_cats_percent_5_clusters)
+  return(final_data)
 }
 
+get_pams <-  function(scale_full_cats_percents){
+  set.seed(99)
+#perform k-medoids clustering with k = 5 clusters
+pams_full_cats_percents <- pam(scale_full_cats_percents, 5, metric = 'euclidean', stand = FALSE)
+return(pams_full_cats_percents)
+}
+
+get_elbow_plot <- function(scaled_data){
+  
+elbow_plot <- fviz_nbclust(scaled_data, pam, method = "wss")
+return(elbow_plot)
+}
+
+get_cluster_plot <- function(pams_data){
+  #plot results of final k-medoids model
+  cluster_plot <- fviz_cluster(pams_data, data = full_cats)
+  return(cluster_plot)
+}
 
 
 #proccess metric 23 to work out whether los of cabg and pci is below trimpoint
@@ -493,7 +514,7 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
                             metric39,metric40){
   clustered_gp_and_metrics <-
     final_data_full_cats_percent_over45_5_clusters |> rename(cluster1=cluster)|>
-    left_join(final_data_full_cats_percent_5_clusters |> select(gp_practice_code,cluster2=cluster)) |>
+    left_join(final_data_full_cats_percent_5_clusters|>select(gp_practice_code,cluster2=cluster)) |>
     left_join(gp_16andover_pop|>select(gp_practice_code=practice_code,list_size=number_of_patients16andover)) |>
     left_join(metric1_updated)|>
     
@@ -639,5 +660,150 @@ activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
   arrange()
 
 return(activity_by_type_clusters_stg1)
+}
+
+get_cluster2_map <- function(clustered_gp_and_metrics,gp_geocoded){
+  
+  # Map the clusters
+  # get domain of numeric data
+  domain <- range(clustered_gp_and_metrics$cluster2)
+  # make a colour palette
+  pal <- colorNumeric(palette = brewer.pal(5, "Set1"), domain = domain)
+  
+  map_data <- clustered_gp_and_metrics |>
+    rownames_to_column(var = 'practice_code') |>
+    select(gp_practice_code,cluster2) |>
+    
+    left_join(gp_geocoded |>
+                mutate(id = row_number()), join_by(gp_practice_code==org_code)) |>
+    filter(postcode != "NA") |>
+    mutate(lon = sf::st_coordinates(geometry)[,1],
+           lat = sf::st_coordinates(geometry)[,2])
+  
+  map_plot2 <- leaflet(map_data) |>
+    addTiles() |>
+    addCircleMarkers(color = ~pal(cluster2),radius=3.5,
+                     label = ~as.character(paste0(gp_practice_code,"- Cluster: ",cluster2)),
+                     stroke = FALSE, fillOpacity = 0.75
+    )
+  
+  return(map_plot2)
+  
+}
+
+get_cluster1_map <- function(clustered_gp_and_metrics,gp_geocoded){
+  
+  # Map the clusters
+  # get domain of numeric data
+  domain <- range(clustered_gp_and_metrics$cluster1)
+  # make a colour palette
+  pal <- colorNumeric(palette = brewer.pal(5, "Set1"), domain = domain)
+  
+  map_data <- clustered_gp_and_metrics |>
+    rownames_to_column(var = 'practice_code') |>
+    select(gp_practice_code,cluster1) |>
+    
+    left_join(gp_geocoded |>
+                mutate(id = row_number()), join_by(gp_practice_code==org_code)) |>
+    filter(postcode != "NA") |>
+    mutate(lon = sf::st_coordinates(geometry)[,1],
+           lat = sf::st_coordinates(geometry)[,2])
+  
+  map_plot1 <- leaflet(map_data) |>
+    addTiles() |>
+    addCircleMarkers(color = ~pal(cluster1),radius=3.5,
+                     label = ~as.character(paste0(gp_practice_code,"- Cluster: ",cluster1)),
+                     stroke = FALSE, fillOpacity = 0.75
+    )
+  
+  return(map_plot1)
+  
+}
+
+######
+
+get_cluster2_chart <- function(clustered_gp_and_metrics){
+  
+  
+  titles <-clustered_gp_and_metrics |> 
+    rownames_to_column(var = 'practice_code') |>
+    pivot_longer(
+      cols = starts_with("gp_perc"),
+      names_to = "ethnicity",
+      values_to = "percent"
+    ) |>
+    group_by(cluster2,ethnicity) |>
+    summarise(med_percent = median(percent)) |>
+    mutate(title= case_when(ethnicity=="gp_perc_est_white_british" ~ paste0("Cluster ",cluster2, " - ", round(med_percent, digits = 0), "% White British")),
+    ) |>
+    filter(ethnicity =="gp_perc_est_white_british")|>
+    select(cluster2,title)
+  
+  cluster2_chart <- clustered_gp_and_metrics |> 
+    rownames_to_column(var = 'practice_code') |>
+    pivot_longer(
+      cols = starts_with("gp_perc"),
+      names_to = "ethnicity",
+      values_to = "percent"
+    ) |>
+    group_by(cluster2,ethnicity) |>
+    summarise(med_percent = median(percent)) |>
+    filter(ethnicity !="gp_perc_est_white_british")|>
+    left_join(titles)|>
+    ggplot(aes(x=fct_rev(factor(ethnicity)) , y=med_percent, fill=factor(ethnicity))) +
+    geom_col() +
+    coord_flip() +
+    ylab("Median Percent of GP Lists") +
+    xlab("") +
+    facet_wrap(cluster2 ~ title) +
+    ylim(0,25) +
+    labs(title="Ethnicity Median Percent by Cluster") +
+    guides(fill = FALSE) 
+  
+  return(cluster2_chart)
+  
+}
+
+
+get_cluster1_chart <- function(clustered_gp_and_metrics){
+  
+  
+  titles <-clustered_gp_and_metrics |> 
+    rownames_to_column(var = 'practice_code') |>
+    pivot_longer(
+      cols = starts_with("gp_perc"),
+      names_to = "ethnicity",
+      values_to = "percent"
+    ) |>
+    group_by(cluster1,ethnicity) |>
+    summarise(med_percent = median(percent)) |>
+    mutate(title= case_when(ethnicity=="gp_perc_est_white_british" ~ paste0("Cluster ",cluster1, " - ", round(med_percent, digits = 0), "% White British")),
+    ) |>
+    filter(ethnicity =="gp_perc_est_white_british")|>
+    select(cluster1,title)
+  
+  cluster1_chart <- clustered_gp_and_metrics |> 
+    rownames_to_column(var = 'practice_code') |>
+    pivot_longer(
+      cols = starts_with("gp_perc"),
+      names_to = "ethnicity",
+      values_to = "percent"
+    ) |>
+    group_by(cluster1,ethnicity) |>
+    summarise(med_percent = median(percent)) |>
+    filter(ethnicity !="gp_perc_est_white_british")|>
+    left_join(titles)|>
+    ggplot(aes(x=fct_rev(factor(ethnicity)) , y=med_percent, fill=factor(ethnicity))) +
+    geom_col() +
+    coord_flip() +
+    ylab("Median Percent of GP Lists") +
+    xlab("") +
+    facet_wrap(cluster1 ~ title) +
+    ylim(0,25) +
+    labs(title="Ethnicity Median Percent by Cluster") +
+    guides(fill = FALSE) 
+  
+  return(cluster1_chart)
+  
 }
 

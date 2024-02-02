@@ -1,11 +1,17 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-activity_by_type_clusters_stg1|stem|b7f38d540078e20d|234a27bac409c97a|7f761c503f11d82e|2132352541||t19755.3771092018s|5ac24080e199830a|1199|rds|local|vector|||0.08||
+activity_by_type_clusters_stg1|stem|ad1791493fbfb306|234a27bac409c97a|6b38bf09310c28ec|2132352541||t19755.4314985961s|cff2221f1a28fc01|1194|rds|local|vector|||0.09||
 activity_long|object|6d996349ed808a4a|||||||||||||||
 activity_type_decile|object|c4f420f33fb96dec|||||||||||||||
 add_all_metrics|function|ef9798f85c9c02b1|||||||||||||||
 by_list_regex|object|b81599c6154011e2|||||||||||||||
 by_list_total|object|7ed9b03a918f8618|||||||||||||||
-clustered_gp_and_metrics|stem|b5792bde72a6ba7c|ffa76963fc35e299|c4e9a787a15a608e|-1308542845||t19755.3771080387s|f7226f30b4138a16|1414328|rds|local|vector|||0.78||
+cluster_plot|stem|50d336def5f6033b|ce4e06ca053deb5b|8c886f37e4143d14|292947156||t19755.5083268239s|604e396c996e1c51|8781748|rds|local|vector|||0.11||
+cluster_plot_over45|stem|b649f699884cbb26|f73801c020993d93|3998fe057db27695|-1531622237||t19755.5083360959s|127857b7b4836ed9|8762320|rds|local|vector|||0.06||
+cluster1_chart|stem|808656f1afcef260|39a919af8721e8fa|5c18c9c8a2047878|-1432709117||t19755.4545905552s|7c377d09eda6de80|1616808|rds|local|vector|||0.38||
+cluster1_map|stem|0d6068c5b9e3b110|dca8a7d9d4db0e24|b32f24cc785ca33f|-334097759||t19755.4439605315s|7d1953d46307e960|1063144|rds|local|vector|||0.05|Data contains 6 rows with either missing or invalid latlon values and will be ignored|
+cluster2_chart|stem|bec040aeff8451eb|530d69998362a523|baeaf3af9fb32ae0|442620410||t19755.4545843428s|494563b8bda3862e|1616831|rds|local|vector|||0.25|1m22mThe scale argument of guides cannot be FALSE. Use none instead asof ggplot2 3.3.4.|
+cluster2_map|stem|6e538991b50c5d99|83f1ab8fec6719de|f94ad7dea98a7be3|-1703897384||t19755.4439579264s|64385a8bab5d38ed|1065693|rds|local|vector|||0.09|Data contains 6 rows with either missing or invalid latlon values and will be ignored|
+clustered_gp_and_metrics|stem|c6bdfc3526e0e3c9|ffa76963fc35e299|503b07529fd4c0a3|-1308542845||t19755.4314973151s|f32e9cf1efeef8a8|1415301|rds|local|vector|||0.81||
 confLevel|object|4dc430958329d776|||||||||||||||
 data_path1|stem|53c19839b811f907|61e9da2aaa8acf6d|ef46db3751d8e999|-591494753|data/metric14.csv|t19676.7132190447s|676b800d1d7efe82|12989|file|local|vector|||1.27||
 data_path10|stem|54e96ff7fdf73461|3bde74f32e90cf4d|ef46db3751d8e999|720080806|data/metric28.csv|t19676.7821046923s|d913eaef418bd16a|34200|file|local|vector|||0||
@@ -32,14 +38,22 @@ data_path6|stem|124fbbc718c0b83a|768ce2c99c8be44e|ef46db3751d8e999|321318511|dat
 data_path7|stem|1a6b312fa8b4c22f|a3f8bf0ffe269f03|ef46db3751d8e999|-967682861|data/metric22.csv|t19677.8363416541s|5dc2289d7403118a|792984|file|local|vector|||0||
 data_path8|stem|c7f020f0dc782c6f|65544542a85333e3|ef46db3751d8e999|-1273253786|data/metric23.csv|t19677.8450187037s|b698dac6c9e8838e|383822|file|local|vector|||0||
 data_path9|stem|5419292de42fe630|a1cfb21b83d0eb7c|ef46db3751d8e999|-883106084|data/metric27.csv|t19676.7489753362s|9e9b4f714b37d001|73895|file|local|vector|||0||
+elbow_plot|stem|f838e129cf9ad952|ea75022eef6088b6|09600a4365c76359|765452591||t19755.5064657244s|6528d6dd8e560562|79570|rds|local|vector|||127.83||
+elbow_plot_over45|stem|3eb8d29d440356f4|ce2bc87d75f47a6c|4040da2e5377702c|446737600||t19755.5083175505s|93120c7e5cf68201|79572|rds|local|vector|||159.97||
 eth_joined|stem|ce635eac1797d5ca|d1e076bb1d44e270|8c6f44233d4b6b45|285540028||t19692.7022540379s|51a98603cbbd641f|1249460|rds|local|vector|||1.78||
 eth_lsoa_census|stem|f50f0c8ec35d8f3a|b48da214d17cfb00|24eea00ddd160309|810133713||t19685.7660411897s|8bca8a9f21a8268a|2489852|rds|local|vector|||0.43||
-final_data_full_cats_percent_5_clusters|stem|129a4baac70bc2fe|97efddff17e9a929|6a680b75f1f3b921|1498339065||t19755.3727830062s|ffdc1428bc00e001|727242|rds|local|vector|||6.23||
-final_data_full_cats_percent_over45_5_clusters|stem|dfb7f3d0d9cb163e|f09556938cf36e7f|bfe3984653e6aa2d|-49620028||t19755.3729247786s|e8761b45dc5e2fc6|777082|rds|local|vector|||12.17||
+final_data_full_cats_percent_5_clusters|stem|d36a7b42f873d43c|d945b2dad82b70a4|1c1f905ca2d99ef0|1498339065||t19755.4999904884s|8aaac343ba51c463|727897|rds|local|vector|||0.02||
+final_data_full_cats_percent_over45_5_clusters|stem|eee20780b1108714|a5bb20b8a0ebcaf8|ef0095b8e037ba5e|-49620028||t19755.499991204s|3993c56c7e3ab22a|777659|rds|local|vector|||0||
 full_cats_percents|stem|74cd7d52b6d45de6|197837822c7e83c8|0d1c12a1bc6d3654|-113998005||t19755.3727098393s|792ea317a8a6b0f4|708308|rds|local|vector|||0.05||
 full_cats_percents_over45|stem|5c70be79861d362d|96a1c76dab8166bc|a708397a40fc3b14|-1904529831||t19751.9639764597s|c0cd703751d83a4a|756022|rds|local|vector|||0.06||
-get_clusters|function|082727cf653775d8|||||||||||||||
+get_cluster_plot|function|800c803ff5b1d507|||||||||||||||
+get_cluster1_chart|function|09dfb88af1b2e6b7|||||||||||||||
+get_cluster1_map|function|c6732655235a185b|||||||||||||||
+get_cluster2_chart|function|1685448a29a07266|||||||||||||||
+get_cluster2_map|function|c11d6730572bd752|||||||||||||||
+get_clusters|function|71ec9ee390003971|||||||||||||||
 get_data_via_server|function|9c10f73bd4a34656|||||||||||||||
+get_elbow_plot|function|01f63381963ca1b0|||||||||||||||
 get_full_cats|function|1981bd884e76e625|||||||||||||||
 get_full_cats_percents|function|9586f03af586fcc8|||||||||||||||
 get_full_cats_percents_over45|function|9abcd05abb788dbf|||||||||||||||
@@ -52,6 +66,7 @@ get_missing_chd_prevalence|function|1890b29cbc6c2b67|||||||||||||||
 get_my_fingertips_gp_data|function|c1da8d293777399c|||||||||||||||
 get_my_fingertips_gp_data_count|function|dbe7b412c9ec0d7b|||||||||||||||
 get_over45_perc|function|eac7e0de845aeffa|||||||||||||||
+get_pams|function|a81dc3b5eaea487f|||||||||||||||
 get_scale_full_cats_percents|function|80fddd22d9a65248|||||||||||||||
 get_scale_full_cats_percents_over45|function|de63cfed36141b5e|||||||||||||||
 get_the_rii|function|542f6307fb21cd2d|||||||||||||||
@@ -115,6 +130,8 @@ mod_df|object|c42c2875b9e9c8aa|||||||||||||||
 mod_results|object|bb4195ec873c4e52|||||||||||||||
 model_df_all_variables|object|36269b5ffad90ea2|||||||||||||||
 ncdes_data|stem|f5be308d097c3649|a5d362f152775310|7501dfc52f463647|-1043310607||t19704.3041584498s|ef4becb719a310a6|126111|rds|local|vector|||3.02|1m22mOne or more parsing issues, call problems on your data frame for details,e.g.  dat  vroom...  problemsdat|
+pams_full_cats_percents|stem|bd21c70b9676bcc6|37bd4a7e7bca5adb|bbbc16b66d8d8a83|-185320845||t19755.4952868443s|28ea596b49a18e5f|804720|rds|local|vector|||6.33||
+pams_full_cats_percents_over45|stem|3d82fb582c4fae28|95faf50fd986d4c5|117353d2dbc0dbb8|1515173774||t19755.4999896394s|4048754da202911f|852367|rds|local|vector|||12.26||
 pred_df|object|11c6e02b16e28fe5|||||||||||||||
 process_census21data|function|03e15213a3a00e1c|||||||||||||||
 process_gpdata|function|06e3f8cced409ee3|||||||||||||||

@@ -41,6 +41,7 @@ library(targets)
 library(GGally)
 library(gt)
 library(tidyverse)
+library(targets)
 
 load("cluster_analysis_v1.Rdata")
 ```
@@ -205,10 +206,38 @@ pams_full_cats_percents_ex_85whitebritish7_clusters_plot
 
 ![](secret/Picture5.png){fig-align="center"}
 
-## Next steps?
+## Five clusters using 14 ethnicities
 
-I wondered about including total list size as a variable?
+```{r}
+tar_read(elbow_plot)
+```
 
-Other clustering methods?
+```{r}
+tar_read(cluster_plot)
+```
 
-Other ideas?
+```{r}
+tar_read(cluster2_chart)
+```
+
+```{r}
+tar_read(cluster2_map)
+```
+
+## Five clusters using 14 ethnicities with % pop 45+
+
+```{r}
+tar_read(elbow_plot_over45)
+```
+
+```{r}
+tar_read(cluster_plot_over45)
+```
+
+```{r}
+tar_read(cluster1_chart)
+```
+
+```{r}
+tar_read(cluster1_map)
+```

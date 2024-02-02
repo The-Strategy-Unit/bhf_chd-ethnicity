@@ -67,13 +67,14 @@ Used October 2022 gp list size by age and gender to calculate % of list size age
 
 ## Clustering
 
-### Attempt 1
+### Notes
 
 <https://www.statology.org/k-medoids-in-r/>
 
 https://www.rdocumentation.org/packages/cluster/versions/2.1.6
 
 look at 18:50 in this video: https://www.youtube.com/watch?v=dKXTNxNDpMA
+
 
 ## Mapping new GP practices to old
 
