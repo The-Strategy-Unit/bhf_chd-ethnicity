@@ -482,7 +482,7 @@ get_cluster_plot <- function(pams_data){
 }
 
 
-#proccess metric 23 to work out whether los of cabg and pci is below trimpoint
+#process metric 23 to work out whether los of cabg and pci is below trimpoint
 metric23_below_trimpoint <- function(metric23,metric23trimpoints){
   #Join the PCI and CABG spells to the trim point data by HRG, flag those with a spell duration less than relevant trim point
   #(take average spell duration for the HRG where spell duration is missing and remove data where still null spell duration
@@ -574,7 +574,7 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
 process_metrics <-function(clustered_gp_and_metrics){
 
 activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
-  filter(metric1 != "NA") |>
+  filter(metric1 != "NA") |> # removes 26 practices (need to check details of these....)
   mutate(list_size_total = replace_na(list_size, 0)) |>
   mutate(metric1_total = replace_na(metric1, 0)) |>
   #mutate(metric2_total = replace_na(metric2, 0)) |>

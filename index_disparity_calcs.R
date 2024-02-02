@@ -36,13 +36,12 @@ get_disparity_ratio <- function(activity_by_type_clusters_stg1) {
       total_rate = metric_total / total_column * 1000
     ) |>
     select(
-      quantile = cluster,
+      quantile = cluster2,
       metric1_total,
       metric_name,
       metric_total,
       total_rate
     ) |>
-    mutate(activity = (total_rate * metric1_total / 1000)) |>
     group_by(metric_name) |>
     # arrange() required for min() and max() functions to calculate
     # largest_value and smallest_value
@@ -51,14 +50,8 @@ get_disparity_ratio <- function(activity_by_type_clusters_stg1) {
       quantile
     ) |>
     mutate(
-      total_activity = sum(activity),
-      prevalence = sum(metric1_total),
-      overall_value = total_activity / prevalence * 1000,
-      population = metric1_total,
       largest_value = max(total_rate),
       smallest_value = min(total_rate),
-      total_pop = sum(population),
-      proportion_pop = population / total_pop,
       abs_range = largest_value - smallest_value, # not used in this particular code
       rel_range = largest_value / smallest_value,
       disparity_ratio = total_rate / largest_value,
@@ -71,4 +64,4 @@ get_disparity_ratio <- function(activity_by_type_clusters_stg1) {
 }
 
 table_data <- activity_long |>
-  select(cluster=quantile, metric_name, disparity_ratio, largest_value)
+  select(cluster=quantile, metric_name, total_rate,disparity_ratio, largest_value)

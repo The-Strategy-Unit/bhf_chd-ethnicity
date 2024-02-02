@@ -217,6 +217,16 @@ tar_read(cluster_plot)
 ```
 
 ```{r}
+
+final_data_full_cats_percent_5_clusters <- tar_read(final_data_full_cats_percent_5_clusters) |> as_tibble()
+
+final_data_full_cats_percent_5_clusters |>
+  group_by(cluster)|>
+  count("practice_code")|>
+  gt()
+```
+
+```{r}
 tar_read(cluster2_chart)
 ```
 
@@ -232,6 +242,15 @@ tar_read(elbow_plot_over45)
 
 ```{r}
 tar_read(cluster_plot_over45)
+```
+
+```{r}
+final_data_full_cats_percent_over45_5_clusters <- tar_read(final_data_full_cats_percent_over45_5_clusters) |> as_tibble()
+
+final_data_full_cats_percent_over45_5_clusters |>
+  group_by(cluster)|>
+  count("practice_code")|>
+  gt()
 ```
 
 ```{r}
