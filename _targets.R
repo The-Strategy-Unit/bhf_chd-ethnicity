@@ -209,6 +209,8 @@ tar_target(metric40, ncdes_data|>
   #and calculate the number for each ethnicity based on ethnicity and list size
   tar_target(gp_lsoa_with_eth,join_gp_and_eth(eth_joined,gp_lsoa)),
   tar_target(gp_lsoa_with_eth_sum,sum_ethnicities(gp_lsoa_with_eth)),
+  #add regional breakdown
+  tar_target(gp_lsoa_with_eth_sum_region,sum_ethnicities_region(gp_lsoa_with_eth)|>filter(comm_region_code=="Y60")),
   #add the perc over 45 on the gp list
   tar_target(gp_lsoa_with_eth_sum_over45perc,join_over45_to_gp_lsoa_with_eth_sum(gp_lsoa_with_eth_sum,gp_over45_perc)),
   
@@ -234,6 +236,14 @@ tar_target(metric40, ncdes_data|>
   tar_target(final_data_full_cats_percent_5_clusters,get_clusters(pams_full_cats_percents,full_cats_percents)),
   tar_target(elbow_plot,get_elbow_plot(scale_full_cats_percents)),
   tar_target(cluster_plot,get_cluster_plot(pams_full_cats_percents)),
+  #cluster the practices by region
+  tar_target(full_cats_percents_region,get_full_cats_percents(gp_lsoa_with_eth_sum_region)),
+  tar_target(scale_full_cats_percents_region,get_scale_full_cats_percents(full_cats_percents_region)),
+  tar_target(pams_full_cats_percents_region,get_pams(scale_full_cats_percents_region)),
+  tar_target(final_data_full_cats_percent_5_clusters_region,get_clusters(pams_full_cats_percents_region,full_cats_percents_region)|>
+                                                            rename(cluster2=cluster)),
+  tar_target(elbow_plot_region,get_elbow_plot(scale_full_cats_percents_region)),
+  tar_target(cluster_plot_region,get_cluster_plot(pams_full_cats_percents_region)),
 
 
 #add in the missing metrics*******
@@ -251,10 +261,14 @@ tar_target(clustered_gp_and_metrics,
                            metric32,metric34,metric38,
                            metric39,metric40)),
 #plot clusters
-tar_target(cluster2_map,get_cluster2_map(clustered_gp_and_metrics,gp_geocoded)),
+#tar_target(cluster2_map,get_cluster2_map(clustered_gp_and_metrics,gp_geocoded)),
 tar_target(cluster1_map,get_cluster1_map(clustered_gp_and_metrics,gp_geocoded)),
+tar_target(cluster2_map,get_cluster2_map(clustered_gp_and_metrics,gp_geocoded)),
 tar_target(cluster2_chart,get_cluster2_chart(clustered_gp_and_metrics)),
 tar_target(cluster1_chart,get_cluster1_chart(clustered_gp_and_metrics)),
+#plot regional cluster
+tar_target(cluster_reg_map,get_cluster2_map(final_data_full_cats_percent_5_clusters_region,gp_geocoded)),
+tar_target(cluster_reg_chart,get_cluster2_chart(final_data_full_cats_percent_5_clusters_region)),
 
 #process the data into the correct format inc dividing some things etc
 tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics))
