@@ -72,22 +72,23 @@ metric23_below_trimpoint <- function(metric23,metric23trimpoints){
 
 add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final_data_full_cats_percent_5_clusters,
                             gp_16andover_pop,
-                            metric1_updated,metric6,metric7,metric8,metric9,metric11,metric13,metric13b,
+                            metric1_updated,metric2,metric5,metric6,metric7,metric8,metric9,metric11,metric12,metric13,metric13b,
                             metric14,metric15,metric16,metric16b,metric17,metric18,metric19,metric20,
                             metric21,metric22,metric23_updated,metric25b,metric27,metric28,
-                            metric29,metric31,metric32,metric34,metric38,
+                            metric29,metric31,metric32,metric33,metric34,metric38,
                             metric39,metric40){
   clustered_gp_and_metrics <-
     final_data_full_cats_percent_over45_5_clusters |> rename(cluster1=cluster)|>
     left_join(final_data_full_cats_percent_5_clusters|>select(gp_practice_code,cluster2=cluster)) |>
     left_join(gp_16andover_pop|>select(gp_practice_code=practice_code,list_size=number_of_patients16andover)) |>
     left_join(metric1_updated)|>
+    mutate(metric1=(metric1/100)*list_size) |>
+    left_join(metric2)|>
     
-    #2 - to do
     #3 - deleted
     #4 - deleted
-    #5 - to do
     
+    left_join(metric5)|>
     left_join(metric6)|>
     mutate(metric6=(metric6/100)*list_size)|>
     left_join(metric7)|>
@@ -96,14 +97,13 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
     mutate(metric8=(metric8/100)*list_size)|>
     left_join(metric9)|>    
     mutate(metric9=(metric9/100)*list_size)|>
+    
     #10 - might not be available
     
     left_join(metric11)|>
-    #12 - to do
+    left_join(metric12)|>
     left_join(metric13)|>
-    mutate(metric13=(metric13/100)*list_size)|>
     left_join(metric13b)|>
-    mutate(metric13b=(metric13b/100)*list_size)|>
     left_join(metric14)|>
     left_join(metric15)|>
     left_join(metric16)|>
@@ -125,7 +125,7 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
     #30 - might not be available
     left_join(metric31)|>
     left_join(metric32)|>
-    #33 - to do
+    left_join(metric33)|>
     left_join(metric34)|>
     #35-37 removed not needed
     left_join(metric38)|>
@@ -137,25 +137,29 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
 
 
 
-
+### think this below function isn't needed?
 process_metrics <-function(clustered_gp_and_metrics){
   
   activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
     filter(metric1 != "NA") |> # removes 26 practices (need to check details of these....)
     mutate(list_size_total = replace_na(list_size, 0)) |>
     mutate(metric1_total = replace_na(metric1, 0)) |>
-    #mutate(metric2_total = replace_na(metric2, 0)) |>
-    #  mutate(metric3_total = replace_na(metric3, 0)) |>
+    mutate(metric2_num_total = replace_na(metric2_num, 0)) |> 
+    mutate(metric2_denom_total = replace_na(metric2_denom, 0)) |>
+  #  mutate(metric3_total = replace_na(metric3, 0)) |>
     #  mutate(metric4_total = replace_na(metric4, 0)) |>
-    #mutate(metric5_total = replace_na(metric5, 0)) |>
+    mutate(metric5_num_total = replace_na(metric5_num, 0)) |> 
+    mutate(metric5_denom_total = replace_na(metric5_denom, 0)) |>
     mutate(metric6_total = replace_na(metric6, 0)) |>
     mutate(metric7_total = replace_na(metric7, 0)) |>
     mutate(metric8_total = replace_na(metric8, 0)) |>
     mutate(metric9_total = replace_na(metric9, 0)) |>
     #mutate(metric10_total = replace_na(metric10, 0)) |>
     #mutate(metric30_total = replace_na(metric30, 0)) |> 
-    mutate(metric11_total = replace_na(metric11, 0)) |> 
-    #mutate(metric12_total = replace_na(metric12, 0)) |> 
+    mutate(metric11_num_total = replace_na(metric11_num, 0)) |> 
+    mutate(metric11_denom_total = replace_na(metric11_denom, 0)) |>
+    mutate(metric12_num_total = replace_na(metric12_num, 0)) |> 
+    mutate(metric12_denom_total = replace_na(metric12_denom, 0)) |>
     mutate(metric13_total = replace_na(metric13, 0)) |>
     mutate(metric13b_total = replace_na(metric13b, 0)) |>
     mutate(metric14_total = replace_na(metric14, 0)) |> 
@@ -178,7 +182,8 @@ process_metrics <-function(clustered_gp_and_metrics){
     #mutate(metric30_total = replace_na(metric30, 0)) |>  
     mutate(metric31_total = replace_na(metric31, 0)) |>
     mutate(metric32_total = replace_na(metric32, 0)) |>
-    #33
+    mutate(metric33_num_total = replace_na(metric33_num, 0)) |> 
+    mutate(metric33_denom_total = replace_na(metric33_denom, 0)) |>
     mutate(metric34_total = replace_na(metric34, 0)) |>
     mutate(metric38_total = replace_na(metric38, 0)) |>
     mutate(metric39_total = replace_na(metric39, 0)) |>
@@ -187,15 +192,19 @@ process_metrics <-function(clustered_gp_and_metrics){
     group_by (cluster2)|>
     
     summarise(list_size_total = sum(list_size_total) ,
-              #metric2_total = sum(metric2_total) ,
-              #metric5_total = sum(metric5_total) , 
+              metric2_num_total = sum(metric2_num_total) , 
+              metric2_denom_total = sum(metric2_denom_total) , 
+              metric5_num_total = sum(metric5_num_total) , 
+              metric5_denom_total = sum(metric5_denom_total) , 
               metric6_total = sum(metric6_total) , 
               metric7_total = sum(metric7_total) , 
               metric8_total = sum(metric8_total) , 
               metric9_total = sum(metric9_total) , 
               #10
-              metric11_total = sum(metric11_total) , 
-              #12
+              metric11_num_total = sum(metric11_num_total) , 
+              metric11_denom_total = sum(metric11_denom_total) , 
+              metric12_num_total = sum(metric12_num_total) , 
+              metric12_denom_total = sum(metric12_denom_total) , 
               metric13_total = sum(metric13_total) , 
               metric13b_total = sum(metric13b_total) , 
               metric14_total = sum(metric14_total) , 
@@ -218,7 +227,8 @@ process_metrics <-function(clustered_gp_and_metrics){
               #30
               metric31_total = sum(metric31_total) ,            
               metric32_total = sum(metric32_total) ,  
-              #33
+              metric33_num_total = sum(metric33_num_total) , 
+              metric33_denom_total = sum(metric33_denom_total) , 
               metric34_total = sum(metric34_total) ,  
               metric38_total = sum(metric38_total) ,
               metric39_total = sum(metric39_total) ,            

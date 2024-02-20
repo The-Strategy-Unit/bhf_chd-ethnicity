@@ -113,9 +113,25 @@ list(
                clean_names()),
   tar_target(metric23_updated,metric23_below_trimpoint(metric23,metric23trimpoints)), #process metric 23
   
+  tar_target(data_path30,"data/gp_survey_smoking_prevalence.xlsx", format="file"), #Smoking synthetic prevalence estimates metric 2
+  tar_target(metric2,read_excel_file(data_path30)|>
+               clean_names()|>
+               select(gp_practice_code=practice_code,metric2_denom=smoking_habits_unweighted_total_responses,percent_occasional_smoker,percent_regular_smoker)|>
+               mutate(metric2_num=(as.numeric(percent_occasional_smoker)+as.numeric(percent_regular_smoker))*metric2_denom)|>
+               select(-percent_occasional_smoker,-percent_regular_smoker)), #metric2
+  
+  tar_target(data_path31,"data/QOFPCASMOK2223.xlsx", format="file"), #Smoking synthetic prevalence estimates metric 12
+  tar_target(metric12,read_excel_file(data_path31)|>
+               clean_names()|>
+               select(gp_practice_code=practice_code,metric12_denom=denominator_plus_pc_as,metric12_num=pc_as)), #metric12
+  
   tar_target(metric13,get_my_fingertips_gp_data(273,"2022/23")|>
                rename(gp_practice_code=AreaCode,
                       metric13=Value)), # metric 13
+  tar_target(metric5,get_my_fingertips_gp_data_count(91280,"2022/23")|>
+               rename(gp_practice_code=AreaCode,
+                      metric5_num=Count,
+                      metric5_denom=Denominator)), # metric 5
   tar_target(metric6,get_my_fingertips_gp_data(92588,"2022/23")|>
                rename(gp_practice_code=AreaCode,
                       metric6=Value)), # metric 6
@@ -149,34 +165,44 @@ list(
 #  rename(gp_practice_code=AreaCode,
 #         metric10=Value)), # metric 10
 
-  tar_target(metric11,get_my_fingertips_gp_data(90619,"2022/23")|>
-  rename(gp_practice_code=AreaCode,
-         metric11=Value)), # metric 11
+  tar_target(metric11,get_my_fingertips_gp_data_count(90619,"2022/23")|>
+                      rename(gp_practice_code=AreaCode,
+                      metric11_num=Count,
+                      metric11_denom=Denominator)), # metric 11
 
   tar_target(data_path16, "data/QOF_CHD_2022_23.xlsx", format = "file"), #QOF CHD indicators
   tar_target(qof_chd_2223,read_qof_excel_file(data_path16) |>
-                            select(1,2,3,6,7,15,32,35,37,38,46)|>
+                            select(1,2,3,6,7,11,14,15,32,35,37,38,46)|>
                             clean_names() |>
                             filter(practice_code != "NA")),
   tar_target(metric16b, qof_chd_2223 |> 
-                          select(4,10) |>
+                          select(4,12) |> #38
                           rename(gp_practice_code=practice_code,
                                  metric16b=patients_receiving_intervention_percent_38)), # metric 16b 22/23
   tar_target(metric31, qof_chd_2223 |> 
-                          select(4,8) |>
+                          select(4,10) |> #35
                           rename(gp_practice_code=practice_code,
                                  metric31=pc_as_35)), # metric 31 22/23
   tar_target(metric25b, qof_chd_2223 |> 
-                          select(4,11) |>
+                          select(4,13) |> #46
                           rename(gp_practice_code=practice_code,
                                  metric25b=patients_receiving_intervention_percent_46)),   # metric 25b 22/23
   tar_target(metric32,get_data_via_server() |>
                rename(gp_practice_code=practice_code,
                       metric32=value)), # metric 32 20/21
   tar_target(metric13b,qof_chd_2223 |> 
-                          select(4,6) |>
+                          select(4,8,6,7) |> #15
                           rename(gp_practice_code=practice_code,
-                                 metric13b=prevalence_percent_15)), # metric 13b 22/23
+                                 metric13b=prevalence_percent_15,
+                                 metric13_num=register_14,
+                                 metric13_denom=list_size_11)), # metric 13b 22/23
+
+tar_target(metric33,get_my_fingertips_gp_data_count(91262,"2022/23")|>
+             rename(gp_practice_code=AreaCode,
+                    metric33_num=Count,
+                    metric33_denom=Denominator)), # metric 33
+
+
   # tar_target(metric39, ncdes_data|>
   #                         mutate(ncd002_percent =(NCD002_Numerator / NCD002_Denominator)*100) |>
   #                         select(practice_code,ncd002_percent)|>
@@ -253,12 +279,12 @@ tar_target(clustered_gp_and_metrics,
            add_all_metrics(final_data_full_cats_percent_over45_5_clusters, 
                            final_data_full_cats_percent_5_clusters,
                            gp_16andover_pop,
-                           metric1_updated,metric6,metric7,metric8,metric9,metric11,
-                           metric13,metric13b,metric14,metric15,metric16,
+                           metric1_updated,metric2,metric5,metric6,metric7,metric8,metric9,metric11,
+                           metric12,metric13,metric13b,metric14,metric15,metric16,
                            metric16b,metric17,metric18,metric19,metric20,
                            metric21,metric22,metric23_updated,
                            metric25b,metric27,metric28, metric29,metric31,
-                           metric32,metric34,metric38,
+                           metric32,metric33,metric34,metric38,
                            metric39,metric40)),
 #plot clusters
 #tar_target(cluster2_map,get_cluster2_map(clustered_gp_and_metrics,gp_geocoded)),

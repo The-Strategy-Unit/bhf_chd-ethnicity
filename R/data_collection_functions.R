@@ -29,7 +29,7 @@ get_my_fingertips_gp_data <- function(ind,year){
 get_my_fingertips_gp_data_count <- function(ind,year){
   Metric <- fingertips_data(IndicatorID = ind,AreaTypeID = "All") |>
     filter(AreaType=="GPs", Timeperiod==year) |>
-    select(AreaCode,Count)
+    select(AreaCode,Count,Denominator)
 }
 
 #Get QOF via Excel file

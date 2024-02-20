@@ -75,7 +75,6 @@ https://www.rdocumentation.org/packages/cluster/versions/2.1.6
 
 look at 18:50 in this video: https://www.youtube.com/watch?v=dKXTNxNDpMA
 
-
 ## Mapping new GP practices to old
 
 ### To obtain CHD prevalence for as many new practices as possible
@@ -89,3 +88,13 @@ link to to the blog
 ## Disparity
 
 <https://www.health.state.mn.us/data/mchs/pubs/raceethn/rankingbyratio20032007.pdf>
+
+## Smoking PCAS
+
+Metric 12 - Exception reporting for Smoking cessation support offered
+
+<https://digital.nhs.uk/data-and-information/publications/statistical/quality-and-outcomes-framework-achievement-prevalence-and-exceptions-data/2022-23>
+
+Donwloaded:
+
+qof-2223-prev-ach-pca-ls-prac.xlsx
