@@ -141,13 +141,13 @@ list(
   tar_target(metric8,get_my_fingertips_gp_data(848,"2022/23")|>
                rename(gp_practice_code=AreaCode,
                       metric8=Value)), # metric 8
-  
   tar_target(metric16,get_my_fingertips_gp_data(90999,"2021/22")|>
                rename(gp_practice_code=AreaCode,
                       metric16=Value)), # metric 16
-  tar_target(metric17,get_my_fingertips_gp_data(91000,"2020/21")|>
+  tar_target(metric17,get_my_fingertips_gp_data_count(91000,"2020/21")|>
                rename(gp_practice_code=AreaCode,
-                      metric17=Value)), # metric 17
+                      metric17_num=Count,
+                      metric17_denom=Denominator)), # metric 17
 
 # metric 9 has been removed from Fingertips :-(  this was the original code
 # tar_target(metric9,get_my_fingertips_gp_data(92589,"2019/20")), # metric 9
@@ -172,7 +172,7 @@ list(
 
   tar_target(data_path16, "data/QOF_CHD_2022_23.xlsx", format = "file"), #QOF CHD indicators
   tar_target(qof_chd_2223,read_qof_excel_file(data_path16) |>
-                            select(1,2,3,6,7,11,14,15,32,35,37,38,46)|>
+                            select(1,2,3,6,7,11,14,15,32,35,37,38,40,45)|>
                             clean_names() |>
                             filter(practice_code != "NA")),
   tar_target(metric16b, qof_chd_2223 |> 
@@ -180,16 +180,19 @@ list(
                           rename(gp_practice_code=practice_code,
                                  metric16b=patients_receiving_intervention_percent_38)), # metric 16b 22/23
   tar_target(metric31, qof_chd_2223 |> 
-                          select(4,10) |> #35
+                          select(4,10,11) |> #35
                           rename(gp_practice_code=practice_code,
-                                 metric31=pc_as_35)), # metric 31 22/23
-  tar_target(metric25b, qof_chd_2223 |> 
-                          select(4,13) |> #46
+                                 metric31_num=pc_as_35,
+                                 metric31_denom=denominator_plus_pc_as_37)), # metric 31 22/23
+  tar_target(metric25b, qof_chd_2223 |>
+                          select(4,13,14) |> #40 and #45
                           rename(gp_practice_code=practice_code,
-                                 metric25b=patients_receiving_intervention_percent_46)),   # metric 25b 22/23
+                                 metric25_num=numerator_40,
+                                 metric25_denom=denominator_plus_pc_as_45)),   # metric 25b 22/23
   tar_target(metric32,get_data_via_server() |>
                rename(gp_practice_code=practice_code,
-                      metric32=value)), # metric 32 20/21
+                      metric32_num=value)), # metric 32 20/21
+  tar_target(metric32_updated,combine_metrics17_and_32(metric32,metric17)),
   tar_target(metric13b,qof_chd_2223 |> 
                           select(4,8,6,7) |> #15
                           rename(gp_practice_code=practice_code,
@@ -284,7 +287,7 @@ tar_target(clustered_gp_and_metrics,
                            metric16b,metric17,metric18,metric19,metric20,
                            metric21,metric22,metric23_updated,
                            metric25b,metric27,metric28, metric29,metric31,
-                           metric32,metric33,metric34,metric38,
+                           metric32_updated,metric33,metric34,metric38,
                            metric39,metric40)),
 #plot clusters
 #tar_target(cluster2_map,get_cluster2_map(clustered_gp_and_metrics,gp_geocoded)),

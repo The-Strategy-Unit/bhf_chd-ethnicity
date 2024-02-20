@@ -1,8 +1,8 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-activity_by_type_clusters_stg1|stem|1fa1c4aab23a10f6|234a27bac409c97a|588fc1b3bcaa4861|2132352541||t19773.526650401s|e1a731960eb47640|1433|rds|local|vector|||0.13||
+activity_by_type_clusters_stg1|stem|981db76b6926274a|234a27bac409c97a|79a31077a76f1502|2132352541||t19773.8241241232s|e03828b00a5d5950|1482|rds|local|vector|||0.14||
 activity_long|object|6d996349ed808a4a|||||||||||||||
 activity_type_decile|object|c4f420f33fb96dec|||||||||||||||
-add_all_metrics|function|762ed0c161d426ef|||||||||||||||
+add_all_metrics|function|c380d2cb3d5cb958|||||||||||||||
 by_list_regex|object|b81599c6154011e2|||||||||||||||
 by_list_total|object|7ed9b03a918f8618|||||||||||||||
 cluster_plot|stem|50d336def5f6033b|ce4e06ca053deb5b|8c886f37e4143d14|292947156||t19755.5083268239s|604e396c996e1c51|8781748|rds|local|vector|||0.11||
@@ -10,11 +10,12 @@ cluster_plot_over45|stem|b649f699884cbb26|f73801c020993d93|3998fe057db27695|-153
 cluster_plot_region|stem|114a4362752ffc57|9dc9cc822f15757e|b3b3f69c1a8fe7a5|1028772277||t19759.5124211042s|ae474793dd8a2ad4|1833656|rds|local|vector|||0.03||
 cluster_reg_chart|stem|3af0af343bd4d9b3|cc79c9802a468912|a27c0de80dd39d90|2058463041||t19759.5124284842s|03b3803ded3a27c0|358321|rds|local|vector|||0.22|1m22mThe scale argument of guides cannot be FALSE. Use none instead asof ggplot2 3.3.4.|
 cluster_reg_map|stem|af0cd0278d8bf1ce|d89768a71c91bf6f|4e96e8c3a1ecc8f8|-274411888||t19759.5124320038s|568f73c8374be25f|323043|rds|local|vector|||0.23|Data contains 4 rows with either missing or invalid latlon values and will be ignored|
-cluster1_chart|stem|49fd81cd6ff33ced|39a919af8721e8fa|b7f3e8f82db7305e|-1432709117||t19773.5266550844s|48c70c079fcf31b8|1752773|rds|local|vector|||0.22||
-cluster1_map|stem|a37cffe479f09a0b|dca8a7d9d4db0e24|51568b035e560ee4|-334097759||t19773.5266464863s|52b970793c9661a8|1024250|rds|local|vector|||0.09|Data contains 6 rows with either missing or invalid latlon values and will be ignored|
-cluster2_chart|stem|ef25e2661e2f58c9|530d69998362a523|11071f236590a1e9|442620410||t19773.5266436781s|b2edea1ee583eb6b|1752782|rds|local|vector|||0.23|1m22mThe scale argument of guides cannot be FALSE. Use none instead asof ggplot2 3.3.4.|
-cluster2_map|stem|5e66719a6079e4f8|83f1ab8fec6719de|a52cee89d3ad9653|-1703897384||t19773.5266486816s|71215c9b1c53fa07|1026705|rds|local|vector|||0.07|Data contains 6 rows with either missing or invalid latlon values and will be ignored|
-clustered_gp_and_metrics|stem|e43df96628cea7ee|2c7b9c545a48c8e4|18d9f4b04da75fcb|-1308542845||t19773.52663857s|ae1bcc1193a7e893|1593726|rds|local|vector|||1.01||
+cluster1_chart|stem|1c6fff7992d46d7f|39a919af8721e8fa|f3d7c60b41f02a3a|-1432709117||t19773.8241220449s|8538d7abe916ba49|1765528|rds|local|vector|||0.44|1m22mThe scale argument of guides cannot be FALSE. Use none instead asof ggplot2 3.3.4.|
+cluster1_map|stem|a37cffe479f09a0b|dca8a7d9d4db0e24|d57736c93213e95e|-334097759||t19773.8241146435s|52b970793c9661a8|1024250|rds|local|vector|||0.11|Data contains 6 rows with either missing or invalid latlon values and will be ignored|
+cluster2_chart|stem|8824b86e87c21752|530d69998362a523|c051459967ff348e|442620410||t19773.8241323039s|3c82c3f9ad0c2438|1765538|rds|local|vector|||0.33||
+cluster2_map|stem|5e66719a6079e4f8|83f1ab8fec6719de|5c07b2bbae51d4dc|-1703897384||t19773.8241262644s|71215c9b1c53fa07|1026705|rds|local|vector|||0.04|Data contains 6 rows with either missing or invalid latlon values and will be ignored|
+clustered_gp_and_metrics|stem|1c9a7aff03a95375|aced4cf54d5b40ab|3593dd755e25b7cb|-1308542845||t19773.8241117163s|abdcf9c5247a2c03|1605719|rds|local|vector|||0.91||
+combine_metrics17_and_32|function|ff02ca12c7130f2b|||||||||||||||
 confLevel|object|4dc430958329d776|||||||||||||||
 data_path1|stem|53c19839b811f907|61e9da2aaa8acf6d|ef46db3751d8e999|-591494753|data/metric14.csv|t19676.7132190447s|676b800d1d7efe82|12989|file|local|vector|||1.27||
 data_path10|stem|54e96ff7fdf73461|3bde74f32e90cf4d|ef46db3751d8e999|720080806|data/metric28.csv|t19676.7821046923s|d913eaef418bd16a|34200|file|local|vector|||0||
@@ -22,7 +23,7 @@ data_path11|stem|45f823d4ba0e8ef5|2376ab56e0b93135|ef46db3751d8e999|952511323|da
 data_path13|stem|8a7ed7b6d4728ebe|75d08952e6f12d24|ef46db3751d8e999|1144963652|data/EthnicityByLSOACensus21.csv|t19443.6561318443s|7e257742e6340326|7278302|file|local|vector|||1.25|package visNetwork was built under R version 4.3.2|
 data_path14|stem|efd867b4129f1bbb|ecc550d59026ea43|ef46db3751d8e999|-1698926786|data/gp-reg-pat-prac-lsoa-all.csv|t19691.6883056453s|4a71909427e0c93a|65291872|file|local|vector|||1.44|package visNetwork was built under R version 4.3.2|
 data_path15|stem|e354be723757858c|f006082b3caca2f6|ef46db3751d8e999|687475643|data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv|t19444.4298281067s|2dfa8eddb9df0acf|3030574|file|local|vector|||0||
-data_path16|stem|adeb35da98acd839|3d3d7063067a4a0d|ef46db3751d8e999|2095100807|data/QOF_CHD_2022_23.xlsx|t19688.5455902778s|e95a9135af77896e|3028988|file|local|vector|||1.17|package visNetwork was built under R version 4.3.2|
+data_path16|stem|4bafcba1f32bb65a|3d3d7063067a4a0d|ef46db3751d8e999|2095100807|data/QOF_CHD_2022_23.xlsx|t19773.7110652582s|333c44e65561505c|3032829|file|local|vector|||1.89|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
 data_path17|stem|a63418159811d834|63ceec6f8c52026f|ef46db3751d8e999|-1960423406|data/gp-reg-pat-prac-map.csv|t19691.6787142247s|0c9d0253ecc0bc0e|1551138|file|local|vector|||1.61|package visNetwork was built under R version 4.3.2|
 data_path2|stem|28352e90a5ceea6a|a819e9b2fa091f61|ef46db3751d8e999|1241406493|data/metric15.csv|t19676.7148857456s|b6828351a7a8f164|6540|file|local|vector|||0||
 data_path21|stem|10624f0f45dddce0|b179230bbd3b1396|ef46db3751d8e999|379676194|data/CVDP008.csv|t19699.5057712187s|afe79be209ff2720|2592672|file|local|vector|||0||
@@ -107,12 +108,12 @@ metric1_updated|stem|4df0ad6441044258|5c4ae4725e97b936|fb8c8ea71adae519|27164660
 metric11|stem|dd8e536073c78ab6|34c99802941e98b9|4116547b8b3bb5b7|-1832098155||t19762.8015338578s|fc72fe1e84610ad3|48553|rds|local|vector|||10.24|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
 metric12|stem|e05bdb3240dedbbc|694a36947eb06206|5b6e996c51f51972|-1601502702||t19773.5032480326s|42b5d5ae251f34ff|43421|rds|local|vector|||0.1||
 metric13|stem|6fde15cf35960acb|3f9a021c3e9289d8|99b71f0bf10e73bf|2002300846||t19753.3762355952s|9c85125d3c5dfa60|52631|rds|local|vector|||14.92|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
-metric13b|stem|febffad8936c2e02|c3b0ac9d5dbb3b9d|32f17ac62406fd60|-675526059||t19762.84577122s|0ffb6d3c988bcfae|100723|rds|local|vector|||0||
+metric13b|stem|febffad8936c2e02|c3b0ac9d5dbb3b9d|6e72134b675e17f3|-675526059||t19773.7144824552s|0ffb6d3c988bcfae|100723|rds|local|vector|||0||
 metric14|stem|ea501eff30bd17d1|6dd7c437454cf56d|399f9c24334dd68b|-2059383939||t19752.3370759305s|2e872bceb9cfe7ab|4521|rds|local|vector|||0.32||
 metric15|stem|578d4cf2cbca3044|4335cdcebe59fb95|1a8dba480186e80c|-412053540||t19752.33707707s|d9a494b98a7d9ccb|2414|rds|local|vector|||0.08||
 metric16|stem|580a311f0d1efa4f|70ea6665309cc14f|99b71f0bf10e73bf|-181130397||t19752.3585025271s|48509184fb571f39|46514|rds|local|vector|||30.35||
-metric16b|stem|4b80b46e04d97f0b|71547f58199cad41|32f17ac62406fd60|1837559296||t19762.8457718112s|82a3a6d91207cd99|50693|rds|local|vector|||0||
-metric17|stem|8341b8827c438a43|8a203a219216ee5a|99b71f0bf10e73bf|-1172392647||t19752.3587692907s|ad5e5c61f03aace1|51740|rds|local|vector|||23.02||
+metric16b|stem|4b80b46e04d97f0b|71547f58199cad41|6e72134b675e17f3|1837559296||t19773.7144820692s|82a3a6d91207cd99|50693|rds|local|vector|||0||
+metric17|stem|84cf49b6063c0411|a8b14a2c2087b65b|4116547b8b3bb5b7|-1172392647||t19773.8208330471s|ca426fb85a51bd95|43807|rds|local|vector|||28.99||
 metric18|stem|51227fcc57d5e94d|64772a6afd0d5525|7e3ddc5b680ed88e|-914664462||t19752.3370782568s|73eeab6ebcbdc29d|37526|rds|local|vector|||0.08||
 metric19|stem|ace84f8c02f9cd9e|eef0b95cd27e9e90|32e9eede6f3a4993|549683841||t19752.3636684634s|578829b2122a7ff0|27965|rds|local|vector|||0.07||
 metric2|stem|7d5084df493854b1|c96915d4919e6684|1eb4633f62f6d56d|-819709152||t19772.7205189705s|3ae1f1cc4bdeecf1|78784|rds|local|vector|||0.14||
@@ -123,12 +124,13 @@ metric23|stem|e3b8fe53b5b5d3e0|49248ff267c1c422|2af263d9a5580342|-1154974335||t1
 metric23_below_trimpoint|function|0fdb4be6f14dd0d6|||||||||||||||
 metric23_updated|stem|1c09ce6590ac20b3|e48e60d0b4b603d2|ebdb80aa5181067e|-771910972||t19753.6069654905s|6dc00f6a5e729fa4|20563|rds|local|vector|||0.03||
 metric23trimpoints|stem|847d71a34b5c7fbb|550968424958c3bd|fd4d33cbdb292def|1085659011||t19753.5928693949s|51a1a8b47eb76aab|54996|rds|local|vector|||0.11|Expecting numeric in D1503  R1503C4 got . Expecting numeric in E1503  R1503C5 got . Expecting numeric in F1503  R1503C6 got . Expecting numeric in G1503  R1503C7 got . Expecting numeric in H1503  R1503C8 got|
-metric25b|stem|734c48c7aa2902f3|af0695334ed46ec4|32f17ac62406fd60|-1993572159||t19762.8457714008s|06b12d26a840f411|49440|rds|local|vector|||0||
+metric25b|stem|fbb14274ca7be559|20e715b397af4e51|6e72134b675e17f3|-1993572159||t19773.7144814249s|94ac6667de7c9960|43869|rds|local|vector|||0||
 metric27|stem|8d98b510ef8bd48b|63a13dd2eee63d66|652ff5d7ea11ef6a|63442627||t19752.3636649319s|d19680d42476c774|27831|rds|local|vector|||0.08||
 metric28|stem|adee5259497bab32|b2a2c613e4c29daa|8948e59cb60e4663|1219696792||t19752.3636662185s|21103f528ff9fedf|11355|rds|local|vector|||0.1||
 metric29|stem|adc65b52fc0a4684|f9c9a93f4204d4f1|82f65d4e99deb644|1482307558||t19752.3636673192s|f144b2f15c68c99f|30490|rds|local|vector|||0.08||
-metric31|stem|c81b6bbb122e3dec|027530b28f3ce457|32f17ac62406fd60|1219074981||t19762.8457720985s|3836ff2a6ae1bb8e|26413|rds|local|vector|||0||
-metric32|stem|af16afe5d464271d|cadd027d66029c75|65f5c6806f006a48|-1831456771||t19752.3684038836s|ed3f7a57debdda5c|27996|rds|local|vector|||10.19|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
+metric31|stem|a67670a24f4e6b66|ab08f7c877ee75fc|6e72134b675e17f3|1219074981||t19773.8068477331s|38aa7c926260d52a|40935|rds|local|vector|||0||
+metric32|stem|4aca8679c6b7abad|fc61c585ee7ccefd|65f5c6806f006a48|-1831456771||t19773.8204956462s|f06114259fa81e13|28001|rds|local|vector|||10.35|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
+metric32_updated|stem|0cdeeee24e497b62|07d5ccab389d5a99|fee0817b0960213a|115816429||t19773.824096428s|4c6e5361027b89eb|41177|rds|local|vector|||0.04||
 metric33|stem|9462232dd2d9c4de|5ea2e5a91ba7f9c9|4116547b8b3bb5b7|-587545527||t19773.5266137478s|030bc98a5fdca916|52644|rds|local|vector|||38.71|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
 metric34|stem|40f4df93f33a094e|b30ede088fdfbe90|ac6bd4cade08682c|-1354012441||t19755.3163582066s|5b2371e5f5011b04|32581|rds|local|vector|||0.2||
 metric38|stem|88c63a95905e7100|522b1e3dff724a3c|a8b0eb207010f044|-296786190||t19755.3163638892s|c57acd83f5cc4c7c|33492|rds|local|vector|||0.09||
@@ -150,9 +152,9 @@ pams_full_cats_percents_region|stem|a3579b9325c690bf|410022bb52750c9e|571d820bfc
 pred_df|object|11c6e02b16e28fe5|||||||||||||||
 process_census21data|function|03e15213a3a00e1c|||||||||||||||
 process_gpdata|function|06e3f8cced409ee3|||||||||||||||
-process_metrics|function|77a6e7a2a969c9e9|||||||||||||||
+process_metrics|function|bc8c76664ca89cd3|||||||||||||||
 process_metrics_part_2|function|b8e4a5e5c4027aa4|||||||||||||||
-qof_chd_2223|stem|d4dd52d4114e10e8|797626dcd7df2a50|0b7c922ca4deb35a|1100172128||t19762.8446784234s|1a3f76f15ec32131|253361|rds|local|vector|||0.35|Expecting numeric in I1186  R1186C9 got . Expecting numeric in X1186  R1186C24 got . Expecting numeric in AB1186  R1186C28 got . Expecting numeric in H1465  R1465C8 got . Expecting numeric in I1465  R1465C9 got . Expecting numeric in J1465  R1465C10 got . Expecting numeric in P1465  R1465C16 got . Expecting numeric in X1465  R1465C24 got . Expecting numeric in AB1465  R1465C28 got . Expecting numeric in AP2518  R2518C42 got . Expecting numeric in AR2518  R2518C44 got . Expecting numeric in AT2518  R2518C46 got . Expecting numeric in H2690  R2690C8 got . Expecting numeric in I2690  R2690C9 got . Expecting numeric in J2690  R2690C10 got . Expecting numeric in P2690  R2690C16 got . Expecting numeric in Q2690  R2690C17 got . Expecting numeric in R2690  R2690C18 got . Expecting numeric in V2690  R2690C22 got . Expecting numeric in W2690  R2690C23 got . Expecting numeric in X2690  R2690C24 got . Expecting numeric in AB2690  R2690C28 got . Expecting numeric in AA3064  R3064C27 got . Expecting numeric in AB3064  R3064C28 got . Expecting numeric in AH3064  R3064C34 got . Expecting numeric in AJ3064  R3064C36 got . Expecting numeric in AL3064  R3064C38 got . Expecting numeric in AP3064  R3064C42 got . Expecting numeric in AR3064  R3064C44 got . Expecting numeric in AT3064  R3064C46 got . Expecting numeric in H3378  R3378C8 got . Expecting numeric in I3378  R3378C9 got . Expecting numeric in J3378  R3378C10 got . Expecting numeric in P3378  R3378C16 got . Expecting numeric in Q3378  R3378C17 got . Expecting numeric in R3378  R3378C18 got . Expecting numeric in V3378  R3378C22 got . Expecting numeric in W3378  R3378C23 got . Expecting numeric in X3378  R3378C24 got . Expecting numeric in AA3378  R3378C27 got . Expecting numeric in AB3378  R3378C28 got . Expecting numeric in AH3378  R3378C34 got . Expecting numeric in A|
+qof_chd_2223|stem|db7b5f85a8196d56|2c4657fb00bd3abb|f76a319003658608|1100172128||t19773.7111823146s|2971af7d0f0d5d82|252047|rds|local|vector|||0.4|Expecting numeric in I1186  R1186C9 got . Expecting numeric in X1186  R1186C24 got . Expecting numeric in AB1186  R1186C28 got . Expecting numeric in H1465  R1465C8 got . Expecting numeric in I1465  R1465C9 got . Expecting numeric in J1465  R1465C10 got . Expecting numeric in P1465  R1465C16 got . Expecting numeric in X1465  R1465C24 got . Expecting numeric in AB1465  R1465C28 got . Expecting numeric in AP2518  R2518C42 got . Expecting numeric in AR2518  R2518C44 got . Expecting numeric in AT2518  R2518C46 got . Expecting numeric in H2690  R2690C8 got . Expecting numeric in I2690  R2690C9 got . Expecting numeric in J2690  R2690C10 got . Expecting numeric in P2690  R2690C16 got . Expecting numeric in Q2690  R2690C17 got . Expecting numeric in R2690  R2690C18 got . Expecting numeric in V2690  R2690C22 got . Expecting numeric in W2690  R2690C23 got . Expecting numeric in X2690  R2690C24 got . Expecting numeric in AB2690  R2690C28 got . Expecting numeric in AA3064  R3064C27 got . Expecting numeric in AB3064  R3064C28 got . Expecting numeric in AH3064  R3064C34 got . Expecting numeric in AJ3064  R3064C36 got . Expecting numeric in AL3064  R3064C38 got . Expecting numeric in AP3064  R3064C42 got . Expecting numeric in AR3064  R3064C44 got . Expecting numeric in AT3064  R3064C46 got . Expecting numeric in H3378  R3378C8 got . Expecting numeric in I3378  R3378C9 got . Expecting numeric in J3378  R3378C10 got . Expecting numeric in P3378  R3378C16 got . Expecting numeric in Q3378  R3378C17 got . Expecting numeric in R3378  R3378C18 got . Expecting numeric in V3378  R3378C22 got . Expecting numeric in W3378  R3378C23 got . Expecting numeric in X3378  R3378C24 got . Expecting numeric in AA3378  R3378C27 got . Expecting numeric in AB3378  R3378C28 got . Expecting numeric in AH3378  R3378C34 got . Expecting numeric in A|
 read_csv_file|function|dcd254c5bba0254b|||||||||||||||
 read_excel_file|function|061c16961cfbd703|||||||||||||||
 read_qof_excel_file|function|53d417490cd71d74|||||||||||||||

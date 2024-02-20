@@ -69,13 +69,21 @@ metric23_below_trimpoint <- function(metric23,metric23trimpoints){
   return(metric23_updated)
 }
 
+combine_metrics17_and_32 <- function(metric32,metric17){
+  metric32_updated <- metric17 |>
+    left_join(metric32)|>
+    select(-metric17_num)|>
+    rename(metric32_denom=metric17_denom)
+  
+  return(metric32_updated)
+}
 
 add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final_data_full_cats_percent_5_clusters,
                             gp_16andover_pop,
                             metric1_updated,metric2,metric5,metric6,metric7,metric8,metric9,metric11,metric12,metric13,metric13b,
                             metric14,metric15,metric16,metric16b,metric17,metric18,metric19,metric20,
                             metric21,metric22,metric23_updated,metric25b,metric27,metric28,
-                            metric29,metric31,metric32,metric33,metric34,metric38,
+                            metric29,metric31,metric32_updated,metric33,metric34,metric38,
                             metric39,metric40){
   clustered_gp_and_metrics <-
     final_data_full_cats_percent_over45_5_clusters |> rename(cluster1=cluster)|>
@@ -124,7 +132,7 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
     left_join(metric29)|>
     #30 - might not be available
     left_join(metric31)|>
-    left_join(metric32)|>
+    left_join(metric32_updated)|>
     left_join(metric33)|>
     left_join(metric34)|>
     #35-37 removed not needed
@@ -166,7 +174,8 @@ process_metrics <-function(clustered_gp_and_metrics){
     mutate(metric15_total = replace_na(metric15, 0)) |> 
     mutate(metric16_total = replace_na(metric16, 0)) |>
     mutate(metric16b_total = replace_na(metric16b, 0)) |>
-    mutate(metric17_total = replace_na(metric17, 0)) |>
+    mutate(metric17_num_total = replace_na(metric17_num, 0)) |> 
+    mutate(metric17_denom_total = replace_na(metric17_denom, 0)) |>
     mutate(metric18_total = replace_na(metric18, 0)) |> 
     mutate(metric19_total = replace_na(metric19, 0)) |>
     mutate(metric20_total = replace_na(metric20, 0)) |>
@@ -174,14 +183,17 @@ process_metrics <-function(clustered_gp_and_metrics){
     mutate(metric22_total = replace_na(metric22, 0)) |> 
     mutate(metric23_total = replace_na(metric23, 0)) |>
     #24
-    mutate(metric25b_total = replace_na(metric25b, 0)) |>
+    mutate(metric25_num_total = replace_na(metric25_num, 0)) |> 
+    mutate(metric25_denom_total = replace_na(metric25_denom, 0)) |>
     #mutate(Metric26_total = replace_na(`Metric26`, 0)) |>
     mutate(metric27_total = replace_na(metric27, 0)) |>
     mutate(metric28_total = replace_na(metric28, 0)) |>
     mutate(metric29_total = replace_na(metric29, 0)) |>
     #mutate(metric30_total = replace_na(metric30, 0)) |>  
-    mutate(metric31_total = replace_na(metric31, 0)) |>
-    mutate(metric32_total = replace_na(metric32, 0)) |>
+    mutate(metric31_num_total = replace_na(metric31_num, 0)) |> 
+    mutate(metric31_denom_total = replace_na(metric31_denom, 0)) |>
+    mutate(metric32_num_total = replace_na(metric32_num, 0)) |> 
+    mutate(metric32_denom_total = replace_na(metric32_denom, 0)) |>
     mutate(metric33_num_total = replace_na(metric33_num, 0)) |> 
     mutate(metric33_denom_total = replace_na(metric33_denom, 0)) |>
     mutate(metric34_total = replace_na(metric34, 0)) |>
@@ -211,7 +223,8 @@ process_metrics <-function(clustered_gp_and_metrics){
               metric15_total = sum(metric15_total) , 
               metric16_total = sum(metric16_total) , 
               metric16b_total = sum(metric16b_total) , 
-              metric17_total = sum(metric17_total) , 
+              metric17_num_total = sum(metric17_num_total) , 
+              metric17_denom_total = sum(metric17_denom_total) , 
               metric18_total = sum(metric18_total) , 
               metric19_total = sum(metric19_total) , 
               metric20_total = sum(metric20_total) , 
@@ -219,14 +232,17 @@ process_metrics <-function(clustered_gp_and_metrics){
               metric22_total = sum(metric22_total) , 
               metric23_total = sum(metric23_total) , 
               #24
-              metric25b_total = sum(metric25b_total) , 
+              metric25_num_total = sum(metric25_num_total) , 
+              metric25_denom_total = sum(metric25_denom_total) , 
               #26
               metric27_total = sum(metric27_total) ,            
               metric28_total = sum(metric28_total) ,   
               metric29_total = sum(metric29_total) ,   
               #30
-              metric31_total = sum(metric31_total) ,            
-              metric32_total = sum(metric32_total) ,  
+              metric31_num_total = sum(metric31_num_total) , 
+              metric31_denom_total = sum(metric31_denom_total) ,           
+              metric32_num_total = sum(metric32_num_total) , 
+              metric32_denom_total = sum(metric32_denom_total) , 
               metric33_num_total = sum(metric33_num_total) , 
               metric33_denom_total = sum(metric33_denom_total) , 
               metric34_total = sum(metric34_total) ,  
