@@ -90,11 +90,11 @@ list(
   
   tar_target(data_path21,"data/CVDP008.csv", format = "file"), 
   tar_target(metric38,read_csv_file(data_path21) |>
-               select(gp_practice_code=area_code,metric38=numerator)),  #metric38
+               select(gp_practice_code=area_code,metric38_num=numerator,metric38_denom=denominator)),  #metric38
   
   tar_target(data_path22,"data/CVDP009.csv", format = "file"), 
   tar_target(metric34,read_csv_file(data_path22) |>
-               select(gp_practice_code=area_code,metric34=numerator)),  #metric34
+               select(gp_practice_code=area_code,metric34_num=numerator,metric34_denom=denominator)),  #metric34
   
   tar_target(data_path23,"data/NCDesMarch23.csv", format = "file"), 
   tar_target(ncdes_data,read_csv_file(data_path23)|>
@@ -141,9 +141,10 @@ list(
   tar_target(metric8,get_my_fingertips_gp_data(848,"2022/23")|>
                rename(gp_practice_code=AreaCode,
                       metric8=Value)), # metric 8
-  tar_target(metric16,get_my_fingertips_gp_data(90999,"2021/22")|>
+  tar_target(metric16,get_my_fingertips_gp_data_count(90999,"2021/22")|>
                rename(gp_practice_code=AreaCode,
-                      metric16=Value)), # metric 16
+                      metric16_num=Count,
+                      metric16_denom=Denominator)), # metric 16
   tar_target(metric17,get_my_fingertips_gp_data_count(91000,"2020/21")|>
                rename(gp_practice_code=AreaCode,
                       metric17_num=Count,
@@ -212,18 +213,20 @@ tar_target(metric33,get_my_fingertips_gp_data_count(91262,"2022/23")|>
   #                         rename(gp_practice_code=practice_code,
   #                                metric39=ncd002_percent)), # metric 39 march 23
 tar_target(metric39, ncdes_data|>
-             select(practice_code,NCD002_Numerator)|>
+             select(practice_code,NCD002_Numerator,NCD002_Denominator)|>
              rename(gp_practice_code=practice_code,
-                    metric39=NCD002_Numerator)), # metric 39 march 23
+                    metric39_num=NCD002_Numerator,
+                    metric39_denom=NCD002_Denominator)), # metric 39 march 23
   # tar_target(metric40, ncdes_data|>
   #                         mutate(ncd003_percent =(NCD003_Numerator / NCD003_Denominator)*100) |>
   #                         select(practice_code,ncd003_percent)|>
   #                         rename(gp_practice_code=practice_code,
   #                                metric40=ncd003_percent)), # metric 40 march 23
 tar_target(metric40, ncdes_data|>
-             select(practice_code,NCD003_Numerator)|>
+             select(practice_code,NCD003_Numerator,NCD003_Denominator)|>
              rename(gp_practice_code=practice_code,
-                    metric40=NCD003_Numerator)), # metric 40 march 23
+                    metric40_num=NCD003_Numerator,
+                    metric40_denom=NCD003_Denominator)), # metric 40 march 23
 
   #process ethnicity data
   tar_target(lsoa_eth_sum,process_census21data(eth_lsoa_census)),
@@ -299,10 +302,19 @@ tar_target(cluster1_chart,get_cluster1_chart(clustered_gp_and_metrics)),
 tar_target(cluster_reg_map,get_cluster2_map(final_data_full_cats_percent_5_clusters_region,gp_geocoded)),
 tar_target(cluster_reg_chart,get_cluster2_chart(final_data_full_cats_percent_5_clusters_region)),
 
-#process the data into the correct format inc dividing some things etc
+#process the data into the correct format and perform IoD calcs
 tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics)),
 tar_target(activity_by_type_clusters_stg2,calc_iod_rate(activity_by_type_clusters_stg1)),
-tar_target(activity_by_type_clusters_stg3,calc_iod_global_rate(activity_by_type_clusters_stg2))
+tar_target(activity_by_type_clusters_stg3,calc_iod_global_rate(activity_by_type_clusters_stg2)),
+tar_target(activity_by_type_clusters_stg4,calc_iod_diff_rate(activity_by_type_clusters_stg3)),
+tar_target(activity_by_type_clusters_stg5,calc_iod_diff(activity_by_type_clusters_stg4)),
+tar_target(activity_by_type_clusters_stg6,calc_abs_iod(activity_by_type_clusters_stg5))
+
+
+
+
+
+
 
 #######################################################################################
 #calculate Disparity Ratio
