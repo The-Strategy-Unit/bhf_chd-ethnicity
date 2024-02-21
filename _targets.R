@@ -301,7 +301,8 @@ tar_target(cluster_reg_chart,get_cluster2_chart(final_data_full_cats_percent_5_c
 
 #process the data into the correct format inc dividing some things etc
 tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics)),
-tar_target(activity_by_type_clusters_stg2,process_metrics_2(activity_by_type_clusters_stg1))
+tar_target(activity_by_type_clusters_stg2,calc_iod_rate(activity_by_type_clusters_stg1)),
+tar_target(activity_by_type_clusters_stg3,calc_iod_global_rate(activity_by_type_clusters_stg2))
 
 #######################################################################################
 #calculate Disparity Ratio

@@ -255,7 +255,7 @@ process_metrics <-function(clustered_gp_and_metrics){
   return(activity_by_type_clusters_stg1)
 }
 
-process_metrics_2 <-function(activity_by_type_clusters_stg1){
+calc_iod_rate <-function(activity_by_type_clusters_stg1){
   activity_by_type_clusters_stg2 <- activity_by_type_clusters_stg1 |>
     mutate(metric2_rate=metric2_num_total/metric2_denom_total,
            metric5_rate=metric5_num_total/metric5_denom_total,
@@ -292,4 +292,16 @@ process_metrics_2 <-function(activity_by_type_clusters_stg1){
            
     )
   return(activity_by_type_clusters_stg2)
+}
+
+calc_iod_global_rate <-function(activity_by_type_clusters_stg2){
+activity_by_type_clusters_stg3 <- activity_by_type_clusters_stg2|>
+  mutate(metric2_overall_num_total=sum(metric2_num_total),
+         metric2_overall_denom_total=sum(metric2_denom_total),
+         metric2_global_rate=metric2_overall_num_total/metric2_overall_denom_total,
+         metric5_overall_num_total=sum(metric5_num_total),
+         metric5_overall_denom_total=sum(metric5_denom_total),
+         metric5_global_rate=metric5_overall_num_total/metric5_overall_denom_total)
+
+return(activity_by_type_clusters_stg3)
 }

@@ -1,11 +1,14 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
 activity_by_type_clusters_stg1|stem|981db76b6926274a|234a27bac409c97a|79a31077a76f1502|2132352541||t19773.8241241232s|e03828b00a5d5950|1482|rds|local|vector|||0.14||
-activity_by_type_clusters_stg2|stem|b5719f09a5cdaa44|5ba9d690ee5dbc63|6e7d1c3d62d8bd0a|-1209135162||t19774.0017133726s|e4c36b1e58f883bf|2427|rds|local|vector|||0.03||
+activity_by_type_clusters_stg2|stem|b5719f09a5cdaa44|c8dce9c8fb237f38|0b9ee5868257150b|-1209135162||t19774.0104952682s|e4c36b1e58f883bf|2427|rds|local|vector|||0||
+activity_by_type_clusters_stg3|stem|3a1e20fd14f66b0b|bcfb03d446c614c0|0130728818902c9e|-1515492543||t19774.0104954648s|bb3cec8717c797c3|2529|rds|local|vector|||0||
 activity_long|object|6d996349ed808a4a|||||||||||||||
 activity_type_decile|object|c4f420f33fb96dec|||||||||||||||
 add_all_metrics|function|c380d2cb3d5cb958|||||||||||||||
 by_list_regex|object|b81599c6154011e2|||||||||||||||
 by_list_total|object|7ed9b03a918f8618|||||||||||||||
+calc_iod_global_rate|function|178b49128db5ac2f|||||||||||||||
+calc_iod_rate|function|031a539e5f0b0655|||||||||||||||
 cluster_plot|stem|50d336def5f6033b|ce4e06ca053deb5b|8c886f37e4143d14|292947156||t19755.5083268239s|604e396c996e1c51|8781748|rds|local|vector|||0.11||
 cluster_plot_over45|stem|b649f699884cbb26|f73801c020993d93|3998fe057db27695|-1531622237||t19755.5083360959s|127857b7b4836ed9|8762320|rds|local|vector|||0.06||
 cluster_plot_region|stem|114a4362752ffc57|9dc9cc822f15757e|b3b3f69c1a8fe7a5|1028772277||t19759.5124211042s|ae474793dd8a2ad4|1833656|rds|local|vector|||0.03||

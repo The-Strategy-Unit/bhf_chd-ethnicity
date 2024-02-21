@@ -6,6 +6,11 @@ library(readxl)
 clustered_gp_and_metrics <- targets::tar_read(clustered_gp_and_metrics) |> dplyr::as_tibble()
 activity_by_type_clusters_stg1<- targets::tar_read(activity_by_type_clusters_stg1) |> dplyr::as_tibble()
 activity_by_type_clusters_stg2<- targets::tar_read(activity_by_type_clusters_stg2) |> dplyr::as_tibble()
+activity_by_type_clusters_stg3<- targets::tar_read(activity_by_type_clusters_stg3) |> dplyr::as_tibble()
+
+activity_by_type_clusters_stg2|>
+  mutate(metric2_overall_num_total=sum(metric2_num_total),
+         metric2_overall_denom_total=sum(metric2_denom_total))
 
 metric32_updated <- targets::tar_read(metric32_updated) |> dplyr::as_tibble()
 
