@@ -145,7 +145,7 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
 
 
 
-### think this below function isn't needed?
+
 process_metrics <-function(clustered_gp_and_metrics){
   
   activity_by_type_clusters_stg1<-clustered_gp_and_metrics |>
@@ -253,4 +253,43 @@ process_metrics <-function(clustered_gp_and_metrics){
     arrange()
   
   return(activity_by_type_clusters_stg1)
+}
+
+process_metrics_2 <-function(activity_by_type_clusters_stg1){
+  activity_by_type_clusters_stg2 <- activity_by_type_clusters_stg1 |>
+    mutate(metric2_rate=metric2_num_total/metric2_denom_total,
+           metric5_rate=metric5_num_total/metric5_denom_total,
+           metric6_rate=metric6_total/list_size_total,
+           metric7_rate=metric6_total/list_size_total,
+           metric8_rate=metric6_total/list_size_total,
+           metric9_rate=metric6_total/list_size_total,
+           metric11_rate=metric11_num_total/metric11_denom_total,
+           metric12_rate=metric12_num_total/metric12_denom_total,
+           #13
+           metric14_rate=metric14_total/metric1_total,
+           metric15_rate=metric15_total/metric1_total,
+           #16
+           metric17_rate=metric17_num_total/metric17_denom_total,
+           metric18_rate=metric18_total/metric1_total,
+           metric19_rate=metric19_total/metric1_total,
+           metric20_rate=metric20_total/metric1_total,
+           metric21_rate=metric21_total/metric1_total,
+           metric22_rate=metric22_total/metric1_total,
+           metric23_rate=metric23_total/metric1_total,
+           #24
+           metric25_rate=metric25_num_total/metric25_denom_total, 
+           metric27_rate=metric27_total/metric1_total,
+           metric28_rate=metric28_total/metric1_total,
+           metric29_rate=metric29_total/metric1_total,
+           metric31_rate=metric31_num_total/metric31_denom_total,
+           metric32_rate=metric32_num_total/metric32_denom_total,
+           metric33_rate=metric33_num_total/metric33_denom_total
+           #34
+           #38
+           #39
+           #40
+           
+           
+    )
+  return(activity_by_type_clusters_stg2)
 }
