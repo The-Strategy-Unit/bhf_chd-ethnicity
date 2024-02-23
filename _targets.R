@@ -9,7 +9,7 @@ library(targets)
 tar_option_set(
   packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor",
                "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder",
-               "cluster","factoextra","purrr","broom","glue","RColorBrewer","leaflet"), # packages that your targets need to run
+               "cluster","factoextra","purrr","broom","glue","RColorBrewer","leaflet","treemapify"), # packages that your targets need to run
   format = "rds"
 
  
@@ -61,9 +61,15 @@ list(
   tar_target(data_path10, "data/metric28.csv", format = "file"), # SUS data metric 28
   tar_target(metric28,read_csv_file(data_path10)|> 
                rename(metric28=number_chd_deaths)),
+  tar_target(data_path32, "data/metric28b.csv", format = "file"), # SUS data metric 28b deaths <75yrs
+  tar_target(metric28b,read_csv_file(data_path32)|>
+               rename(metric28b=number_chd_deaths)),
   tar_target(data_path11, "data/metric29.csv", format = "file"), # SUS data metric 29
   tar_target(metric29,read_csv_file(data_path11)|> 
                rename(metric29=deaths)),
+  tar_target(data_path33, "data/metric29b.csv", format = "file"), # SUS data metric 29b deaths <75yrs
+  tar_target(metric29b,read_csv_file(data_path33)|>
+               rename(metric29b=deaths)),
   
   # tar_target(data_path12, "data/April22GPListLSOA.csv", format = "file"), #GP list size
   # tar_target(gp_list_lsoa,read_csv_file(data_path12)),
@@ -78,6 +84,7 @@ list(
   tar_target(gp_reg_pat_prac_sing_age_male,read_csv_file(data_path27)|>
                select(org_code,age,number_of_patients)), 
   tar_target(gp_over45_perc,get_over45_perc(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)),
+  tar_target(gp_list_45over,get_45over_list(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)),
   tar_target(gp_16andover_pop,get_gp_16andover_pop(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)),
  
   tar_target(data_path15, "data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv", format = "file"), #lookup
@@ -284,12 +291,12 @@ tar_target(metric40, ncdes_data|>
 tar_target(clustered_gp_and_metrics,
            add_all_metrics(final_data_full_cats_percent_over45_5_clusters, 
                            final_data_full_cats_percent_5_clusters,
-                           gp_16andover_pop,
+                           gp_16andover_pop,gp_list_45over,
                            metric1_updated,metric2,metric5,metric6,metric7,metric8,metric9,metric11,
                            metric12,metric13,metric13b,metric14,metric15,metric16,
                            metric16b,metric17,metric18,metric19,metric20,
                            metric21,metric22,metric23_updated,
-                           metric25b,metric27,metric28, metric29,metric31,
+                           metric25b,metric27,metric28, metric28b, metric29,metric29b,metric31,
                            metric32_updated,metric33,metric34,metric38,
                            metric39,metric40)),
 #plot clusters
@@ -298,6 +305,12 @@ tar_target(cluster1_map,get_cluster1_map(clustered_gp_and_metrics,gp_geocoded)),
 tar_target(cluster2_map,get_cluster2_map(clustered_gp_and_metrics,gp_geocoded)),
 tar_target(cluster2_chart,get_cluster2_chart(clustered_gp_and_metrics)),
 tar_target(cluster1_chart,get_cluster1_chart(clustered_gp_and_metrics)),
+tar_target(cluster2_treemap_data,get_cluster2_treemap_data(clustered_gp_and_metrics)),
+tar_target(cluster2_treemap_1,get_cluster2_treemap_1(cluster2_treemap_data)),
+tar_target(cluster2_treemap_2,get_cluster2_treemap_2(cluster2_treemap_data)),
+tar_target(cluster2_treemap_3,get_cluster2_treemap_3(cluster2_treemap_data)),
+tar_target(cluster2_treemap_4,get_cluster2_treemap_4(cluster2_treemap_data)),
+tar_target(cluster2_treemap_5,get_cluster2_treemap_5(cluster2_treemap_data)),
 #plot regional cluster
 tar_target(cluster_reg_map,get_cluster2_map(final_data_full_cats_percent_5_clusters_region,gp_geocoded)),
 tar_target(cluster_reg_chart,get_cluster2_chart(final_data_full_cats_percent_5_clusters_region)),

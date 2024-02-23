@@ -299,3 +299,188 @@ get_cluster1_chart <- function(clustered_gp_and_metrics){
   
 }
 
+get_cluster2_treemap_data <- function(clustered_gp_and_metrics){
+
+  cluster2_treemap_data<-clustered_gp_and_metrics |> 
+    rownames_to_column(var = 'practice_code') |>
+    select(cluster2,gp_practice_code,starts_with("gp_perc"))|>
+    mutate(all_asian_gp_perc=gp_perc_est_bangladeshi+gp_perc_est_chinese+gp_perc_est_indian+gp_perc_est_pakistani+gp_perc_est_other_asian,
+           all_black_gp_perc=gp_perc_est_blk_african+gp_perc_est_blk_caribbean+gp_perc_est_other_blk,
+           all_white_gp_perc=gp_perc_est_white_british+gp_perc_est_white_irish+gp_perc_est_white_other,
+           all_other_gp_perc=gp_perc_est_other_arab+gp_perc_est_other_other,
+           all_mixed_gp_perc=gp_perc_est_all_mixed) |>
+    select(cluster2,gp_practice_code,ends_with("gp_perc")) |>
+    pivot_longer(
+      cols = ends_with("gp_perc"),
+      names_to = "ethnicity",
+      values_to = "percent"
+    ) |>
+    group_by(cluster2,ethnicity) |>
+    summarise(med_percent = median(percent)) |>
+    mutate(ethnicity_name=case_when(ethnicity=="all_asian_gp_perc" ~ "Asian",
+                                    ethnicity=="all_black_gp_perc" ~ "Black",
+                                    ethnicity=="all_white_gp_perc" ~ "White",
+                                    ethnicity=="all_other_gp_perc" ~ "Other",
+                                    ethnicity=="all_mixed_gp_perc" ~ "Mixed")) 
+  
+  
+return(cluster2_treemap_data)
+}
+
+
+get_cluster2_treemap_1 <- function(cluster2_treemap_data){
+  #SU colours
+  su_yellow <- '#f9bf07'
+  su_red <- '#ec6555'
+  su_blue <- '#5881c1'
+  su_grey <- '#686f73'
+  su_black <- '#2c2825'
+
+  su_light_yellow <- '#ffe699'
+  su_light_red <- '#f4a39a'
+  su_light_blue <- '#b4c6e6'
+  su_light_grey <- '#d9d9d9'
+  
+
+  
+  cluster2_treemap_1 <- cluster2_treemap_data |>
+    filter(cluster2==1)|>
+    ggplot(label = paste(ethnicity_name, med_percent, sep = "\n")) +
+    geom_treemap(aes(area = med_percent, 
+                     fill = ethnicity_name),
+                 colour = 'white',
+                 size = 2) +
+    geom_treemap_text(aes(area = med_percent, 
+                          label = paste(ethnicity_name, round(med_percent,2), sep = "\n")), 
+                      grow = FALSE, 
+                      size = 12, colour = 'white') +
+    scale_fill_manual(values = c(su_blue, su_red, su_grey, su_black, su_yellow)) +
+    theme(legend.position = 'none') +
+    labs(title = "Cluster 1")
+  
+return(cluster2_treemap_1)
+}
+
+get_cluster2_treemap_2 <- function(cluster2_treemap_data){
+  # SU colours
+  su_yellow <- '#f9bf07'
+  su_red <- '#ec6555'
+  su_blue <- '#5881c1'
+  su_grey <- '#686f73'
+  su_black <- '#2c2825'
+  
+  su_light_yellow <- '#ffe699'
+  su_light_red <- '#f4a39a'
+  su_light_blue <- '#b4c6e6'
+  su_light_grey <- '#d9d9d9'
+  
+  cluster2_treemap_2 <- cluster2_treemap_data |>
+    filter(cluster2==2)|>
+    ggplot() +
+    geom_treemap(aes(area = med_percent, 
+                     fill = ethnicity_name),
+                 colour = 'white',
+                 size = 2) +
+    geom_treemap_text(aes(area = med_percent, 
+                          label = paste(ethnicity_name, round(med_percent,2), sep = "\n")), 
+                      grow = FALSE, 
+                      size = 12, colour = 'white') +
+    scale_fill_manual(values = c(su_blue, su_red, su_grey, su_black, su_yellow)) +
+    theme(legend.position = 'none') +
+    labs(title = "Cluster 2")
+  
+  return(cluster2_treemap_2)
+}
+
+get_cluster2_treemap_3 <- function(cluster2_treemap_data){
+  # SU colours
+  su_yellow <- '#f9bf07'
+  su_red <- '#ec6555'
+  su_blue <- '#5881c1'
+  su_grey <- '#686f73'
+  su_black <- '#2c2825'
+  
+  su_light_yellow <- '#ffe699'
+  su_light_red <- '#f4a39a'
+  su_light_blue <- '#b4c6e6'
+  su_light_grey <- '#d9d9d9'
+  
+  cluster2_treemap_3 <- cluster2_treemap_data |>
+    filter(cluster2==3)|>
+    ggplot() +
+    geom_treemap(aes(area = med_percent, 
+                     fill = ethnicity_name),
+                 colour = 'white',
+                 size = 2) +
+    geom_treemap_text(aes(area = med_percent, 
+                          label = paste(ethnicity_name, round(med_percent,2), sep = "\n")), 
+                      grow = FALSE, 
+                      size = 12, colour = 'white') +
+    scale_fill_manual(values = c(su_blue, su_red, su_grey, su_black, su_yellow)) +
+    theme(legend.position = 'none') +
+    labs(title = "Cluster 3")
+  
+  return(cluster2_treemap_3)
+}
+
+get_cluster2_treemap_4 <- function(cluster2_treemap_data){
+  # SU colours
+  su_yellow <- '#f9bf07'
+  su_red <- '#ec6555'
+  su_blue <- '#5881c1'
+  su_grey <- '#686f73'
+  su_black <- '#2c2825'
+  
+  su_light_yellow <- '#ffe699'
+  su_light_red <- '#f4a39a'
+  su_light_blue <- '#b4c6e6'
+  su_light_grey <- '#d9d9d9'
+  
+  cluster2_treemap_4 <- cluster2_treemap_data |>
+    filter(cluster2==4)|>
+    ggplot() +
+    geom_treemap(aes(area = med_percent, 
+                     fill = ethnicity_name),
+                 colour = 'white',
+                 size = 2) +
+    geom_treemap_text(aes(area = med_percent, 
+                          label = paste(ethnicity_name, round(med_percent,2), sep = "\n")), 
+                      grow = FALSE, 
+                      size = 12, colour = 'white') +
+    scale_fill_manual(values = c(su_blue, su_red, su_grey, su_black, su_yellow)) +
+    theme(legend.position = 'none') +
+    labs(title = "Cluster 4")
+  
+  return(cluster2_treemap_4)
+}
+
+get_cluster2_treemap_5 <- function(cluster2_treemap_data){
+  # SU colours
+  su_yellow <- '#f9bf07'
+  su_red <- '#ec6555'
+  su_blue <- '#5881c1'
+  su_grey <- '#686f73'
+  su_black <- '#2c2825'
+  
+  su_light_yellow <- '#ffe699'
+  su_light_red <- '#f4a39a'
+  su_light_blue <- '#b4c6e6'
+  su_light_grey <- '#d9d9d9'
+  
+  cluster2_treemap_5 <- cluster2_treemap_data |>
+    filter(cluster2==5)|>
+    ggplot() +
+    geom_treemap(aes(area = med_percent, 
+                     fill = ethnicity_name),
+                 colour = 'white',
+                 size = 2) +
+    geom_treemap_text(aes(area = med_percent, 
+                          label = paste(ethnicity_name, round(med_percent,2), sep = "\n")), 
+                      grow = FALSE, 
+                      size = 12, colour = 'white') +
+    scale_fill_manual(values = c(su_blue, su_red, su_grey, su_black, su_yellow)) +
+    theme(legend.position = 'none') +
+    labs(title = "Cluster 5")
+  
+  return(cluster2_treemap_5)
+}

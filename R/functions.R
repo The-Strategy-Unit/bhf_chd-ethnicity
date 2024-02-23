@@ -3,6 +3,27 @@
 # Other Functions
 
 ################################################################################
+#get SU colours
+# get_su_colours <- function(){
+#   su_yellow <- '#f9bf07'
+#   su_red <- '#ec6555'
+#   su_blue <- '#5881c1'
+#   su_grey <- '#686f73'
+#   su_black <- '#2c2825'
+#   
+#   su_light_yellow <- '#ffe699'
+#   su_light_red <- '#f4a39a'
+#   su_light_blue <- '#b4c6e6'
+#   su_light_grey <- '#d9d9d9'
+#   
+#   su_colour_list <- list(c(su_yellow,su_red,su_blue,su_grey,su_black,su_light_yellow,su_light_red,su_light_blue,su_light_grey),
+#                          c("su_yellow","su_red","su_blue","su_grey","su_black","su_light_yellow","su_light_red","su_light_blue",
+#                            "su_light_grey")
+#                          )
+#   
+#   return(su_colour_list)
+#   
+# }
 
 
 #join the chd prev to gp history
@@ -31,6 +52,27 @@ get_geocoded_data <- function(gp_list_summary,orig,joined_gp_history_and_chd_pre
 }
 
 
+get_45over_list <- function(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)
+{gp_list_45over <- gp_reg_pat_prac_sing_age_male |>
+  rbind(gp_reg_pat_prac_sing_age_female)|>
+  filter(age != "ALL") |>
+  group_by(org_code,age) |>
+  summarise(number_of_patients=sum(number_of_patients)) |>
+  dplyr::mutate(age=as.numeric(case_when(age=="95+" ~ 95,
+                                         .default = as.numeric(age))
+  )) |>
+  mutate(over_45=case_when(age>= 45 ~1,
+                           .default = 0)) |>
+  group_by(org_code,over_45)|>
+  summarise(number_of_patients=sum(number_of_patients))|>
+  ungroup()|>
+  filter(over_45==1)|>
+  select(practice_code=org_code,number_45over=number_of_patients)
+
+
+return(gp_list_45over)
+
+}
 
 
 

@@ -72,6 +72,38 @@ final_data_full_cats_percent_5_clusters |>
 tar_read(cluster2_chart)
 ```
 
+::: panel-tabset
+## Cluster 1 - Least diverse
+
+```{r}
+tar_read(cluster2_treemap_1)
+```
+
+## Cluster 2
+
+```{r}
+tar_read(cluster2_treemap_2)
+```
+
+## Cluster 3
+
+```{r}
+tar_read(cluster2_treemap_3)
+```
+
+## Cluster 4
+
+```{r}
+tar_read(cluster2_treemap_4)
+```
+
+## Cluster 5 - Most diverse
+
+```{r}
+tar_read(cluster2_treemap_5)
+```
+:::
+
 ```{r}
 tar_read(cluster2_map)
 ```
