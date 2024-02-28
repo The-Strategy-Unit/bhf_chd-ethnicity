@@ -7,7 +7,7 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor",
+  packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","forcats",
                "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder",
                "cluster","factoextra","purrr","broom","glue","RColorBrewer","leaflet","treemapify"), # packages that your targets need to run
   format = "rds"
@@ -54,6 +54,10 @@ list(
   
   tar_target(data_path8, "data/metric23.csv", format = "file"), # SUS data metric 23
   tar_target(metric23,read_csv_file(data_path8)),
+  
+  tar_target(data_path34, "data/metric26.csv", format = "file"), # SUS data metric 26
+  tar_target(metric26,read_csv_file(data_path34)|> 
+               rename(metric26=num)),
   
   tar_target(data_path9, "data/metric27.csv", format = "file"), # SUS data metric 27
   tar_target(metric27,read_csv_file(data_path9)|> 
@@ -166,8 +170,6 @@ list(
                       metric9=value)),# metric 9
 
 
-
-
 # metric 10 has been removed from Fingertips :-(
 # tar_target(metric10,get_my_fingertips_gp_data(91248,"2019/20")|>
 #  rename(gp_practice_code=AreaCode,
@@ -214,21 +216,12 @@ tar_target(metric33,get_my_fingertips_gp_data_count(91262,"2022/23")|>
                     metric33_denom=Denominator)), # metric 33
 
 
-  # tar_target(metric39, ncdes_data|>
-  #                         mutate(ncd002_percent =(NCD002_Numerator / NCD002_Denominator)*100) |>
-  #                         select(practice_code,ncd002_percent)|>
-  #                         rename(gp_practice_code=practice_code,
-  #                                metric39=ncd002_percent)), # metric 39 march 23
 tar_target(metric39, ncdes_data|>
              select(practice_code,NCD002_Numerator,NCD002_Denominator)|>
              rename(gp_practice_code=practice_code,
                     metric39_num=NCD002_Numerator,
                     metric39_denom=NCD002_Denominator)), # metric 39 march 23
-  # tar_target(metric40, ncdes_data|>
-  #                         mutate(ncd003_percent =(NCD003_Numerator / NCD003_Denominator)*100) |>
-  #                         select(practice_code,ncd003_percent)|>
-  #                         rename(gp_practice_code=practice_code,
-  #                                metric40=ncd003_percent)), # metric 40 march 23
+
 tar_target(metric40, ncdes_data|>
              select(practice_code,NCD003_Numerator,NCD003_Denominator)|>
              rename(gp_practice_code=practice_code,
@@ -268,6 +261,7 @@ tar_target(metric40, ncdes_data|>
   tar_target(final_data_full_cats_percent_over45_5_clusters,get_clusters(pams_full_cats_percents_over45,full_cats_percents_over45)),
   tar_target(elbow_plot_over45,get_elbow_plot(scale_full_cats_percents_over45)),
   tar_target(cluster_plot_over45,get_cluster_plot(pams_full_cats_percents_over45)),
+  
   #cluster the practices 2
   tar_target(full_cats_percents,get_full_cats_percents(gp_lsoa_with_eth_sum)),
   tar_target(scale_full_cats_percents,get_scale_full_cats_percents(full_cats_percents)),
@@ -275,6 +269,8 @@ tar_target(metric40, ncdes_data|>
   tar_target(final_data_full_cats_percent_5_clusters,get_clusters(pams_full_cats_percents,full_cats_percents)),
   tar_target(elbow_plot,get_elbow_plot(scale_full_cats_percents)),
   tar_target(cluster_plot,get_cluster_plot(pams_full_cats_percents)),
+  tar_target(clusters_for_nacr,get_clusters_for_nacr(clustered_gp_and_metrics,gp_icb_mapping)),
+
   #cluster the practices by region
   tar_target(full_cats_percents_region,get_full_cats_percents(gp_lsoa_with_eth_sum_region)),
   tar_target(scale_full_cats_percents_region,get_scale_full_cats_percents(full_cats_percents_region)),
@@ -289,14 +285,14 @@ tar_target(metric40, ncdes_data|>
 
 #join the metrics together with the clusters
 tar_target(clustered_gp_and_metrics,
-           add_all_metrics(final_data_full_cats_percent_over45_5_clusters, 
+           add_all_metrics(final_data_full_cats_percent_over45_5_clusters,
                            final_data_full_cats_percent_5_clusters,
                            gp_16andover_pop,gp_list_45over,
                            metric1_updated,metric2,metric5,metric6,metric7,metric8,metric9,metric11,
                            metric12,metric13,metric13b,metric14,metric15,metric16,
                            metric16b,metric17,metric18,metric19,metric20,
-                           metric21,metric22,metric23_updated,
-                           metric25b,metric27,metric28, metric28b, metric29,metric29b,metric31,
+                           metric21,metric22,metric23_updated,metric25b,
+                           metric26,metric27,metric28, metric28b, metric29,metric29b,metric31,
                            metric32_updated,metric33,metric34,metric38,
                            metric39,metric40)),
 #plot clusters
@@ -311,9 +307,14 @@ tar_target(cluster2_treemap_2,get_cluster2_treemap_2(cluster2_treemap_data)),
 tar_target(cluster2_treemap_3,get_cluster2_treemap_3(cluster2_treemap_data)),
 tar_target(cluster2_treemap_4,get_cluster2_treemap_4(cluster2_treemap_data)),
 tar_target(cluster2_treemap_5,get_cluster2_treemap_5(cluster2_treemap_data)),
+tar_target(cluster2_eth_chart_1,get_cluster2_14_eth_chart(clustered_gp_and_metrics,1)),
+tar_target(cluster2_eth_chart_2,get_cluster2_14_eth_chart(clustered_gp_and_metrics,2)),
+tar_target(cluster2_eth_chart_3,get_cluster2_14_eth_chart(clustered_gp_and_metrics,3)),
+tar_target(cluster2_eth_chart_4,get_cluster2_14_eth_chart(clustered_gp_and_metrics,4)),
+tar_target(cluster2_eth_chart_5,get_cluster2_14_eth_chart(clustered_gp_and_metrics,5)),
 #plot regional cluster
 tar_target(cluster_reg_map,get_cluster2_map(final_data_full_cats_percent_5_clusters_region,gp_geocoded)),
-tar_target(cluster_reg_chart,get_cluster2_chart(final_data_full_cats_percent_5_clusters_region)),
+#tar_target(cluster_reg_chart,get_cluster2_chart(final_data_full_cats_percent_5_clusters_region)),
 
 #process the data into the correct format and perform IoD calcs
 tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics)),
@@ -321,7 +322,22 @@ tar_target(activity_by_type_clusters_stg2,calc_iod_rate(activity_by_type_cluster
 tar_target(activity_by_type_clusters_stg3,calc_iod_global_rate(activity_by_type_clusters_stg2)),
 tar_target(activity_by_type_clusters_stg4,calc_iod_diff_rate(activity_by_type_clusters_stg3)),
 tar_target(activity_by_type_clusters_stg5,calc_iod_diff(activity_by_type_clusters_stg4)),
-tar_target(activity_by_type_clusters_stg6,calc_abs_iod(activity_by_type_clusters_stg5))
+tar_target(activity_by_type_clusters_stg6,calc_abs_iod(activity_by_type_clusters_stg5)),
+
+#chart findings
+tar_target(chart_iod_data,get_rel_iod_data_for_chart(activity_by_type_clusters_stg6)),
+tar_target(rel_iod_chart,get_rel_iod_chart(chart_iod_data)),
+
+tar_target(rate_chart_data,get_rate_chart_data(activity_by_type_clusters_stg6)),
+tar_target(rate_chart_risk_fact,get_rate_chart(rate_chart_data,"Risk factors")),
+tar_target(rate_chart_risk_fact_ident,get_rate_chart(rate_chart_data,"Risk factor identification")),
+tar_target(rate_chart_prim_prevent,get_rate_chart(rate_chart_data,"Primary prevention")),
+tar_target(rate_chart_disease_ident,get_rate_chart(rate_chart_data,"Disease identification")),
+tar_target(rate_chart_second_prevent,get_rate_chart(rate_chart_data,"Secondary prevention")),
+tar_target(rate_chart_tert_prevent,get_rate_chart(rate_chart_data,"Tertiary prevention")),
+tar_target(rate_chart_int_out,get_rate_chart(rate_chart_data,"Intermediate outcome")),
+tar_target(rate_chart_full_out,get_rate_chart(rate_chart_data,"Full outcomes"))
+
 
 
 

@@ -1,5 +1,5 @@
 ---
-title: "Draft Clustering"
+title: "Clustering"
 lang: en-GB
 author: "Jacqueline Grout"
 date: last-modified
@@ -39,7 +39,7 @@ library(targets)
 library(GGally)
 library(gt)
 library(tidyverse)
-library(targets)
+
 
 load("cluster_analysis_v1.Rdata")
 ```

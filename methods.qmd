@@ -98,3 +98,7 @@ Metric 12 - Exception reporting for Smoking cessation support offered
 Donwloaded:
 
 qof-2223-prev-ach-pca-ls-prac.xlsx
+
+## References
+
+<https://journals.sagepub.com/doi/epdf/10.1093/phr/117.3.273>

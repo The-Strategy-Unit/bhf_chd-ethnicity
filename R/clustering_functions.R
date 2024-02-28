@@ -45,19 +45,19 @@ get_scale_full_cats_percents_over45 <- function(full_cats_percents_over45){
   
 }
 
-get_clusters <- function(scale_full_cats_percents_over45,full_cats_percents_over45){
-  #FULL CATS WITH 15 CLUSTERS PERCENT BASED
-  #make this example reproducible
-  set.seed(10)
-  #perform k-medoids clustering with k = 15 clusters
-  pams_full_cats_percents_over45 <- pam(scale_full_cats_percents_over45, 5, metric = 'euclidean', stand = FALSE)
-  
-  final_data_full_cats_percent_over45_5_clusters <- 
-    cbind(full_cats_percents_over45, cluster = pams_full_cats_percents_over45$cluster)|>
-    rename(gp_practice_code=practice_code)
-  
-  return(final_data_full_cats_percent_over45_5_clusters)
-}
+# get_clusters_over45 <- function(scale_full_cats_percents_over45,full_cats_percents_over45){
+#   #FULL CATS WITH 15 CLUSTERS PERCENT BASED
+#   #make this example reproducible
+#   set.seed(10)
+#   #perform k-medoids clustering with k = 15 clusters
+#   pams_full_cats_percents_over45 <- pam(scale_full_cats_percents_over45, 5, metric = 'euclidean', stand = FALSE)
+# 
+#   final_data_full_cats_percent_over45_5_clusters <-
+#     cbind(full_cats_percents_over45, cluster = pams_full_cats_percents_over45$cluster)|>
+#     rename(gp_practice_code=practice_code)
+# 
+#   return(final_data_full_cats_percent_over45_5_clusters)
+# }
 
 
 get_full_cats_percents <- function(gp_lsoa_with_eth_sum)
@@ -139,7 +139,17 @@ get_cluster_plot <- function(pams_data){
   return(cluster_plot)
 }
 
+get_clusters_for_nacr <- function(clustered_gp_and_metrics,gp_icb_mapping){
+  
+clusters_for_nacr <- clustered_gp_and_metrics |>
+  select(gp_practice_code,cluster=cluster2) |>
+  left_join(gp_icb_mapping, join_by(gp_practice_code==practice_code)) |>
+  select(-sub_icb_location_code,-sub_icb_location_name)
 
+write_excel_csv(clusters_for_nacr,"data/clusters_for_nacr.csv")
+
+return(clusters_for_nacr)
+}
 
 get_cluster2_map <- function(clustered_gp_and_metrics,gp_geocoded){
   
@@ -241,18 +251,94 @@ get_cluster2_chart <- function(clustered_gp_and_metrics){
     group_by(cluster2,ethnicity) |>
     summarise(med_percent = median(percent)) |>
     filter(ethnicity !="gp_perc_est_white_british")|>
+    mutate(ethnicity_name=case_when(ethnicity=="gp_perc_est_all_mixed" ~ "All Mixed",
+                                    ethnicity=="gp_perc_est_bangladeshi" ~ "Bangladeshi",
+                                    ethnicity=="gp_perc_est_blk_african" ~ "Black African",
+                                    ethnicity=="gp_perc_est_blk_caribbean" ~ "Black Caribbean",
+                                    ethnicity=="gp_perc_est_chinese" ~ "Chinese",
+                                    ethnicity=="gp_perc_est_indian" ~ "Indian",
+                                    ethnicity=="gp_perc_est_other_arab" ~ "Other Arab",
+                                    ethnicity=="gp_perc_est_other_asian" ~ "Other Asian",
+                                    ethnicity=="gp_perc_est_other_blk" ~ "Other Black",
+                                    ethnicity=="gp_perc_est_other_other" ~ "Other",
+                                    ethnicity=="gp_perc_est_pakistani" ~ "Pakistani",
+                                    ethnicity=="gp_perc_est_white_irish" ~ "White Irish",
+                                    ethnicity=="gp_perc_est_white_other" ~ "White Other",
+                                    .default="error")
+          )|>
     left_join(titles)|>
-    ggplot(aes(x=fct_rev(factor(ethnicity)) , y=med_percent, fill=factor(ethnicity))) +
+    ggplot(aes(x=fct_rev(factor(ethnicity_name)) , y=med_percent, fill=factor(ethnicity_name))) +
     geom_col() +
     coord_flip() +
     ylab("Median Percent of GP Lists") +
     xlab("") +
-    facet_wrap(cluster2 ~ title) +
+    facet_wrap(cluster2 ~ title,ncol=2) +
     ylim(0,25) +
-    labs(title="Ethnicity Median Percent by Cluster") +
+    labs(title="Median Percent by Ethnicity") +
+    theme(axis.text.y=element_text(size=6))+
     guides(fill = FALSE) 
   
   return(cluster2_chart)
+  
+}
+
+
+get_cluster2_14_eth_chart <- function(clustered_gp_and_metrics,cluster_num){
+  
+  
+  titles <-clustered_gp_and_metrics |> 
+    rownames_to_column(var = 'practice_code') |>
+    pivot_longer(
+      cols = starts_with("gp_perc"),
+      names_to = "ethnicity",
+      values_to = "percent"
+    ) |>
+    group_by(cluster2,ethnicity) |>
+    summarise(med_percent = median(percent)) |>
+    mutate(title_name= case_when(ethnicity=="gp_perc_est_white_british" ~ paste0("Cluster ",cluster2, " - ", round(med_percent, digits = 0), "% White British")),
+    ) |>
+    filter(ethnicity =="gp_perc_est_white_british")|>
+    select(cluster2,title_name)
+  
+  cluster2_14_eth_chart <- clustered_gp_and_metrics |> 
+    rownames_to_column(var = 'practice_code') |>
+    pivot_longer(
+      cols = starts_with("gp_perc"),
+      names_to = "ethnicity",
+      values_to = "percent"
+    ) |>
+    group_by(cluster2,ethnicity) |>
+    summarise(med_percent = median(percent)) |>
+    filter(ethnicity !="gp_perc_est_white_british")|>
+    mutate(ethnicity_name=case_when(ethnicity=="gp_perc_est_all_mixed" ~ "All Mixed",
+                                    ethnicity=="gp_perc_est_bangladeshi" ~ "Bangladeshi",
+                                    ethnicity=="gp_perc_est_blk_african" ~ "Black African",
+                                    ethnicity=="gp_perc_est_blk_caribbean" ~ "Black Caribbean",
+                                    ethnicity=="gp_perc_est_chinese" ~ "Chinese",
+                                    ethnicity=="gp_perc_est_indian" ~ "Indian",
+                                    ethnicity=="gp_perc_est_other_arab" ~ "Other Arab",
+                                    ethnicity=="gp_perc_est_other_asian" ~ "Other Asian",
+                                    ethnicity=="gp_perc_est_other_blk" ~ "Other Black",
+                                    ethnicity=="gp_perc_est_other_other" ~ "Other",
+                                    ethnicity=="gp_perc_est_pakistani" ~ "Pakistani",
+                                    ethnicity=="gp_perc_est_white_irish" ~ "White Irish",
+                                    ethnicity=="gp_perc_est_white_other" ~ "White Other",
+                                    .default="error")
+    )|>
+    left_join(titles)|>
+    filter(cluster2==cluster_num)|>
+    ggplot(aes(x=fct_rev(factor(ethnicity_name)) , y=med_percent, fill=factor(ethnicity_name))) +
+    geom_col() +
+    coord_flip() +
+    ylab("Median Percent of GP Lists") +
+    xlab("") +
+  #  facet_wrap(cluster2 ~ title,ncol=2) +
+    ylim(0,25) +
+    labs(title="Median Percent by Ethnicity") +
+    theme(axis.text.y=element_text(size=6))+
+    guides(fill = FALSE) 
+  
+  return(cluster2_14_eth_chart)
   
 }
 
@@ -351,7 +437,7 @@ get_cluster2_treemap_1 <- function(cluster2_treemap_data){
                  colour = 'white',
                  size = 2) +
     geom_treemap_text(aes(area = med_percent, 
-                          label = paste(ethnicity_name, round(med_percent,2), sep = "\n")), 
+                          label = paste(ethnicity_name, round(med_percent,1), sep = "\n")), 
                       grow = FALSE, 
                       size = 12, colour = 'white') +
     scale_fill_manual(values = c(su_blue, su_red, su_grey, su_black, su_yellow)) +
@@ -382,7 +468,7 @@ get_cluster2_treemap_2 <- function(cluster2_treemap_data){
                  colour = 'white',
                  size = 2) +
     geom_treemap_text(aes(area = med_percent, 
-                          label = paste(ethnicity_name, round(med_percent,2), sep = "\n")), 
+                          label = paste(ethnicity_name, round(med_percent,1), sep = "\n")), 
                       grow = FALSE, 
                       size = 12, colour = 'white') +
     scale_fill_manual(values = c(su_blue, su_red, su_grey, su_black, su_yellow)) +
@@ -413,7 +499,7 @@ get_cluster2_treemap_3 <- function(cluster2_treemap_data){
                  colour = 'white',
                  size = 2) +
     geom_treemap_text(aes(area = med_percent, 
-                          label = paste(ethnicity_name, round(med_percent,2), sep = "\n")), 
+                          label = paste(ethnicity_name, round(med_percent,1), sep = "\n")), 
                       grow = FALSE, 
                       size = 12, colour = 'white') +
     scale_fill_manual(values = c(su_blue, su_red, su_grey, su_black, su_yellow)) +
@@ -444,7 +530,7 @@ get_cluster2_treemap_4 <- function(cluster2_treemap_data){
                  colour = 'white',
                  size = 2) +
     geom_treemap_text(aes(area = med_percent, 
-                          label = paste(ethnicity_name, round(med_percent,2), sep = "\n")), 
+                          label = paste(ethnicity_name, round(med_percent,1), sep = "\n")), 
                       grow = FALSE, 
                       size = 12, colour = 'white') +
     scale_fill_manual(values = c(su_blue, su_red, su_grey, su_black, su_yellow)) +
@@ -475,7 +561,7 @@ get_cluster2_treemap_5 <- function(cluster2_treemap_data){
                  colour = 'white',
                  size = 2) +
     geom_treemap_text(aes(area = med_percent, 
-                          label = paste(ethnicity_name, round(med_percent,2), sep = "\n")), 
+                          label = paste(ethnicity_name, round(med_percent,1), sep = "\n")), 
                       grow = FALSE, 
                       size = 12, colour = 'white') +
     scale_fill_manual(values = c(su_blue, su_red, su_grey, su_black, su_yellow)) +
