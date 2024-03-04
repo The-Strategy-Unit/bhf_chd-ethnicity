@@ -1,10 +1,10 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
 activity_by_type_clusters_stg1|stem|dffb6b8445818efb|234a27bac409c97a|d3371c34251a2489|2132352541||t19781.5008291483s|4b1fb072f4afeb48|1684|rds|local|vector|||0.19||
-activity_by_type_clusters_stg2|stem|2f5feb882c01f94e|c8dce9c8fb237f38|c0c013c51b81ad5b|-1209135162||t19781.500829848s|caceb503e407f418|3153|rds|local|vector|||0.03||
-activity_by_type_clusters_stg3|stem|b8d3011f1ec9a298|bcfb03d446c614c0|638a353cdf5c5171|-1515492543||t19781.7967150676s|4017098b0d2bd0eb|5168|rds|local|vector|||0.33||
-activity_by_type_clusters_stg4|stem|429e0fa7f4297156|4e4c6152eac6d573|a6c45e9e9902c340|-631581537||t19781.7967158442s|dffaa6f9b5cd0615|7101|rds|local|vector|||0.04||
-activity_by_type_clusters_stg5|stem|9809433ba144fe01|0c47f497a31d7f92|54b6cd861b77c968|-938397684||t19781.7967166842s|090a478521389f5c|9006|rds|local|vector|||0.06||
-activity_by_type_clusters_stg6|stem|a444af8966db91a6|e8927589cdcf4b87|aea708caf161527f|-81521103||t19781.7967184707s|6c624b538f2df987|9906|rds|local|vector|||0.14||
+activity_by_type_clusters_stg2|stem|2f498372dce91108|c8dce9c8fb237f38|d5301dd32940095d|-1209135162||t19782.3712245394s|94fb8d36eee95232|6022|rds|local|vector|||0.24||
+activity_by_type_clusters_stg3|stem|0ad1c3c68066183a|bcfb03d446c614c0|809d78e4d5983327|-1515492543||t19782.3712282589s|53712083771cec42|8077|rds|local|vector|||0.3||
+activity_by_type_clusters_stg4|stem|8ada77fee5827d37|4e4c6152eac6d573|fa592bd61fe063c3|-631581537||t19782.3712288299s|c17ae795b826a54a|9999|rds|local|vector|||0.05||
+activity_by_type_clusters_stg5|stem|8636f69b1755d264|0c47f497a31d7f92|f4984dfd4a6b075a|-938397684||t19782.3712296289s|ec37eff08a1a9d01|11918|rds|local|vector|||0.04||
+activity_by_type_clusters_stg6|stem|3cfb450eec07ca1e|e8927589cdcf4b87|9f9317d3c0203043|-81521103||t19782.371231659s|9c35acc02b38731b|12830|rds|local|vector|||0.15||
 activity_long|object|6d996349ed808a4a|||||||||||||||
 activity_type_decile|object|c4f420f33fb96dec|||||||||||||||
 add_all_metrics|function|eafbf6a82d536d1a|||||||||||||||
@@ -13,9 +13,9 @@ by_list_total|object|7ed9b03a918f8618|||||||||||||||
 calc_abs_iod|function|ba5c84ed48b6a342|||||||||||||||
 calc_iod_diff|function|ec79b4025f63b1f8|||||||||||||||
 calc_iod_diff_rate|function|f0e74ce45f4cf258|||||||||||||||
-calc_iod_global_rate|function|7ffe8129f47b98eb|||||||||||||||
-calc_iod_rate|function|1af8fd788462ceac|||||||||||||||
-chart_iod_data|stem|f3300603ca7df16f|64a0c7d646096793|d51842907cb8303f|85269323||t19781.7967192906s|225002ec50985cb1|561|rds|local|vector|||0.02||
+calc_iod_global_rate|function|3411993b59f6979f|||||||||||||||
+calc_iod_rate|function|67e759653b7c9c7f|||||||||||||||
+chart_iod_data|stem|f3300603ca7df16f|64a0c7d646096793|cf1056ec45d4ce5a|85269323||t19782.3712326722s|225002ec50985cb1|561|rds|local|vector|||0.02||
 cluster_plot|stem|50d336def5f6033b|ce4e06ca053deb5b|8c886f37e4143d14|292947156||t19755.5083268239s|604e396c996e1c51|8781748|rds|local|vector|||0.11||
 cluster_plot_over45|stem|b649f699884cbb26|f73801c020993d93|3998fe057db27695|-1531622237||t19755.5083360959s|127857b7b4836ed9|8762320|rds|local|vector|||0.06||
 cluster_plot_region|stem|114a4362752ffc57|9dc9cc822f15757e|b3b3f69c1a8fe7a5|1028772277||t19759.5124211042s|ae474793dd8a2ad4|1833656|rds|local|vector|||0.03||
@@ -113,8 +113,8 @@ get_my_fingertips_gp_data|function|c1da8d293777399c|||||||||||||||
 get_my_fingertips_gp_data_count|function|4dee013fab430f3f|||||||||||||||
 get_over45_perc|function|eac7e0de845aeffa|||||||||||||||
 get_pams|function|a81dc3b5eaea487f|||||||||||||||
-get_rate_chart|function|a34a007939788f4c|||||||||||||||
-get_rate_chart_data|function|d0100bba23f76a70|||||||||||||||
+get_rate_chart|function|94212dcb1b5a1fbc|||||||||||||||
+get_rate_chart_data|function|c01a45751183bf5b|||||||||||||||
 get_rel_iod_chart|function|04d17d32db230d25|||||||||||||||
 get_rel_iod_data_for_chart|function|ef2cc6f8cf220737|||||||||||||||
 get_scale_full_cats_percents|function|80fddd22d9a65248|||||||||||||||
@@ -200,15 +200,15 @@ process_metrics|function|e3994d6ef05179a5|||||||||||||||
 process_metrics_2|function|031a539e5f0b0655|||||||||||||||
 process_metrics_part_2|function|b8e4a5e5c4027aa4|||||||||||||||
 qof_chd_2223|stem|db7b5f85a8196d56|2c4657fb00bd3abb|f76a319003658608|1100172128||t19773.7111823146s|2971af7d0f0d5d82|252047|rds|local|vector|||0.4|Expecting numeric in I1186  R1186C9 got . Expecting numeric in X1186  R1186C24 got . Expecting numeric in AB1186  R1186C28 got . Expecting numeric in H1465  R1465C8 got . Expecting numeric in I1465  R1465C9 got . Expecting numeric in J1465  R1465C10 got . Expecting numeric in P1465  R1465C16 got . Expecting numeric in X1465  R1465C24 got . Expecting numeric in AB1465  R1465C28 got . Expecting numeric in AP2518  R2518C42 got . Expecting numeric in AR2518  R2518C44 got . Expecting numeric in AT2518  R2518C46 got . Expecting numeric in H2690  R2690C8 got . Expecting numeric in I2690  R2690C9 got . Expecting numeric in J2690  R2690C10 got . Expecting numeric in P2690  R2690C16 got . Expecting numeric in Q2690  R2690C17 got . Expecting numeric in R2690  R2690C18 got . Expecting numeric in V2690  R2690C22 got . Expecting numeric in W2690  R2690C23 got . Expecting numeric in X2690  R2690C24 got . Expecting numeric in AB2690  R2690C28 got . Expecting numeric in AA3064  R3064C27 got . Expecting numeric in AB3064  R3064C28 got . Expecting numeric in AH3064  R3064C34 got . Expecting numeric in AJ3064  R3064C36 got . Expecting numeric in AL3064  R3064C38 got . Expecting numeric in AP3064  R3064C42 got . Expecting numeric in AR3064  R3064C44 got . Expecting numeric in AT3064  R3064C46 got . Expecting numeric in H3378  R3378C8 got . Expecting numeric in I3378  R3378C9 got . Expecting numeric in J3378  R3378C10 got . Expecting numeric in P3378  R3378C16 got . Expecting numeric in Q3378  R3378C17 got . Expecting numeric in R3378  R3378C18 got . Expecting numeric in V3378  R3378C22 got . Expecting numeric in W3378  R3378C23 got . Expecting numeric in X3378  R3378C24 got . Expecting numeric in AA3378  R3378C27 got . Expecting numeric in AB3378  R3378C28 got . Expecting numeric in AH3378  R3378C34 got . Expecting numeric in A|
-rate_chart_data|stem|6850c0a0d60867d8|fcd565da40d5855d|0bdf5abceffec90a|902029551||t19781.8330453478s|f016625e9bdd35a7|3597|rds|local|vector|||0.03||
-rate_chart_disease_ident|stem|2ee8b986833ee0de|27434dafd1cb3ba2|eb0c41d3e9f2f175|-1124250002||t19781.8330486442s|a3b66d27a98c50b6|121168|rds|local|vector|||0.01||
-rate_chart_full_out|stem|129e2e855b360b0d|29543d1b1f459770|eb0c41d3e9f2f175|1854188602||t19781.8330493972s|8604d892f80525b5|121314|rds|local|vector|||0||
-rate_chart_int_out|stem|203b338c38a56f29|9351af51eeb09514|eb0c41d3e9f2f175|1856460288||t19781.8330508583s|8f4d53216dc2c655|121231|rds|local|vector|||0||
-rate_chart_prim_prevent|stem|3e9a2a9d9b5c75a6|5942a1552449cdb7|eb0c41d3e9f2f175|-213513136||t19781.8330463279s|e4cd4c167f271437|121653|rds|local|vector|||0.02||
-rate_chart_risk_fact|stem|c467058413bbe745|f97c630faa6ce861|eb0c41d3e9f2f175|1887141211||t19781.8330472035s|9e5944fd50b940a9|120709|rds|local|vector|||0.02||
-rate_chart_risk_fact_ident|stem|827664e87920c665|6245e9929e1bd4f7|eb0c41d3e9f2f175|-442052794||t19781.8330501613s|74a8511c90ddb3a5|121593|rds|local|vector|||0||
-rate_chart_second_prevent|stem|6063a76caf48b213|7e0596514fad6a7b|eb0c41d3e9f2f175|-1937259243||t19781.8330514984s|2ce1fb72d732b1b9|122221|rds|local|vector|||0||
-rate_chart_tert_prevent|stem|e6a530ffdde187a8|069823d35347d5f3|eb0c41d3e9f2f175|-1494903428||t19781.8330478455s|70e54dd838581574|121369|rds|local|vector|||0||
+rate_chart_data|stem|0e8c4d0e3af0bf06|fcd565da40d5855d|fbd6b4fc2f3c8ade|902029551||t19782.518210547s|40c58963e0dd04e5|5243|rds|local|vector|||0.14||
+rate_chart_disease_ident|stem|62e9ae08b5c4e64a|27434dafd1cb3ba2|323c3a113521153b|-1124250002||t19782.5497493701s|0419473503ea8dff|135491|rds|local|vector|||0.05||
+rate_chart_full_out|stem|06bc786265317651|29543d1b1f459770|323c3a113521153b|1854188602||t19782.5497507124s|dd100f165310a2d6|135752|rds|local|vector|||0.04||
+rate_chart_int_out|stem|4bc24393c6a8474e|9351af51eeb09514|323c3a113521153b|1856460288||t19782.549753137s|00b5eda93f6a90da|135627|rds|local|vector|||0.05||
+rate_chart_prim_prevent|stem|c555d020ee492f1f|5942a1552449cdb7|323c3a113521153b|-213513136||t19782.5497456105s|49557ea88e3073ee|136356|rds|local|vector|||0.11|1m22mUsing size aesthetic for lines was deprecated in ggplot2 3.4.0.36mℹ39m Please use linewidth instead.|
+rate_chart_risk_fact|stem|ab7ce57678b13acc|f97c630faa6ce861|323c3a113521153b|1887141211||t19782.5497468016s|28ce937a7e1c2266|134706|rds|local|vector|||0.03||
+rate_chart_risk_fact_ident|stem|f1e96854e64f5343|6245e9929e1bd4f7|323c3a113521153b|-442052794||t19782.5497518694s|47866d2131351b69|136277|rds|local|vector|||0.04||
+rate_chart_second_prevent|stem|e5fbc7ef670720f4|7e0596514fad6a7b|323c3a113521153b|-1937259243||t19782.5497541827s|1dd17876b6c00a42|137376|rds|local|vector|||0.07||
+rate_chart_tert_prevent|stem|9d54dc36d599fe51|069823d35347d5f3|323c3a113521153b|-1494903428||t19782.5497479739s|0348502810754ead|135882|rds|local|vector|||0.05||
 read_csv_file|function|dcd254c5bba0254b|||||||||||||||
 read_excel_file|function|061c16961cfbd703|||||||||||||||
 read_qof_excel_file|function|53d417490cd71d74|||||||||||||||

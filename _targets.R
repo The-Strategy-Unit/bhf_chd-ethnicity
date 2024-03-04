@@ -272,13 +272,13 @@ tar_target(metric40, ncdes_data|>
   tar_target(clusters_for_nacr,get_clusters_for_nacr(clustered_gp_and_metrics,gp_icb_mapping)),
 
   #cluster the practices by region
-  tar_target(full_cats_percents_region,get_full_cats_percents(gp_lsoa_with_eth_sum_region)),
-  tar_target(scale_full_cats_percents_region,get_scale_full_cats_percents(full_cats_percents_region)),
-  tar_target(pams_full_cats_percents_region,get_pams(scale_full_cats_percents_region)),
-  tar_target(final_data_full_cats_percent_5_clusters_region,get_clusters(pams_full_cats_percents_region,full_cats_percents_region)|>
-                                                            rename(cluster2=cluster)),
-  tar_target(elbow_plot_region,get_elbow_plot(scale_full_cats_percents_region)),
-  tar_target(cluster_plot_region,get_cluster_plot(pams_full_cats_percents_region)),
+#  tar_target(full_cats_percents_region,get_full_cats_percents(gp_lsoa_with_eth_sum_region)),
+ # tar_target(scale_full_cats_percents_region,get_scale_full_cats_percents(full_cats_percents_region)),
+#  tar_target(pams_full_cats_percents_region,get_pams(scale_full_cats_percents_region)),
+ # tar_target(final_data_full_cats_percent_5_clusters_region,get_clusters(pams_full_cats_percents_region,full_cats_percents_region)|>
+  #                                                          rename(cluster2=cluster)),
+ # tar_target(elbow_plot_region,get_elbow_plot(scale_full_cats_percents_region)),
+ # tar_target(cluster_plot_region,get_cluster_plot(pams_full_cats_percents_region)),
 
 
 #add in the missing metrics*******
@@ -296,7 +296,6 @@ tar_target(clustered_gp_and_metrics,
                            metric32_updated,metric33,metric34,metric38,
                            metric39,metric40)),
 #plot clusters
-#tar_target(cluster2_map,get_cluster2_map(clustered_gp_and_metrics,gp_geocoded)),
 tar_target(cluster1_map,get_cluster1_map(clustered_gp_and_metrics,gp_geocoded)),
 tar_target(cluster2_map,get_cluster2_map(clustered_gp_and_metrics,gp_geocoded)),
 tar_target(cluster2_chart,get_cluster2_chart(clustered_gp_and_metrics)),
@@ -313,7 +312,7 @@ tar_target(cluster2_eth_chart_3,get_cluster2_14_eth_chart(clustered_gp_and_metri
 tar_target(cluster2_eth_chart_4,get_cluster2_14_eth_chart(clustered_gp_and_metrics,4)),
 tar_target(cluster2_eth_chart_5,get_cluster2_14_eth_chart(clustered_gp_and_metrics,5)),
 #plot regional cluster
-tar_target(cluster_reg_map,get_cluster2_map(final_data_full_cats_percent_5_clusters_region,gp_geocoded)),
+#tar_target(cluster_reg_map,get_cluster2_map(final_data_full_cats_percent_5_clusters_region,gp_geocoded)),
 #tar_target(cluster_reg_chart,get_cluster2_chart(final_data_full_cats_percent_5_clusters_region)),
 
 #process the data into the correct format and perform IoD calcs
@@ -337,10 +336,6 @@ tar_target(rate_chart_second_prevent,get_rate_chart(rate_chart_data,"Secondary p
 tar_target(rate_chart_tert_prevent,get_rate_chart(rate_chart_data,"Tertiary prevention")),
 tar_target(rate_chart_int_out,get_rate_chart(rate_chart_data,"Intermediate outcome")),
 tar_target(rate_chart_full_out,get_rate_chart(rate_chart_data,"Full outcomes"))
-
-
-
-
 
 
 
