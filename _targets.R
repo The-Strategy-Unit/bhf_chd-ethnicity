@@ -323,6 +323,111 @@ tar_target(activity_by_type_clusters_stg4,calc_iod_diff_rate(activity_by_type_cl
 tar_target(activity_by_type_clusters_stg5,calc_iod_diff(activity_by_type_clusters_stg4)),
 tar_target(activity_by_type_clusters_stg6,calc_abs_iod(activity_by_type_clusters_stg5)),
 
+#get metrics individually, ready to calculate IoD confidence intervals using a bootstrap method
+tar_target(metric2_data,get_one_metric(activity_by_type_clusters_stg6,"metric2","list_size_total")|>
+             rename(numerator=metric2_num_total,denominator=list_size_total)),
+tar_target(metric5_data,get_one_metric(activity_by_type_clusters_stg6,"metric5","list_size_total")|>
+             rename(numerator=metric5_num_total,denominator=list_size_total)),
+tar_target(metric6_data,get_one_metric(activity_by_type_clusters_stg6,"metric6","list_size_total")|>
+             rename(numerator=metric6_total,denominator=list_size_total)),
+tar_target(metric7_data,get_one_metric(activity_by_type_clusters_stg6,"metric7","list_size_total")|>
+             rename(numerator=metric7_total,denominator=list_size_total)),
+tar_target(metric8_data,get_one_metric(activity_by_type_clusters_stg6,"metric8","list_size_total")|>
+             rename(numerator=metric8_total,denominator=list_size_total)),
+tar_target(metric9_data,get_one_metric(activity_by_type_clusters_stg6,"metric9","list_size_total")|>
+             rename(numerator=metric9_total,denominator=list_size_total)),
+tar_target(metric11_data,get_one_metric(activity_by_type_clusters_stg6,"metric11","metric1_total")|>
+             rename(numerator=metric11_num_total,denominator=metric1_total)),
+tar_target(metric12_data,get_one_metric(activity_by_type_clusters_stg6,"metric12","metric1_total")|>
+             rename(numerator=metric12_num_total,denominator=metric1_total)),
+tar_target(metric13_data,get_one_metric(activity_by_type_clusters_stg6,"metric13","metric1_total")|>
+             rename(numerator=metric13_num_total,denominator=metric1_total)),
+tar_target(metric14_data,get_one_metric(activity_by_type_clusters_stg6,"metric14","metric1_total")|>
+             rename(numerator=metric14_total,denominator=metric1_total)),
+tar_target(metric15_data,get_one_metric(activity_by_type_clusters_stg6,"metric15","metric1_total")|>
+             rename(numerator=metric15_total,denominator=metric1_total)),
+tar_target(metric16_data,get_one_metric(activity_by_type_clusters_stg6,"metric16","metric1_total")|>
+             rename(numerator=metric16_num_total,denominator=metric1_total)),
+tar_target(metric17_data,get_one_metric(activity_by_type_clusters_stg6,"metric17","metric1_total")|>
+             rename(numerator=metric17_num_total,denominator=metric1_total)),
+tar_target(metric18_data,get_one_metric(activity_by_type_clusters_stg6,"metric18","metric1_total")|>
+             rename(numerator=metric18_total,denominator=metric1_total)),
+tar_target(metric19_data,get_one_metric(activity_by_type_clusters_stg6,"metric19","metric1_total")|>
+             rename(numerator=metric19_total,denominator=metric1_total)),
+tar_target(metric20_data,get_one_metric(activity_by_type_clusters_stg6,"metric20","metric1_total")|>
+             rename(numerator=metric20_total,denominator=metric1_total)),
+tar_target(metric21_data,get_one_metric(activity_by_type_clusters_stg6,"metric21","metric1_total")|>
+             rename(numerator=metric21_total,denominator=metric1_total)),
+tar_target(metric22_data,get_one_metric(activity_by_type_clusters_stg6,"metric22","metric1_total")|>
+             rename(numerator=metric22_total,denominator=metric1_total)),
+tar_target(metric23_data,get_one_metric(activity_by_type_clusters_stg6,"metric23","metric1_total")|>
+             rename(numerator=metric23_total,denominator=metric1_total)),
+#24
+tar_target(metric25_data,get_one_metric(activity_by_type_clusters_stg6,"metric25","metric1_total")|>
+             rename(numerator=metric25_num_total,denominator=metric1_total)),
+tar_target(metric26_data,get_one_metric(activity_by_type_clusters_stg6,"metric26","metric1_total")|>
+             rename(numerator=metric26_total,denominator=metric1_total)),
+tar_target(metric27_data,get_one_metric(activity_by_type_clusters_stg6,"metric27","metric1_total")|>
+             rename(numerator=metric27_total,denominator=metric1_total)),
+tar_target(metric28_data,get_one_metric(activity_by_type_clusters_stg6,"metric28","metric1_total")|>
+             rename(numerator=metric28_total,denominator=metric1_total)),
+tar_target(metric28b_data,get_one_metric(activity_by_type_clusters_stg6,"metric28b","metric1_total")|>
+             rename(numerator=metric28b_total,denominator=metric1_total)),
+tar_target(metric29_data,get_one_metric(activity_by_type_clusters_stg6,"metric29","metric1_total")|>
+             rename(numerator=metric29_total,denominator=metric1_total)),
+tar_target(metric29b_data,get_one_metric(activity_by_type_clusters_stg6,"metric29b","metric1_total")|>
+             rename(numerator=metric29b_total,denominator=metric1_total)),
+tar_target(metric31_data,get_one_metric(activity_by_type_clusters_stg6,"metric31","metric1_total")|>
+             rename(numerator=metric31_num_total,denominator=metric1_total)),
+tar_target(metric32_data,get_one_metric(activity_by_type_clusters_stg6,"metric32","metric1_total")|>
+             rename(numerator=metric32_num_total,denominator=metric1_total)),
+tar_target(metric33_data,get_one_metric(activity_by_type_clusters_stg6,"metric33","list_size_45_total")|>
+             rename(numerator=metric33_num_total,denominator=list_size_45_total)),
+tar_target(metric34_data,get_one_metric(activity_by_type_clusters_stg6,"metric34","metric1_total")|>
+             rename(numerator=metric34_num_total,denominator=metric1_total)),
+tar_target(metric38_data,get_one_metric(activity_by_type_clusters_stg6,"metric38","metric1_total")|>
+             rename(numerator=metric38_num_total,denominator=metric1_total)),
+tar_target(metric39_data,get_one_metric(activity_by_type_clusters_stg6,"metric39","metric1_total")|>
+             rename(numerator=metric39_num_total,denominator=metric1_total)),
+tar_target(metric40_data,get_one_metric(activity_by_type_clusters_stg6,"metric40","metric1_total")|>
+             rename(numerator=metric40_num_total,denominator=metric1_total)),
+#get 1000 random sets of data per metric to bootstrap the conf ints
+tar_target(metric2_rates_per_cluster,get_rates_per_cluster(metric2_data)),
+tar_target(metric5_rates_per_cluster,get_rates_per_cluster(metric5_data)),
+tar_target(metric6_rates_per_cluster,get_rates_per_cluster(metric6_data)),
+tar_target(metric7_rates_per_cluster,get_rates_per_cluster(metric7_data)),
+tar_target(metric8_rates_per_cluster,get_rates_per_cluster(metric8_data)),
+tar_target(metric9_rates_per_cluster,get_rates_per_cluster(metric9_data)),
+tar_target(metric11_rates_per_cluster,get_rates_per_cluster(metric11_data)),
+tar_target(metric12_rates_per_cluster,get_rates_per_cluster(metric12_data)),
+tar_target(metric13_rates_per_cluster,get_rates_per_cluster(metric13_data)),
+tar_target(metric14_rates_per_cluster,get_rates_per_cluster(metric14_data)),
+tar_target(metric15_rates_per_cluster,get_rates_per_cluster(metric15_data)),
+tar_target(metric16_rates_per_cluster,get_rates_per_cluster(metric16_data)),
+tar_target(metric17_rates_per_cluster,get_rates_per_cluster(metric17_data)),
+tar_target(metric18_rates_per_cluster,get_rates_per_cluster(metric18_data)),
+tar_target(metric19_rates_per_cluster,get_rates_per_cluster(metric19_data)),
+tar_target(metric20_rates_per_cluster,get_rates_per_cluster(metric20_data)),
+tar_target(metric21_rates_per_cluster,get_rates_per_cluster(metric21_data)),
+tar_target(metric22_rates_per_cluster,get_rates_per_cluster(metric22_data)),
+tar_target(metric23_rates_per_cluster,get_rates_per_cluster(metric23_data)),
+#24
+tar_target(metric25_rates_per_cluster,get_rates_per_cluster(metric25_data)),
+tar_target(metric26_rates_per_cluster,get_rates_per_cluster(metric26_data)),
+tar_target(metric27_rates_per_cluster,get_rates_per_cluster(metric27_data)),
+tar_target(metric28_rates_per_cluster,get_rates_per_cluster(metric28_data)),
+tar_target(metric28b_rates_per_cluster,get_rates_per_cluster(metric28b_data)),
+tar_target(metric29_rates_per_cluster,get_rates_per_cluster(metric29_data)),
+tar_target(metric29b_rates_per_cluster,get_rates_per_cluster(metric29b_data)),
+tar_target(metric31_rates_per_cluster,get_rates_per_cluster(metric31_data)),
+tar_target(metric32_rates_per_cluster,get_rates_per_cluster(metric32_data)),
+tar_target(metric33_rates_per_cluster,get_rates_per_cluster(metric33_data)),
+tar_target(metric34_rates_per_cluster,get_rates_per_cluster(metric34_data)),
+tar_target(metric38_rates_per_cluster,get_rates_per_cluster(metric38_data)),
+tar_target(metric39_rates_per_cluster,get_rates_per_cluster(metric39_data)),
+tar_target(metric40_rates_per_cluster,get_rates_per_cluster(metric40_data)),
+
+
 #chart findings
 tar_target(chart_iod_data,get_rel_iod_data_for_chart(activity_by_type_clusters_stg6)),
 tar_target(rel_iod_chart,get_rel_iod_chart(chart_iod_data)),

@@ -789,3 +789,4 @@ calc_abs_iod <- function(activity_by_type_clusters_stg5){
   return(activity_by_type_clusters_stg6)
   
 }
+
