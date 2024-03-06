@@ -151,6 +151,10 @@ tar_read(cluster2_eth_chart_5)
 tar_read(rel_iod_chart)
 ```
 
+```{r}
+tar_read(ci_iod_chart)
+```
+
 ## Rate
 
 ### Risk factors

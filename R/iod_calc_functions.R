@@ -94,3 +94,20 @@ get_rates_per_cluster <- function(one_metric_data){
   return(rate_clusters)
   
 }
+
+get_ci_iod_together <- function(rates_per_cluster,met_name,metric_data){
+  iod_with_ci <- as_tibble(quantile(rates_per_cluster$iod_rel, c(.05, .95)) )|>
+    mutate(item_number=row_number(),
+           metric_name=met_name,
+           item_name=case_when(item_number==1~"lower_ci",
+                               item_number==2~"upper_ci"))|>
+    tibble::add_row(value=compute_iod(metric_data),
+                    item_number=3,
+                    metric_name=met_name,
+                    item_name="iod")|>
+    select(-item_number)|>
+    pivot_wider(values_from="value",
+                names_from=item_name)
+  return(iod_with_ci)
+  
+}

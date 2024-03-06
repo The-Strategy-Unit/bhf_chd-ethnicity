@@ -72,6 +72,77 @@ get_rel_iod_chart <- function(chart_iod_data){
 return(rel_iod_chart)
 }
 
+get_ci_iod_chart <- function(iod_with_ci){
+  ci_iod_chart <- iod_with_ci |>
+    mutate(metric_long_name=case_when(metric_name=="metric2"~"Smoking prev est",
+                                      metric_name=="metric5"~"Smoking register",
+                                      metric_name=="metric6"~"Obesity register",
+                                      metric_name=="metric7"~"Diabetes register",
+                                      metric_name=="metric8"~"Depression register",
+                                      metric_name=="metric33"~"45+ BP check < 5 years",
+                                      metric_name=="metric9"~"CVD risk register",
+                                      metric_name=="metric34"~"CVD pat treated with LLT",
+                                      metric_name=="metric38"~"Pat at risk treated with LLT",
+                                      metric_name=="metric11"~"Smoking cessation support offered",
+                                      metric_name=="metric12"~"Except rep. smoke cease sup",
+                                      metric_name=="metric13"~"CHD register",
+                                      metric_name=="metric14"~"CT angiography",
+                                      metric_name=="metric15"~"Electrocardiography",
+                                      metric_name=="metric16"~"Asprin anti-platelet etc",
+                                      metric_name=="metric31"~"Except rep. asprin etc",
+                                      metric_name=="metric17"~"Flu vaccination",
+                                      metric_name=="metric32"~"Except rep. flu vacc",
+                                      metric_name=="metric39"~"65+ flu vaccination",
+                                      metric_name=="metric40"~"<65 at risk flu vaccination",
+                                      metric_name=="metric18"~"Ref to OP cardiology (new)",
+                                      metric_name=="metric19"~"Cardiology outpatient DNAs",
+                                      metric_name=="metric20"~"Elective PCI",
+                                      metric_name=="metric21"~"Elective CABG",
+                                      metric_name=="metric22"~"Waiting time for elective PCI / CABG",
+                                      metric_name=="metric23"~"PCI/CABG disch < trimpoint",
+                                      metric_name=="metric25"~"BP reading < 140/90 (<80 yrs CHD)",
+                                      metric_name=="metric26"~"Readmit<30 days of PCI / CABG",
+                                      metric_name=="metric27"~"Emergency admissions for CHD",
+                                      metric_name=="metric28"~"CHD Hospital Deaths",
+                                      metric_name=="metric28b"~"CHD Hospital Deaths <75",
+                                      metric_name=="metric29"~"CHD Deaths",
+                                      metric_name=="metric29b"~"CHD Deaths <75",
+                                      .default = metric_name))|>
+    mutate(metric_long_name=fct_rev(factor(metric_long_name,levels=c("Smoking prev est","Smoking register","Obesity register","Diabetes register",
+                                                                     "Depression register", "45+ BP check < 5 years","CVD risk register","CVD pat treated with LLT",
+                                                                     "Pat at risk treated with LLT","Smoking cessation support offered",
+                                                                     "Except rep. smoke cease sup","CHD register","CT angiography","Electrocardiography",
+                                                                     "Asprin anti-platelet etc","Except rep. asprin etc", "Flu vaccination",
+                                                                     "Except rep. flu vacc", "65+ flu vaccination","<65 at risk flu vaccination",
+                                                                     "Ref to OP cardiology (new)", "Cardiology outpatient DNAs","Elective PCI",
+                                                                     "Elective CABG","Waiting time for elective PCI / CABG","PCI/CABG disch < trimpoint",
+                                                                     "BP reading < 140/90 (<80 yrs CHD)","Readmit<30 days of PCI / CABG",
+                                                                     "Emergency admissions for CHD","CHD Hospital Deaths","CHD Hospital Deaths <75", 
+                                                                     "CHD Deaths","CHD Deaths <75")))) |>
+    ggplot() +
+    geom_segment( aes(x=metric_long_name, xend=metric_long_name, y=lower_ci*100, yend=upper_ci*100), color="grey") +
+    geom_point( aes(x=metric_long_name, y=lower_ci*100), color="grey", size=2.5 ) +
+    geom_point( aes(x=metric_long_name, y=upper_ci*100), color="grey", size=2.5 ) +
+    geom_point( aes(x=metric_long_name, y=iod*100), color="orange", size=2.5 ) +
+    coord_flip()+
+    theme_light() +
+    theme(
+      panel.grid.major.x = element_blank(),
+      panel.border = element_blank(),
+      axis.ticks.x = element_blank()
+    ) +
+    # theme(
+    #   legend.position = "none",
+    #  ) +
+    xlab("") +
+    ylab("Relative Index of Disparity (%)") +
+    labs(title = paste("Index of Disparity along CHD pathway"))
+  
+  
+  return(ci_iod_chart)
+  
+}
+
 
 
 get_rate_chart_data <- function(activity_by_type_clusters_stg6){
