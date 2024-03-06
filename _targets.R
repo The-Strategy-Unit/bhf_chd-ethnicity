@@ -485,14 +485,6 @@ tar_target(rate_chart_tert_prevent,get_rate_chart(rate_chart_data,"Tertiary prev
 tar_target(rate_chart_int_out,get_rate_chart(rate_chart_data,"Intermediate outcome")),
 tar_target(rate_chart_full_out,get_rate_chart(rate_chart_data,"Full outcomes"))
 
-
-
-
-#######################################################################################
-#calculate Disparity Ratio
-#tar_target(activity_long,get_disparity_ratio(activity_by_type_clusters_stg1))
-
-
 )
 
 

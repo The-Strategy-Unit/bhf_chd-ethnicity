@@ -37,6 +37,14 @@ library(targets)
 library(tidyverse)
 ```
 
+## Introduction
+
+In the earlier report ..........
+
+## CHD Metrics
+
+jhjkhhjhkj
+
 ## Clustered GP Practices
 
 ```{r}
@@ -205,3 +213,25 @@ tar_read(rate_chart_int_out)
 ```{r}
 tar_read(rate_chart_full_out)
 ```
+
+## Appendix
+
+### Definitions and data sources of pathway metrics
+
+### Methods explained
+
+#### CHD synthetic prevalence estimates
+
+CHD synthetic prevalence estimates data has been removed from Fingertips by OHID.
+
+OHID have sent the archived data. This is for 7564 practices from 2015, of which 6297 are current practices.
+
+Need to identify practices with missing data and work out how to get a prevalence for them.
+
+Also have file from previous project - checked data is the same but need to check practices included - maybe there are more?
+
+nearest neighbours to impute chd prevalence
+
+#### Census 2021 Ethnicity by LSOA
+
+#### Which date should be used for the gp list size dataset?

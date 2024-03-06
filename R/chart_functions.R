@@ -119,24 +119,73 @@ get_ci_iod_chart <- function(iod_with_ci){
                                                                      "BP reading < 140/90 (<80 yrs CHD)","Readmit<30 days of PCI / CABG",
                                                                      "Emergency admissions for CHD","CHD Hospital Deaths","CHD Hospital Deaths <75", 
                                                                      "CHD Deaths","CHD Deaths <75")))) |>
+    mutate(pathway_level = case_when(metric_name == 'metric2' ~ 'Risk',
+                                 metric_name == 'metric5' ~ 'Risk identif.',
+                                 metric_name == 'metric6' ~ 'Risk identif.',
+                                 metric_name == 'metric7' ~ 'Risk identif.',
+                                 metric_name == 'metric8' ~ 'Risk identif.',
+                                 metric_name == 'metric33' ~ 'Risk identif.',  
+                                 metric_name == 'metric9' ~ 'Risk identif.',
+                                 metric_name == 'metric34' ~ '1°c prevent',
+                                 metric_name == 'metric38' ~ '1°c prevent',
+                                 metric_name == 'metric11' ~ '1°c prevent', 
+                                 metric_name == 'metric12' ~ '1°c prevent', 
+                                 metric_name == 'metric13' ~ 'Dis. ident',
+                                 metric_name == 'metric14' ~ 'Dis. ident',
+                                 metric_name == 'metric15' ~ 'Dis. ident',
+                                 metric_name == 'metric16' ~ '2°c prevent',
+                                 metric_name == 'metric31' ~ '2°c prevent',
+                                 metric_name == 'metric17' ~ '2°c prevent',
+                                 metric_name == 'metric32' ~ '2°c prevent',
+                                 metric_name == 'metric39' ~ '2°c prevent',
+                                 metric_name == 'metric40' ~ '2°c prevent',
+                                 metric_name == 'metric18' ~ '2°c prevent',
+                                 metric_name == 'metric19' ~ '2°c prevent',
+                                 metric_name == 'metric20' ~ '3°c prevent',
+                                 metric_name == 'metric21' ~ '3°c prevent',
+                                 metric_name == 'metric22' ~ '3°c prevent',                              
+                                 metric_name == 'metric23' ~ '3°c prevent',   
+                                # 24   
+                                metric_name == 'metric25' ~ 'Inter. outc.',                                 
+                                metric_name == 'metric26' ~ 'Inter. outc.',
+                                metric_name == 'metric26' ~ 'Inter. outc.',    
+                                metric_name == 'metric27' ~ 'Inter. outc.', 
+                                metric_name == 'metric28' ~ 'Full outcomes', 
+                                metric_name == 'metric28b' ~ 'Full outcomes', 
+                                metric_name == 'metric29' ~ 'Full outcomes',
+                                metric_name == 'metric29b' ~ 'Full outcomes'
+    )) |>
+    # mutate(pathway_level = fct_rev(factor(pathway_level, levels = c('Risk', 'Risk identif.', '1°c prevent', 'Dis. ident',
+    #                                                       '2°c prevent', '3°c prevent', 'Inter. outc.', 'Full outcomes')))) |>
     ggplot() +
-    geom_segment( aes(x=metric_long_name, xend=metric_long_name, y=lower_ci*100, yend=upper_ci*100), color="grey") +
-    geom_point( aes(x=metric_long_name, y=lower_ci*100), color="grey", size=2.5 ) +
-    geom_point( aes(x=metric_long_name, y=upper_ci*100), color="grey", size=2.5 ) +
-    geom_point( aes(x=metric_long_name, y=iod*100), color="orange", size=2.5 ) +
+    geom_segment( aes(x=metric_long_name, xend=metric_long_name, y=lower_ci*100, yend=upper_ci*100), color="#686f73") +
+    geom_point( aes(x=metric_long_name, y=lower_ci*100), color="#686f73", size=2.5 ) +
+    geom_point( aes(x=metric_long_name, y=upper_ci*100), color="#686f73", size=2.5 ) +
+    geom_point( aes(x=metric_long_name, y=iod*100), color="#f9bf07", size=2.5 ) +
     coord_flip()+
+    facet_grid(rows = factor(pathway_level,levels=c('Risk', 'Risk identif.', '1°c prevent', 'Dis. ident','2°c prevent',
+                                                     '3°c prevent', 'Inter. outc.', 'Full outcomes'))~.,
+               scales='free_y',
+               space='free_y'
+               , drop = FALSE
+    )+    
+    # facet_grid(rows = vars(pathway_level),
+    #                  scales='free_y',
+    #                  space='free_y'
+    #                  , drop = FALSE
+    # )+
     theme_light() +
     theme(
       panel.grid.major.x = element_blank(),
       panel.border = element_blank(),
-      axis.ticks.x = element_blank()
+      axis.ticks.x = element_blank(),
+      axis.text.y = element_text(size=7),
+      strip.text = element_text(
+        size = 7, color = "black")
     ) +
-    # theme(
-    #   legend.position = "none",
-    #  ) +
     xlab("") +
     ylab("Relative Index of Disparity (%)") +
-    labs(title = paste("Index of Disparity along CHD pathway"))
+    labs(title = paste("Index of Disparity along CHD pathway (with 95% confidence intervals)"))
   
   
   return(ci_iod_chart)
