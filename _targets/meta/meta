@@ -16,7 +16,7 @@ calc_iod_diff_rate|function|f0e74ce45f4cf258|||||||||||||||
 calc_iod_global_rate|function|3411993b59f6979f|||||||||||||||
 calc_iod_rate|function|67e759653b7c9c7f|||||||||||||||
 chart_iod_data|stem|f3300603ca7df16f|64a0c7d646096793|cf1056ec45d4ce5a|85269323||t19782.3712326722s|225002ec50985cb1|561|rds|local|vector|||0.02||
-ci_iod_chart|stem|a2c217b37c65bbd3|dc7caf851cc86df5|cd11e9de64155437|177855813||t19788.7919340705s|de03434d0f3d9490|112691|rds|local|vector|||0.06||
+ci_iod_chart|stem|c48f1fe2ddfe0a75|dc7caf851cc86df5|9775b55fa872ea83|177855813||t19788.8117014205s|f95fcc076208a86c|112730|rds|local|vector|||0.07||
 cluster_plot|stem|50d336def5f6033b|ce4e06ca053deb5b|8c886f37e4143d14|292947156||t19755.5083268239s|604e396c996e1c51|8781748|rds|local|vector|||0.11||
 cluster_plot_over45|stem|b649f699884cbb26|f73801c020993d93|3998fe057db27695|-1531622237||t19755.5083360959s|127857b7b4836ed9|8762320|rds|local|vector|||0.06||
 cluster_plot_region|stem|114a4362752ffc57|9dc9cc822f15757e|b3b3f69c1a8fe7a5|1028772277||t19759.5124211042s|ae474793dd8a2ad4|1833656|rds|local|vector|||0.03||
@@ -84,7 +84,7 @@ full_cats_percents|stem|74cd7d52b6d45de6|197837822c7e83c8|0d1c12a1bc6d3654|-1139
 full_cats_percents_over45|stem|5c70be79861d362d|96a1c76dab8166bc|a708397a40fc3b14|-1904529831||t19751.9639764597s|c0cd703751d83a4a|756022|rds|local|vector|||0.06||
 full_cats_percents_region|stem|e679c9f7a703cf86|62d9450df912286a|e6d9c215839a52f6|-467528888||t19759.5123871966s|cdd9af73ce8efa83|150821|rds|local|vector|||0.25||
 get_45over_list|function|0d83447c6bb85505|||||||||||||||
-get_ci_iod_chart|function|f3b448cea1aaeb47|||||||||||||||
+get_ci_iod_chart|function|bf190c1bc47fa796|||||||||||||||
 get_ci_iod_together|function|5d7687e10b55c581|||||||||||||||
 get_cluster_map|function|697e5b376ca88835|||||||||||||||
 get_cluster_plot|function|800c803ff5b1d507|||||||||||||||
@@ -118,7 +118,7 @@ get_my_fingertips_gp_data_count|function|4dee013fab430f3f|||||||||||||||
 get_one_metric|function|c41e67e642290829|||||||||||||||
 get_over45_perc|function|eac7e0de845aeffa|||||||||||||||
 get_pams|function|a81dc3b5eaea487f|||||||||||||||
-get_rate_chart|function|94212dcb1b5a1fbc|||||||||||||||
+get_rate_chart|function|e7133adeb673c622|||||||||||||||
 get_rate_chart_data|function|c01a45751183bf5b|||||||||||||||
 get_rates_per_cluster|function|1134af60b4b55adf|||||||||||||||
 get_rel_iod_chart|function|04d17d32db230d25|||||||||||||||
@@ -308,14 +308,14 @@ process_metrics_2|function|031a539e5f0b0655|||||||||||||||
 process_metrics_part_2|function|b8e4a5e5c4027aa4|||||||||||||||
 qof_chd_2223|stem|db7b5f85a8196d56|2c4657fb00bd3abb|f76a319003658608|1100172128||t19773.7111823146s|2971af7d0f0d5d82|252047|rds|local|vector|||0.4|Expecting numeric in I1186  R1186C9 got . Expecting numeric in X1186  R1186C24 got . Expecting numeric in AB1186  R1186C28 got . Expecting numeric in H1465  R1465C8 got . Expecting numeric in I1465  R1465C9 got . Expecting numeric in J1465  R1465C10 got . Expecting numeric in P1465  R1465C16 got . Expecting numeric in X1465  R1465C24 got . Expecting numeric in AB1465  R1465C28 got . Expecting numeric in AP2518  R2518C42 got . Expecting numeric in AR2518  R2518C44 got . Expecting numeric in AT2518  R2518C46 got . Expecting numeric in H2690  R2690C8 got . Expecting numeric in I2690  R2690C9 got . Expecting numeric in J2690  R2690C10 got . Expecting numeric in P2690  R2690C16 got . Expecting numeric in Q2690  R2690C17 got . Expecting numeric in R2690  R2690C18 got . Expecting numeric in V2690  R2690C22 got . Expecting numeric in W2690  R2690C23 got . Expecting numeric in X2690  R2690C24 got . Expecting numeric in AB2690  R2690C28 got . Expecting numeric in AA3064  R3064C27 got . Expecting numeric in AB3064  R3064C28 got . Expecting numeric in AH3064  R3064C34 got . Expecting numeric in AJ3064  R3064C36 got . Expecting numeric in AL3064  R3064C38 got . Expecting numeric in AP3064  R3064C42 got . Expecting numeric in AR3064  R3064C44 got . Expecting numeric in AT3064  R3064C46 got . Expecting numeric in H3378  R3378C8 got . Expecting numeric in I3378  R3378C9 got . Expecting numeric in J3378  R3378C10 got . Expecting numeric in P3378  R3378C16 got . Expecting numeric in Q3378  R3378C17 got . Expecting numeric in R3378  R3378C18 got . Expecting numeric in V3378  R3378C22 got . Expecting numeric in W3378  R3378C23 got . Expecting numeric in X3378  R3378C24 got . Expecting numeric in AA3378  R3378C27 got . Expecting numeric in AB3378  R3378C28 got . Expecting numeric in AH3378  R3378C34 got . Expecting numeric in A|
 rate_chart_data|stem|0e8c4d0e3af0bf06|fcd565da40d5855d|fbd6b4fc2f3c8ade|902029551||t19782.518210547s|40c58963e0dd04e5|5243|rds|local|vector|||0.14||
-rate_chart_disease_ident|stem|62e9ae08b5c4e64a|27434dafd1cb3ba2|323c3a113521153b|-1124250002||t19782.5497493701s|0419473503ea8dff|135491|rds|local|vector|||0.05||
-rate_chart_full_out|stem|06bc786265317651|29543d1b1f459770|323c3a113521153b|1854188602||t19782.5497507124s|dd100f165310a2d6|135752|rds|local|vector|||0.04||
-rate_chart_int_out|stem|4bc24393c6a8474e|9351af51eeb09514|323c3a113521153b|1856460288||t19782.549753137s|00b5eda93f6a90da|135627|rds|local|vector|||0.05||
-rate_chart_prim_prevent|stem|c555d020ee492f1f|5942a1552449cdb7|323c3a113521153b|-213513136||t19782.5497456105s|49557ea88e3073ee|136356|rds|local|vector|||0.11|1m22mUsing size aesthetic for lines was deprecated in ggplot2 3.4.0.36mℹ39m Please use linewidth instead.|
-rate_chart_risk_fact|stem|ab7ce57678b13acc|f97c630faa6ce861|323c3a113521153b|1887141211||t19782.5497468016s|28ce937a7e1c2266|134706|rds|local|vector|||0.03||
-rate_chart_risk_fact_ident|stem|f1e96854e64f5343|6245e9929e1bd4f7|323c3a113521153b|-442052794||t19782.5497518694s|47866d2131351b69|136277|rds|local|vector|||0.04||
-rate_chart_second_prevent|stem|e5fbc7ef670720f4|7e0596514fad6a7b|323c3a113521153b|-1937259243||t19782.5497541827s|1dd17876b6c00a42|137376|rds|local|vector|||0.07||
-rate_chart_tert_prevent|stem|9d54dc36d599fe51|069823d35347d5f3|323c3a113521153b|-1494903428||t19782.5497479739s|0348502810754ead|135882|rds|local|vector|||0.05||
+rate_chart_disease_ident|stem|0de6a11547a1b926|27434dafd1cb3ba2|67bbb156dfcc6701|-1124250002||t19788.8065417905s|02cafc10f8f32f6b|150934|rds|local|vector|||0.06||
+rate_chart_full_out|stem|06f223d753c7375e|29543d1b1f459770|67bbb156dfcc6701|1854188602||t19788.806548339s|52d3b60d392dc4f9|151193|rds|local|vector|||0.05||
+rate_chart_int_out|stem|f551f865a4fb482c|9351af51eeb09514|67bbb156dfcc6701|1856460288||t19788.8065392501s|904a50c3a98ca89a|151073|rds|local|vector|||0.13|1m22mUsing size aesthetic for lines was deprecated in ggplot2 3.4.0.36mℹ39m Please use linewidth instead.|
+rate_chart_prim_prevent|stem|a1159a274ec46bb9|5942a1552449cdb7|67bbb156dfcc6701|-213513136||t19788.806544403s|b187459831edfa03|151810|rds|local|vector|||0.04||
+rate_chart_risk_fact|stem|c0b93f7774b9f701|f97c630faa6ce861|67bbb156dfcc6701|1887141211||t19788.8065405308s|cd72881a783b849d|150156|rds|local|vector|||0.06||
+rate_chart_risk_fact_ident|stem|db3ec3510da9667e|6245e9929e1bd4f7|67bbb156dfcc6701|-442052794||t19788.8065430482s|c2d62ded9c3e0c26|151713|rds|local|vector|||0.04||
+rate_chart_second_prevent|stem|4aa6b343b51e3833|7e0596514fad6a7b|67bbb156dfcc6701|-1937259243||t19788.8065470384s|bd97b4e59e4a09c8|152826|rds|local|vector|||0.05||
+rate_chart_tert_prevent|stem|c081a0540576b8c0|069823d35347d5f3|67bbb156dfcc6701|-1494903428||t19788.8065457269s|d748d0bfc14627cb|151315|rds|local|vector|||0.05||
 read_csv_file|function|dcd254c5bba0254b|||||||||||||||
 read_excel_file|function|061c16961cfbd703|||||||||||||||
 read_qof_excel_file|function|53d417490cd71d74|||||||||||||||

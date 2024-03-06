@@ -169,19 +169,15 @@ get_ci_iod_chart <- function(iod_with_ci){
                space='free_y'
                , drop = FALSE
     )+    
-    # facet_grid(rows = vars(pathway_level),
-    #                  scales='free_y',
-    #                  space='free_y'
-    #                  , drop = FALSE
-    # )+
     theme_light() +
     theme(
+      plot.title=element_text(size=11),
       panel.grid.major.x = element_blank(),
       panel.border = element_blank(),
       axis.ticks.x = element_blank(),
       axis.text.y = element_text(size=7),
       strip.text = element_text(
-        size = 7, color = "black")
+        size = 5, color = "black")
     ) +
     xlab("") +
     ylab("Relative Index of Disparity (%)") +
@@ -322,6 +318,7 @@ rate_chart <- rate_chart_data|>
   geom_bar(stat = "identity") +
   geom_errorbar( aes(x=as.factor(cluster2), ymin=lower_ci, ymax=upper_ci), width=0.4, colour="grey", alpha=0.9, size=0.5) +
   scale_fill_manual(values = palette)+
+  theme_light() +
   theme(legend.position="none")+
   xlab("Cluster (1=Least diverse, 5=Most diverse)") +
   ylab("Rate")+
