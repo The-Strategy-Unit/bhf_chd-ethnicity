@@ -7,9 +7,9 @@ date-format: "YYYY-MM-DD"
 format:
   html:
     grid:
-      sidebar-width: 250px
-      body-width: 800px
-      margin-width: 250px
+      sidebar-width: 200px
+      body-width: 950px
+      margin-width: 150px
       gutter-width: 1.5rem
     embed-resources: true
     smooth-scroll: true
@@ -35,6 +35,9 @@ editor_options:
 library(targets)
 
 library(tidyverse)
+library(grid)
+library(gridExtra)
+library(cowplot)
 ```
 
 ## Introduction
@@ -156,10 +159,6 @@ tar_read(cluster2_eth_chart_5)
 ## Relative Index of Disparity
 
 ```{r}
-tar_read(rel_iod_chart)
-```
-
-```{r}
 tar_read(ci_iod_chart)
 ```
 
@@ -214,6 +213,58 @@ tar_read(rate_chart_int_out)
 tar_read(rate_chart_full_out)
 ```
 
+## Regions - Relative Index of Disparity
+
+### London
+
+```{r}
+regional_charts <- tar_read(regional_charts)
+regional_charts[1]
+```
+
+### South West
+
+```{r}
+
+regional_charts[2]
+```
+
+### South East
+
+```{r}
+
+regional_charts[3]
+```
+
+### Midlands
+
+```{r}
+regional_charts[4]
+```
+
+### East of England
+
+```{r}
+regional_charts[5]
+```
+
+### North West
+
+```{r}
+regional_charts[6]
+```
+
+### North East and Yorkshire
+
+```{r}
+regional_charts[7]
+```
+
+```{r}
+
+
+```
+
 ## Appendix
 
 ### Definitions and data sources of pathway metrics
@@ -235,3 +286,21 @@ nearest neighbours to impute chd prevalence
 #### Census 2021 Ethnicity by LSOA
 
 #### Which date should be used for the gp list size dataset?
+
+### ICBs- Relative Index of Disparity
+
+```{r}
+icb_charts <- tar_read(icb_charts)
+icb_charts[1]
+icb_charts[2]
+icb_charts[3]
+icb_charts[4]
+icb_charts[5]
+icb_charts[6]
+icb_charts[7]
+icb_charts[8]
+icb_charts[9]
+icb_charts[10]
+icb_charts[11]
+icb_charts[12]
+```

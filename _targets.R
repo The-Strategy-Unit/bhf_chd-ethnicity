@@ -19,6 +19,7 @@ tar_option_set(
 # tar_make_clustermq() is an older (pre-{crew}) way to do distributed computing
 # in {targets}, and its configuration for your machine is below.
 options(clustermq.scheduler = "multiprocess")
+options(scipen=999)
 
 
 # Run the R scripts in the R/ folder with your custom functions:
@@ -483,7 +484,36 @@ tar_target(rate_chart_disease_ident,get_rate_chart(rate_chart_data,"Disease iden
 tar_target(rate_chart_second_prevent,get_rate_chart(rate_chart_data,"Secondary prevention")),
 tar_target(rate_chart_tert_prevent,get_rate_chart(rate_chart_data,"Tertiary prevention")),
 tar_target(rate_chart_int_out,get_rate_chart(rate_chart_data,"Intermediate outcome")),
-tar_target(rate_chart_full_out,get_rate_chart(rate_chart_data,"Full outcomes"))
+tar_target(rate_chart_full_out,get_rate_chart(rate_chart_data,"Full outcomes")),
+
+
+#Regional versions
+tar_target(region_clustered_gp_and_metrics,clustered_gp_and_metrics|>
+              left_join(gp_icb_mapping, join_by(gp_practice_code==practice_code))),
+tar_target(regional_charts,region_clustered_gp_and_metrics |>
+             split(region_clustered_gp_and_metrics$comm_region_code) |>
+             map(\(df) process_metrics(df) )|>
+             map(\(df) calc_iod_rate(df) )|>
+             map(\(df) calc_iod_global_rate(df) )|>
+             map(\(df) calc_iod_diff_rate(df) )|>
+             map(\(df) calc_iod_diff(df) )|>
+             map(\(df) calc_abs_iod(df) )|>
+             map(\(df) get_rel_iod_data_for_chart(df) )|>
+             map(\(df) get_rel_iod_chart(df) )),
+
+#ICB versions
+tar_target(icb_clustered_gp_and_metrics,clustered_gp_and_metrics|>
+             left_join(gp_icb_mapping, join_by(gp_practice_code==practice_code))),
+tar_target(icb_charts,icb_clustered_gp_and_metrics |>
+             split(icb_clustered_gp_and_metrics$icb_code) |>
+             map(\(df) process_metrics(df) )|>
+             map(\(df) calc_iod_rate(df) )|>
+             map(\(df) calc_iod_global_rate(df) )|>
+             map(\(df) calc_iod_diff_rate(df) )|>
+             map(\(df) calc_iod_diff(df) )|>
+             map(\(df) calc_abs_iod(df) )|>
+             map(\(df) get_rel_iod_data_for_chart(df) )|>
+             map(\(df) get_rel_iod_chart(df) ))
 
 )
 

@@ -4,8 +4,8 @@ get_rel_iod_data_for_chart <- function(activity_by_type_clusters_stg6){
   select(cluster2,list_size_total,ends_with("rel_iod"))|>
   pivot_longer(cols=starts_with("metric"),
                names_to="metric")|>
-  filter(cluster2==1)|>
-  select(-cluster2,-list_size_total)
+  select(-cluster2,-list_size_total)|>
+  dplyr::distinct(metric,value)
 return(chart_iod_data)
 }
 
@@ -191,6 +191,7 @@ get_ci_iod_chart <- function(iod_with_ci){
 
 
 get_rate_chart_data <- function(activity_by_type_clusters_stg6){
+  options(scipen=999)
   rate_data <- activity_by_type_clusters_stg6 |>
   select(cluster2,ends_with("_rate"),ends_with("ci"))|>
   select(-ends_with("global_rate"),-ends_with("diff_rate"))|>
