@@ -215,55 +215,50 @@ tar_read(rate_chart_full_out)
 
 ## Regions - Relative Index of Disparity
 
-### London
+::: panel-tabset
+## London
 
 ```{r}
 regional_charts <- tar_read(regional_charts)
 regional_charts[1]
 ```
 
-### South West
+## South West
 
 ```{r}
-
 regional_charts[2]
 ```
 
-### South East
+## South East
 
 ```{r}
-
 regional_charts[3]
 ```
 
-### Midlands
+## Midlands
 
 ```{r}
 regional_charts[4]
 ```
 
-### East of England
+## East of England
 
 ```{r}
 regional_charts[5]
 ```
 
-### North West
+## North West
 
 ```{r}
 regional_charts[6]
 ```
 
-### North East and Yorkshire
+## North East and Yorkshire
 
 ```{r}
 regional_charts[7]
 ```
-
-```{r}
-
-
-```
+:::
 
 ## Appendix
 
@@ -304,3 +299,9 @@ icb_charts[10]
 icb_charts[11]
 icb_charts[12]
 ```
+
+### References
+
+Confidence intervals vs statistical significance
+
+<https://academic.oup.com/jrssig/article/16/4/20/7038025>

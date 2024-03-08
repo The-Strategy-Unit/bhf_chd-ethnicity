@@ -69,6 +69,8 @@ get_rel_iod_chart <- function(chart_iod_data){
   ylab("Relative Index of Disparity (%)")+
   labs(title = paste("Index of Disparity along CHD pathway"))
 
+  
+
 return(rel_iod_chart)
 }
 
@@ -155,8 +157,6 @@ get_ci_iod_chart <- function(iod_with_ci){
                                 metric_name == 'metric29' ~ 'Full outcomes',
                                 metric_name == 'metric29b' ~ 'Full outcomes'
     )) |>
-    # mutate(pathway_level = fct_rev(factor(pathway_level, levels = c('Risk', 'Risk identif.', '1°c prevent', 'Dis. ident',
-    #                                                       '2°c prevent', '3°c prevent', 'Inter. outc.', 'Full outcomes')))) |>
     ggplot() +
     geom_segment( aes(x=metric_long_name, xend=metric_long_name, y=lower_ci*100, yend=upper_ci*100), color="#686f73") +
     geom_point( aes(x=metric_long_name, y=lower_ci*100), color="#686f73", size=2.5 ) +
