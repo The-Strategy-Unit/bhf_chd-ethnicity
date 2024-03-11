@@ -16,7 +16,7 @@ calc_iod_diff_rate|function|f0e74ce45f4cf258|||||||||||||||
 calc_iod_global_rate|function|3411993b59f6979f|||||||||||||||
 calc_iod_rate|function|67e759653b7c9c7f|||||||||||||||
 chart_iod_data|stem|f3300603ca7df16f|64a0c7d646096793|afb50dd8be77b69e|85269323||t19789.6981491553s|225002ec50985cb1|561|rds|local|vector|||0||
-ci_iod_chart|stem|eb7666ecd5ceae75|dc7caf851cc86df5|9bca9344785028d5|177855813||t19789.6791787616s|7a42b44030851a50|112713|rds|local|vector|||0.07||
+ci_iod_chart|stem|0c3cfbc093333471|dc7caf851cc86df5|1110bb09d7c37bae|177855813||t19790.4915264413s|74bb788c7b71778d|115454|rds|local|vector|||0.06||
 cluster_plot|stem|50d336def5f6033b|ce4e06ca053deb5b|8c886f37e4143d14|292947156||t19755.5083268239s|604e396c996e1c51|8781748|rds|local|vector|||0.11||
 cluster_plot_over45|stem|b649f699884cbb26|f73801c020993d93|3998fe057db27695|-1531622237||t19755.5083360959s|127857b7b4836ed9|8762320|rds|local|vector|||0.06||
 cluster_plot_region|stem|114a4362752ffc57|9dc9cc822f15757e|b3b3f69c1a8fe7a5|1028772277||t19759.5124211042s|ae474793dd8a2ad4|1833656|rds|local|vector|||0.03||
@@ -84,7 +84,7 @@ full_cats_percents|stem|74cd7d52b6d45de6|197837822c7e83c8|0d1c12a1bc6d3654|-1139
 full_cats_percents_over45|stem|5c70be79861d362d|96a1c76dab8166bc|a708397a40fc3b14|-1904529831||t19751.9639764597s|c0cd703751d83a4a|756022|rds|local|vector|||0.06||
 full_cats_percents_region|stem|e679c9f7a703cf86|62d9450df912286a|e6d9c215839a52f6|-467528888||t19759.5123871966s|cdd9af73ce8efa83|150821|rds|local|vector|||0.25||
 get_45over_list|function|0d83447c6bb85505|||||||||||||||
-get_ci_iod_chart|function|bf190c1bc47fa796|||||||||||||||
+get_ci_iod_chart|function|11c10529502d2beb|||||||||||||||
 get_ci_iod_together|function|b93332871b925f75|||||||||||||||
 get_cluster_map|function|697e5b376ca88835|||||||||||||||
 get_cluster_plot|function|800c803ff5b1d507|||||||||||||||
@@ -121,7 +121,9 @@ get_pams|function|a81dc3b5eaea487f|||||||||||||||
 get_rate_chart|function|e7133adeb673c622|||||||||||||||
 get_rate_chart_data|function|c1d03d7661e1ae34|||||||||||||||
 get_rates_per_cluster|function|1134af60b4b55adf|||||||||||||||
-get_rel_iod_chart|function|04d17d32db230d25|||||||||||||||
+get_region_cluster_chart|function|c8aeb209e1b63933|||||||||||||||
+get_region_cluster_chart_data|function|7403aa100c9a975c|||||||||||||||
+get_rel_iod_chart|function|a8d023fc7fc0230c|||||||||||||||
 get_rel_iod_data_for_chart|function|c1ce6d76418a4e6a|||||||||||||||
 get_scale_full_cats_percents|function|80fddd22d9a65248|||||||||||||||
 get_scale_full_cats_percents_over45|function|de63cfed36141b5e|||||||||||||||
@@ -143,7 +145,7 @@ gp_reg_pat_prac_lsoa|stem|79c68c31967a37db|7f1951eaacacc5d8|4101d168c19880d7|-62
 gp_reg_pat_prac_sing_age_female|stem|2cc85d420f4ecfea|e570b239ed9a384d|2825ee30f143fb57|-2010966184||t19747.8098915844s|b169455902611087|952425|rds|local|vector|||0.57||
 gp_reg_pat_prac_sing_age_male|stem|856db12304cb044a|a85e010038bab71c|096186f173331ed2|-729996257||t19747.8099023049s|b0bc242a0bf4c40a|954356|rds|local|vector|||0.5||
 i|object|3a9a7d4ce430bc57|||||||||||||||
-icb_charts|stem|1ec2dd73c2d707cc|d57d86c96317da81|96f9c529d3fb24b3|1641162239||t19789.9043005038s|c7b32cba70ab46ff|373973|rds|local|vector|||7.28||
+icb_charts|stem|f7915cd153b1c069|760d3affb434155c|ee689d8fd984703e|1641162239||t19790.5025551006s|0af3a5dfd1927907|908266|rds|local|vector|||8.86||
 icb_clustered_gp_and_metrics|stem|8d9f99ca8c0f7b2d|2797e0c57b31c3a0|e0e921c497ba125b|1134288029||t19789.904213899s|9083ef3dddaebad1|1754816|rds|local|vector|||0.01||
 iod_with_ci|stem|c8693c91afa95caa|e827e1da638c0a42|2976cdf8342d9371|1474657023||t19789.6744286479s|2586203e115fc78a|1096|rds|local|vector|||0||
 iod_with_ci_metric11|stem|c6ea1058bde35ad1|e34b3cd115942be8|e4afb3d5fb201aea|1206424029||t19789.6744214433s|458efa8352f0a1fc|195|rds|local|vector|||0.02||
@@ -328,10 +330,13 @@ region_activity_by_type_clusters_stg4|stem|db4c8f4790fff5a5|e7626326bc147abc|152
 region_activity_by_type_clusters_stg5|stem|7a729b62dbef4617|9680c82f05f6d327|67bfca9a383f37d1|-85026949||t19789.730900055s|e54afba5a30e3a2e|9952|rds|local|vector|||0.03||
 region_activity_by_type_clusters_stg6|stem|b8aa27bd6793745c|dcb2073ee59855a5|af37fbc23591a238|95333627||t19789.7309018897s|700c35f2219ebc70|10747|rds|local|vector|||0.14||
 region_chart_iod_data|stem|84c44ed48b4d3d4b|f6d9665126facf2f|a6d7833d6e212429|-320902951||t19789.7309032517s|d29875c59aebc51d|560|rds|local|vector|||0.02||
+region_cluster_chart|stem|19530289dd1f1983|9b18f69b698d2c9d|54b9c28b0b251167|668055022||t19790.5621596654s|2a324ccf163d5c34|122358|rds|local|vector|||0.03||
+region_cluster_chart_data|stem|7d3eb44eaf7efcf5|dc9142a2e208839d|6d8a2a75f143c5e0|1442861169||t19790.6443084861s|0e097f16d551a674|448|rds|local|vector|||0.05||
+region_cluster_charts|stem|c1517120bbd8a3de|e777d3cc2a6aa472|ed797ab915b53f11|-1898002185||t19790.6443108173s|fba5c6358854d929|196045|rds|local|vector|||0.09||
 region_clustered_gp_and_metrics|stem|8d9f99ca8c0f7b2d|2797e0c57b31c3a0|e0e921c497ba125b|1136487785||t19789.7729950507s|9083ef3dddaebad1|1754816|rds|local|vector|||0||
 region_rel_iod_chart|stem|0bae5a93159f26ec|acb78874463ceae7|955a2cc2358adc38|1100335637||t19789.7309055882s|539a1f1a50e8a90e|93292|rds|local|vector|||0.05||
-regional_charts|stem|05330eaf7ca49506|72f2d7085fcf100b|5ebe6bec9962bb3b|151199613||t19790.3958057861s|ba4565d4e20d79e9|134779|rds|local|vector|||1.93||
-rel_iod_chart|stem|cad0b52a425d6415|b7052ef283314f17|4eb31c44884fccc5|2099304028||t19781.5030450103s|234c390f17a85969|67562|rds|local|vector|||0.04||
+regional_charts|stem|2bdebcf11e57f371|ef1c45f77585fd3c|9f36cd0c7bd83e4e|151199613||t19790.5814266486s|bc235336a71406d3|286437|rds|local|vector|||1.91||
+rel_iod_chart|stem|e282233bb5f6e44d|b7052ef283314f17|f08f0fa8f1828b03|2099304028||t19790.5025794209s|30a79957893cf932|176766|rds|local|vector|||0.03||
 scale_full_cats_percents|stem|a4403e79b0579d27|694714b629c7c9fe|29dce0c47f179812|1412890650||t19755.3727104787s|8aff3ac93319bfe1|708126|rds|local|vector|||0||
 scale_full_cats_percents_over45|stem|536fe1e2f9e8ae0c|7d25f20735d19a15|ccd2e3d8b5e934d9|-2145464109||t19751.9639773171s|e2d0f8d2c005d40e|757236|rds|local|vector|||0.02||
 scale_full_cats_percents_region|stem|f26628b3544c322e|7b9b57fc9f4453f9|84144d1b63e6ec0a|-259050396||t19759.5123875474s|b7dadd65f2f5ca31|142580|rds|local|vector|||0||

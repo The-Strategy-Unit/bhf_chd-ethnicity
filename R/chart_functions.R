@@ -13,66 +13,112 @@ return(chart_iod_data)
 get_rel_iod_chart <- function(chart_iod_data){
 
   rel_iod_chart <- chart_iod_data |>
-  mutate(metric=fct_rev(factor(metric,levels=c("metric2_rel_iod","metric5_rel_iod","metric6_rel_iod","metric7_rel_iod","metric8_rel_iod",
-                                               "metric33_rel_iod","metric9_rel_iod","metric34_rel_iod","metric38_rel_iod","metric11_rel_iod",
-                                               "metric12_rel_iod","metric13_rel_iod","metric14_rel_iod", "metric15_rel_iod","metric16_rel_iod",
-                                               "metric31_rel_iod", "metric17_rel_iod","metric32_rel_iod", "metric39_rel_iod",
-                                               "metric40_rel_iod","metric18_rel_iod", "metric19_rel_iod","metric20_rel_iod","metric21_rel_iod",
-                                               "metric22_rel_iod","metric23_rel_iod", "metric25_rel_iod","metric26_rel_iod","metric27_rel_iod",
-                                               "metric28_rel_iod","metric28b_rel_iod", "metric29_rel_iod","metric29b_rel_iod")))) |>
- 
-    mutate(metric_name=case_when(metric=="metric2_rel_iod"~"Smoking prev est",
-                               metric=="metric5_rel_iod"~"Smoking register",
-                               metric=="metric6_rel_iod"~"Obesity register",
-                               metric=="metric7_rel_iod"~"Diabetes register",
-                               metric=="metric8_rel_iod"~"Depression register",
-                               metric=="metric33_rel_iod"~"45+ BP check < 5 years",
-                               metric=="metric9_rel_iod"~"CVD risk register",
-                               metric=="metric34_rel_iod"~"CVD pat treated with LLT",
-                               metric=="metric38_rel_iod"~"Pat at risk treated with LLT",
-                               metric=="metric11_rel_iod"~"Smoking cessation support offered",
-                               metric=="metric12_rel_iod"~"Except rep. smoke cease sup",
-                               metric=="metric13_rel_iod"~"CHD register",
-                               metric=="metric14_rel_iod"~"CT angiography",
-                               metric=="metric15_rel_iod"~"Electrocardiography",
-                               metric=="metric16_rel_iod"~"Asprin anti-platelet etc",
-                               metric=="metric31_rel_iod"~"Except rep. asprin etc",
-                               metric=="metric17_rel_iod"~"Flu vaccination",
-                               metric=="metric32_rel_iod"~"Except rep. flu vacc",
-                               metric=="metric39_rel_iod"~"65+ flu vaccination",
-                               metric=="metric40_rel_iod"~"<65 at risk flu vaccination",
-                               metric=="metric18_rel_iod"~"Ref to OP cardiology (new)",
-                               metric=="metric19_rel_iod"~"Cardiology outpatient DNAs",
-                               metric=="metric20_rel_iod"~"Elective PCI",
-                               metric=="metric21_rel_iod"~"Elective CABG",
-                               metric=="metric22_rel_iod"~"Waiting time for elective PCI / CABG",
-                               metric=="metric23_rel_iod"~"PCI/CABG disch < trimpoint",
-                               metric=="metric25_rel_iod"~"BP reading < 140/90 (<80 yrs CHD)",
-                               metric=="metric26_rel_iod"~"Readmit<30 days of PCI / CABG",
-                               metric=="metric27_rel_iod"~"Emergency admissions for CHD",
-                               metric=="metric28_rel_iod"~"CHD Hospital Deaths",
-                               metric=="metric28b_rel_iod"~"CHD Hospital Deaths <75",
-                               metric=="metric29_rel_iod"~"CHD Deaths",
-                               metric=="metric29b_rel_iod"~"CHD Deaths <75",
-                               .default = metric))|>
-  ggplot(aes(x=metric, y=value)) +
-  geom_segment( aes(x=metric, xend=metric, y=0, yend=value), color="grey") +
-  geom_point( color="orange", size=3) +
-  coord_flip()+
-  theme_light() +
-  theme(
-    panel.grid.major.x = element_blank(),
-    panel.border = element_blank(),
-    axis.ticks.x = element_blank()
-  ) +
-  xlab("") +
-  ylab("Relative Index of Disparity (%)")+
-  labs(title = paste("Index of Disparity along CHD pathway"))
-
-  
+    mutate(metric_long_name=case_when(metric=="metric2_rel_iod"~"Smoking prev est",
+                                      metric=="metric5_rel_iod"~"Smoking register",
+                                      metric=="metric6_rel_iod"~"Obesity register",
+                                      metric=="metric7_rel_iod"~"Diabetes register",
+                                      metric=="metric8_rel_iod"~"Depression register",
+                                      metric=="metric33_rel_iod"~"45+ BP check < 5 years",
+                                      metric=="metric9_rel_iod"~"CVD risk register",
+                                      metric=="metric34_rel_iod"~"CVD pat treated with LLT",
+                                      metric=="metric38_rel_iod"~"Pat at risk treated with LLT",
+                                      metric=="metric11_rel_iod"~"Smoking cessation support offered",
+                                      metric=="metric12_rel_iod"~"Except rep. smoke cease sup",
+                                      metric=="metric13_rel_iod"~"CHD register",
+                                      metric=="metric14_rel_iod"~"CT angiography",
+                                      metric=="metric15_rel_iod"~"Electrocardiography",
+                                      metric=="metric16_rel_iod"~"Asprin anti-platelet etc",
+                                      metric=="metric31_rel_iod"~"Except rep. asprin etc",
+                                      metric=="metric17_rel_iod"~"Flu vaccination",
+                                      metric=="metric32_rel_iod"~"Except rep. flu vacc",
+                                      metric=="metric39_rel_iod"~"65+ flu vaccination",
+                                      metric=="metric40_rel_iod"~"<65 at risk flu vaccination",
+                                      metric=="metric18_rel_iod"~"Ref to OP cardiology (new)",
+                                      metric=="metric19_rel_iod"~"Cardiology outpatient DNAs",
+                                      metric=="metric20_rel_iod"~"Elective PCI",
+                                      metric=="metric21_rel_iod"~"Elective CABG",
+                                      metric=="metric22_rel_iod"~"Waiting time for elective PCI / CABG",
+                                      metric=="metric23_rel_iod"~"PCI/CABG disch < trimpoint",
+                                      metric=="metric25_rel_iod"~"BP reading < 140/90 (<80 yrs CHD)",
+                                      metric=="metric26_rel_iod"~"Readmit<30 days of PCI / CABG",
+                                      metric=="metric27_rel_iod"~"Emergency admissions for CHD",
+                                      metric=="metric28_rel_iod"~"CHD Hospital Deaths",
+                                      metric=="metric28b_rel_iod"~"CHD Hospital Deaths <75",
+                                      metric=="metric29_rel_iod"~"CHD Deaths",
+                                      metric=="metric29b_rel_iod"~"CHD Deaths <75",
+                                      .default = metric))|>
+    mutate(metric_long_name=fct_rev(factor(metric_long_name,levels=c("Smoking prev est","Smoking register","Obesity register","Diabetes register",
+                                                                     "Depression register", "45+ BP check < 5 years","CVD risk register","CVD pat treated with LLT",
+                                                                     "Pat at risk treated with LLT","Smoking cessation support offered",
+                                                                     "Except rep. smoke cease sup","CHD register","CT angiography","Electrocardiography",
+                                                                     "Asprin anti-platelet etc","Except rep. asprin etc", "Flu vaccination",
+                                                                     "Except rep. flu vacc", "65+ flu vaccination","<65 at risk flu vaccination",
+                                                                     "Ref to OP cardiology (new)", "Cardiology outpatient DNAs","Elective PCI",
+                                                                     "Elective CABG","Waiting time for elective PCI / CABG","PCI/CABG disch < trimpoint",
+                                                                     "BP reading < 140/90 (<80 yrs CHD)","Readmit<30 days of PCI / CABG",
+                                                                     "Emergency admissions for CHD","CHD Hospital Deaths","CHD Hospital Deaths <75", 
+                                                                     "CHD Deaths","CHD Deaths <75")))) |>
+    mutate(pathway_level = case_when(metric == 'metric2_rel_iod' ~ 'Risk',
+                                     metric == 'metric5_rel_iod' ~ 'Risk identif.',
+                                     metric == 'metric6_rel_iod' ~ 'Risk identif.',
+                                     metric == 'metric7_rel_iod' ~ 'Risk identif.',
+                                     metric == 'metric8_rel_iod' ~ 'Risk identif.',
+                                     metric == 'metric33_rel_iod' ~ 'Risk identif.',  
+                                     metric == 'metric9_rel_iod' ~ 'Risk identif.',
+                                     metric == 'metric34_rel_iod' ~ '1°c prevent',
+                                     metric == 'metric38_rel_iod' ~ '1°c prevent',
+                                     metric == 'metric11_rel_iod' ~ '1°c prevent', 
+                                     metric == 'metric12_rel_iod' ~ '1°c prevent', 
+                                     metric == 'metric13_rel_iod' ~ 'Dis. ident',
+                                     metric == 'metric14_rel_iod' ~ 'Dis. ident',
+                                     metric == 'metric15_rel_iod' ~ 'Dis. ident',
+                                     metric == 'metric16_rel_iod' ~ '2°c prevent',
+                                     metric == 'metric31_rel_iod' ~ '2°c prevent',
+                                     metric == 'metric17_rel_iod' ~ '2°c prevent',
+                                     metric == 'metric32_rel_iod' ~ '2°c prevent',
+                                     metric == 'metric39_rel_iod' ~ '2°c prevent',
+                                     metric == 'metric40_rel_iod' ~ '2°c prevent',
+                                     metric == 'metric18_rel_iod' ~ '2°c prevent',
+                                     metric == 'metric19_rel_iod' ~ '2°c prevent',
+                                     metric == 'metric20_rel_iod' ~ '3°c prevent',
+                                     metric == 'metric21_rel_iod' ~ '3°c prevent',
+                                     metric == 'metric22_rel_iod' ~ '3°c prevent',                              
+                                     metric == 'metric23_rel_iod' ~ '3°c prevent',   
+                                     # 24   
+                                     metric == 'metric25_rel_iod' ~ 'Inter. outc.',                                 
+                                     metric == 'metric26_rel_iod' ~ 'Inter. outc.',
+                                     metric == 'metric27_rel_iod' ~ 'Inter. outc.', 
+                                     metric == 'metric28_rel_iod' ~ 'Full outcomes', 
+                                     metric == 'metric28b_rel_iod' ~ 'Full outcomes', 
+                                     metric == 'metric29_rel_iod' ~ 'Full outcomes',
+                                     metric == 'metric29b_rel_iod' ~ 'Full outcomes'
+    )) |>
+    ggplot(aes(x=metric_long_name, y=value)) +
+    geom_segment( aes(x=metric_long_name, xend=metric_long_name, y=0, yend=value), color="grey") +
+    geom_point( color="#f9bf07", size=3) +
+    coord_flip()+
+    facet_grid(rows = factor(pathway_level,levels=c('Risk', 'Risk identif.', '1°c prevent', 'Dis. ident','2°c prevent',
+                                                    '3°c prevent', 'Inter. outc.', 'Full outcomes'))~.,
+               scales='free_y',
+               space='free_y'
+               , drop = FALSE
+    )+ 
+    theme_light() +
+    theme(
+      panel.grid.major.x = element_blank(),
+      panel.border = element_blank(),
+      axis.ticks.x = element_blank(),
+      strip.text = element_text(
+        size = 5, color = "black")
+    ) +
+    ylim(0,30)+
+    xlab("") +
+    ylab("Relative Index of Disparity (%)")+
+    labs(title = paste("Index of Disparity along CHD pathway"))
 
 return(rel_iod_chart)
 }
+
 
 get_ci_iod_chart <- function(iod_with_ci){
   ci_iod_chart <- iod_with_ci |>
@@ -150,7 +196,6 @@ get_ci_iod_chart <- function(iod_with_ci){
                                 # 24   
                                 metric_name == 'metric25' ~ 'Inter. outc.',                                 
                                 metric_name == 'metric26' ~ 'Inter. outc.',
-                                metric_name == 'metric26' ~ 'Inter. outc.',    
                                 metric_name == 'metric27' ~ 'Inter. outc.', 
                                 metric_name == 'metric28' ~ 'Full outcomes', 
                                 metric_name == 'metric28b' ~ 'Full outcomes', 
@@ -326,4 +371,30 @@ rate_chart <- rate_chart_data|>
   facet_wrap(vars(metric_name),ncol=3,scales="free_y")+
   geom_hline(aes(yintercept=global_rate),intercept_data)
 return(rate_chart)
+}
+
+get_region_cluster_chart_data <- function(region_clustered_gp_and_metrics){
+  options(scipen=999)
+  
+  region_cluster_chart_data <- region_clustered_gp_and_metrics|>
+    group_by(comm_region_name,cluster2)|>
+    summarise(cluster_list_size=sum(list_size))|>
+    ungroup()|>
+    complete(comm_region_name,nesting(cluster2),fill=list(cluster_list_size=0),explicit=FALSE)
+  return(region_cluster_chart_data)
+}
+
+get_region_cluster_chart <- function(region_cluster_chart_data){
+  palette <- brewer.pal(5, "Set1")
+  options(scipen=999)
+  region_cluster_chart<- region_cluster_chart_data |>
+    ggplot(aes(x=as.factor(cluster2),y=format(cluster_list_size, scientific = FALSE), fill=as.factor(cluster2) ))+
+    geom_bar(stat = "identity") +
+    scale_fill_manual(values = palette)+
+    theme_light() +
+    theme(legend.position="none")+
+    xlab("Cluster (1=Least diverse, 5=Most diverse)")+
+    ylab("List Size")+
+    labs(title = paste("List Size by Cluster"))
+  return(region_cluster_chart)
 }

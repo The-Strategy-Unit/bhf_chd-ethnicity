@@ -8,7 +8,7 @@ library(targets)
 # Set target options:
 tar_option_set(
   packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","forcats",
-               "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder",
+               "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder","patchwork",
                "cluster","factoextra","purrr","broom","glue","RColorBrewer","leaflet","treemapify"), # packages that your targets need to run
   format = "rds"
 
@@ -491,7 +491,8 @@ tar_target(rate_chart_full_out,get_rate_chart(rate_chart_data,"Full outcomes")),
 tar_target(region_clustered_gp_and_metrics,clustered_gp_and_metrics|>
               left_join(gp_icb_mapping, join_by(gp_practice_code==practice_code))),
 tar_target(regional_charts,region_clustered_gp_and_metrics |>
-             group_split(comm_region_code)|>
+             #group_split(comm_region_code)|>
+             split(region_clustered_gp_and_metrics$comm_region_code)|>
              map(\(df) process_metrics(df) )|>
              map(\(df) calc_iod_rate(df) )|>
              map(\(df) calc_iod_global_rate(df) )|>
@@ -500,13 +501,18 @@ tar_target(regional_charts,region_clustered_gp_and_metrics |>
              map(\(df) calc_abs_iod(df) )|>
              map(\(df) get_rel_iod_data_for_chart(df) )|>
              map(\(df) get_rel_iod_chart(df) )),
+tar_target(region_cluster_chart_data,get_region_cluster_chart_data(region_clustered_gp_and_metrics)),
+tar_target(region_cluster_charts,region_cluster_chart_data|>
+             group_split(comm_region_name)|>
+             map(\(df) get_region_cluster_chart(df) )),
+
 
 #ICB versions
 tar_target(icb_clustered_gp_and_metrics,clustered_gp_and_metrics|>
              left_join(gp_icb_mapping, join_by(gp_practice_code==practice_code))),
 tar_target(icb_charts,icb_clustered_gp_and_metrics |>
-             group_split(icb_name)|>
-             #split(icb_clustered_gp_and_metrics$icb_code) |>
+             #group_split(icb_name)|>
+             split(icb_clustered_gp_and_metrics$icb_name) |>
              map(\(df) process_metrics(df) )|>
              map(\(df) calc_iod_rate(df) )|>
              map(\(df) calc_iod_global_rate(df) )|>

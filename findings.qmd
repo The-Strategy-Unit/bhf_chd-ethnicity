@@ -1,11 +1,12 @@
 ---
-title: "Inequalities by ethnicity in the CHD pathway"
+title: "Visualising CHD Pathway Inequalities by ethnicity - draft"
 lang: en-GB
 author: "Jacqueline Grout"
 date: last-modified
 date-format: "YYYY-MM-DD"
 format:
   html:
+    self-contained: true
     grid:
       sidebar-width: 200px
       body-width: 950px
@@ -33,20 +34,158 @@ editor_options:
 #| echo: false
  
 library(targets)
-
+library(gt)
 library(tidyverse)
 library(grid)
 library(gridExtra)
 library(cowplot)
 ```
 
-## Introduction
+# Introduction
 
-In the earlier report ..........
+In 2022, the Strategy Unit worked with the British Heart Foundation (BHF) to explore ways of visualising socio-economic inequalities as they emerge through the coronary heart disease (CHD) pathway. We made these visualisations available so that health and care staff can understand where on the pathway socio-economic inequalities emerge and at which points they are moderated or exacerbated. The report [^1]and web-based tool[^2] are available via the BHF and Strategy Unit websites.
 
-## CHD Metrics
+[^1]: <https://www.strategyunitwm.nhs.uk/publications/socio-economic-inequalities-coronary-heart-disease>
 
-jhjkhhjhkj
+[^2]: <https://www.bhf.org.uk/icb-tool>
+
+Whilst this initial analysis was focused on inequalities between socio-economic groups, BHF asked the Strategy Unit if we might explore the feasibility of assessing inequalities across other dimensions of inequality. This report explores inequalities by ethnicity along the coronary heart disease (CHD) pathway.
+
+The objectives of the report are to:
+
+1.  Set out the methods by which the Strategy Unit have sought to represent CHD pathway inequalities by ethnicity.
+
+2.  Quantify and illustrate the inequalities by ethnicity over the disease progression and treatment pathway for CHD
+
+The analysis has been conducted by the Strategy Unit on behalf of the British Heart Foundation.
+
+# Inequities in healthcare
+
+The term ‘inequities’ is used to describe unjustifiable differences in rates of access between
+subgroups. An equity analysis must control for levels of need within each population subgroup.
+Having done this, an equitable distribution of services is one where rates of access to a service or
+population follow the distribution of need, such that a patient with a given level of need in one
+subgroup has the same chance of accessing a service as their counterparts with a similar level of
+need in other subgroups. This is the standard that the NHS seeks to achieve. Assessing equity is
+challenging. Further detail about inequalities and inequities in healthcare can be found in a recent
+Strategy Unit report[^3]
+
+[^3]: <https://www.strategyunitwm.nhs.uk/publications/socio-economic-inequalities-access-planned-hospital-care-causes-and-consequences>
+
+In our previous work, visualising socio-economic inequalities, our units of analysis were GP practices. The metrics of interest, risk factors, primary prevention interventions, secondary care procedures, outcomes etc, are readily available at GP practice level and there are established methods of assigning GP practices to deciles of deprivation. Having calculated a metric value for each decile of GP practices, we used the relative index of inequality (RII) to estimate the scale and direction of inequality. The RII can only be used when the dimension of inequality can be expressed as a set of order groups.
+
+Assessing inequalities across ethnic groups is more challenging, since unlike deprivation, ethnicity cannot be expresseed as a set of ordered groups. The distribution of patients across ethnic groups is unique to each practice. There is no meaningful way to numerically aggregate these distributions into a single variable (e.g. % BME) without significant loss of information. An alternative method of grouping practices according to the distribution of its patients over ethnic group was required. We have used k-medoids clustering to assign practices to one of a small number of groups such that practices within a group have similar distributions of patients over ethnic groups. K-medoids is an established, and commonly used unsupervised machine learning technique. This clustering approach required data on the ethnicity of a practices registered population. We imputed it based on the Lower Super Output Area (LSOA) of residence of GP registrants and the ethnicity distribution of patients living in these LSOAs using the Census 2021 data.
+
+Ethnicity, unlike deprivation, is not an ordered variable. The approach in our previous work used the relative index of inequality to measure the degree of inequality. This measure relies on the ordered quality of the socio-economic deprivation variable. To handle the categorical nature of the ethnicity variable we have used the relative index of disparity to indicate the extent to which the rate of an activity or event varies across groups. The index estimates the proportion of events (e.g., admissions) that would need to be redistributed between clusters in order that event rates follow levels of need. Further detailed explanations of the methods used in the analysis can be found in the appendix.
+
+# CHD Metrics
+
+This report quantifies and illustrates levels of inequity across 34 metrics at various points along the
+continuum of coronary heart disease progression and over a typical treatment pathway. They are
+shown in the table below grouped by domain (risk factors, risk factor identification, primary
+prevention, disease identification, secondary prevention, tertiary prevention, intermediate and full
+outcomes), which represent the various stages along the pathway. Full definitions and data sources
+for each metric are included in the appendix.
+
+*Table 1 - coronary heart disease pathway metrics*
+
+```{r}
+library(gt)
+metrics_table <- tibble(metric_domain = c("Need","Risk factors","Risk factor identification","Risk factor identification","Risk factor identification","Risk factor identification","Risk factor identification","Primary prevention","Primary prevention","Primary prevention","Primary prevention","Primary prevention","Disease identification","Disease identification","Disease identification","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Intermediate outcome","Intermediate outcome","Intermediate outcome","Full outcomes","Full outcomes","Full outcomes","Full outcomes"),
+  name_metric=c("CHD synthetic prevalence estimates",
+                                      "Smoking synthetic prevalence estimates",
+                                      "Smoking register",
+                                      "Obesity register",
+                                      "Diabetes register",
+                                      "Depression register",
+                                      "CVD risk register",
+                                      "Percentage of patients aged 18 and over with GP recorded CVD (narrow definition), who are currently treated with lipid lowering therapy",
+                                      "Percentage of patients aged 18 and over, with no GP recorded CVD and a GP recorded QRISK score of 10% or more, CKD (G3a to G5), T1 diabetes (aged 40 and over) or T2 diabetes aged 60 and over, who are currently treated with lipid lowering therapy.",
+                                      "Smoking cessation support offered",
+                                      "Exception reporting for Smoking cessation support offered",
+                                      "The percentage of patients aged 45 or over who have a record of blood pressure in the preceding 5 years",
+                                      "CHD register",
+                                      "CT angiography",
+                                      "Electrocardiography",
+                                      "Aspirin, anti-platelet or anti-coagulent",
+                                      "Exception reporting for Aspirin, anti-platelet or anti-coagulent",
+                                      "Flu vaccination",
+                                      "Exception reporting for Flu vaccination",
+                                      "Percentage of patients aged 65 or over
+who received a seasonal influenza vaccination between 1 September 2022 and 31 March 2023",
+                                      " Percentage of patients aged 18 to 64
+years and in a clinical at-risk group who received
+a seasonal influenza vaccination between 1
+September 2022 and 31 March 2023",
+"Referral to cardiology (First outpatient)",
+                                      "Cardiology outpatient DNAs",
+"Elective PCI","Elective CABG","Waiting time for elective PCI / CABG","Elective PCI / CABG patients discharged before trimpoint",
+"Cardiac rehabilitation - Started", "Cardiac rehabilitation - Completed","BP reading < 140/90","Readmission within 30 days of elective PCI / CABG","Emergency admissions for CHD","Deaths in hospital from CHD","Deaths in hospital from CHD <75","Deaths from CHD","Deaths from CHD <75"
+                                      )
+                        )
+
+metrics_table |>
+    gt()|>
+  cols_hide(metric_domain)|>
+ # tab_stubhead(label = md("**Domain**"))|>
+    tab_header(
+    title = md("**Table 1** - *Coronary heart disease pathway metrics*")
+  )|>
+   tab_row_group(
+     id="Need",
+    label = md("**Need**"),
+    rows = 1
+  ) |>
+  tab_row_group(
+    id="Risk factors",
+    label = md("**Risk factors**"),
+    rows = 2
+  ) |>
+  tab_row_group(
+    id="Risk factor identification",
+    label = md("**Risk factor identification**"),
+    rows = 3:7
+  )|>
+  tab_row_group(
+    id="Primary prevention",
+    label = md("**Primary prevention**"),
+    rows = 8:12
+  )|>
+  tab_row_group(
+    id="Disease identification",
+    label = md("**Disease identification**"),
+    rows = 13:15
+  )|>
+  tab_row_group(
+    id="Secondary prevention",
+    label = md("**Secondary prevention**"),
+    rows = 16:23
+  )|>
+    tab_row_group(
+    id="Tertiary prevention",
+    label = md("**Tertiary prevention**"),
+    rows = 24:29
+  )|>
+    tab_row_group(
+    id="Intermediate outcome",
+    label = md("**Intermediate outcome**"),
+    rows = 30:32
+  )|>
+    tab_row_group(
+    id="Full outcomes",
+    label = md("**Full outcomes**"),
+    rows = 33:36
+  )|>
+  row_group_order(groups=c("Need","Risk factors","Risk factor identification","Primary prevention","Disease identification","Secondary prevention","Tertiary prevention","Intermediate outcome","Full outcomes"))
+
+#  cols_label(name_metric=md("**Metric**"))
+    
+    #domain_metric=md("**Domain**")
+```
+
+# Clustering
+
+Combining List size by lsoa with 2021 census by ethnicity
 
 ## Clustered GP Practices
 
@@ -54,7 +193,7 @@ jhjkhhjhkj
 tar_read(cluster2_map)
 ```
 
-### Cluster descriptions
+## Cluster descriptions
 
 #### Cluster 1 - Least diverse
 
@@ -156,13 +295,11 @@ tar_read(cluster2_eth_chart_5)
 ```
 :::
 
-## Relative Index of Disparity
+# Rate of activity
 
-```{r}
-tar_read(ci_iod_chart)
-```
+KEY FINDINGS
 
-## Rate
+The charts below show the rates by cluster for each metric along the CHD pathway. The horizontal line is the overall rate. Explain how its calculated and how to interpret. Mention that confidence ontervals are also shown on the charts.
 
 ### Risk factors
 
@@ -213,7 +350,80 @@ tar_read(rate_chart_int_out)
 tar_read(rate_chart_full_out)
 ```
 
-## Regions - Relative Index of Disparity
+# Relative Index of Disparity
+
+KEY FINDINGS
+
+```{r} tar_read(ci_iod_chart)}
+```
+
+::: {.callout-tip icon="false"}
+## Confidence Intervals
+
+Confidence intervals are shown in grey. There is 95% confidence that the index of disparity is within this range.
+:::
+
+Calc of iod inc bootstrap of confidence intervals
+
+# Regional Analysis
+
+## Clusters
+
+The charts below show the distribution of the patients in each region according to the cluster of their GP practice.
+
+::: panel-tabset
+## London
+
+```{r}
+#1
+region_cluster_charts <- tar_read(region_cluster_charts)
+region_cluster_charts[2]
+```
+
+## South West
+
+```{r}
+#2
+region_cluster_charts[7]
+```
+
+## South East
+
+```{r}
+#3
+region_cluster_charts[6]
+```
+
+## Midlands
+
+```{r}
+#4
+region_cluster_charts[3]
+```
+
+## East of England
+
+```{r}
+#5
+region_cluster_charts[1]
+```
+
+## North West
+
+```{r}
+#6
+region_cluster_charts[5]
+```
+
+## North East and Yorkshire
+
+```{r}
+#7
+region_cluster_charts[4]
+```
+:::
+
+## Relative Index of Disparity
 
 ::: panel-tabset
 ## London
@@ -260,13 +470,66 @@ regional_charts[7]
 ```
 :::
 
-## Appendix
+Mention ICB charts are in appendix and refer to ICBs of interest under relevant region, hyperlink to appendix?? CIs of ICB????? should the CI be reduced?
 
-### Definitions and data sources of pathway metrics
+# Conclusions
 
-### Methods explained
+# Appendix
 
-#### CHD synthetic prevalence estimates
+## Definitions and data sources of pathway metrics
+
+The table below sets out the sources of the various metrics as well as the time-period to which they relate, and details of the selection criteria used.
+
+| Domain                     | Metric                                 | Data Source | Year    | Definition and selection criteria/codes                                                 |
+|-------------|---------------------|-----------|--------|-------------------|
+| Need                       | CHD synthetic prevalence estimates     | PHE         | 2015    | Provided directly by OHID (formerly indicator 92847 in FingertipsR)                     |
+| Risk factors               | Smoking synthetic prevalence estimates | GP survey   | 2023    |                                                                                         |
+| Risk factor identification | Smoking register                       | NHSD QOF    | 2022/23 | [Indicator 91280 extracted fromFingertipsR](https://fingertips.phe.org.uk/search/91280) |
+|                            | Obesity register                       | NHSD QOF    |         | [Indicator 93088 extracted fromFingertipsR](https://fingertips.phe.org.uk/search/93088) |
+|                            | Diabetes register                      | NHSD QOF    |         |                                                                                         |
+|                            | Depression register                    | NHSD QOF    |         |                                                                                         |
+| Primary prevention         |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+|                            |                                        |             |         |                                                                                         |
+| Full Outcomes              | Deaths in hospital from CHD            |             |         |                                                                                         |
+|                            | Deaths in hospital from CHD \< 75      |             |         |                                                                                         |
+|                            | Deaths from CHD                        |             |         |                                                                                         |
+|                            | Deaths from CHD \<75                   |             |         |                                                                                         |
+
+## Methods explained
+
+### QOF data
+
+### SUS data
+
+### Cardiac rehabilitation
+
+### Readmission within 30 days
+
+### ONS Death records
+
+### CHD synthetic prevalence estimates
 
 CHD synthetic prevalence estimates data has been removed from Fingertips by OHID.
 
@@ -278,11 +541,23 @@ Also have file from previous project - checked data is the same but need to chec
 
 nearest neighbours to impute chd prevalence
 
+<https://the-strategy-unit.github.io/data_science/blogs/posts/2024-01-17_nearest_neighbour.html>
+
 #### Census 2021 Ethnicity by LSOA
 
 #### Which date should be used for the gp list size dataset?
 
-### ICBs- Relative Index of Disparity
+### K-Medoids Cluster
+
+### Index of Disparity calculations
+
+### Confidence Intervals
+
+Explain how these were done - bootstrap method etc
+
+## Integrated Care Board (ICB) Analysis
+
+#### Relative Index of Disparity
 
 ```{r}
 icb_charts <- tar_read(icb_charts)
@@ -298,6 +573,37 @@ icb_charts[9]
 icb_charts[10]
 icb_charts[11]
 icb_charts[12]
+icb_charts[13]
+icb_charts[14]
+icb_charts[15]
+icb_charts[16]
+icb_charts[17]
+icb_charts[18]
+icb_charts[19]
+icb_charts[20]
+icb_charts[21]
+icb_charts[22]
+icb_charts[23]
+icb_charts[24]
+icb_charts[25]
+icb_charts[26]
+icb_charts[27]
+icb_charts[28]
+icb_charts[23]
+icb_charts[29]
+icb_charts[30]
+icb_charts[31]
+icb_charts[32]
+icb_charts[33]
+icb_charts[34]
+icb_charts[35]
+icb_charts[36]
+icb_charts[37]
+icb_charts[38]
+icb_charts[39]
+icb_charts[40]
+icb_charts[41]
+icb_charts[42]
 ```
 
 ### References
