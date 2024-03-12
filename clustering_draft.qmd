@@ -1,0 +1,109 @@
+---
+title: "Clustering"
+lang: en-GB
+author: "Jacqueline Grout"
+date: last-modified
+date-format: "YYYY-MM-DD"
+format:
+  html:
+    grid:
+      sidebar-width: 250px
+      body-width: 800px
+      margin-width: 250px
+      gutter-width: 1.5rem
+    embed-resources: true
+    smooth-scroll: true
+    theme: cosmo
+    fontcolor: black
+    toc: true
+    toc-location: left
+    toc-title: Contents
+    toc-depth: 3
+editor: visual
+execute:
+  echo: false
+  message: false
+  warning: false
+  freeze: auto
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| echo: false
+# Read in the analysis RData file ----
+library(factoextra)
+library(cluster)
+library(dplyr)
+library(targets)
+library(GGally)
+library(gt)
+library(tidyverse)
+
+
+load("cluster_analysis_v1.Rdata")
+```
+
+## Five clusters using 14 ethnicities
+
+```{r}
+
+tar_read(elbow_plot)
+```
+
+```{r}
+tar_read(cluster_plot)
+
+```
+
+```{r}
+final_data_full_cats_percent_5_clusters <- tar_read(final_data_full_cats_percent_5_clusters) |> as_tibble()
+
+final_data_full_cats_percent_5_clusters |>
+  group_by(cluster)|>
+  count("practice_code")|>
+  ungroup() |>
+  select(cluster,n)|>
+  gt()
+
+```
+
+```{r}
+tar_read(cluster2_chart)
+```
+
+::: panel-tabset
+## Cluster 1 - Least diverse
+
+```{r}
+tar_read(cluster2_treemap_1)
+```
+
+## Cluster 2
+
+```{r}
+tar_read(cluster2_treemap_2)
+```
+
+## Cluster 3
+
+```{r}
+tar_read(cluster2_treemap_3)
+```
+
+## Cluster 4
+
+```{r}
+tar_read(cluster2_treemap_4)
+```
+
+## Cluster 5 - Most diverse
+
+```{r}
+tar_read(cluster2_treemap_5)
+```
+:::
+
+```{r}
+tar_read(cluster2_map)
+```
