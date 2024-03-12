@@ -1,5 +1,3 @@
-self-contained: true
-
 ---
 title: "Inequalities by ethnicity in the CHD pathway - DRAFT"
 lang: en-GB
