@@ -1,0 +1,377 @@
+self-contained: true
+
+---
+title: "Inequalities by ethnicity in the CHD pathway - DRAFT"
+lang: en-GB
+author: "Jacqueline Grout"
+date: last-modified
+date-format: "YYYY-MM-DD"
+format:
+  html:
+    self-contained: true
+    grid:
+      sidebar-width: 200px
+      body-width: 950px
+      margin-width: 150px
+      gutter-width: 1.5rem
+    embed-resources: true
+    smooth-scroll: true
+    theme: cosmo
+    fontcolor: black
+    toc: true
+    toc-location: left
+    toc-title: Contents
+    toc-depth: 3
+editor: visual
+execute:
+  echo: false
+  message: false
+  warning: false
+  freeze: auto
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| echo: false
+ 
+library(targets)
+
+library(tidyverse)
+library(grid)
+library(gridExtra)
+library(cowplot)
+```
+
+## Clustered GP Practices
+
+```{r}
+tar_read(cluster2_map)
+```
+
+### Cluster descriptions
+
+#### Cluster 1 - Least diverse
+
+This cluster is the least diverse of the five and the median percentage of White patients is 97% (94% White British).
+
+::: panel-tabset
+## Five categories
+
+```{r}
+tar_read(cluster2_treemap_1)
+```
+
+## Fourteen categories
+
+94% White British
+
+```{r}
+tar_read(cluster2_eth_chart_1)
+```
+:::
+
+#### Cluster 2
+
+In this cluster the median percentage of White patients is 93% (87% White British). Those patients whose ethnicity is White are more likely to be White Irish or other White ethnicities (0.7% and 4% respectively) when compared to cluster 1. The median percentage of patients with a mixed ethnicity in this cluster is 2%.
+
+::: panel-tabset
+## Five categories
+
+```{r}
+tar_read(cluster2_treemap_2)
+```
+
+## Fourteen categories
+
+87% White British
+
+```{r}
+tar_read(cluster2_eth_chart_2)
+```
+:::
+
+#### Cluster 3
+
+In this cluster the median percentage of White patients is 78% (69% White British). The median percentage of patients with a mixed ethnicity in this cluster is 3.8%, which is higher than in cluster 2. Indian patients make up 3.3% of the patients, and 2.6% are patients whose ethnicity is Black African.
+
+::: panel-tabset
+## Five categories
+
+```{r}
+tar_read(cluster2_treemap_3)
+```
+
+## Fourteen categories
+
+69% White British
+
+```{r}
+tar_read(cluster2_eth_chart_3)
+```
+:::
+
+#### Cluster 4
+
+In cluster 4 just over half the patients are White with a median percentage of 55% (35% White British). The ethnic group of White has fewer White British than clusters 1 to 3, with 17% of patients having an ethnicity of White Other The median percentage of patients whose ethnicity is Black African in this cluster is 8.3%, which is higher than in cluster 3 and the median percentage of Black Caribbean patients is 3.9%. The median percentage of Black and Asian is 29% in this cluster.
+
+::: panel-tabset
+## Five categories
+
+```{r}
+tar_read(cluster2_treemap_4)
+```
+
+## Fourteen categories
+
+35% White British
+
+```{r}
+tar_read(cluster2_eth_chart_4)
+```
+:::
+
+#### Cluster 5 - Most diverse
+
+This cluster is the most diverse. Overall the median percentage of Asian patients in this cluster is 45%. There are 13.3% Indian, 9.7% Pakistani and 2.9% Bangladeshi. Mixed and other ethnic groups form a large proportion of the patients in this cluster.
+
+::: panel-tabset
+## Five categories
+
+```{r}
+tar_read(cluster2_treemap_5)
+```
+
+## Fourteen categories
+
+22% White British
+
+```{r}
+tar_read(cluster2_eth_chart_5)
+```
+:::
+
+## Relative Index of Disparity
+
+```{r}
+tar_read(ci_iod_chart)
+```
+
+::: {.callout-tip icon="false"}
+## Confidence Intervals
+
+Confidence intervals are shown in grey. Please disregard the last 4 metrics (related to patient deaths) at this stage.
+:::
+
+## Rate
+
+The charts below show the rates by cluster for each metric along the CHD pathway. The horizontal line is the overall rate.
+
+### Risk factors
+
+```{r}
+tar_read(rate_chart_risk_fact)
+```
+
+### Risk factor identification
+
+```{r}
+tar_read(rate_chart_risk_fact_ident)
+```
+
+### Primary prevention
+
+```{r}
+tar_read(rate_chart_prim_prevent)
+
+```
+
+### Disease identification
+
+```{r}
+tar_read(rate_chart_disease_ident)
+```
+
+### Secondary prevention
+
+```{r}
+tar_read(rate_chart_second_prevent)
+```
+
+### Tertiary prevention
+
+```{r}
+tar_read(rate_chart_tert_prevent)
+```
+
+### Intermediate outcome
+
+```{r}
+tar_read(rate_chart_int_out)
+```
+
+### Full outcomes
+
+```{r}
+tar_read(rate_chart_full_out)
+```
+
+## Regions
+
+### Clusters
+
+The charts below show the distribution of the patients in each region according to the cluster of their GP practice.
+
+::: panel-tabset
+## London
+
+```{r}
+#1
+region_cluster_charts <- tar_read(region_cluster_charts)
+region_cluster_charts[2]
+```
+
+## South West
+
+```{r}
+#2
+region_cluster_charts[7]
+```
+
+## South East
+
+```{r}
+#3
+region_cluster_charts[6]
+```
+
+## Midlands
+
+```{r}
+#4
+region_cluster_charts[3]
+```
+
+## East of England
+
+```{r}
+#5
+region_cluster_charts[1]
+```
+
+## North West
+
+```{r}
+#6
+region_cluster_charts[5]
+```
+
+## North East and Yorkshire
+
+```{r}
+#7
+region_cluster_charts[4]
+```
+:::
+
+### Relative Index of Disparity
+
+::: panel-tabset
+## London
+
+```{r}
+regional_charts <- tar_read(regional_charts)
+regional_charts[1]
+```
+
+## South West
+
+```{r}
+regional_charts[2]
+```
+
+## South East
+
+```{r}
+regional_charts[3]
+```
+
+## Midlands
+
+```{r}
+regional_charts[4]
+```
+
+## East of England
+
+```{r}
+regional_charts[5]
+```
+
+## North West
+
+```{r}
+regional_charts[6]
+```
+
+## North East and Yorkshire
+
+```{r}
+regional_charts[7]
+```
+:::
+
+## Appendix
+
+### Integrated Care Boards (ICBs)
+
+#### Relative Index of Disparity
+
+```{r}
+icb_charts <- tar_read(icb_charts)
+icb_charts[1]
+icb_charts[2]
+icb_charts[3]
+icb_charts[4]
+icb_charts[5]
+icb_charts[6]
+icb_charts[7]
+icb_charts[8]
+icb_charts[9]
+icb_charts[10]
+icb_charts[11]
+icb_charts[12]
+icb_charts[13]
+icb_charts[14]
+icb_charts[15]
+icb_charts[16]
+icb_charts[17]
+icb_charts[18]
+icb_charts[19]
+icb_charts[20]
+icb_charts[21]
+icb_charts[22]
+icb_charts[23]
+icb_charts[24]
+icb_charts[25]
+icb_charts[26]
+icb_charts[27]
+icb_charts[28]
+icb_charts[23]
+icb_charts[29]
+icb_charts[30]
+icb_charts[31]
+icb_charts[32]
+icb_charts[33]
+icb_charts[34]
+icb_charts[35]
+icb_charts[36]
+icb_charts[37]
+icb_charts[38]
+icb_charts[39]
+icb_charts[40]
+icb_charts[41]
+icb_charts[42]
+```
+
+### 

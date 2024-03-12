@@ -327,6 +327,7 @@ get_cluster2_14_eth_chart <- function(clustered_gp_and_metrics,cluster_num){
     )|>
     left_join(titles)|>
     filter(cluster2==cluster_num)|>
+    mutate(ethnicity_name=fct_reorder(ethnicity_name,desc(med_percent))) |>
     ggplot(aes(x=fct_rev(factor(ethnicity_name)) , y=med_percent, fill=factor(ethnicity_name))) +
     geom_col() +
     coord_flip() +
