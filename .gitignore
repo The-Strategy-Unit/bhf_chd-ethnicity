@@ -1,13 +1,13 @@
 # History files
-.Rhistory
-.Rapp.history
+*.Rhistory
+*.Rapp.history
 
 # Session Data files
-.RData
-.RDataTmp
+*.RData
+*.RDataTmp
 
 # User-specific files
-.Ruserdata
+*.Ruserdata
 
 # Example code in package build process
 *-Ex.R
@@ -19,7 +19,7 @@
 /*.Rcheck/
 
 # RStudio files
-.Rproj.user/
+*.Rproj.user/
 
 # produced vignettes
 vignettes/*.html
@@ -51,6 +51,9 @@ rsconnect/
 # Secret folder
 secret/
 
+# Data folder
+data/
+
 #csv files
 *.csv
 
@@ -60,3 +63,10 @@ data/*.xlsx
 
 #csv files in data folder
 data/*.csv
+
+#html files
+*.html
+
+# when quarto renders document it makes files that dont need adding to the git history
+/.quarto/
+/_site/
