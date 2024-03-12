@@ -388,13 +388,14 @@ get_region_cluster_chart <- function(region_cluster_chart_data){
   palette <- brewer.pal(5, "Set1")
   options(scipen=999)
   region_cluster_chart<- region_cluster_chart_data |>
-    ggplot(aes(x=as.factor(cluster2),y=format(cluster_list_size, scientific = FALSE), fill=as.factor(cluster2) ))+
+    ggplot(aes(x=as.factor(cluster2),y=cluster_list_size, fill=as.factor(cluster2) ))+
     geom_bar(stat = "identity") +
     scale_fill_manual(values = palette)+
     theme_light() +
     theme(legend.position="none")+
     xlab("Cluster (1=Least diverse, 5=Most diverse)")+
     ylab("List Size")+
+    scale_y_continuous(limits = c(0,NA))+
     labs(title = paste("List Size by Cluster"))
   return(region_cluster_chart)
 }

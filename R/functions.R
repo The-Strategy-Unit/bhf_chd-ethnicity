@@ -129,4 +129,11 @@ join_over45_to_gp_lsoa_with_eth_sum <- function(gp_lsoa_with_eth_sum,gp_over45_p
   return(gp_lsoa_with_eth_sum_over45perc)
 }
 
-
+show_in_excel <- function(.data){
+  
+  tmp <- paste0(tempfile(), ".csv")
+  
+  write.csv(.data, tmp)
+  
+  fs::file_show(path = tmp)
+}

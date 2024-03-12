@@ -83,19 +83,20 @@ This report quantifies and illustrates levels of inequity across 35 metrics at v
 
 ```{r}
 library(gt)
-metrics_table <- tibble(metric_domain = c("Need","Risk factors","Risk factor identification","Risk factor identification","Risk factor identification","Risk factor identification","Risk factor identification","Primary prevention","Primary prevention","Primary prevention","Primary prevention","Primary prevention","Disease identification","Disease identification","Disease identification","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Intermediate outcome","Intermediate outcome","Intermediate outcome","Full outcomes","Full outcomes","Full outcomes","Full outcomes"),
+metrics_table <- tibble(metric_domain = c("Need","Risk factors","Risk factor identification","Risk factor identification","Risk factor identification","Risk factor identification","Risk factor identification","Risk factor identification","Primary prevention","Primary prevention","Primary prevention","Primary prevention","Disease identification","Disease identification","Disease identification","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Intermediate outcome","Intermediate outcome","Intermediate outcome","Full outcomes","Full outcomes","Full outcomes","Full outcomes"),
   name_metric=c("CHD synthetic prevalence estimates",
                                       "Smoking synthetic prevalence estimates",
                                       "Smoking register",
                                       "Obesity register",
                                       "Diabetes register",
                                       "Depression register",
+                                      "The percentage of patients aged 45 or over who have a record of blood pressure in the preceding 5 years",
                                       "CVD risk register",
                                       "Percentage of patients aged 18 and over with GP recorded CVD (narrow definition), who are currently treated with lipid lowering therapy",
                                       "Percentage of patients aged 18 and over, with no GP recorded CVD and a GP recorded QRISK score of 10% or more, CKD (G3a to G5), T1 diabetes (aged 40 and over) or T2 diabetes aged 60 and over, who are currently treated with lipid lowering therapy.",
                                       "Smoking cessation support offered",
                                       "Exception reporting for Smoking cessation support offered",
-                                      "The percentage of patients aged 45 or over who have a record of blood pressure in the preceding 5 years",
+
                                       "CHD register",
                                       "CT angiography",
                                       "Electrocardiography",
@@ -173,6 +174,12 @@ metrics_table |>
     
 
 ```
+
+::: {.callout-note icon="false"}
+## Cardiac rehabilitation metrics
+
+Cardiac rehabilitation metrics will be added once they become available from NACR (expected before 31/3/24)
+:::
 
 # Clustering
 
@@ -294,23 +301,45 @@ tar_read(cluster2_map)
 
 # Rate of activity
 
-KEY FINDINGS
+The charts below show the activity rates by cluster for each metric along the CHD pathway. The horizontal line is the overall rate. The 95% confidence intervals are shown at the top of each bar. These activity rates take account of need by using CHD prevalence (or list size for risk factor) as the denominator of the calculation. Further detail on the methodology can be found in the appendix.
 
-The charts below show the rates by cluster for each metric along the CHD pathway. The horizontal line is the overall rate. Explain how its calculated and how to interpret. Mention that confidence intervals are also shown on the charts.
+In some cases these upper and lower limits are so small as to not be visible (e.g. Obesity register), whereas for other metrics (e.g. Readmission within 30 days of a PCI or CABG) they are much wider. Metrics with larger volumes of activity data give rise to a greater confidence in the calculated rate (e.g. limits are closer together) when compared to metrics with smaller volumes of activity data where there is less confidence in the calculated rate (e.g. limits are further apart).
+
+In calculating these rates for each cluster within each metric and then comparing the rates by cluster to the global rate for the metric it is possible to identify how activity rates vary across the 5 clusters. For there to be equity between the clusters the rates would need to be the same. The charts below present the metrics grouped according to pathway domain.
 
 ### Risk factors
+
+::: callout-tip
+## Key Findings
+
+-   Activity rates vary very little for the risk factor metric % patients 45+ with a record of BP \< 5 years
+
+-   Rates of patients on the diabetes register are highest in the most diverse cluster
+
+-   Rates of patients on the depression register are highest in the least diverse cluster and lowest in the most diverse cluster
+:::
+
+#### Risk factors
 
 ```{r}
 tar_read(rate_chart_risk_fact)
 ```
 
-### Risk factor identification
+#### Risk factor identification
 
 ```{r}
 tar_read(rate_chart_risk_fact_ident)
 ```
 
 ### Primary prevention
+
+::: callout-tip
+## Key Findings
+
+-   The activity rate for CVD patients treated with LLT is highest for those patients whose practice is in the least diverse cluster and lowest for patients whose practice is in cluster 4.
+
+-   A similar pattern applies for at risk patients treated with LLT, activity rates being highest for those in the least diverse cluster.
+:::
 
 ```{r}
 tar_read(rate_chart_prim_prevent)
@@ -319,11 +348,33 @@ tar_read(rate_chart_prim_prevent)
 
 ### Disease identification
 
+::: callout-tip
+## Key Findings
+
+-   Activity rates vary considerably across the clusters in the disease identification metrics, with differing patterns for each metric
+
+-   Patients from clusters 4 and 5 (most diverse) are less likely to be recorded on the CHD register
+
+-   Clusters 5 and 4 have lower rates of CT angiography and electrocardiography
+:::
+
 ```{r}
 tar_read(rate_chart_disease_ident)
 ```
 
 ### Secondary prevention
+
+::: callout-tip
+## Key Findings
+
+-   There is little variation between clusters 1 to 4 in referral rates to outpatient cardiology, although the referrals are lower for the most diverse cluster (cluster 5)
+
+-   Flu vaccination rates for 65+ patients are highest among patients whose practice is in the least diverse cluster. the two most diverse clusters having the lowest rates
+
+-   Amongst patients under 65 who are at risk, flu vaccination rates are less varied between the clusters than for 65+ patients. Cluster 4 has the lowest rate of vaccination
+
+-   Cardiology outpatient DNA rates are higher the more diverse the cluster
+:::
 
 ```{r}
 tar_read(rate_chart_second_prevent)
@@ -331,11 +382,25 @@ tar_read(rate_chart_second_prevent)
 
 ### Tertiary prevention
 
+::: callout-tip
+## Key Findings
+
+-   All 4 tertiary prevention metrics follow the same pattern of activity rates with the highest rates being in the least diverse cluster (cluster 1), followed by clusters 2 and then cluster 5 (the most diverse) and cluster 3. Cluster 4 has the lowest activity rates.
+:::
+
 ```{r}
 tar_read(rate_chart_tert_prevent)
 ```
 
 ### Intermediate outcome
+
+::: callout-tip
+## Key Findings
+
+-   The least diverse cluster has the highest rates of BP readings \< 140/90.
+
+-   Emergency admissions for CHD and readmissions within 30 days of a PCI or CABG are highest for the least diverse cluster and lowest for cluster 4.
+:::
 
 ```{r}
 tar_read(rate_chart_int_out)
@@ -343,15 +408,27 @@ tar_read(rate_chart_int_out)
 
 ### Full outcomes
 
+::: callout-tip
+## Key Findings
+
+...to be determined - awaiting death data check
+:::
+
 ```{r}
 tar_read(rate_chart_full_out)
 ```
 
 # Relative Index of Disparity
 
-KEY FINDINGS
+The relative index of deprivation for the metric is expressed here as a %, such that the % indicates the amount of activity that would need to be redistributed between clusters in order that event rates follow levels of need. The detail of the methodology used for its calculation can be found in the appendix.
 
-and explain what it means and what it is showing
+The chart below presents the metrics along the CHD pathway from risk factor and identification through to outcome measures of death from CHD. For each metric the index of disparity is shown as a point estimate (yellow dot) with the upper and lower confidence intervals in grey.
+
+::: callout-tip
+## Key Findings
+
+-   The greatest disparity is flu vaccinations for patients aged 65+ where the relative index of disparity is 16.70% (95% ci - 16.64%, 16.70%), indicating that 16.7% of activity needs to be redistributed so that rates reflect need.
+:::
 
 ```{r}
 tar_read(ci_iod_chart)
@@ -362,6 +439,26 @@ tar_read(ci_iod_chart)
 
 Confidence intervals are shown in grey. There is 95% confidence that the index of disparity is within this range. The confidence interval estimation methods are detailed in the appendix.
 :::
+
+## Routes to equity
+
+A previous Strategy Unit report "Strategies to reduce inequalities in access to planned hospital procedures"[^4] highlights in chapter 1, three of the many routes from inequity to equity: levelling-up, levelling-down and zero-sum redistribution. Using the zero-sum redistribution route as an example, along with the metric flu vaccinations for patients aged 65+, this illustration shows how equity could be achieved by increasing and decreasing the number of vaccinations delivered in each cluster to give the same activity rate per cluster.
+
+[^4]: <https://www.midlandsdecisionsupport.nhs.uk/knowledge-library/strategies-to-reduce-inequalities-in-access-to-planned-hospital-procedures/>
+
+|  Cluster  | Number of vaccinations | CHD synthetic prevalence | Rate (No. of vaccinations / CHD synthetic prevalence) | Global rate |  Change in number of vaccinations to match global rate  |
+|:----------:|-----------:|-----------:|:----------:|:----------:|:----------:|
+|           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                      *(r-gr) x d*                       |
+|     1     |              3,356,002 |                1,026,826 |                         3.27                          |    2.33     |                        -961,239                         |
+|     2     |              2,638,698 |                  924,088 |                         2.86                          |    2.33     |                        -483,540                         |
+|     3     |              1,862,430 |                  958,825 |                         1.94                          |    2.33     |                        +373,741                         |
+|     4     |                476,616 |                  478,728 |                         1.00                          |    2.33     |                        +639,873                         |
+|     5     |                332,728 |                  327,542 |                         1.02                          |    2.33     |                        +431,166                         |
+| **Total** |          **8,666,474** |            **3,716,009** |                       **2.33**                        |             |                          **0**                          |
+
+: In reality, in attempting to achieve equity for this metric, it is unlikely that the offer of vaccination would be removed from patients whose practice is in clusters 1 and 2. More likely would be an approach to focus public health and vaccination roll-out campaigns on practices in clusters 3, 4 and 5.
+
+Each of the metrics along the CHD pathway with the higher relative indicies of disparity would almost certainly require a variety of different routes from inequity to equity given their differing nature. The more effective interventions on the pathway might be levelled-up, whilst those of more limited value might be levelled-down.
 
 # Regional Analysis
 
@@ -423,6 +520,12 @@ region_cluster_charts[4]
 
 ## Relative Index of Disparity
 
+::: callout-tip
+## Key Findings
+
+-   The greatest disparity
+:::
+
 ::: panel-tabset
 ## London
 
@@ -468,11 +571,11 @@ regional_charts[7]
 ```
 :::
 
-refer to ICBs of interest under relevant region
-
 The appendix contains equivalent charts to those above, showing the Index of Disparity for each CHD pathway metric for each of the 42 ICBs.
 
 # Conclusions
+
+.......
 
 # Appendix
 
@@ -533,9 +636,9 @@ This data was supplied by NACR. The data wasn’t available by GP Practice, so a
 
 ### Readmission within 30 days
 
-The methodology used for this metric follows, as far as possible, that detailed by NHS Digital[^4]. The readmissions counted relate to those who had an elective PCI / CABG in the period 1/3/2022 to 28/2/2023.
+The methodology used for this metric follows, as far as possible, that detailed by NHS Digital[^5]. The readmissions counted relate to those who had an elective PCI / CABG in the period 1/3/2022 to 28/2/2023.
 
-[^4]: <https://digital.nhs.uk/data-and-information/publications/statistical/ccg-outcomes-indicator-set/specifications/3.2-emergency-readmissions-within-30-days-of-discharge-from-hospital_1_4>
+[^5]: <https://digital.nhs.uk/data-and-information/publications/statistical/ccg-outcomes-indicator-set/specifications/3.2-emergency-readmissions-within-30-days-of-discharge-from-hospital_1_4>
 
 ### ONS Death records
 
@@ -543,9 +646,9 @@ ONS death records contain an encrypted HES ID which was used to link to outpatie
 
 ### CHD synthetic prevalence estimates
 
-Public Health England (PHE) CHD synthetic prevalence estimates data was previously available from OHID via Fingertips. This data has now been removed from Fingertips and archived, however OHID supplied it via email for this project following a request. This data is for 7564 practices from 2015, of which 6297 are current practices. In order to assign a prevalence for practices with missing data a nearest neighbours methodology was used to impute the prevalence by taking an average of the prevalence of each practice within a 1.5km radius of the practice without data. Further details, including code with sample data, for this methodology are available in a blog post on the Strategy Unit Data Science website[^5].
+Public Health England (PHE) CHD synthetic prevalence estimates data was previously available from OHID via Fingertips. This data has now been removed from Fingertips and archived, however OHID supplied it via email for this project following a request. This data is for 7564 practices from 2015, of which 6297 are current practices. In order to assign a prevalence for practices with missing data a nearest neighbours methodology was used to impute the prevalence by taking an average of the prevalence of each practice within a 1.5km radius of the practice without data. Further details, including code with sample data, for this methodology are available in a blog post on the Strategy Unit Data Science website[^6].
 
-[^5]: <https://the-strategy-unit.github.io/data_science/blogs/posts/2024-01-17_nearest_neighbour.html>
+[^6]: <https://the-strategy-unit.github.io/data_science/blogs/posts/2024-01-17_nearest_neighbour.html>
 
 ### Ethnicity by GP practice
 
@@ -553,43 +656,39 @@ Ethnicity by GP practice was imputed based on the Lower Super Output Area (LSOA)
 
 #### GP list size by LSOA
 
-Since metric data is mainly from the 2022/23 year, the October 2022 list size data was taken from the NHS Digital Patients Registered at a GP practice dataset[^6] as this is the data closest to the mid point in the 22/23 year. The GP to ICB mapping file was also downloaded and joined to the list size to easily create analysis by ICB and region.
+Since metric data is mainly from the 2022/23 year, the October 2022 list size data was taken from the NHS Digital Patients Registered at a GP practice dataset[^7] as this is the data closest to the mid point in the 22/23 year. The GP to ICB mapping file was also downloaded and joined to the list size to easily create analysis by ICB and region.
 
-[^6]: <https://digital.nhs.uk/data-and-information/publications/statistical/patients-registered-at-a-gp-practice/october-2022>
+[^7]: <https://digital.nhs.uk/data-and-information/publications/statistical/patients-registered-at-a-gp-practice/october-2022>
 
 #### Census 2021 Ethnicity by LSOA
 
-The 2021 Census Ethnicity data by LSOA uses the 2021 LSOAs. The GP list size data uses the 2011 LSOAs. Some LSOAs that have gp list population assigned to them do not feature in the census data of ethnicity by lsoa. Need to check if these are the changes from 2011 to 2021 census.
+The 2021 Census Ethnicity data was downloaded from the .gov.uk website.[^8] Summary details of the census ethnicity data is also available and this includes descriptions of the standardised list of ethnic groups and the differences from the 2011 ethnic groups.[^9]
 
-Possible solution would be to work out the average proportions for all the other LSOAs for the practice and distribute the gp list population for the lsoas that have no match proportionally across the ethnic groups.
+[^8]: <https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/#download-the-data>
 
-Another option would be where lsoas in 2021 have a parent lsoa in 2011 then apply the average ethnicity % for the child lsoas to the parent (this is when one 2011 lsoa has been split into multiple 2021 lsoas.) Where the lsoas in 2021 have a child lsoa in 2011 then apply the ethnicity % for the 2021 parent to the 2011 children (this is when several lsoas have been combined into one new lsoa)
+[^9]: <https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/>
 
-join lsoa_lookup to census 21eth using the 2021 lsoa code in the lookup dataset.
+The 2021 Census Ethnicity data by LSOA uses the 2021 LSOAs. The GP list size data uses the 2011 LSOAs. This results in gaps when the datasets are combined. To overcome this the following method was used:
 
-Have opted for the latter solution.
+-   An LSOA lookup showing 2011 and 2021 LSOA parent and child relationships was joined to the 2021 Census Ethnicity data
 
-Imputing data in Census 2021:
+-   Where a 2021 LSOAs has a parent LSOA in 2011 then we applied the average ethnicity % for the child LSOAs to the parent (this is when one 2011 LSOA has been split into multiple 2021 LSOAs).
 
-<https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/itemeditingandimputationprocessforcensus2021englandandwales>
+-   Where the LSOAs in 2021 have a child LSOA in 2011 then we applied the ethnicity % for the 2021 parent to the 2011 children (this is when several LSOAs have been combined into one new LSOA).
 
-Variation in age groups for different ethnicities:
+Further details about item editing and imputation processes for Census 2021, England and Wales are available on the ONS website. This details techniques used by ONS with the aim of arriving at a fully populated clean database. These techniques include manual imputation and nearest neighbour donor imputation. For the England and Wales Census 2021 the imputation rate for ethnic group was 1.3%.[^10]
 
-<https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/>
-
-<https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/#download-the-data>
-
-explain how 2011 lsoa and 2021 lsoa mis match was handled
+[^10]: <https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/itemeditingandimputationprocessforcensus2021englandandwales>
 
 ### K-Medoids Clustering
 
 K-medoids is an established, and commonly used unsupervised machine learning technique. This clustering approach required data on the ethnicity of a practices registered population which was obtained as per the methodology explained above (Ethnicity by GP practice). The data used in the clustering was the % of patients in each ethnic group per practice, such that for each practice all the ethnic group %'s added to 100%.
 
-The K-medoids clustering was performed using the {cluster} package[^7] in R using partitioning (clustering) of the data into k clusters "around medoids" (PAM), which is a more robust version of K-means. The algorithm is based on the search for k representative objects or medoids among the observations of the dataset. After finding a set of k medoids, k clusters are constructed by assigning each observation to the nearest medoid. The goal is to find k representative objects which minimise the sum of the dissimilarities of the observations to their closest representative object.[^8]
+The K-medoids clustering was performed using the {cluster} package[^11] in R using partitioning (clustering) of the data into k clusters "around medoids" (PAM), which is a more robust version of K-means. The algorithm is based on the search for k representative objects or medoids among the observations of the dataset. After finding a set of k medoids, k clusters are constructed by assigning each observation to the nearest medoid. The goal is to find k representative objects which minimise the sum of the dissimilarities of the observations to their closest representative object.[^12]
 
-[^7]: Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2023). *cluster: Cluster Analysis Basics and Extensions*. R package version 2.1.6 — For new features, see the 'NEWS' and the 'Changelog' file in the package source), [https://CRAN.R-project.org/package=cluster](https://cran.r-project.org/package=cluster).
+[^11]: Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2023). *cluster: Cluster Analysis Basics and Extensions*. R package version 2.1.6 — For new features, see the 'NEWS' and the 'Changelog' file in the package source), [https://CRAN.R-project.org/package=cluster](https://cran.r-project.org/package=cluster).
 
-[^8]: <https://cran.r-project.org/web/packages/cluster/cluster.pdf>
+[^12]: <https://cran.r-project.org/web/packages/cluster/cluster.pdf>
 
 Clustering experiments were conducted using a variety of different combinations of ethnic breakdowns, such as 14 ethnic groups and 5 ethnic groups, as well as variations that excluded the % of White British patients or factored in age group. Techniques were also used to attempt to determine the optimal number of clusters such as the elbow method, gap plots, and scree plots. Consideration was given to combining some ethnic groups and in doing so a correlation matrix was produced to identify ethnic groups that commonly featured together. It was also important to seek a number of clusters that could be defined easily, where characteristics did not overlap each other so that resulting clusters were too similar to each other. It was also necessary to ensure that there was a sufficient number of practices in each cluster, too few practices in a cluster could result in issues with small amounts of metric data when calculating activity rates and consequently lead to wide confidence intervals in the index of disparity calculations.
 
@@ -617,21 +716,39 @@ final_data_full_cats_percent_5_clusters |>
 
 ### Index of Disparity calculations
 
-remember...how , detail - allowing for NEED and how this is done
+#### Rate of activity
+
+Calculations of the index of disparity begin by calculating an activity rate using a numerator of the activity ( eg number of elective procedures) divided by a denominator, which for metrics other than risk factors has been taken to be CHD synthetic prevalence (as a determinant of need).
+
+Where the metric is in the risk factor domain the denominator used is GP practice list size (with the exception of the percentage of patients aged 45 or over who have a record of blood pressure in the preceding 5 years, where the 45+ list size has been used).
+
+In calculating these rates for each cluster within each metric and then comparing these rates by cluster to the global rate for the metric it is possible to identify how activity rates vary across the 5 clusters
+
+#### Index of disparity
+
+The relative index of disparity indicates the extent to which the rate of an activity or event varies across groups. Having calculated the rates for each cluster within each metric the disparity is calculated by taking the differences for each cluster from the global rate and then determining the amount of activity by which this cluster varies from the global. This absolute difference is then summed for the 5 clusters and divided by twice the sum of the numerators. This produces a relative index of deprivation for the metric, expressed as a %, such that the % indicates the amount of activity that would need to be redistributed between clusters in order that event rates follow levels of need.
+
+Index of disparity = (𝚺 \| r~(1–n)~ - R\| / n) / R\*100
+
+where r = group rate and R = total population rate
+
+A report by Pearcy and Keppel (2002) presents the Index of Disparity as a summary measure of disparity across population groups and advocates its use for groups defined in terms of categories such as ethnicity.[^13]
+
+[^13]: <https://journals.sagepub.com/doi/epdf/10.1093/phr/117.3.273>
 
 ### Confidence Intervals
 
 Confidence intervals of 95% are presented in the national charts presented in this report. Confidence intervals have been used, rather than calculations of statistical significance as this presents a clearer picture of the likelihood of the disparity and due to concerns with the suitability in this case of statistical significance.
 
-> "Practitioners need to be aware that statistical significance differs from practical importance in that statistical significance is highly dependent upon sample size. For a large sample, a statistically significant result is likely to be obtained even when the actual magnitude of an effect is small and of little or no practical importance. On the other hand, for a small sample, it is quite likely that insufficient evidence of a statistically significant result will be obtained – even when there is, indeed, an effect of practical importance." (Hahn, G. J., Doganaksoy, N., Meeker, W. Q., 2019)[^9]
+> "Practitioners need to be aware that statistical significance differs from practical importance in that statistical significance is highly dependent upon sample size. For a large sample, a statistically significant result is likely to be obtained even when the actual magnitude of an effect is small and of little or no practical importance. On the other hand, for a small sample, it is quite likely that insufficient evidence of a statistically significant result will be obtained – even when there is, indeed, an effect of practical importance." (Hahn, G. J., Doganaksoy, N., Meeker, W. Q., 2019)[^14]
 
-[^9]: <https://academic.oup.com/jrssig/article/16/4/20/7038025>
+[^14]: <https://academic.oup.com/jrssig/article/16/4/20/7038025>
 
 In order to estimate the confidence intervals for the index of disparity, a bootstrap method was adopted, assuming independence, generating 1000 random samples for each metric for which an index of disparity was calculated. The 2.5th and 97.5th percentiles were then taken for each metric to give the upper and lower limits of the 95% confidence interval for each.
 
-An explanation of bootstrap theory and confidence intervals is available in Practical Statistics for Data Scientists (Bruce, P. and Bruce, A., 2017)[^10]
+An explanation of bootstrap theory and confidence intervals is available in Practical Statistics for Data Scientists (Bruce, P. and Bruce, A., 2017)[^15]
 
-[^10]: <https://www.oreilly.com/library/view/practical-statistics-for/9781491952955/>
+[^15]: <https://www.oreilly.com/library/view/practical-statistics-for/9781491952955/>
 
 ## Integrated Care Board (ICB) Analysis
 
@@ -686,6 +803,6 @@ icb_charts[42]
 
 ## R code on Github
 
-All the code used in this project is available on the Strategy Unit GitHub[^11].
+All the code used in this project is available on the Strategy Unit GitHub[^16].
 
-[^11]: <https://github.com/The-Strategy-Unit/bhf_chd-ethnicity>
+[^16]: <https://github.com/The-Strategy-Unit/bhf_chd-ethnicity>
