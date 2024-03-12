@@ -77,7 +77,7 @@ Ethnicity, unlike deprivation, is not an ordered variable. The approach in our p
 
 # CHD Metrics
 
-This report quantifies and illustrates levels of inequity across 34 metrics at various points along the continuum of coronary heart disease progression and over a typical treatment pathway. They are shown in the table below grouped by domain (risk factors, risk factor identification, primary prevention, disease identification, secondary prevention, tertiary prevention, intermediate and full outcomes), which represent the various stages along the pathway. Full definitions and data sources for each metric are included in the appendix.
+This report quantifies and illustrates levels of inequity across 35 metrics at various points along the continuum of coronary heart disease progression and over a typical treatment pathway. They are shown in the table below grouped by domain (risk factors, risk factor identification, primary prevention, disease identification, secondary prevention, tertiary prevention, intermediate and full outcomes), which represent the various stages along the pathway. Full definitions and data sources for each metric are included in the appendix.
 
 *Table 1 - coronary heart disease pathway metrics*
 
@@ -189,13 +189,13 @@ The median percentage of each ethnic group for each cluster was calculated and i
 This cluster is the least diverse of the five and the median percentage of White patients is 97% (94% White British).
 
 ::: panel-tabset
-## Five categories
+## Five ethnic groups
 
 ```{r}
 tar_read(cluster2_treemap_1)
 ```
 
-## Fourteen categories
+## Fourteen ethnic groups
 
 94% White British
 
@@ -209,13 +209,13 @@ tar_read(cluster2_eth_chart_1)
 In this cluster the median percentage of White patients is 93% (87% White British). Those patients whose ethnicity is White are more likely to be White Irish or other White ethnicities (0.7% and 4% respectively) when compared to cluster 1. The median percentage of patients with a mixed ethnicity in this cluster is 2%.
 
 ::: panel-tabset
-## Five categories
+## Five ethnic groups
 
 ```{r}
 tar_read(cluster2_treemap_2)
 ```
 
-## Fourteen categories
+## Fourteen ethnic groups
 
 87% White British
 
@@ -229,13 +229,13 @@ tar_read(cluster2_eth_chart_2)
 In this cluster the median percentage of White patients is 78% (69% White British). The median percentage of patients with a mixed ethnicity in this cluster is 3.8%, which is higher than in cluster 2. Indian patients make up 3.3% of the patients, and 2.6% are patients whose ethnicity is Black African.
 
 ::: panel-tabset
-## Five categories
+## Five ethnic groups
 
 ```{r}
 tar_read(cluster2_treemap_3)
 ```
 
-## Fourteen categories
+## Fourteen ethnic groups
 
 69% White British
 
@@ -249,13 +249,13 @@ tar_read(cluster2_eth_chart_3)
 In cluster 4 just over half the patients are White with a median percentage of 55% (35% White British). The ethnic group of White has fewer White British than clusters 1 to 3, with 17% of patients having an ethnicity of White Other The median percentage of patients whose ethnicity is Black African in this cluster is 8.3%, which is higher than in cluster 3 and the median percentage of Black Caribbean patients is 3.9%. The median percentage of Black and Asian is 29% in this cluster.
 
 ::: panel-tabset
-## Five categories
+## Five ethnic groups
 
 ```{r}
 tar_read(cluster2_treemap_4)
 ```
 
-## Fourteen categories
+## Fourteen ethnic groups
 
 35% White British
 
@@ -269,13 +269,13 @@ tar_read(cluster2_eth_chart_4)
 This cluster is the most diverse. Overall the median percentage of Asian patients in this cluster is 45%. There are 13.3% Indian, 9.7% Pakistani and 2.9% Bangladeshi. Mixed and other ethnic groups form a large proportion of the patients in this cluster.
 
 ::: panel-tabset
-## Five categories
+## Five ethnic groups
 
 ```{r}
 tar_read(cluster2_treemap_5)
 ```
 
-## Fourteen categories
+## Fourteen ethnic groups
 
 22% White British
 
@@ -286,7 +286,7 @@ tar_read(cluster2_eth_chart_5)
 
 ## Clustered GP Practices
 
-The map below presents each GP practice coloured according to their assigned cluster. Cluster 1 (red) is the least diverse and cluster 5 (orange) is the most diverse.
+The interactive map below presents each GP practice coloured according to their assigned cluster. Cluster 1 (red) is the least diverse and cluster 5 (orange) is the most diverse.
 
 ```{r}
 tar_read(cluster2_map)
@@ -521,44 +521,25 @@ The table below sets out the sources of the various metrics as well as the time-
 
 ### QOF data
 
-Metrics taken from the QOF data via Fingertips have been extracted by GP practice and the counts
-(numerator of the measure) from the calculations have been used.
-Exception reporting metrics have used the Personalised Care Adjustment (PCA) data to obtain the
-number of patients by GP practice for whom a PCA has been recorded for the relevant metric.
-Possible reasons for a PCA include; Newly diagnosed/registered, Intervention is clinically
-unsuitable, patient choice, did not respond to offers of care, service not available.
+Metrics taken from the QOF data via Fingertips have been extracted by GP practice and the counts (numerator of the measure) from the calculations have been used. Exception reporting metrics have used the Personalised Care Adjustment (PCA) data to obtain the number of patients by GP practice for whom a PCA has been recorded for the relevant metric. Possible reasons for a PCA include; Newly diagnosed/registered, Intervention is clinically unsuitable, patient choice, did not respond to offers of care, service not available.
 
 ### SUS data
 
-SUS data was extracted using Transact-SQL and using relevant OPCS, ICD10, HRG, and Treatment
-function codes as detailed in table 2 above.
+SUS data was extracted using Transact-SQL and using relevant OPCS, ICD10, HRG, and Treatment function codes as detailed in table 2 above.
 
 ### Cardiac rehabilitation
 
-This data was supplied by NACR. The data wasn’t available by GP Practice, so an alternative method
-was followed. Practices were allocated to a cluster and data was then supplied aggregated into clusters. In some cases, the data had to be redacted due to small numbers in the category. For the purposes of this analysis the redacted data item was reassigned an average value.
-The true definition of eligible for rehabilitation is the HES admission and successful discharge of all
-patients with CVD e.g., MI, revascularization, or HF. However, to link with the NACR only those
-records entered into the database can be used so NACR use pseudo eligible as this is as close as
-the audit can get, at a granular level, to eligible. It is though affected by areas without entry to the
-database,
-The data used relates to the 2023 calendar year, which is the most recent complete year, and
-following changes in the way rehabilitation has been delivered due to the Covid pandemic, most
-closely reflects the rehabilitation model now in place.
+This data was supplied by NACR. The data wasn’t available by GP Practice, so an alternative method was followed. Practices were allocated to a cluster and data was then supplied aggregated into clusters. In some cases, the data had to be redacted due to small numbers in the category. For the purposes of this analysis the redacted data item was reassigned an average value. The true definition of eligible for rehabilitation is the HES admission and successful discharge of all patients with CVD e.g., MI, revascularization, or HF. However, to link with the NACR only those records entered into the database can be used so NACR use pseudo eligible as this is as close as the audit can get, at a granular level, to eligible. It is though affected by areas without entry to the database, The data used relates to the 2023 calendar year, which is the most recent complete year, and following changes in the way rehabilitation has been delivered due to the Covid pandemic, most closely reflects the rehabilitation model now in place.
 
 ### Readmission within 30 days
 
-The methodology used for this metric follows, as far as possible, that detailed by NHS Digital[^4]. The
-readmissions counted relate to those who had an elective PCI / CABG in the period 1/3/2022 to
-28/2/2023.
+The methodology used for this metric follows, as far as possible, that detailed by NHS Digital[^4]. The readmissions counted relate to those who had an elective PCI / CABG in the period 1/3/2022 to 28/2/2023.
 
 [^4]: <https://digital.nhs.uk/data-and-information/publications/statistical/ccg-outcomes-indicator-set/specifications/3.2-emergency-readmissions-within-30-days-of-discharge-from-hospital_1_4>
 
 ### ONS Death records
 
-ONS death records contain an encrypted HES ID which was used to link to outpatient, inpatient and
-A&E HES records, from which the latest GP practice recorded (on a spine traced record) for the
-patient was then assigned to the death record.
+ONS death records contain an encrypted HES ID which was used to link to outpatient, inpatient and A&E HES records, from which the latest GP practice recorded (on a spine traced record) for the patient was then assigned to the death record.
 
 ### CHD synthetic prevalence estimates
 
@@ -578,7 +559,25 @@ Since metric data is mainly from the 2022/23 year, the October 2022 list size da
 
 #### Census 2021 Ethnicity by LSOA
 
-xxxxxxxxxxxxxx
+The 2021 Census Ethnicity data by LSOA uses the 2021 LSOAs. The GP list size data uses the 2011 LSOAs. Some LSOAs that have gp list population assigned to them do not feature in the census data of ethnicity by lsoa. Need to check if these are the changes from 2011 to 2021 census.
+
+Possible solution would be to work out the average proportions for all the other LSOAs for the practice and distribute the gp list population for the lsoas that have no match proportionally across the ethnic groups.
+
+Another option would be where lsoas in 2021 have a parent lsoa in 2011 then apply the average ethnicity % for the child lsoas to the parent (this is when one 2011 lsoa has been split into multiple 2021 lsoas.) Where the lsoas in 2021 have a child lsoa in 2011 then apply the ethnicity % for the 2021 parent to the 2011 children (this is when several lsoas have been combined into one new lsoa)
+
+join lsoa_lookup to census 21eth using the 2021 lsoa code in the lookup dataset.
+
+Have opted for the latter solution.
+
+Imputing data in Census 2021:
+
+<https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/itemeditingandimputationprocessforcensus2021englandandwales>
+
+Variation in age groups for different ethnicities:
+
+<https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/>
+
+<https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/#download-the-data>
 
 explain how 2011 lsoa and 2021 lsoa mis match was handled
 
@@ -586,19 +585,21 @@ explain how 2011 lsoa and 2021 lsoa mis match was handled
 
 K-medoids is an established, and commonly used unsupervised machine learning technique. This clustering approach required data on the ethnicity of a practices registered population which was obtained as per the methodology explained above (Ethnicity by GP practice). The data used in the clustering was the % of patients in each ethnic group per practice, such that for each practice all the ethnic group %'s added to 100%.
 
-The K-medoids clusterimg was performed using the {cluster} package[^7] in R using partitioning (clustering) of the data into k clusters "around medoids" (PAM), which is a more robust version of K-means.
+The K-medoids clustering was performed using the {cluster} package[^7] in R using partitioning (clustering) of the data into k clusters "around medoids" (PAM), which is a more robust version of K-means. The algorithm is based on the search for k representative objects or medoids among the observations of the dataset. After finding a set of k medoids, k clusters are constructed by assigning each observation to the nearest medoid. The goal is to find k representative objects which minimise the sum of the dissimilarities of the observations to their closest representative object.[^8]
 
 [^7]: Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2023). *cluster: Cluster Analysis Basics and Extensions*. R package version 2.1.6 — For new features, see the 'NEWS' and the 'Changelog' file in the package source), [https://CRAN.R-project.org/package=cluster](https://cran.r-project.org/package=cluster).
 
-Clustering experiments were conducted using a variety of different combinations of ethnic breakdowns, such as 14 ethnic groups and 5 ethnic groups, as well as variations that excluded the % of white british patients or factored in age group. Techniques were also used to attempt to determine the optimal number of clusters such as the elbow method, gap plots, and scree plots. Consideration was given to combining some ethnic groups and in doing so a correlation matrix was produced to identify ethnic groups that commonly featured together. It was also important to seek a number of clusters that could be defined easily, where characteristics did not overlap each other so that resulting clusters were too similar to each other. It was also necessary to ensure that there was a sufficient number of practices in each cluster, too few practices in a cluster could result in issues with small amounts of metric data when calculating activity rates and consequently wide confidence intervals in the index of disparity calculations.
+[^8]: <https://cran.r-project.org/web/packages/cluster/cluster.pdf>
 
-In conclusion, the final version selected and presented here used the percentage of the GP list size in each of the 14 census 2021 ethnic groups and five clusters was felt to give a sufficient number of describable clusters for which the index of disparity calculations could be performed. The chart below is an elbow plot generated for the 14 ethnic groups showing an elbow around 4 or 5 clusters.
+Clustering experiments were conducted using a variety of different combinations of ethnic breakdowns, such as 14 ethnic groups and 5 ethnic groups, as well as variations that excluded the % of White British patients or factored in age group. Techniques were also used to attempt to determine the optimal number of clusters such as the elbow method, gap plots, and scree plots. Consideration was given to combining some ethnic groups and in doing so a correlation matrix was produced to identify ethnic groups that commonly featured together. It was also important to seek a number of clusters that could be defined easily, where characteristics did not overlap each other so that resulting clusters were too similar to each other. It was also necessary to ensure that there was a sufficient number of practices in each cluster, too few practices in a cluster could result in issues with small amounts of metric data when calculating activity rates and consequently lead to wide confidence intervals in the index of disparity calculations.
+
+In conclusion, the final version selected, and presented here, used the percentage of the GP list size in each of the 14 census 2021 ethnic groups and five clusters was felt to give a sufficient number of describable clusters for which the index of disparity calculations could be performed. The chart below is an elbow plot generated for the 14 ethnic groups showing an elbow at around 4 or 5 clusters.
 
 ```{r}
 tar_read(elbow_plot)
 ```
 
-Table 3 shows the number of GP practices assigned to each of the 5 clusters and the characteristics of the clusters are descirbed above in the main body of the report.
+Table 3 shows the number of GP practices assigned to each of the 5 clusters and the characteristics of the clusters are described in the main body of the report above.
 
 ```{r}
 final_data_full_cats_percent_5_clusters <- tar_read(final_data_full_cats_percent_5_clusters) |> as_tibble()
@@ -622,15 +623,15 @@ remember...how , detail - allowing for NEED and how this is done
 
 Confidence intervals of 95% are presented in the national charts presented in this report. Confidence intervals have been used, rather than calculations of statistical significance as this presents a clearer picture of the likelihood of the disparity and due to concerns with the suitability in this case of statistical significance.
 
-> "Practitioners need to be aware that statistical significance differs from practical importance in that statistical significance is highly dependent upon sample size. For a large sample, a statistically significant result is likely to be obtained even when the actual magnitude of an effect is small and of little or no practical importance. On the other hand, for a small sample, it is quite likely that insufficient evidence of a statistically significant result will be obtained – even when there is, indeed, an effect of practical importance." (Hahn, G. J., Doganaksoy, N., Meeker, W. Q., 2019)[^8]
+> "Practitioners need to be aware that statistical significance differs from practical importance in that statistical significance is highly dependent upon sample size. For a large sample, a statistically significant result is likely to be obtained even when the actual magnitude of an effect is small and of little or no practical importance. On the other hand, for a small sample, it is quite likely that insufficient evidence of a statistically significant result will be obtained – even when there is, indeed, an effect of practical importance." (Hahn, G. J., Doganaksoy, N., Meeker, W. Q., 2019)[^9]
 
-[^8]: <https://academic.oup.com/jrssig/article/16/4/20/7038025>
+[^9]: <https://academic.oup.com/jrssig/article/16/4/20/7038025>
 
 In order to estimate the confidence intervals for the index of disparity, a bootstrap method was adopted, assuming independence, generating 1000 random samples for each metric for which an index of disparity was calculated. The 2.5th and 97.5th percentiles were then taken for each metric to give the upper and lower limits of the 95% confidence interval for each.
 
-An explanation of bootstrap theory and confidence intervals is available in Practical Statistics for Data Scientists (Bruce, P. and Bruce, A., 2017)[^9]
+An explanation of bootstrap theory and confidence intervals is available in Practical Statistics for Data Scientists (Bruce, P. and Bruce, A., 2017)[^10]
 
-[^9]: <https://www.oreilly.com/library/view/practical-statistics-for/9781491952955/>
+[^10]: <https://www.oreilly.com/library/view/practical-statistics-for/9781491952955/>
 
 ## Integrated Care Board (ICB) Analysis
 
@@ -685,6 +686,6 @@ icb_charts[42]
 
 ## R code on Github
 
-All the code used in this project is available on the Strategy Unit GitHub[^10].
+All the code used in this project is available on the Strategy Unit GitHub[^11].
 
-[^10]: <https://github.com/The-Strategy-Unit/bhf_chd-ethnicity>
+[^11]: <https://github.com/The-Strategy-Unit/bhf_chd-ethnicity>

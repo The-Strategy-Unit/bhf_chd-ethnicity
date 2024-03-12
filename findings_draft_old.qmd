@@ -1,11 +1,9 @@
 ---
-title: "Visualising CHD Pathway Inequalities by ethnicity - DRAFT"
+title: "Inequalities by ethnicity in the CHD pathway - DRAFT"
 lang: en-GB
 author: "Jacqueline Grout"
 date: last-modified
 date-format: "YYYY-MM-DD"
-title-block-banner: "#f9bf07"
-title-block-banner-color: "#333739"
 format:
   html:
     self-contained: true
@@ -30,39 +28,39 @@ execute:
   freeze: auto
 editor_options: 
   chunk_output_type: console
-  
-css: styles.css
 ---
 
 ```{r}
 #| echo: false
  
 library(targets)
-library(gt)
+
 library(tidyverse)
 library(grid)
 library(gridExtra)
-
+library(cowplot)
 ```
 
-# Clustering 
+## Clustered GP Practices
 
-## Cluster descriptions
+```{r}
+tar_read(cluster2_map)
+```
 
-The median percentage of each ethnic group for each cluster was calculated and is presented in these charts to describe their respective diversity.
+### Cluster descriptions
 
-### Cluster 1 - Least diverse
+#### Cluster 1 - Least diverse
 
 This cluster is the least diverse of the five and the median percentage of White patients is 97% (94% White British).
 
 ::: panel-tabset
-## Five ethnic groups
+## Five categories
 
 ```{r}
 tar_read(cluster2_treemap_1)
 ```
 
-## Fourteen ethnic groups
+## Fourteen categories
 
 94% White British
 
@@ -71,18 +69,18 @@ tar_read(cluster2_eth_chart_1)
 ```
 :::
 
-### Cluster 2
+#### Cluster 2
 
 In this cluster the median percentage of White patients is 93% (87% White British). Those patients whose ethnicity is White are more likely to be White Irish or other White ethnicities (0.7% and 4% respectively) when compared to cluster 1. The median percentage of patients with a mixed ethnicity in this cluster is 2%.
 
 ::: panel-tabset
-## Five ethnic groups
+## Five categories
 
 ```{r}
 tar_read(cluster2_treemap_2)
 ```
 
-## Fourteen ethnic groups
+## Fourteen categories
 
 87% White British
 
@@ -91,18 +89,18 @@ tar_read(cluster2_eth_chart_2)
 ```
 :::
 
-### Cluster 3
+#### Cluster 3
 
 In this cluster the median percentage of White patients is 78% (69% White British). The median percentage of patients with a mixed ethnicity in this cluster is 3.8%, which is higher than in cluster 2. Indian patients make up 3.3% of the patients, and 2.6% are patients whose ethnicity is Black African.
 
 ::: panel-tabset
-## Five ethnic groups
+## Five categories
 
 ```{r}
 tar_read(cluster2_treemap_3)
 ```
 
-## Fourteen ethnic groups
+## Fourteen categories
 
 69% White British
 
@@ -111,18 +109,18 @@ tar_read(cluster2_eth_chart_3)
 ```
 :::
 
-### Cluster 4
+#### Cluster 4
 
 In cluster 4 just over half the patients are White with a median percentage of 55% (35% White British). The ethnic group of White has fewer White British than clusters 1 to 3, with 17% of patients having an ethnicity of White Other The median percentage of patients whose ethnicity is Black African in this cluster is 8.3%, which is higher than in cluster 3 and the median percentage of Black Caribbean patients is 3.9%. The median percentage of Black and Asian is 29% in this cluster.
 
 ::: panel-tabset
-## Five ethnic groups
+## Five categories
 
 ```{r}
 tar_read(cluster2_treemap_4)
 ```
 
-## Fourteen ethnic groups
+## Fourteen categories
 
 35% White British
 
@@ -131,18 +129,18 @@ tar_read(cluster2_eth_chart_4)
 ```
 :::
 
-### Cluster 5 - Most diverse
+#### Cluster 5 - Most diverse
 
 This cluster is the most diverse. Overall the median percentage of Asian patients in this cluster is 45%. There are 13.3% Indian, 9.7% Pakistani and 2.9% Bangladeshi. Mixed and other ethnic groups form a large proportion of the patients in this cluster.
 
 ::: panel-tabset
-## Five ethnic groups
+## Five categories
 
 ```{r}
 tar_read(cluster2_treemap_5)
 ```
 
-## Fourteen ethnic groups
+## Fourteen categories
 
 22% White British
 
@@ -151,15 +149,21 @@ tar_read(cluster2_eth_chart_5)
 ```
 :::
 
-## Clustered GP Practices
-
-The interactive map below presents each GP practice coloured according to their assigned cluster. Cluster 1 (red) is the least diverse and cluster 5 (orange) is the most diverse.
+## Relative Index of Disparity
 
 ```{r}
-tar_read(cluster2_map)
+tar_read(ci_iod_chart)
 ```
 
-# Rate of activity
+::: {.callout-tip icon="false"}
+## Confidence Intervals
+
+Confidence intervals are shown in grey. Please disregard the last 4 metrics (related to patient deaths) at this stage.
+:::
+
+## Rate
+
+The charts below show the rates by cluster for each metric along the CHD pathway. The horizontal line is the overall rate.
 
 ### Risk factors
 
@@ -210,23 +214,11 @@ tar_read(rate_chart_int_out)
 tar_read(rate_chart_full_out)
 ```
 
-# Relative Index of Disparity
+## Regions
 
-```{r}
-tar_read(ci_iod_chart)
-```
+### Clusters
 
-::: {.callout-tip icon="false"}
-## Confidence Intervals
-
-Confidence intervals are shown in grey. There is 95% confidence that the index of disparity is within this range. **Please disregard the last 4 metrics (related to patient deaths) at this stage.**
-:::
-
-# Regional Analysis
-
-## Clusters
-
-The charts below show the distribution of the patients in each NHS region according to the cluster of their GP practice.
+The charts below show the distribution of the patients in each region according to the cluster of their GP practice.
 
 ::: panel-tabset
 ## London
@@ -280,7 +272,7 @@ region_cluster_charts[4]
 ```
 :::
 
-## Relative Index of Disparity
+### Relative Index of Disparity
 
 ::: panel-tabset
 ## London
@@ -327,7 +319,9 @@ regional_charts[7]
 ```
 :::
 
-## Integrated Care Board (ICB) Analysis
+## Appendix
+
+### Integrated Care Boards (ICBs)
 
 #### Relative Index of Disparity
 
@@ -378,4 +372,4 @@ icb_charts[41]
 icb_charts[42]
 ```
 
-## 
+### 
