@@ -29,8 +29,8 @@ get_rel_iod_chart <- function(chart_iod_data){
                                       metric=="metric15_rel_iod"~"Electrocardiography",
                                       metric=="metric16_rel_iod"~"Asprin anti-platelet etc",
                                       metric=="metric31_rel_iod"~"Except rep. asprin etc",
-                                      metric=="metric17_rel_iod"~"Flu vaccination",
-                                      metric=="metric32_rel_iod"~"Except rep. flu vacc",
+                                      # metric=="metric17_rel_iod"~"Flu vaccination",
+                                      # metric=="metric32_rel_iod"~"Except rep. flu vacc",
                                       metric=="metric39_rel_iod"~"65+ flu vaccination",
                                       metric=="metric40_rel_iod"~"<65 at risk flu vaccination",
                                       metric=="metric18_rel_iod"~"Ref to OP cardiology (new)",
@@ -51,8 +51,9 @@ get_rel_iod_chart <- function(chart_iod_data){
                                                                      "Depression register", "45+ BP check < 5 years","CVD risk register","CVD pat treated with LLT",
                                                                      "Pat at risk treated with LLT","Smoking cessation support offered",
                                                                      "Except rep. smoke cease sup","CHD register","CT angiography","Electrocardiography",
-                                                                     "Asprin anti-platelet etc","Except rep. asprin etc", "Flu vaccination",
-                                                                     "Except rep. flu vacc", "65+ flu vaccination","<65 at risk flu vaccination",
+                                                                     "Asprin anti-platelet etc","Except rep. asprin etc", 
+                                                                     #"Flu vaccination","Except rep. flu vacc", 
+                                                                     "65+ flu vaccination","<65 at risk flu vaccination",
                                                                      "Ref to OP cardiology (new)", "Cardiology outpatient DNAs","Elective PCI",
                                                                      "Elective CABG","Waiting time for elective PCI / CABG","PCI/CABG disch < trimpoint",
                                                                      "BP reading < 140/90 (<80 yrs CHD)","Readmit<30 days of PCI / CABG",
@@ -74,8 +75,8 @@ get_rel_iod_chart <- function(chart_iod_data){
                                      metric == 'metric15_rel_iod' ~ 'Dis. ident',
                                      metric == 'metric16_rel_iod' ~ '2°c prevent',
                                      metric == 'metric31_rel_iod' ~ '2°c prevent',
-                                     metric == 'metric17_rel_iod' ~ '2°c prevent',
-                                     metric == 'metric32_rel_iod' ~ '2°c prevent',
+                                     # metric == 'metric17_rel_iod' ~ '2°c prevent',
+                                     # metric == 'metric32_rel_iod' ~ '2°c prevent',
                                      metric == 'metric39_rel_iod' ~ '2°c prevent',
                                      metric == 'metric40_rel_iod' ~ '2°c prevent',
                                      metric == 'metric18_rel_iod' ~ '2°c prevent',
@@ -138,8 +139,8 @@ get_ci_iod_chart <- function(iod_with_ci){
                                       metric_name=="metric15"~"Electrocardiography",
                                       metric_name=="metric16"~"Asprin anti-platelet etc",
                                       metric_name=="metric31"~"Except rep. asprin etc",
-                                      metric_name=="metric17"~"Flu vaccination",
-                                      metric_name=="metric32"~"Except rep. flu vacc",
+                                      # metric_name=="metric17"~"Flu vaccination",
+                                      # metric_name=="metric32"~"Except rep. flu vacc",
                                       metric_name=="metric39"~"65+ flu vaccination",
                                       metric_name=="metric40"~"<65 at risk flu vaccination",
                                       metric_name=="metric18"~"Ref to OP cardiology (new)",
@@ -160,8 +161,9 @@ get_ci_iod_chart <- function(iod_with_ci){
                                                                      "Depression register", "45+ BP check < 5 years","CVD risk register","CVD pat treated with LLT",
                                                                      "Pat at risk treated with LLT","Smoking cessation support offered",
                                                                      "Except rep. smoke cease sup","CHD register","CT angiography","Electrocardiography",
-                                                                     "Asprin anti-platelet etc","Except rep. asprin etc", "Flu vaccination",
-                                                                     "Except rep. flu vacc", "65+ flu vaccination","<65 at risk flu vaccination",
+                                                                     "Asprin anti-platelet etc","Except rep. asprin etc", 
+                                                                    # "Flu vaccination","Except rep. flu vacc",
+                                                                     "65+ flu vaccination","<65 at risk flu vaccination",
                                                                      "Ref to OP cardiology (new)", "Cardiology outpatient DNAs","Elective PCI",
                                                                      "Elective CABG","Waiting time for elective PCI / CABG","PCI/CABG disch < trimpoint",
                                                                      "BP reading < 140/90 (<80 yrs CHD)","Readmit<30 days of PCI / CABG",
@@ -183,8 +185,8 @@ get_ci_iod_chart <- function(iod_with_ci){
                                  metric_name == 'metric15' ~ 'Dis. ident',
                                  metric_name == 'metric16' ~ '2°c prevent',
                                  metric_name == 'metric31' ~ '2°c prevent',
-                                 metric_name == 'metric17' ~ '2°c prevent',
-                                 metric_name == 'metric32' ~ '2°c prevent',
+                                 # metric_name == 'metric17' ~ '2°c prevent',
+                                 # metric_name == 'metric32' ~ '2°c prevent',
                                  metric_name == 'metric39' ~ '2°c prevent',
                                  metric_name == 'metric40' ~ '2°c prevent',
                                  metric_name == 'metric18' ~ '2°c prevent',
@@ -249,7 +251,8 @@ get_rate_chart_data <- function(activity_by_type_clusters_stg6){
                            metric=="metric9_rate"|metric=="metric34_rate"|metric=="metric38_rate"|metric=="metric11_rate"|
                              metric=="metric12_rate"~"Primary prevention",
                            metric=="metric13_rate"|metric=="metric14_rate"|metric=="metric15_rate"~"Disease identification",
-                           metric=="metric16_rate"|metric=="metric31_rate"|metric=="metric17_rate"|metric=="metric32_rate"|
+                           metric=="metric16_rate"|metric=="metric31_rate"|
+                             #metric=="metric17_rate"|metric=="metric32_rate"|
                              metric=="metric39_rate"|metric=="metric40_rate"|metric=="metric18_rate"|
                              metric=="metric19_rate"~"Secondary prevention",
                            metric=="metric20_rate"|metric=="metric21_rate"|metric=="metric22_rate"|
@@ -266,7 +269,8 @@ get_rate_chart_data <- function(activity_by_type_clusters_stg6){
                              metric=="metric11_upper_ci"|metric=="metric12_upper_ci"~"Primary prevention",
                            metric=="metric13_upper_ci"|metric=="metric14_upper_ci"|metric=="metric15_upper_ci"|
                              metric=="metric13_lower_ci"|metric=="metric14_lower_ci"|metric=="metric15_lower_ci"~"Disease identification",
-                           metric=="metric16_lower_ci"|metric=="metric31_lower_ci"|metric=="metric17_lower_ci"|metric=="metric32_lower_ci"|
+                           metric=="metric16_lower_ci"|metric=="metric31_lower_ci"|
+                             #metric=="metric17_lower_ci"|metric=="metric32_lower_ci"|
                              metric=="metric39_lower_ci"|metric=="metric40_lower_ci"|metric=="metric18_lower_ci"|
                              metric=="metric19_lower_ci"|metric=="metric16_upper_ci"|metric=="metric31_upper_ci"|metric=="metric17_upper_ci"|
                              metric=="metric32_upper_ci"|metric=="metric39_upper_ci"|metric=="metric40_upper_ci"|metric=="metric18_upper_ci"|
@@ -296,8 +300,8 @@ get_rate_chart_data <- function(activity_by_type_clusters_stg6){
                                metric=="metric15_rate"|metric=="metric15_lower_ci"|metric=="metric15_upper_ci"~"Electrocardiography",
                                metric=="metric16_rate"|metric=="metric16_lower_ci"|metric=="metric16_upper_ci"~"Asprin anti-platelet etc",
                                metric=="metric31_rate"|metric=="metric31_lower_ci"|metric=="metric31_upper_ci"~"Except rep. asprin etc",
-                               metric=="metric17_rate"|metric=="metric17_lower_ci"|metric=="metric17_upper_ci"~"Flu vaccination",
-                               metric=="metric32_rate"|metric=="metric32_lower_ci"|metric=="metric32_upper_ci"~"Except rep. flu vacc",
+                              # metric=="metric17_rate"|metric=="metric17_lower_ci"|metric=="metric17_upper_ci"~"Flu vaccination",
+                              # metric=="metric32_rate"|metric=="metric32_lower_ci"|metric=="metric32_upper_ci"~"Except rep. flu vacc",
                                metric=="metric39_rate"|metric=="metric39_lower_ci"|metric=="metric39_upper_ci"~"65+ flu vaccination",
                                metric=="metric40_rate"|metric=="metric40_lower_ci"|metric=="metric40_upper_ci"~"<65 at risk flu vaccination",
                                metric=="metric18_rate"|metric=="metric18_lower_ci"|metric=="metric18_upper_ci"~"Ref to OP cardiology (new)",

@@ -69,21 +69,25 @@ metric23_below_trimpoint <- function(metric23,metric23trimpoints){
   return(metric23_updated)
 }
 
-combine_metrics17_and_32 <- function(metric32,metric17){
-  metric32_updated <- metric17 |>
-    left_join(metric32)|>
-    select(-metric17_num)|>
-    rename(metric32_denom=metric17_denom)
-  
-  return(metric32_updated)
-}
+# combine_metrics17_and_32 <- function(metric32,metric17){
+#   metric32_updated <- metric17 |>
+#     left_join(metric32)|>
+#     select(-metric17_num)|>
+#     rename(metric32_denom=metric17_denom)
+#   
+#   return(metric32_updated)
+# }
 
 add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final_data_full_cats_percent_5_clusters,
                             gp_16andover_pop,gp_list_45over,
                             metric1_updated,metric2,metric5,metric6,metric7,metric8,metric9,metric11,metric12,metric13,metric13b,
-                            metric14,metric15,metric16,metric16b,metric17,metric18,metric19,metric20,
+                            metric14,metric15,metric16,metric16b,
+                            #metric17,
+                            metric18,metric19,metric20,
                             metric21,metric22,metric23_updated,metric25b,metric26,metric27,metric28,metric28b,
-                            metric29,metric29b,metric31,metric32_updated,metric33,metric34,metric38,
+                            metric29,metric29b,metric31,
+                            #metric32_updated,
+                            metric33,metric34,metric38,
                             metric39,metric40){
   clustered_gp_and_metrics <-
     final_data_full_cats_percent_over45_5_clusters |> rename(cluster1=cluster)|>
@@ -117,7 +121,7 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
     left_join(metric15)|>
     left_join(metric16)|>
     left_join(metric16b)|>
-    left_join(metric17)|>
+   # left_join(metric17)|>
     left_join(metric18)|>
     left_join(metric19)|>
     left_join(metric20)|>
@@ -135,7 +139,7 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
     left_join(metric29b)|>
     #30 - not available
     left_join(metric31)|>
-    left_join(metric32_updated)|>
+  #  left_join(metric32_updated)|>
     left_join(metric33)|>
     left_join(metric34)|>
     #35-37 removed not needed
@@ -176,8 +180,8 @@ process_metrics <-function(clustered_gp_and_metrics){
     mutate(metric16_num_total = replace_na(metric16_num, 0)) |> 
     mutate(metric16_denom_total = replace_na(metric16_denom, 0)) |>
     mutate(metric16b_total = replace_na(metric16b, 0)) |>
-    mutate(metric17_num_total = replace_na(metric17_num, 0)) |> 
-    mutate(metric17_denom_total = replace_na(metric17_denom, 0)) |>
+  #  mutate(metric17_num_total = replace_na(metric17_num, 0)) |> 
+  #  mutate(metric17_denom_total = replace_na(metric17_denom, 0)) |>
     mutate(metric18_total = replace_na(metric18, 0)) |> 
     mutate(metric19_total = replace_na(metric19, 0)) |>
     mutate(metric20_total = replace_na(metric20, 0)) |>
@@ -196,8 +200,8 @@ process_metrics <-function(clustered_gp_and_metrics){
     #mutate(metric30_total = replace_na(metric30, 0)) |>  
     mutate(metric31_num_total = replace_na(metric31_num, 0)) |> 
     mutate(metric31_denom_total = replace_na(metric31_denom, 0)) |>
-    mutate(metric32_num_total = replace_na(metric32_num, 0)) |> 
-    mutate(metric32_denom_total = replace_na(metric32_denom, 0)) |>
+  #  mutate(metric32_num_total = replace_na(metric32_num, 0)) |> 
+  #  mutate(metric32_denom_total = replace_na(metric32_denom, 0)) |>
     mutate(metric33_num_total = replace_na(metric33_num, 0)) |> 
     mutate(metric33_denom_total = replace_na(metric33_denom, 0)) |>
     mutate(metric34_num_total = replace_na(metric34_num, 0)) |> 
@@ -233,8 +237,8 @@ process_metrics <-function(clustered_gp_and_metrics){
               metric16_num_total = sum(metric16_num_total) , 
               metric16_denom_total = sum(metric16_denom_total) , 
               metric16b_total = sum(metric16b_total) , 
-              metric17_num_total = sum(metric17_num_total) , 
-              metric17_denom_total = sum(metric17_denom_total) , 
+              # metric17_num_total = sum(metric17_num_total) , 
+              # metric17_denom_total = sum(metric17_denom_total) , 
               metric18_total = sum(metric18_total) , 
               metric19_total = sum(metric19_total) , 
               metric20_total = sum(metric20_total) , 
@@ -252,8 +256,8 @@ process_metrics <-function(clustered_gp_and_metrics){
               metric29b_total = sum(metric29b_total) ,
               metric31_num_total = sum(metric31_num_total) , 
               metric31_denom_total = sum(metric31_denom_total) ,           
-              metric32_num_total = sum(metric32_num_total) , 
-              metric32_denom_total = sum(metric32_denom_total) , 
+              # metric32_num_total = sum(metric32_num_total) , 
+              # metric32_denom_total = sum(metric32_denom_total) , 
               metric33_num_total = sum(metric33_num_total) , 
               metric33_denom_total = sum(metric33_denom_total) , 
               metric34_num_total = sum(metric34_num_total) , 
@@ -285,7 +289,7 @@ calc_iod_rate <-function(activity_by_type_clusters_stg1){
            metric15_rate=metric15_total/metric1_total,
            metric16_rate=metric16_num_total/metric1_total,
            #16b
-           metric17_rate=metric17_num_total/metric1_total,
+           # metric17_rate=metric17_num_total/metric1_total,
            metric18_rate=metric18_total/metric1_total,
            metric19_rate=metric19_total/metric1_total,
            metric20_rate=metric20_total/metric1_total,
@@ -301,7 +305,7 @@ calc_iod_rate <-function(activity_by_type_clusters_stg1){
            metric29_rate=metric29_total/metric1_total,
            metric29b_rate=metric29b_total/metric1_total,
            metric31_rate=metric31_num_total/metric1_total,
-           metric32_rate=metric32_num_total/metric1_total,
+           # metric32_rate=metric32_num_total/metric1_total,
            metric33_rate=metric33_num_total/list_size_45_total,
            metric34_rate=metric34_num_total/metric1_total,
            metric38_rate=metric38_num_total/metric1_total,
@@ -331,8 +335,8 @@ calc_iod_rate <-function(activity_by_type_clusters_stg1){
            metric15_lower_ci=(metric15_total-(sqrt(metric15_total*1.96)))*(1/metric1_total),
            metric16_upper_ci=(metric16_num_total+(sqrt(metric16_num_total*1.96)))*(1/metric1_total),
            metric16_lower_ci=(metric16_num_total-(sqrt(metric16_num_total*1.96)))*(1/metric1_total),
-           metric17_upper_ci=(metric17_num_total+(sqrt(metric17_num_total*1.96)))*(1/metric1_total),
-           metric17_lower_ci=(metric17_num_total-(sqrt(metric17_num_total*1.96)))*(1/metric1_total),
+           # metric17_upper_ci=(metric17_num_total+(sqrt(metric17_num_total*1.96)))*(1/metric1_total),
+           # metric17_lower_ci=(metric17_num_total-(sqrt(metric17_num_total*1.96)))*(1/metric1_total),
            metric18_upper_ci=(metric18_total+(sqrt(metric18_total*1.96)))*(1/metric1_total),
            metric18_lower_ci=(metric18_total-(sqrt(metric18_total*1.96)))*(1/metric1_total),
            metric19_upper_ci=(metric19_total+(sqrt(metric19_total*1.96)))*(1/metric1_total),
@@ -362,8 +366,8 @@ calc_iod_rate <-function(activity_by_type_clusters_stg1){
            metric29b_lower_ci=(metric29b_total-(sqrt(metric29b_total*1.96)))*(1/metric1_total),
            metric31_upper_ci=(metric31_num_total+(sqrt(metric31_num_total*1.96)))*(1/metric1_total),
            metric31_lower_ci=(metric31_num_total-(sqrt(metric31_num_total*1.96)))*(1/metric1_total),
-           metric32_upper_ci=(metric32_num_total+(sqrt(metric32_num_total*1.96)))*(1/metric1_total),
-           metric32_lower_ci=(metric32_num_total-(sqrt(metric32_num_total*1.96)))*(1/metric1_total),
+           # metric32_upper_ci=(metric32_num_total+(sqrt(metric32_num_total*1.96)))*(1/metric1_total),
+           # metric32_lower_ci=(metric32_num_total-(sqrt(metric32_num_total*1.96)))*(1/metric1_total),
            metric33_upper_ci=(metric33_num_total+(sqrt(metric33_num_total*1.96)))*(1/list_size_45_total),
            metric33_lower_ci=(metric33_num_total-(sqrt(metric33_num_total*1.96)))*(1/list_size_45_total),
            metric34_upper_ci=(metric34_num_total+(sqrt(metric34_num_total*1.96)))*(1/metric1_total),
@@ -441,11 +445,11 @@ activity_by_type_clusters_stg3 <- activity_by_type_clusters_stg2|>
          metric16_upper_ci_global=(1/metric16_overall_denom_total)*((sqrt(metric16_overall_num_total)*1.96)+metric16_overall_num_total),
          metric16_lower_ci_global=(1/metric16_overall_denom_total)*((sqrt(metric16_overall_num_total)*1.96)-metric16_overall_num_total),
          #16b
-         metric17_overall_num_total=sum(metric17_num_total),
-         metric17_overall_denom_total=sum(metric1_total),
-         metric17_global_rate=metric17_overall_num_total/metric17_overall_denom_total,
-         metric17_upper_ci_global=(1/metric17_overall_denom_total)*((sqrt(metric17_overall_num_total)*1.96)+metric17_overall_num_total),
-         metric17_lower_ci_global=(1/metric17_overall_denom_total)*((sqrt(metric17_overall_num_total)*1.96)-metric17_overall_num_total),
+         # metric17_overall_num_total=sum(metric17_num_total),
+         # metric17_overall_denom_total=sum(metric1_total),
+         # metric17_global_rate=metric17_overall_num_total/metric17_overall_denom_total,
+         # metric17_upper_ci_global=(1/metric17_overall_denom_total)*((sqrt(metric17_overall_num_total)*1.96)+metric17_overall_num_total),
+         # metric17_lower_ci_global=(1/metric17_overall_denom_total)*((sqrt(metric17_overall_num_total)*1.96)-metric17_overall_num_total),
          metric18_overall_num_total=sum(metric18_total),
          metric18_overall_denom_total=sum(metric1_total),
          metric18_global_rate=metric18_overall_num_total/metric18_overall_denom_total,
@@ -517,11 +521,11 @@ activity_by_type_clusters_stg3 <- activity_by_type_clusters_stg2|>
          metric31_global_rate=metric31_overall_num_total/metric31_overall_denom_total,
          metric31_upper_ci_global=(1/metric31_overall_denom_total)*((sqrt(metric31_overall_num_total)*1.96)+metric31_overall_num_total),
          metric31_lower_ci_global=(1/metric31_overall_denom_total)*((sqrt(metric31_overall_num_total)*1.96)-metric31_overall_num_total),
-         metric32_overall_num_total=sum(metric32_num_total),
-         metric32_overall_denom_total=sum(metric1_total),
-         metric32_global_rate=metric32_overall_num_total/metric32_overall_denom_total,
-         metric32_upper_ci_global=(1/metric32_overall_denom_total)*((sqrt(metric32_overall_num_total)*1.96)+metric32_overall_num_total),
-         metric32_lower_ci_global=(1/metric32_overall_denom_total)*((sqrt(metric32_overall_num_total)*1.96)-metric32_overall_num_total),
+         # metric32_overall_num_total=sum(metric32_num_total),
+         # metric32_overall_denom_total=sum(metric1_total),
+         # metric32_global_rate=metric32_overall_num_total/metric32_overall_denom_total,
+         # metric32_upper_ci_global=(1/metric32_overall_denom_total)*((sqrt(metric32_overall_num_total)*1.96)+metric32_overall_num_total),
+         # metric32_lower_ci_global=(1/metric32_overall_denom_total)*((sqrt(metric32_overall_num_total)*1.96)-metric32_overall_num_total),
          metric33_overall_num_total=sum(metric33_num_total),
          metric33_overall_denom_total=sum(list_size_45_total),
          metric33_global_rate=metric33_overall_num_total/metric33_overall_denom_total,
@@ -568,7 +572,7 @@ calc_iod_diff_rate <-function(activity_by_type_clusters_stg3){
            metric15_diff_rate=metric15_rate-metric15_global_rate,
            metric16_diff_rate=metric16_rate-metric16_global_rate,
            #16b
-           metric17_diff_rate=metric17_rate-metric17_global_rate,
+           # metric17_diff_rate=metric17_rate-metric17_global_rate,
            metric18_diff_rate=metric18_rate-metric18_global_rate,
            metric19_diff_rate=metric19_rate-metric19_global_rate,          
            metric20_diff_rate=metric20_rate-metric20_global_rate,
@@ -584,7 +588,7 @@ calc_iod_diff_rate <-function(activity_by_type_clusters_stg3){
            metric29_diff_rate=metric29_rate-metric29_global_rate,
            metric29b_diff_rate=metric29b_rate-metric29b_global_rate,     
            metric31_diff_rate=metric31_rate-metric31_global_rate,
-           metric32_diff_rate=metric32_rate-metric32_global_rate,
+           # metric32_diff_rate=metric32_rate-metric32_global_rate,
            metric33_diff_rate=metric33_rate-metric33_global_rate,        
            metric34_diff_rate=metric34_rate-metric34_global_rate, 
            metric38_diff_rate=metric38_rate-metric38_global_rate,
@@ -604,7 +608,7 @@ calc_iod_diff_rate <-function(activity_by_type_clusters_stg3){
            metric15_abs_diff_rate=abs(metric15_diff_rate),
            metric16_abs_diff_rate=abs(metric16_diff_rate),
            #16
-           metric17_abs_diff_rate=abs(metric17_diff_rate),
+           # metric17_abs_diff_rate=abs(metric17_diff_rate),
            metric18_abs_diff_rate=abs(metric18_diff_rate),
            metric19_abs_diff_rate=abs(metric19_diff_rate),         
            metric20_abs_diff_rate=abs(metric20_diff_rate),
@@ -620,7 +624,7 @@ calc_iod_diff_rate <-function(activity_by_type_clusters_stg3){
            metric29_abs_diff_rate=abs(metric29_diff_rate),  
            metric29b_abs_diff_rate=abs(metric29b_diff_rate),     
            metric31_abs_diff_rate=abs(metric31_diff_rate),
-           metric32_abs_diff_rate=abs(metric32_diff_rate),
+           # metric32_abs_diff_rate=abs(metric32_diff_rate),
            metric33_abs_diff_rate=abs(metric33_diff_rate),     
            metric34_abs_diff_rate=abs(metric34_diff_rate),
            metric38_abs_diff_rate=abs(metric38_diff_rate),
@@ -647,7 +651,7 @@ calc_iod_diff <-function(activity_by_type_clusters_stg4){
            metric15_diff=metric15_diff_rate*metric1_total,
            metric16_diff=metric16_diff_rate*metric1_total,
            #16b
-           metric17_diff=metric17_diff_rate*metric1_total,
+           # metric17_diff=metric17_diff_rate*metric1_total,
            metric18_diff=metric18_diff_rate*metric1_total,
            metric19_diff=metric19_diff_rate*metric1_total,
            metric20_diff=metric20_diff_rate*metric1_total,          
@@ -663,7 +667,7 @@ calc_iod_diff <-function(activity_by_type_clusters_stg4){
            metric29_diff=metric29_diff_rate*metric1_total,  
            metric29b_diff=metric29b_diff_rate*metric1_total,  
            metric31_diff=metric31_diff_rate*metric1_total,  
-           metric32_diff=metric32_diff_rate*metric1_total,  
+           # metric32_diff=metric32_diff_rate*metric1_total,  
            metric33_diff=metric33_diff_rate*list_size_45_total,          
            metric34_diff=metric34_diff_rate*metric1_total,
            metric38_diff=metric38_diff_rate*metric1_total,
@@ -683,7 +687,7 @@ calc_iod_diff <-function(activity_by_type_clusters_stg4){
            metric15_abs_diff=abs(metric15_diff),
            metric16_abs_diff=abs(metric16_diff),
            #16b
-           metric17_abs_diff=abs(metric17_diff),
+           # metric17_abs_diff=abs(metric17_diff),
            metric18_abs_diff=abs(metric18_diff),
            metric19_abs_diff=abs(metric19_diff),
            metric20_abs_diff=abs(metric20_diff),          
@@ -699,7 +703,7 @@ calc_iod_diff <-function(activity_by_type_clusters_stg4){
            metric29_abs_diff=abs(metric29_diff),
            metric29b_abs_diff=abs(metric29b_diff),
            metric31_abs_diff=abs(metric31_diff),  
-           metric32_abs_diff=abs(metric32_diff), 
+           # metric32_abs_diff=abs(metric32_diff), 
            metric33_abs_diff=abs(metric33_diff),        
            metric34_abs_diff=abs(metric34_diff), 
            metric38_abs_diff=abs(metric38_diff), 
@@ -726,7 +730,7 @@ calc_abs_iod <- function(activity_by_type_clusters_stg5){
            metric15_abs_iod=sum(metric15_abs_diff)/2,   
            metric16_abs_iod=sum(metric16_abs_diff)/2, 
            #16b
-           metric17_abs_iod=sum(metric17_abs_diff)/2,
+           # metric17_abs_iod=sum(metric17_abs_diff)/2,
            metric18_abs_iod=sum(metric18_abs_diff)/2,
            metric19_abs_iod=sum(metric19_abs_diff)/2,
            metric20_abs_iod=sum(metric20_abs_diff)/2,
@@ -742,7 +746,7 @@ calc_abs_iod <- function(activity_by_type_clusters_stg5){
            metric29_abs_iod=sum(metric29_abs_diff)/2,
            metric29b_abs_iod=sum(metric29b_abs_diff)/2,
            metric31_abs_iod=sum(metric31_abs_diff)/2,
-           metric32_abs_iod=sum(metric32_abs_diff)/2,
+           # metric32_abs_iod=sum(metric32_abs_diff)/2,
            metric33_abs_iod=sum(metric33_abs_diff)/2,        
            metric34_abs_iod=sum(metric34_abs_diff)/2,
            metric38_abs_iod=sum(metric38_abs_diff)/2,
@@ -762,7 +766,7 @@ calc_abs_iod <- function(activity_by_type_clusters_stg5){
            metric15_rel_iod=(sum(metric15_abs_diff)/(2*metric15_overall_num_total))*100,
            metric16_rel_iod=(sum(metric16_abs_diff)/(2*metric16_overall_num_total))*100,
            #16b
-           metric17_rel_iod=(sum(metric17_abs_diff)/(2*metric17_overall_num_total))*100,
+           # metric17_rel_iod=(sum(metric17_abs_diff)/(2*metric17_overall_num_total))*100,
            metric18_rel_iod=(sum(metric18_abs_diff)/(2*metric18_overall_num_total))*100,
            metric19_rel_iod=(sum(metric19_abs_diff)/(2*metric19_overall_num_total))*100,
            metric20_rel_iod=(sum(metric20_abs_diff)/(2*metric20_overall_num_total))*100,
@@ -778,7 +782,7 @@ calc_abs_iod <- function(activity_by_type_clusters_stg5){
            metric29_rel_iod=(sum(metric29_abs_diff)/(2*metric29_overall_num_total))*100,
            metric29b_rel_iod=(sum(metric29b_abs_diff)/(2*metric29b_overall_num_total))*100,
            metric31_rel_iod=(sum(metric31_abs_diff)/(2*metric31_overall_num_total))*100,
-           metric32_rel_iod=(sum(metric32_abs_diff)/(2*metric32_overall_num_total))*100,
+           # metric32_rel_iod=(sum(metric32_abs_diff)/(2*metric32_overall_num_total))*100,
            metric33_rel_iod=(sum(metric33_abs_diff)/(2*metric33_overall_num_total))*100,
            metric34_rel_iod=(sum(metric34_abs_diff)/(2*metric34_overall_num_total))*100,
            metric38_rel_iod=(sum(metric38_abs_diff)/(2*metric38_overall_num_total))*100,

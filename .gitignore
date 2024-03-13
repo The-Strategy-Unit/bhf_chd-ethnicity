@@ -70,3 +70,4 @@ data/*.csv
 # when quarto renders document it makes files that dont need adding to the git history
 /.quarto/
 /_site/
+.Rproj.user
