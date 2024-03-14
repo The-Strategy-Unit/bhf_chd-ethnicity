@@ -420,7 +420,7 @@ tar_read(rate_chart_full_out)
 
 # Relative Index of Disparity
 
-The relative index of deprivation for the metric is expressed here as a %, such that the % indicates the amount of activity that would need to be redistributed between clusters in order that event rates follow levels of need. The detail of the methodology used for its calculation can be found in the appendix.
+The relative index of disparity for the metric is expressed here as a %, such that the % indicates the amount of activity that would need to be redistributed between clusters in order that event rates follow levels of need. The detail of the methodology used for its calculation can be found in the appendix.
 
 The chart below presents the metrics along the CHD pathway from risk factor and identification through to outcome measures of death from CHD. For each metric the index of disparity is shown as a point estimate (yellow dot) with the upper and lower confidence intervals in grey.
 
