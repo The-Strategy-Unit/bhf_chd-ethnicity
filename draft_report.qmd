@@ -631,7 +631,7 @@ data_source=c("PHE","GP Survey","NHSD QOF","NHSD QOF","NHSD QOF","NHSD QOF","NHS
               "SUS","SUS","ONS Death records","ONS Death records"),
 year=c("2015","2023","2022/23","2022/23","2022/23","2022/23","2022/23","2019/20","2022/23","2022/23",
               "2022/23","2022/23","2022/23","2022/23","2022/23","2022/23","2022/23","March 2023","March 2023","2022/23",
-              "2022/23","2022/23","2022/23","2022/23","2022/23","2023","2023","2022/23","2022/23 (Mar-Feb)","2022/23",
+              "2022/23","2022/23","2022/23","2022/23","2022/23","2021 & 2022","2021 & 2022","2022/23","2022/23 (Mar-Feb)","2022/23",
               "2022/23","2022/23","2022/23","2022/23"),
 definition=c("Provided directly by OHID (formerly indicator 92847 in FingertipsR)","","Indicator 91280 extracted from FingertipsR","Indicator 93088 extracted from FingertipsR","Indicator 241 extracted from FingertipsR","Indicator 848 extracted from FingertipsR","Indicator 91262 extracted from FingertipsR","Formerly indicator 92589 extracted from FingertipsR","https://www.cvdprevent.nhs.uk/home","https://www.cvdprevent.nhs.uk/home",
               "Indicator 90619 extracted from FingertipsR","Indicator 90619 extracted from FingertipsR","Indicator 273 extracted from FingertipsR","OPCS Code: U102 - Cardiac computed tomography angiography. Elective only","OPCS: U19 & U34. Elective only","Indicator 90999 extracted from FingertipsR","Indicator 90999 extracted from FingertipsR","https://www.england.nhs.uk/primary-care/primary-care-networks/network-contract-des/iif/","https://www.england.nhs.uk/primary-care/primary-care-networks/network-contract-des/iif/","TFC = 320",
@@ -662,7 +662,7 @@ SUS data was extracted using Transact-SQL and using relevant OPCS, ICD10, HRG, a
 
 ### Cardiac rehabilitation
 
-This data was supplied by NACR. The data wasn’t available by GP Practice, so an alternative method was followed. Practices were allocated to a cluster and data was then supplied aggregated into clusters. In some cases, the data had to be redacted due to small numbers in the category. For the purposes of this analysis the redacted data item was reassigned an average value. The true definition of eligible for rehabilitation is the HES admission and successful discharge of all patients with CVD e.g., MI, revascularization, or HF. However, to link with the NACR only those records entered into the database can be used so NACR use pseudo eligible as this is as close as the audit can get, at a granular level, to eligible. It is though affected by areas without entry to the database, The data used relates to the 2023 calendar year, which is the most recent complete year, and following changes in the way rehabilitation has been delivered due to the Covid pandemic, most closely reflects the rehabilitation model now in place.
+This data was supplied by NACR. The data wasn’t available by GP Practice, so an alternative method was followed. Practices were allocated to a cluster and data was then supplied aggregated into clusters. In some cases, the data had to be redacted due to small numbers in the category. For the purposes of this analysis the redacted data item was reassigned an average value. The data used relates to the 2021 & 2022 calendar years, which are the most recent complete years, and following changes in the way rehabilitation has been delivered due to the Covid pandemic, most closely reflects the rehabilitation model now in place.
 
 ### Readmission within 30 days
 
