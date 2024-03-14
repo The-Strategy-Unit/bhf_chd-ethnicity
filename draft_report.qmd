@@ -454,6 +454,8 @@ A previous Strategy Unit report "Strategies to reduce inequalities in access to 
 
 [^4]: <https://www.midlandsdecisionsupport.nhs.uk/knowledge-library/strategies-to-reduce-inequalities-in-access-to-planned-hospital-procedures/>
 
+*Table 2 - achieving equity via zero-sum redistribution*
+
 |  Cluster  | Number of vaccinations | CHD synthetic prevalence | Rate (No. of vaccinations / CHD synthetic prevalence) | Global rate | Change in number of vaccinations to match global rate |
 |:----------:|-----------:|-----------:|:----------:|:----------:|:----------:|
 |           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                     *(r-gr) x d*                      |
@@ -531,7 +533,7 @@ region_cluster_charts[4]
 ::: callout-tip
 ## Key Findings
 
--   Looking at a regional level, the greatest disparity is in CT angiography in the South West, Midland, and the North West.
+-   Looking at a regional level, the greatest disparity is in CT angiography in the South West, Midlands, and the North West.
 :::
 
 ::: panel-tabset
@@ -591,7 +593,62 @@ To be added as part of finalisation of the report.
 
 The table below sets out the sources of the various metrics as well as the time-period to which they relate, and details of the selection criteria used.
 
-...
+```{r}
+library(gt)
+metrics_table <- tibble(metric_domain = c("Need","Risk factors","Risk factor identification","Risk factor identification","Risk factor identification","Risk factor identification","Risk factor identification","Risk factor identification","Primary prevention","Primary prevention","Primary prevention","Primary prevention","Disease identification","Disease identification","Disease identification","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Secondary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Tertiary prevention","Intermediate outcome","Intermediate outcome","Intermediate outcome","Full outcomes","Full outcomes","Full outcomes","Full outcomes"),
+  name_metric=c("CHD synthetic prevalence estimates",
+                                      "Smoking synthetic prevalence estimates",
+                                      "Smoking register",
+                                      "Obesity register",
+                                      "Diabetes register",
+                                      "Depression register",
+                                      "The percentage of patients aged 45 or over who have a record of blood pressure in the preceding 5 years",
+                                      "CVD risk register",
+                                      "Percentage of patients aged 18 and over with GP recorded CVD (narrow definition), who are currently treated with lipid lowering therapy",
+                                      "Percentage of patients aged 18 and over, with no GP recorded CVD and a GP recorded QRISK score of 10% or more, CKD (G3a to G5), T1 diabetes (aged 40 and over) or T2 diabetes aged 60 and over, who are currently treated with lipid lowering therapy",
+                                      "Smoking cessation support offered",
+                                      "Exception reporting for Smoking cessation support offered",
+                                      "CHD register",
+                                      "CT angiography",
+                                      "Electrocardiography",
+                                      "Aspirin, anti-platelet or anti-coagulent",
+                                      "Exception reporting for Aspirin, anti-platelet or anti-coagulent",
+                                      "Percentage of patients aged 65 or over
+who received a seasonal influenza vaccination
+between 1 September 2022 and 31 March 2023",
+                                      " Percentage of patients aged 18 to 64
+years and in a clinical at-risk group who received
+a seasonal influenza vaccination between 1
+September 2022 and 31 March 2023",
+"Referral to cardiology (First outpatient)",
+                                      "Cardiology outpatient DNAs",
+"Elective PCI","Elective CABG","Waiting time for elective PCI / CABG","Elective PCI / CABG patients discharged before trimpoint",
+"Cardiac rehabilitation - Started", "Cardiac rehabilitation - Completed","BP reading < 140/90","Readmission within 30 days of elective PCI / CABG","Emergency admissions for CHD","Deaths in hospital from CHD","Deaths in hospital from CHD <75","Deaths from CHD","Deaths from CHD <75"
+                                      ),
+data_source=c("PHE","GP Survey","NHSD QOF","NHSD QOF","NHSD QOF","NHSD QOF","NHSD QOF","NHSD QOF","CVD Prevent","CVD Prevent",
+              "NHSD QOF","NHSD QOF","NHSD QOF","SUS","SUS","NHSD QOF","NHSD QOF","IIF","IIF","SUS",
+              "SUS","SUS","SUS","SUS","SUS","NACR","NACR","NHSD QOF","SUS","SUS",
+              "SUS","SUS","ONS Death records","ONS Death records"),
+year=c("2015","2023","2022/23","2022/23","2022/23","2022/23","2022/23","2019/20","2022/23","2022/23",
+              "2022/23","2022/23","2022/23","2022/23","2022/23","2022/23","2022/23","March 2023","March 2023","2022/23",
+              "2022/23","2022/23","2022/23","2022/23","2022/23","2023","2023","2022/23","2022/23 (Mar-Feb)","2022/23",
+              "2022/23","2022/23","2022/23","2022/23"),
+definition=c("Provided directly by OHID (formerly indicator 92847 in FingertipsR)","","Indicator 91280 extracted from FingertipsR","Indicator 93088 extracted from FingertipsR","Indicator 241 extracted from FingertipsR","Indicator 848 extracted from FingertipsR","Indicator 91262 extracted from FingertipsR","Formerly indicator 92589 extracted from FingertipsR","https://www.cvdprevent.nhs.uk/home","https://www.cvdprevent.nhs.uk/home",
+              "Indicator 90619 extracted from FingertipsR","Indicator 90619 extracted from FingertipsR","Indicator 273 extracted from FingertipsR","OPCS Code: U102 - Cardiac computed tomography angiography. Elective only","OPCS: U19 & U34. Elective only","Indicator 90999 extracted from FingertipsR","Indicator 90999 extracted from FingertipsR","https://www.england.nhs.uk/primary-care/primary-care-networks/network-contract-des/iif/","https://www.england.nhs.uk/primary-care/primary-care-networks/network-contract-des/iif/","TFC = 320",
+              "TFC = 320","OPCS Code: K49, K50, K75. FCE = 1","OPCS Code: K40-K46, FCE = 1","Elective admissions. OPCS Codes as per metrics 20 and 21","Main PCI and CABG Trim points for 2022/23 linked for HRG","Data supplied by ICB. Aggregated ACS and HF patients","Data supplied by ICB. Aggregated ACS and HF patients","CHD008","No. of emerg. spells up to 31/03/2023 within 0-29 days (inclusive) of the last, previous discharge from hospital / No. of finished spells with discharge date between 01/03/2022 and 28/02/2023 Exclude: TFC = 501, 560, 610, OPCS starting with O, Classpat = 1 (Ord.), Any diagnosis = C00*-C97*, D37*-D48*","PRIMARY diagnosis = I20 or I21 or I22 or I23 or I24 or I25",
+              "Following any admission Elective or Emergency. PRIMARY diagnosis = I20 or I21 or I22 or I23 or I24 or I25","Following any admission Elective or Emergency. PRIMARY diagnosis = I20 or I21 or I22 or I23 or I24 or I25. Age <=75","Underlying Cause of Death = I20 or I21 or I22 or I23 or I24 or I25","Underlying Cause of Death = I20 or I21 or I22 or I23 or I24 or I25. Age <=75")
+                        )
+
+metrics_table |>
+    gt()|>
+    tab_header(
+    title = md("**Table 3** - *Metric definitions and data sources*"))|>
+    cols_label(name_metric=md("**Metric**"),
+             metric_domain=md("**Domain**"),
+             data_source=md("**Data Source**"),
+             year=md("**Year**"),
+             definition=md("**Definition and selection criteria/codes**"))
+```
 
 ## Methods explained
 
@@ -682,7 +739,7 @@ final_data_full_cats_percent_5_clusters |>
   ungroup() |>
   select(cluster,n)|>
   gt()|>
-    tab_header(title = md("**Table 3** - *Number of practices per cluster*"))|>
+    tab_header(title = md("**Table 4** - *Number of practices per cluster*"))|>
     cols_label(cluster=md("**Cluster**"),
              n=md("**Number of practices**"))
 ```
