@@ -16,7 +16,7 @@ compute_iod <- function(one_metric_data) {
            diff = rate-global_rate,
            abs_diff=abs(diff*denominator))
   iod_abs <- sum(data$abs_diff)/2
-  iod_rel <- sum(data$abs_diff)/(2*sum(data$numerator))
+  iod_rel <- sum(data$abs_diff)/(2*                                                                         sum(data$numerator))
   return(iod_rel)
 }
 
@@ -109,4 +109,5 @@ get_ci_iod_together <- function(rates_per_cluster,met_name,metric_data){
     pivot_wider(values_from="value",
                 names_from=item_name)
   return(iod_with_ci)
+  
 }
