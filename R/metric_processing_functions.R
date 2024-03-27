@@ -79,7 +79,7 @@ metric23_below_trimpoint <- function(metric23,metric23trimpoints){
 # }
 
 add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final_data_full_cats_percent_5_clusters,
-                            gp_16andover_pop,gp_list_45over,
+                            gp_16andover_pop,gp_list_45over,gp_list_allage,
                             metric1_updated,metric2,metric5,metric6,metric7,metric8,metric9,metric11,metric12,metric13,metric13b,
                             metric14,metric15,metric16,metric16b,
                             #metric17,
@@ -94,8 +94,9 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
     left_join(final_data_full_cats_percent_5_clusters|>select(gp_practice_code,cluster2=cluster)) |>
     left_join(gp_16andover_pop|>select(gp_practice_code=practice_code,list_size=number_of_patients16andover)) |>
     left_join(gp_list_45over|>select(gp_practice_code=practice_code,list_size_45=number_45over)) |>
+    left_join(gp_list_allage|>select(gp_practice_code=practice_code,list_size_all_age=number_of_patients)) |>
     left_join(metric1_updated)|>
-    mutate(metric1=(metric1/100)*list_size) |>
+    mutate(metric1=(metric1/100)*list_size_all_age) |> #CHANGED HERE FROM gp_16andover_pop$list_size DUE TO PREV BEING % OF ALL AGES
     left_join(metric2)|>
     
     #3 - deleted
@@ -159,6 +160,7 @@ process_metrics <-function(clustered_gp_and_metrics){
     filter(metric1 != "NA") |> # removes 26 practices (need to check details of these....)
     mutate(list_size_total = replace_na(list_size, 0)) |>
     mutate(list_size_45_total = replace_na(list_size_45, 0)) |>
+    mutate(list_size_all_age_total = replace_na(list_size_all_age,0))|>
     mutate(metric1_total = replace_na(metric1, 0)) |>
     mutate(metric2_num_total = replace_na(metric2_num, 0)) |> 
     mutate(metric2_denom_total = replace_na(metric2_denom, 0)) |>
@@ -217,6 +219,7 @@ process_metrics <-function(clustered_gp_and_metrics){
     
     summarise(list_size_total = sum(list_size_total) ,
               list_size_45_total = sum(list_size_45_total),
+              list_size_all_age_total = sum(list_size_all_age),
               metric2_num_total = sum(metric2_num_total) , 
               metric2_denom_total = sum(metric2_denom_total) , 
               metric5_num_total = sum(metric5_num_total) , 
