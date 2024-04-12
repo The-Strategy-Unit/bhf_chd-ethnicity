@@ -1,8 +1,12 @@
+library(targets)
+library(janitor)
+
 clustered_gp_and_metrics <- tar_read(clustered_gp_and_metrics)|>as_tibble()
 activity_by_type_clusters_stg6 <- tar_read(activity_by_type_clusters_stg6)|>as_tibble()
 gp_reg_pat_prac_sing_age_female<- tar_read(gp_reg_pat_prac_sing_age_female)|>as_tibble()
 gp_reg_pat_prac_sing_age_male<- tar_read(gp_reg_pat_prac_sing_age_male)|>as_tibble()
 gp_reg_pat_prac_lsoa <- tar_read(gp_reg_pat_prac_lsoa)|>as_tibble()
+clusters_for_nacr <-  tar_read(clusters_for_nacr)|>as_tibble()
 
 need <- activity_by_type_clusters_stg6|>select(cluster2,metric1_total)|>rename(chdprev_need=metric1_total)
 
@@ -88,3 +92,203 @@ death_data <- clustered_gp_and_metrics |>
   select(-white,-asian,-black,-mixed,-other)|>
   left_join(need)|>
   mutate(chd_prev_perc=chdprev_need/list_size)
+
+
+age_sex_gp_reg_pat <-gp_reg_pat_prac_sing_age_female|>
+  rbind(gp_reg_pat_prac_sing_age_male)
+
+
+all_cause_deaths_2223 <- read_csv_file("data/all_cause_deaths_2223.csv")
+
+all_cause_deaths_2223 |>
+  group_by(gpnull)|>
+  summarise(deaths=sum(num_deaths))
+
+all_cause_deaths_2223 |>
+  filter(age_at_death!="NA")|>
+  group_by(gpnull)|>
+  summarise(deaths=sum(num_deaths))
+
+all_cause_deaths_2223_data <- all_cause_deaths_2223|>
+  filter(age_at_death!="NA")|>
+  #filter(chd==1)|>
+  mutate(age_group=case_when(age_at_death<1~'<1',
+                   age_at_death>=1 & age_at_death <5 ~'1-4',
+                   age_at_death>=5 & age_at_death <10 ~'5-9',
+                   age_at_death>=10 & age_at_death <15 ~'10-14',
+                   age_at_death>=15 & age_at_death <20 ~'15-19',
+                   age_at_death>=20 & age_at_death <25 ~'20-24',
+                   age_at_death>=25 & age_at_death <30 ~'25-29',
+                   age_at_death>=30 & age_at_death <35 ~'30-34',
+                   age_at_death>=35 & age_at_death <40 ~'35-39',
+                   age_at_death>=40 & age_at_death <45 ~'40-44',
+                   age_at_death>=45 & age_at_death <50 ~'45-49',
+                   age_at_death>=50 & age_at_death <55 ~'50-54',
+                   age_at_death>=55 & age_at_death <60 ~'55-59',
+                   age_at_death>=60 & age_at_death <65 ~'60-64',
+                   age_at_death>=65 & age_at_death <70 ~'65-69',
+                   age_at_death>=70 & age_at_death <75 ~'70-74',
+                   age_at_death>=75 & age_at_death <80 ~'75-79',
+                   age_at_death>=80 & age_at_death <85 ~'80-84',
+                   age_at_death>=85 & age_at_death <90 ~'85-89',
+                   age_at_death>=90  ~'90+'
+                   
+  ))|>
+  select(-age_at_death)|>
+  group_by(sex,age_group)|>
+  summarise(deaths=sum(num_deaths))
+
+all_cause_deaths_2223_gp_prac <- all_cause_deaths_2223|>
+  filter(age_at_death!="NA")|>
+  filter(gp_practice_code!="NULL")|>
+  filter(chd==1)|>
+  mutate(age_group=case_when(age_at_death<1~'<1',
+                             age_at_death>=1 & age_at_death <5 ~'1-4',
+                             age_at_death>=5 & age_at_death <10 ~'5-9',
+                             age_at_death>=10 & age_at_death <15 ~'10-14',
+                             age_at_death>=15 & age_at_death <20 ~'15-19',
+                             age_at_death>=20 & age_at_death <25 ~'20-24',
+                             age_at_death>=25 & age_at_death <30 ~'25-29',
+                             age_at_death>=30 & age_at_death <35 ~'30-34',
+                             age_at_death>=35 & age_at_death <40 ~'35-39',
+                             age_at_death>=40 & age_at_death <45 ~'40-44',
+                             age_at_death>=45 & age_at_death <50 ~'45-49',
+                             age_at_death>=50 & age_at_death <55 ~'50-54',
+                             age_at_death>=55 & age_at_death <60 ~'55-59',
+                             age_at_death>=60 & age_at_death <65 ~'60-64',
+                             age_at_death>=65 & age_at_death <70 ~'65-69',
+                             age_at_death>=70 & age_at_death <75 ~'70-74',
+                             age_at_death>=75 & age_at_death <80 ~'75-79',
+                             age_at_death>=80 & age_at_death <85 ~'80-84',
+                             age_at_death>=85 & age_at_death <90 ~'85-89',
+                             age_at_death>=90  ~'90+'
+                             
+  ))|>
+  select(-age_at_death)|>
+  group_by(sex,age_group,gp_practice_code)|>
+  summarise(deaths=sum(num_deaths),
+            chddeaths=sum(chd))|>
+  ungroup()|>
+  left_join(clusters_for_nacr|>select(gp_practice_code,cluster))|>
+  filter(is.na(cluster)==FALSE)|>
+  group_by(sex,age_group,cluster)|>
+  summarise(deaths=sum(deaths))
+
+all_cause_deaths_2223|>filter(gp_practice_code!="NULL")|>
+  group_by(gp_practice_code)|>summarise(deaths=sum(deaths))
+
+#Cluster population data from gp lists
+
+females_gp_reg_pat <- gp_reg_pat_prac_sing_age_female |>
+  filter(age != "ALL") |>
+  mutate(age=as.numeric(case_when(age=="95+" ~ 95,
+                                         .default = as.numeric(age))))|>
+  mutate(age_group=case_when(age<1~'<1',
+                             age>=1 & age <5 ~'1-4',
+                             age>=5 & age <10 ~'5-9',
+                             age>=10 & age <15 ~'10-14',
+                             age>=15 & age <20 ~'15-19',
+                             age>=20 & age <25 ~'20-24',
+                             age>=25 & age <30 ~'25-29',
+                             age>=30 & age <35 ~'30-34',
+                             age>=35 & age <40 ~'35-39',
+                             age>=40 & age <45 ~'40-44',
+                             age>=45 & age <50 ~'45-49',
+                             age>=50 & age <55 ~'50-54',
+                             age>=55 & age <60 ~'55-59',
+                             age>=60 & age <65 ~'60-64',
+                             age>=65 & age <70 ~'65-69',
+                             age>=70 & age <75 ~'70-74',
+                             age>=75 & age <80 ~'75-79',
+                             age>=80 & age <85 ~'80-84',
+                             age>=85 & age <90 ~'85-89',
+                             age>=90  ~'90+'
+  ))|>
+  select(-age)|>
+  mutate(sex=2)
+
+males_gp_reg_pat <- gp_reg_pat_prac_sing_age_male |>
+  filter(age != "ALL") |>
+  mutate(age=as.numeric(case_when(age=="95+" ~ 95,
+                                  .default = as.numeric(age))))|>
+  mutate(age_group=case_when(age<1~'<1',
+                             age>=1 & age <5 ~'1-4',
+                             age>=5 & age <10 ~'5-9',
+                             age>=10 & age <15 ~'10-14',
+                             age>=15 & age <20 ~'15-19',
+                             age>=20 & age <25 ~'20-24',
+                             age>=25 & age <30 ~'25-29',
+                             age>=30 & age <35 ~'30-34',
+                             age>=35 & age <40 ~'35-39',
+                             age>=40 & age <45 ~'40-44',
+                             age>=45 & age <50 ~'45-49',
+                             age>=50 & age <55 ~'50-54',
+                             age>=55 & age <60 ~'55-59',
+                             age>=60 & age <65 ~'60-64',
+                             age>=65 & age <70 ~'65-69',
+                             age>=70 & age <75 ~'70-74',
+                             age>=75 & age <80 ~'75-79',
+                             age>=80 & age <85 ~'80-84',
+                             age>=85 & age <90 ~'85-89',
+                             age>=90  ~'90+'
+  ))|>
+  select(-age)|>
+  mutate(sex=1)
+
+all_gp_reg_pat <- males_gp_reg_pat|>
+  rbind(females_gp_reg_pat)|>
+  rename(gp_practice_code=org_code)|>
+group_by(sex,age_group,gp_practice_code)|>
+  summarise(number_of_patients=sum(number_of_patients))|>
+  ungroup()|>
+  left_join(clusters_for_nacr|>select(gp_practice_code,cluster))|>
+  group_by(sex,age_group,cluster)|>
+  summarise(number_of_patients=sum(number_of_patients))
+
+
+#Describe the clusters
+
+
+females_gp_reg_pat <- gp_reg_pat_prac_sing_age_female |>
+  filter(age != "ALL") |>
+  mutate(age=as.numeric(case_when(age=="95+" ~ 95,
+                                  .default = as.numeric(age))))|>
+  mutate(age_group=case_when(age<18~'<18',
+                             age>=18 & age <45 ~'18-44',
+                             age>=45 & age <65 ~'45-64',
+                             age>=65 & age <75 ~'65-74',
+                             age>=75  ~'75+'
+  ))|>
+  select(-age)|>
+  mutate(sex=2)
+
+males_gp_reg_pat <- gp_reg_pat_prac_sing_age_male |>
+  filter(age != "ALL") |>
+  mutate(age=as.numeric(case_when(age=="95+" ~ 95,
+                                  .default = as.numeric(age))))|>
+  mutate(age_group=case_when(age<18~'<18',
+                             age>=18 & age <45 ~'18-44',
+                             age>=45 & age <65 ~'45-64',
+                             age>=65 & age <75 ~'65-74',
+                             age>=75  ~'75+'
+  ))|>
+  select(-age)|>
+  mutate(sex=1)
+
+all_gp_reg_pat <- males_gp_reg_pat|>
+  rbind(females_gp_reg_pat)|>
+  rename(gp_practice_code=org_code)|>
+  group_by(sex,age_group,gp_practice_code)|>
+  summarise(number_of_patients=sum(number_of_patients))|>
+  ungroup()|>
+  left_join(clusters_for_nacr|>select(gp_practice_code,cluster))|>
+  group_by(sex,age_group,cluster)|>
+  summarise(number_of_patients=sum(number_of_patients))|>
+  ungroup()|>
+  mutate(sex_name=case_when(sex==1~'Male',
+         sex==2~'Female'))|>
+select(-sex)|>
+  group_by(cluster)|>
+  mutate(patients_total_cluster=sum(number_of_patients))|>
+  mutate(perc=number_of_patients/patients_total_cluster)
+
