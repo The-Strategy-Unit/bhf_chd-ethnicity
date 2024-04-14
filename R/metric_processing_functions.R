@@ -94,7 +94,7 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
     left_join(final_data_full_cats_percent_5_clusters|>select(gp_practice_code,cluster2=cluster)) |>
     left_join(gp_16andover_pop|>select(gp_practice_code=practice_code,list_size=number_of_patients16andover)) |>
     left_join(gp_list_45over|>select(gp_practice_code=practice_code,list_size_45=number_45over)) |>
-    left_join(gp_list_allage|>select(gp_practice_code=practice_code,list_size_all_age=number_of_patients)) |>
+    left_join(gp_list_all_age|>select(gp_practice_code=practice_code,list_size_all_age=number_of_patients)) |>
     left_join(metric1_updated)|>
     mutate(metric1=(metric1/100)*list_size_all_age) |> #CHANGED HERE FROM gp_16andover_pop$list_size DUE TO PREV BEING % OF ALL AGES
     left_join(metric2)|>

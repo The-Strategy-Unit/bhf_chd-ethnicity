@@ -123,7 +123,7 @@ return(gp_16andover_pop)
 }
 
 get_allage_list <- function(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)
-{gp_list_allage <- gp_reg_pat_prac_sing_age_male |>
+{gp_list_all_age <- gp_reg_pat_prac_sing_age_male |>
   rbind(gp_reg_pat_prac_sing_age_female)|>
   filter(age == "ALL") |>
   group_by(org_code) |>
@@ -132,7 +132,7 @@ get_allage_list <- function(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_a
   select(org_code,number_of_patients)|>
   rename(practice_code=org_code)
 
-return(gp_list_allage)
+return(gp_list_all_age)
 }
 
 

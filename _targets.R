@@ -91,6 +91,7 @@ list(
   tar_target(gp_over45_perc,get_over45_perc(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)),
   tar_target(gp_list_45over,get_45over_list(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)),
   tar_target(gp_16andover_pop,get_gp_16andover_pop(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)),
+  tar_target(gp_list_all_age,get_allage_list(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)),
  
   tar_target(data_path15, "data/LSOA_(2011)_to_LSOA_(2021)_to_Local_Authority_District_(2022)_Lookup_for_England_and_Wales.csv", format = "file"), #lookup
   tar_target(lsoa_lookup,read_csv_file(data_path15)),
@@ -288,7 +289,7 @@ tar_target(metric40, ncdes_data|>
 tar_target(clustered_gp_and_metrics,
            add_all_metrics(final_data_full_cats_percent_over45_5_clusters,
                            final_data_full_cats_percent_5_clusters,
-                           gp_16andover_pop,gp_list_45over,
+                           gp_16andover_pop,gp_list_45over,gp_list_all_age,
                            metric1_updated,metric2,metric5,metric6,metric7,metric8,metric9,metric11,
                            metric12,metric13,metric13b,metric14,metric15,metric16,
                            metric16b,
