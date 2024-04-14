@@ -8,7 +8,7 @@ library(targets)
 # Set target options:
 tar_option_set(
   packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","forcats",
-               "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder","patchwork",
+               "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder",
                "cluster","factoextra","purrr","broom","glue","RColorBrewer","leaflet","treemapify"), # packages that your targets need to run
   format = "rds"
 
@@ -19,7 +19,7 @@ tar_option_set(
 # tar_make_clustermq() is an older (pre-{crew}) way to do distributed computing
 # in {targets}, and its configuration for your machine is below.
 options(clustermq.scheduler = "multiprocess")
-options(scipen=999)
+
 
 
 # Run the R scripts in the R/ folder with your custom functions:

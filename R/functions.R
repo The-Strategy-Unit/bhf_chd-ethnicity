@@ -122,6 +122,19 @@ return(gp_16andover_pop)
 
 }
 
+get_allage_list <- function(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_age_female)
+{gp_list_allage <- gp_reg_pat_prac_sing_age_male |>
+  rbind(gp_reg_pat_prac_sing_age_female)|>
+  filter(age == "ALL") |>
+  group_by(org_code) |>
+  summarise(number_of_patients=sum(number_of_patients)) |>
+  ungroup() |>
+  select(org_code,number_of_patients)|>
+  rename(practice_code=org_code)
+
+return(gp_list_allage)
+}
+
 
 join_over45_to_gp_lsoa_with_eth_sum <- function(gp_lsoa_with_eth_sum,gp_over45_perc){
   gp_lsoa_with_eth_sum_over45perc <- gp_lsoa_with_eth_sum |>
