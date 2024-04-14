@@ -7,7 +7,7 @@ activity_by_type_clusters_stg5|stem|330fa33eb8d76ace|0c47f497a31d7f92|706790e673
 activity_by_type_clusters_stg6|stem|b48c5194b8caa26e|e8927589cdcf4b87|43aed919aadeeca0|-81521103||t19795.4078978699s|6878d2f56876505a|12098|rds|local|vector|||0.01||
 activity_long|object|6d996349ed808a4a|||||||||||||||
 activity_type_decile|object|c4f420f33fb96dec|||||||||||||||
-add_all_metrics|function|42b6cd64d65e9731|||||||||||||||
+add_all_metrics|function|a7270333dd307a76|||||||||||||||
 by_list_regex|object|b81599c6154011e2|||||||||||||||
 by_list_total|object|7ed9b03a918f8618|||||||||||||||
 calc_abs_iod|function|66f63b28eb854b0f|||||||||||||||
@@ -37,7 +37,7 @@ cluster2_treemap_3|stem|284edec5a18afdc8|ab1714034e8d61c8|87fc17ea677e8d50|67910
 cluster2_treemap_4|stem|7f82f6a9e4679bf4|b63587597886450a|3a310587875836f7|-707960962||t19776.3426601008s|22c2af0987741560|115989|rds|local|vector|||0.02||
 cluster2_treemap_5|stem|8d9ea0701f7fa94c|6dda158d89b570ac|5ae4a2f6d2045b67|1503029010||t19776.3426609609s|8f1ef08d32ade915|115991|rds|local|vector|||0.02||
 cluster2_treemap_data|stem|0f7ad0e4eaf22937|e5dad07707d81342|fda3d09ec58c3b5a|-1628886548||t19795.4077465847s|dbed3970883e696d|668|rds|local|vector|||0.07||
-clustered_gp_and_metrics|stem|d7441354f89a62ad|f08be093a224b902|30ab141f69a99824|-1308542845||t19795.4077433769s|02bc2237d7097a84|1637635|rds|local|vector|||1.11||
+clustered_gp_and_metrics|stem|d7441354f89a62ad|f08be093a224b902|c8e14046f074ebe9|-1308542845||t19795.4077433769s||1637635|rds|local|vector|||0.12||object gp_list_allage not found
 clusters_for_nacr|stem|bde45681a5ec31e9|ac14b0cfd2cd3332|c669307d935ad49e|-1099703976||t19795.4077564265s|80eff149aeda8a6e|79857|rds|local|vector|||0.37||
 combine_metrics17_and_32|function|ff02ca12c7130f2b|||||||||||||||
 compute_iod|function|333bdd2d59c349f4|||||||||||||||
@@ -84,14 +84,15 @@ full_cats_percents|stem|74cd7d52b6d45de6|197837822c7e83c8|0d1c12a1bc6d3654|-1139
 full_cats_percents_over45|stem|5c70be79861d362d|96a1c76dab8166bc|a708397a40fc3b14|-1904529831||t19751.9639764597s|c0cd703751d83a4a|756022|rds|local|vector|||0.06||
 full_cats_percents_region|stem|e679c9f7a703cf86|62d9450df912286a|e6d9c215839a52f6|-467528888||t19759.5123871966s|cdd9af73ce8efa83|150821|rds|local|vector|||0.25||
 get_45over_list|function|0d83447c6bb85505|||||||||||||||
+get_allage_list|function|6ea427c45ac3ce1a|||||||||||||||
 get_ci_iod_chart|function|ccd5edd49c623cb2|||||||||||||||
 get_ci_iod_together|function|b93332871b925f75|||||||||||||||
 get_cluster_map|function|697e5b376ca88835|||||||||||||||
 get_cluster_plot|function|800c803ff5b1d507|||||||||||||||
 get_cluster1_chart|function|09dfb88af1b2e6b7|||||||||||||||
 get_cluster1_map|function|1002aa50204d05fa|||||||||||||||
-get_cluster2_14_eth_chart|function|7c21513e39586240|||||||||||||||
-get_cluster2_chart|function|81739bd0e2e1f948|||||||||||||||
+get_cluster2_14_eth_chart|function|0db0587ef443f236|||||||||||||||
+get_cluster2_chart|function|53b6a802139c155a|||||||||||||||
 get_cluster2_map|function|46803f7d2b130a36|||||||||||||||
 get_cluster2_treemap_1|function|447b27755decc539|||||||||||||||
 get_cluster2_treemap_2|function|508b39ce07c792ae|||||||||||||||
@@ -118,8 +119,8 @@ get_my_fingertips_gp_data_count|function|4dee013fab430f3f|||||||||||||||
 get_one_metric|function|c41e67e642290829|||||||||||||||
 get_over45_perc|function|eac7e0de845aeffa|||||||||||||||
 get_pams|function|a81dc3b5eaea487f|||||||||||||||
-get_rate_chart|function|e7133adeb673c622|||||||||||||||
-get_rate_chart_data|function|dfbfbc7a56c33ef3|||||||||||||||
+get_rate_chart|function|c099fbbb97c8db28|||||||||||||||
+get_rate_chart_data|function|652a98cd20fe9c0b|||||||||||||||
 get_rates_per_cluster|function|1134af60b4b55adf|||||||||||||||
 get_region_cluster_chart|function|5ab40d8436436d0c|||||||||||||||
 get_region_cluster_chart_data|function|7403aa100c9a975c|||||||||||||||
@@ -307,7 +308,7 @@ pams_full_cats_percents_region|stem|a3579b9325c690bf|410022bb52750c9e|571d820bfc
 pred_df|object|11c6e02b16e28fe5|||||||||||||||
 process_census21data|function|03e15213a3a00e1c|||||||||||||||
 process_gpdata|function|06e3f8cced409ee3|||||||||||||||
-process_metrics|function|a802a0b90ff31ac1|||||||||||||||
+process_metrics|function|b6c6adb36ae100e2|||||||||||||||
 process_metrics_2|function|031a539e5f0b0655|||||||||||||||
 process_metrics_part_2|function|b8e4a5e5c4027aa4|||||||||||||||
 qof_chd_2223|stem|db7b5f85a8196d56|2c4657fb00bd3abb|f76a319003658608|1100172128||t19773.7111823146s|2971af7d0f0d5d82|252047|rds|local|vector|||0.4|Expecting numeric in I1186  R1186C9 got . Expecting numeric in X1186  R1186C24 got . Expecting numeric in AB1186  R1186C28 got . Expecting numeric in H1465  R1465C8 got . Expecting numeric in I1465  R1465C9 got . Expecting numeric in J1465  R1465C10 got . Expecting numeric in P1465  R1465C16 got . Expecting numeric in X1465  R1465C24 got . Expecting numeric in AB1465  R1465C28 got . Expecting numeric in AP2518  R2518C42 got . Expecting numeric in AR2518  R2518C44 got . Expecting numeric in AT2518  R2518C46 got . Expecting numeric in H2690  R2690C8 got . Expecting numeric in I2690  R2690C9 got . Expecting numeric in J2690  R2690C10 got . Expecting numeric in P2690  R2690C16 got . Expecting numeric in Q2690  R2690C17 got . Expecting numeric in R2690  R2690C18 got . Expecting numeric in V2690  R2690C22 got . Expecting numeric in W2690  R2690C23 got . Expecting numeric in X2690  R2690C24 got . Expecting numeric in AB2690  R2690C28 got . Expecting numeric in AA3064  R3064C27 got . Expecting numeric in AB3064  R3064C28 got . Expecting numeric in AH3064  R3064C34 got . Expecting numeric in AJ3064  R3064C36 got . Expecting numeric in AL3064  R3064C38 got . Expecting numeric in AP3064  R3064C42 got . Expecting numeric in AR3064  R3064C44 got . Expecting numeric in AT3064  R3064C46 got . Expecting numeric in H3378  R3378C8 got . Expecting numeric in I3378  R3378C9 got . Expecting numeric in J3378  R3378C10 got . Expecting numeric in P3378  R3378C16 got . Expecting numeric in Q3378  R3378C17 got . Expecting numeric in R3378  R3378C18 got . Expecting numeric in V3378  R3378C22 got . Expecting numeric in W3378  R3378C23 got . Expecting numeric in X3378  R3378C24 got . Expecting numeric in AA3378  R3378C27 got . Expecting numeric in AB3378  R3378C28 got . Expecting numeric in AH3378  R3378C34 got . Expecting numeric in A|
