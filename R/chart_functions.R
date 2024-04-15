@@ -279,8 +279,8 @@ get_rate_chart_data <- function(activity_by_type_clusters_stg6){
                              metric=="metric23_lower_ci"~"Tertiary prevention",
                            metric=="metric25_upper_ci"|metric=="metric26_upper_ci"|metric=="metric27_upper_ci"|
                              metric=="metric25_lower_ci"|metric=="metric26_lower_ci"|metric=="metric27_lower_ci"~"Intermediate outcome",
-                           metric=="metric28_upper_ci"|metric=="metric28b_upper_ci"|metric=="metric29_upper_ci"|
-                             metric=="metric29b_upper_ci"|metric=="metric28_lower_ci"|metric=="metric28b_lower_ci"|metric=="metric29_lower_ci"|
+                           metric=="metric28_upper_ci"|metric=="metric28b_upper_ci"|metric=="metric29_upper_ci"| metric=="metric29b_upper_ci"|
+                             metric=="metric28_lower_ci"|metric=="metric28b_lower_ci"|metric=="metric29_lower_ci"|
                              metric=="metric29b_lower_ci"~"Full outcomes",
                            .default="other"))|>
   mutate(metric_name=case_when(metric=="metric2_rate"|metric=="metric2_lower_ci"|metric=="metric2_upper_ci"~"Smoking prev est",
@@ -367,7 +367,7 @@ rate_chart <- rate_chart_data|>
   geom_bar(stat = "identity") +
   geom_errorbar( aes(x=as.factor(cluster2), ymin=lower_ci, ymax=upper_ci), width=0.4, colour="grey", alpha=0.9, size=0.5) +
   scale_fill_manual(values = palette)+
-  #scale_y_continuous(comma(rate,digits=4,format="g"))+#added this line
+  scale_y_continuous(comma(rate,digits=4,format="g"))+#added this line
   theme_light() +
   theme(legend.position="none")+
   xlab("Cluster (1=Least diverse, 5=Most diverse)") +
