@@ -56,6 +56,10 @@ list(
   tar_target(data_path8, "data/metric23.csv", format = "file"), # SUS data metric 23
   tar_target(metric23,read_csv_file(data_path8)),
   
+  tar_target(data_path35, "data/nacr_data.csv", format = "file"), #nacr data metric 24
+  tar_target(metric24,read_csv_file(data_path35)),
+  tar_target(metric24_processed,metric24_process(metric24)),
+  
   tar_target(data_path34, "data/metric26.csv", format = "file"), # SUS data metric 26
   tar_target(metric26,read_csv_file(data_path34)|> 
                rename(metric26=num)),
@@ -416,7 +420,7 @@ tar_target(metric20_rates_per_cluster,get_rates_per_cluster(metric20_data)),
 tar_target(metric21_rates_per_cluster,get_rates_per_cluster(metric21_data)),
 tar_target(metric22_rates_per_cluster,get_rates_per_cluster(metric22_data)),
 tar_target(metric23_rates_per_cluster,get_rates_per_cluster(metric23_data)),
-#24
+#24 tar_target(metric24_rates_per_cluster,xxxxxx(metric24_data)),
 tar_target(metric25_rates_per_cluster,get_rates_per_cluster(metric25_data)),
 tar_target(metric26_rates_per_cluster,get_rates_per_cluster(metric26_data)),
 tar_target(metric27_rates_per_cluster,get_rates_per_cluster(metric27_data)),

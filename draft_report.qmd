@@ -457,7 +457,7 @@ A previous Strategy Unit report "Strategies to reduce inequalities in access to 
 *Table 2 - achieving equity via zero-sum redistribution*
 
 |  Cluster  | Number of vaccinations | CHD synthetic prevalence | Rate (No. of vaccinations / CHD synthetic prevalence) | Global rate | Change in number of vaccinations to match global rate |
-|:----------:|-----------:|-----------:|:----------:|:----------:|:----------:|
+|:---------:|-----------------------:|-------------------------:|:-----------------------------------------------------:|:-----------:|:-----------------------------------------------------:|
 |           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                     *(gr-r) x d*                      |
 |     1     |              3,356,002 |                1,228,453 |                         2.73                          |    1.92     |                      -1,001,284                       |
 |     2     |              2,638,698 |                1,124,040 |                         2.35                          |    1.92     |                       -484,121                        |

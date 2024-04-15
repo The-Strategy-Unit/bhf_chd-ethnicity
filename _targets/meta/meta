@@ -66,6 +66,7 @@ data_path31|stem|d251dc901b133384|13042cdd280b7cf8|ef46db3751d8e999|327899714|da
 data_path32|stem|3e8c7466ed774390|803ec981df1cec40|ef46db3751d8e999|-233826492|data/metric28b.csv|t19775.6545231186s|096dc3ff2371037c|16792|file|local|vector|||1.82|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
 data_path33|stem|80b18764ee0675e1|f1b5bb87c5242ea3|ef46db3751d8e999|6992889|data/metric29b.csv|t19775.6747548975s|f1850d6d441da1fc|60734|file|local|vector|||2.01|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
 data_path34|stem|e1325e36fb8ebf8a|f8a21a400a08739a|ef46db3751d8e999|122438076|data/metric26.csv|t19781.4907551973s|34fe586450e60e2a|9302|file|local|vector|||3.67|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2. package treemapify was built under R version 4.3.2|
+data_path35|stem|a47520a79347c4a7|8a140f514433ce66|ef46db3751d8e999|595556898|data/nacr_data.csv|t19828.2710763732s|323582e9d5f5c408|3201|file|local|vector|||2.09|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2. package treemapify was built under R version 4.3.2|
 data_path4|stem|b7cc946932ede1fe|b828d36b9b97d3cf|ef46db3751d8e999|-293133008|data/metric19.csv|t19677.4296193447s|86075df8ff8c4e6f|73221|file|local|vector|||0||
 data_path5|stem|bbf92bb42d38857b|a72d2f9a4b889877|ef46db3751d8e999|-1519578359|data/metric20.csv|t19676.725866652s|21e7b5c5881d5a74|54335|file|local|vector|||0||
 data_path6|stem|124fbbc718c0b83a|768ce2c99c8be44e|ef46db3751d8e999|321318511|data/metric21.csv|t19676.7326485801s|3ddafd12ba7bc012|37198|file|local|vector|||0||
@@ -239,6 +240,7 @@ metric23_data|stem|87ff4309c27ef89c|942b662cd8dd1a72|2973320e5dad4998|2123227489
 metric23_rates_per_cluster|stem|8bc9c775db017f45|3bf02a7cd2741e5e|a80c48cc16b69fbf|48742043||t19827.651394927s|0b3025d70bc125bf|313155|rds|local|vector|||0.14||
 metric23_updated|stem|1c09ce6590ac20b3|e48e60d0b4b603d2|ebdb80aa5181067e|-771910972||t19753.6069654905s|6dc00f6a5e729fa4|20563|rds|local|vector|||0.03||
 metric23trimpoints|stem|847d71a34b5c7fbb|550968424958c3bd|fd4d33cbdb292def|1085659011||t19753.5928693949s|51a1a8b47eb76aab|54996|rds|local|vector|||0.11|Expecting numeric in D1503  R1503C4 got . Expecting numeric in E1503  R1503C5 got . Expecting numeric in F1503  R1503C6 got . Expecting numeric in G1503  R1503C7 got . Expecting numeric in H1503  R1503C8 got|
+metric24|stem|619f4d7d3e129931|84e759b7c295811b|3b632eb355aed07f|2138244631||t19828.2717397091s|bef995dd3dda7f07|1428|rds|local|vector|||0.36||
 metric25__iod|stem|48e0ef428f878074|94fe44b8cf0101f8|7ed0904fb467deb3|-792136711||t19787.606367106s|7e02ad38317bcde4|55|rds|local|vector|||0.04||
 metric25_data|stem|0d44e3fd5d5b5113|8e67580c16cac29f|2973320e5dad4998|307519988||t19827.646474155s|ff792da0e745e8fa|717|rds|local|vector|||0||
 metric25_rates_per_cluster|stem|07c132adab7027ca|5b132baa81e37c4b|a5398bf25d96b9f0|-1187463361||t19827.6464857982s|49aade141969e873|301279|rds|local|vector|||0.22||
@@ -316,7 +318,7 @@ qof_chd_2223|stem|db7b5f85a8196d56|2c4657fb00bd3abb|f76a319003658608|1100172128|
 rate_chart_data|stem|31d30dc647e5ea46|fcd565da40d5855d|9fc4650cb02414b3|902029551||t19827.6464778675s|5084cec2b145c81b|4919|rds|local|vector|||0.13||
 rate_chart_disease_ident|stem|dad2f63fcf7cac13|27434dafd1cb3ba2|af43496ad379f945|-1124250002||t19827.6513848232s|a228d27d0c1e7c43|155676|rds|local|vector|||0.03||
 rate_chart_full_out|stem|424431fe0824f5a1|29543d1b1f459770|af43496ad379f945|1854188602||t19827.6513871185s|95f341cc3a3d2375|156017|rds|local|vector|||0.04||
-rate_chart_int_out|stem|cc9ccefe78af05cf|9351af51eeb09514|af43496ad379f945|1856460288||t19827.6513810344s|2c90c76dbdef64b7|155815|rds|local|vector|||0.03||
+rate_chart_int_out|stem|816a87d12e154fb5|9351af51eeb09514|af43496ad379f945|1856460288||t19828.2645650612s|6727d956a840c628|155809|rds|local|vector|||0.13|1m22mUsing size aesthetic for lines was deprecated in ggplot2 3.4.0.36mℹ39m Please use linewidth instead.|
 rate_chart_prim_prevent|stem|4c5b0423ae4a951b|5942a1552449cdb7|af43496ad379f945|-213513136||t19827.6513798735s|045a05b366e2a946|156553|rds|local|vector|||0.11|1m22mUsing size aesthetic for lines was deprecated in ggplot2 3.4.0.36mℹ39m Please use linewidth instead.|
 rate_chart_risk_fact|stem|137fa3a94838342f|f97c630faa6ce861|af43496ad379f945|1887141211||t19827.6513837315s|9aacfc6f554227e0|154915|rds|local|vector|||0.05||
 rate_chart_risk_fact_ident|stem|95eb77bfa22ff808|6245e9929e1bd4f7|af43496ad379f945|-442052794||t19827.6513883701s|6e0118b5a0beb133|156458|rds|local|vector|||0.04||

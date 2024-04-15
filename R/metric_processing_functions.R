@@ -78,13 +78,25 @@ metric23_below_trimpoint <- function(metric23,metric23trimpoints){
 #   return(metric32_updated)
 # }
 
+metric24_process <- function(metric24){
+  
+  metric24_processed <- metric24 |> group_by(cluster) |>
+    summarise(started=sum(started),
+              completed=sum(completed))
+    
+    
+    return(metric24_processed)
+  
+}
+
 add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final_data_full_cats_percent_5_clusters,
                             gp_16andover_pop,gp_list_45over,gp_list_all_age,
                             metric1_updated,metric2,metric5,metric6,metric7,metric8,metric9,metric11,metric12,metric13,metric13b,
                             metric14,metric15,metric16,metric16b,
                             #metric17,
                             metric18,metric19,metric20,
-                            metric21,metric22,metric23_updated,metric25b,metric26,metric27,metric28,metric28b,
+                            metric21,metric22,metric23_updated,
+                            metric25b,metric26,metric27,metric28,metric28b,
                             metric29,metric29b,metric31,
                             #metric32_updated,
                             metric33,metric34,metric38,
