@@ -20,8 +20,6 @@ tar_option_set(
 # in {targets}, and its configuration for your machine is below.
 options(clustermq.scheduler = "multiprocess")
 
-
-
 # Run the R scripts in the R/ folder with your custom functions:
 tar_source()
 # source("other_functions.R") # Source other scripts as needed.
@@ -162,10 +160,10 @@ list(
                rename(gp_practice_code=AreaCode,
                       metric16_num=Count,
                       metric16_denom=Denominator)), # metric 16
-  # tar_target(metric17,get_my_fingertips_gp_data_count(91000,"2020/21")|>
-  #              rename(gp_practice_code=AreaCode,
-  #                     metric17_num=Count,
-  #                     metric17_denom=Denominator)), # metric 17
+  tar_target(metric17,get_my_fingertips_gp_data_count(91000,"2020/21")|>
+               rename(gp_practice_code=AreaCode,
+                      metric17_num=Count,
+                      metric17_denom=Denominator)), # metric 17
 
 # metric 9 has been removed from Fingertips :-(  this was the original code
 # tar_target(metric9,get_my_fingertips_gp_data(92589,"2019/20")), # metric 9
@@ -205,10 +203,10 @@ list(
                           rename(gp_practice_code=practice_code,
                                  metric25_num=numerator_40,
                                  metric25_denom=denominator_plus_pc_as_45)),   # metric 25b 22/23
-  # tar_target(metric32,get_data_via_server() |>
-  #              rename(gp_practice_code=practice_code,
-  #                     metric32_num=value)), # metric 32 20/21
-  # tar_target(metric32_updated,combine_metrics17_and_32(metric32,metric17)),
+  tar_target(metric32,get_data_via_server() |>
+               rename(gp_practice_code=practice_code,
+                      metric32_num=value)), # metric 32 20/21
+  tar_target(metric32_updated,combine_metrics17_and_32(metric32,metric17)),
   tar_target(metric13b,qof_chd_2223 |> 
                           select(4,8,6,7) |> #15
                           rename(gp_practice_code=practice_code,
@@ -296,13 +294,10 @@ tar_target(clustered_gp_and_metrics,
                            gp_16andover_pop,gp_list_45over,gp_list_all_age,
                            metric1_updated,metric2,metric5,metric6,metric7,metric8,metric9,metric11,
                            metric12,metric13,metric13b,metric14,metric15,metric16,
-                           metric16b,
-                           #metric17,
-                           metric18,metric19,metric20,
+                           metric16b,metric17,metric18,metric19,metric20,
                            metric21,metric22,metric23_updated,metric25b,
                            metric26,metric27,metric28, metric28b, metric29,metric29b,metric31,
-                           #metric32_updated,
-                           metric33,metric34,metric38,
+                           metric32_updated,metric33,metric34,metric38,
                            metric39,metric40)),
 #plot clusters
 tar_target(cluster1_map,get_cluster1_map(clustered_gp_and_metrics,gp_geocoded)),
@@ -324,6 +319,11 @@ tar_target(cluster2_eth_chart_5,get_cluster2_14_eth_chart(clustered_gp_and_metri
 #tar_target(cluster_reg_map,get_cluster2_map(final_data_full_cats_percent_5_clusters_region,gp_geocoded)),
 #tar_target(cluster_reg_chart,get_cluster2_chart(final_data_full_cats_percent_5_clusters_region)),
 
+  
+  
+  
+  
+  
 #process the data into the correct format and perform IoD calcs
 tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics)),
 tar_target(activity_by_type_clusters_stg2,calc_iod_rate(activity_by_type_clusters_stg1,metric24_processed)),
@@ -495,7 +495,7 @@ tar_target(rate_chart_disease_ident,get_rate_chart(rate_chart_data,"Disease iden
 tar_target(rate_chart_second_prevent,get_rate_chart(rate_chart_data,"Secondary prevention")),
 tar_target(rate_chart_tert_prevent,get_rate_chart(rate_chart_data,"Tertiary prevention")),
 tar_target(rate_chart_int_out,get_rate_chart(rate_chart_data,"Intermediate outcome")),
-tar_target(rate_chart_full_out,get_rate_chart(rate_chart_data,"Full outcomes")),
+tar_target(rate_chart_full_out,get_rate_chart(rate_chart_data,"Full outcomes"))
 
 
 #Regional versions

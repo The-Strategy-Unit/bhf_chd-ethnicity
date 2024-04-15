@@ -132,7 +132,9 @@ get_allage_list <- function(gp_reg_pat_prac_sing_age_male,gp_reg_pat_prac_sing_a
   select(org_code,number_of_patients)|>
   rename(practice_code=org_code)
 
+
 return(gp_list_all_age)
+
 }
 
 

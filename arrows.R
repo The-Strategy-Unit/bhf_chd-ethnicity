@@ -4,6 +4,7 @@ rate_chart <- tar_read(rate_chart)
 
 clustered_gp_and_metrics<- tar_read(clustered_gp_and_metrics)|>as_tibble()
 
+
 geom_segment(
   x = 1, y = 1,
   xend = 4, yend = 7,

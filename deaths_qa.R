@@ -6,7 +6,9 @@ activity_by_type_clusters_stg6 <- tar_read(activity_by_type_clusters_stg6)|>as_t
 gp_reg_pat_prac_sing_age_female<- tar_read(gp_reg_pat_prac_sing_age_female)|>as_tibble()
 gp_reg_pat_prac_sing_age_male<- tar_read(gp_reg_pat_prac_sing_age_male)|>as_tibble()
 gp_reg_pat_prac_lsoa <- tar_read(gp_reg_pat_prac_lsoa)|>as_tibble()
+
 clusters_for_nacr <- tar_read(clusters_for_nacr)|> as_tibble()
+
 
 need <- activity_by_type_clusters_stg6|>select(cluster2,metric1_total)|>rename(chdprev_need=metric1_total)
 
@@ -133,6 +135,7 @@ all_cause_deaths_2223_data <- all_cause_deaths_2223|>
                              age_at_death>=85 & age_at_death <90 ~'85-89',
                              age_at_death>=90  ~'90+'
                              
+
   ))|>
   select(-age_at_death)|>
   group_by(sex,age_group)|>
@@ -182,7 +185,9 @@ all_cause_deaths_2223|>filter(gp_practice_code!="NULL")|>
 females_gp_reg_pat <- gp_reg_pat_prac_sing_age_female |>
   filter(age != "ALL") |>
   mutate(age=as.numeric(case_when(age=="95+" ~ 95,
+
                                   .default = as.numeric(age))))|>
+
   mutate(age_group=case_when(age<1~'<1',
                              age>=1 & age <5 ~'1-4',
                              age>=5 & age <10 ~'5-9',
@@ -238,7 +243,9 @@ males_gp_reg_pat <- gp_reg_pat_prac_sing_age_male |>
 all_gp_reg_pat <- males_gp_reg_pat|>
   rbind(females_gp_reg_pat)|>
   rename(gp_practice_code=org_code)|>
+
   group_by(sex,age_group,gp_practice_code)|>
+
   summarise(number_of_patients=sum(number_of_patients))|>
   ungroup()|>
   left_join(clusters_for_nacr|>select(gp_practice_code,cluster))|>
@@ -286,8 +293,10 @@ all_gp_reg_pat <- males_gp_reg_pat|>
   summarise(number_of_patients=sum(number_of_patients))|>
   ungroup()|>
   mutate(sex_name=case_when(sex==1~'Male',
+
                             sex==2~'Female'))|>
   select(-sex)|>
+
   group_by(cluster)|>
   mutate(patients_total_cluster=sum(number_of_patients))|>
   mutate(perc=number_of_patients/patients_total_cluster)

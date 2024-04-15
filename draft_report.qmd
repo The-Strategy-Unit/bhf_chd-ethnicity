@@ -458,6 +458,7 @@ A previous Strategy Unit report "Strategies to reduce inequalities in access to 
 
 |  Cluster  | Number of vaccinations | CHD synthetic prevalence | Rate (No. of vaccinations / CHD synthetic prevalence) | Global rate | Change in number of vaccinations to match global rate |
 |:---------:|-----------------------:|-------------------------:|:-----------------------------------------------------:|:-----------:|:-----------------------------------------------------:|
+
 |           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                     *(gr-r) x d*                      |
 |     1     |              3,356,002 |                1,228,453 |                         2.73                          |    1.92     |                      -1,001,284                       |
 |     2     |              2,638,698 |                1,124,040 |                         2.35                          |    1.92     |                       -484,121                        |
@@ -465,6 +466,7 @@ A previous Strategy Unit report "Strategies to reduce inequalities in access to 
 |     4     |                476,616 |                  571,049 |                         0.83                          |    1.92     |                        617,979                        |
 |     5     |                332,728 |                  415,950 |                         0.80                          |    1.92     |                        464,571                        |
 | **Total** |          **8,666,474** |            **4,521,288** |                         1.92                          |             |                         **0**                         |
+
 
 In reality, in attempting to achieve equity for this metric, it is unlikely that the offer of vaccination would be removed from patients whose practice is in clusters 1 and 2. More likely would be an approach to focus public health and vaccination roll-out campaigns on practices in clusters 3, 4 and 5.
 
