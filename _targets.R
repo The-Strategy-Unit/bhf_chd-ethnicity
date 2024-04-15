@@ -326,7 +326,7 @@ tar_target(cluster2_eth_chart_5,get_cluster2_14_eth_chart(clustered_gp_and_metri
 
 #process the data into the correct format and perform IoD calcs
 tar_target(activity_by_type_clusters_stg1,process_metrics(clustered_gp_and_metrics)),
-tar_target(activity_by_type_clusters_stg2,calc_iod_rate(activity_by_type_clusters_stg1)),
+tar_target(activity_by_type_clusters_stg2,calc_iod_rate(activity_by_type_clusters_stg1,metric24_processed)),
 tar_target(activity_by_type_clusters_stg3,calc_iod_global_rate(activity_by_type_clusters_stg2)),
 tar_target(activity_by_type_clusters_stg4,calc_iod_diff_rate(activity_by_type_clusters_stg3)),
 tar_target(activity_by_type_clusters_stg5,calc_iod_diff(activity_by_type_clusters_stg4)),
