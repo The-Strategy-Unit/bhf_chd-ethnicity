@@ -1,6 +1,7 @@
 rate_chart_data <- tar_read(rate_chart_data)|>as_tibble()
 activity_by_type_clusters_stg6 <- tar_read(activity_by_type_clusters_stg6)|>as_tibble()
 rate_chart <- tar_read(rate_chart)
+
 clustered_gp_and_metrics<- tar_read(clustered_gp_and_metrics)|>as_tibble()
 
 

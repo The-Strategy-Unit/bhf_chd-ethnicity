@@ -78,20 +78,39 @@ combine_metrics17_and_32 <- function(metric32,metric17){
   return(metric32_updated)
 }
 
+metric24_process <- function(metric24){
+  
+  metric24_processed <- metric24 |> group_by(cluster) |>
+    summarise(started=sum(started),
+              completed=sum(completed))|>
+    rename(cluster2=cluster)
+    
+    
+    return(metric24_processed)
+  
+}
+
 add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final_data_full_cats_percent_5_clusters,
-                            gp_16andover_pop,gp_list_45over,
+                            gp_16andover_pop,gp_list_45over,gp_list_all_age,
                             metric1_updated,metric2,metric5,metric6,metric7,metric8,metric9,metric11,metric12,metric13,metric13b,
-                            metric14,metric15,metric16,metric16b,metric17,metric18,metric19,metric20,
-                            metric21,metric22,metric23_updated,metric25b,metric26,metric27,metric28,metric28b,
-                            metric29,metric29b,metric31,metric32_updated,metric33,metric34,metric38,
+
+                            metric14,metric15,metric16,metric16b,
+                            #metric17,
+                            metric18,metric19,metric20,
+                            metric21,metric22,metric23_updated,
+                            metric25b,metric26,metric27,metric28,metric28b,
+                            metric29,metric29b,metric31,
+                            #metric32_updated,
+                            metric33,metric34,metric38,
                             metric39,metric40){
   clustered_gp_and_metrics <-
     final_data_full_cats_percent_over45_5_clusters |> rename(cluster1=cluster)|>
     left_join(final_data_full_cats_percent_5_clusters|>select(gp_practice_code,cluster2=cluster)) |>
     left_join(gp_16andover_pop|>select(gp_practice_code=practice_code,list_size=number_of_patients16andover)) |>
     left_join(gp_list_45over|>select(gp_practice_code=practice_code,list_size_45=number_45over)) |>
+    left_join(gp_list_all_age|>select(gp_practice_code=practice_code,list_size_all_age=number_of_patients)) |>
     left_join(metric1_updated)|>
-    mutate(metric1=(metric1/100)*list_size) |>
+    mutate(metric1=(metric1/100)*list_size_all_age) |> #CHANGED HERE FROM gp_16andover_pop$list_size DUE TO PREV BEING % OF ALL AGES
     left_join(metric2)|>
     
     #3 - deleted
@@ -124,8 +143,6 @@ add_all_metrics <- function(final_data_full_cats_percent_over45_5_clusters,final
     left_join(metric21)|>
     left_join(metric22)|>
     left_join(metric23_updated)|>
-    #24b - NACR
-    #24c - NACR
     left_join(metric25b)|>
     left_join(metric26)|>
     left_join(metric27)|>
@@ -155,6 +172,7 @@ process_metrics <-function(clustered_gp_and_metrics){
     filter(metric1 != "NA") |> # removes 26 practices (need to check details of these....)
     mutate(list_size_total = replace_na(list_size, 0)) |>
     mutate(list_size_45_total = replace_na(list_size_45, 0)) |>
+    mutate(list_size_all_age_total = replace_na(list_size_all_age,0))|>
     mutate(metric1_total = replace_na(metric1, 0)) |>
     mutate(metric2_num_total = replace_na(metric2_num, 0)) |> 
     mutate(metric2_denom_total = replace_na(metric2_denom, 0)) |>
@@ -184,7 +202,6 @@ process_metrics <-function(clustered_gp_and_metrics){
     mutate(metric21_total = replace_na(metric21, 0)) |> 
     mutate(metric22_total = replace_na(metric22, 0)) |> 
     mutate(metric23_total = replace_na(metric23, 0)) |>
-    #24
     mutate(metric25_num_total = replace_na(metric25_num, 0)) |> 
     mutate(metric25_denom_total = replace_na(metric25_denom, 0)) |>
     mutate(metric26_total = replace_na(`metric26`, 0)) |>
@@ -213,6 +230,7 @@ process_metrics <-function(clustered_gp_and_metrics){
     
     summarise(list_size_total = sum(list_size_total) ,
               list_size_45_total = sum(list_size_45_total),
+              list_size_all_age_total = sum(list_size_all_age),
               metric2_num_total = sum(metric2_num_total) , 
               metric2_denom_total = sum(metric2_denom_total) , 
               metric5_num_total = sum(metric5_num_total) , 
@@ -241,7 +259,6 @@ process_metrics <-function(clustered_gp_and_metrics){
               metric21_total = sum(metric21_total) , 
               metric22_total = sum(metric22_total) , 
               metric23_total = sum(metric23_total) , 
-              #24
               metric25_num_total = sum(metric25_num_total) , 
               metric25_denom_total = sum(metric25_denom_total) , 
               metric26_total = sum(metric26_total) ,  
@@ -270,8 +287,11 @@ process_metrics <-function(clustered_gp_and_metrics){
   return(activity_by_type_clusters_stg1)
 }
 
-calc_iod_rate <-function(activity_by_type_clusters_stg1){
+calc_iod_rate <-function(activity_by_type_clusters_stg1,metric24_processed){
   activity_by_type_clusters_stg2 <- activity_by_type_clusters_stg1 |>
+  #  left_join(metric24_processed)|>
+   # rename(metric24a_num_total=started,
+    #       metric24b_num_total=completed)|>
     mutate(metric2_rate=metric2_num_total/list_size_total,
            metric5_rate=metric5_num_total/list_size_total,
            metric6_rate=metric6_total/list_size_total,
@@ -292,7 +312,8 @@ calc_iod_rate <-function(activity_by_type_clusters_stg1){
            metric21_rate=metric21_total/metric1_total,
            metric22_rate=metric22_total/metric1_total,
            metric23_rate=metric23_total/metric1_total,
-           #24
+    #       metric24a_rate=metric24a_num_total/metric1_total,
+     #      metric24b_rate=metric24b_num_total/metric1_total,
            metric25_rate=metric25_num_total/metric1_total, 
            metric26_rate=metric26_total/metric1_total,
            metric27_rate=metric27_total/metric1_total,
@@ -345,7 +366,10 @@ calc_iod_rate <-function(activity_by_type_clusters_stg1){
            metric22_lower_ci=(metric22_total-(sqrt(metric22_total*1.96)))*(1/metric1_total),
            metric23_upper_ci=(metric23_total+(sqrt(metric23_total*1.96)))*(1/metric1_total),
            metric23_lower_ci=(metric23_total-(sqrt(metric23_total*1.96)))*(1/metric1_total),
-           #24
+ #          metric24a_upper_ci=(metric24a_num_total+(sqrt(metric24a_num_total*1.96)))*(1/metric1_total),
+  #         metric24a_lower_ci=(metric24a_num_total-(sqrt(metric24a_num_total*1.96)))*(1/metric1_total),
+   #        metric24b_upper_ci=(metric24b_num_total+(sqrt(metric24b_num_total*1.96)))*(1/metric1_total),
+    #       metric24b_lower_ci=(metric24b_num_total-(sqrt(metric24b_num_total*1.96)))*(1/metric1_total),
            metric25_upper_ci=(metric25_num_total+(sqrt(metric25_num_total*1.96)))*(1/metric1_total),
            metric25_lower_ci=(metric25_num_total-(sqrt(metric25_num_total*1.96)))*(1/metric1_total),
            metric26_upper_ci=(metric26_total+(sqrt(metric26_total*1.96)))*(1/metric1_total),
@@ -476,7 +500,19 @@ activity_by_type_clusters_stg3 <- activity_by_type_clusters_stg2|>
          metric23_global_rate=metric23_overall_num_total/metric23_overall_denom_total, 
          metric23_upper_ci_global=(1/metric23_overall_denom_total)*((sqrt(metric23_overall_num_total)*1.96)+metric23_overall_num_total),
          metric23_lower_ci_global=(1/metric23_overall_denom_total)*((sqrt(metric23_overall_num_total)*1.96)-metric23_overall_num_total),
-         #24
+         
+         # metric24a_overall_num_total=sum(metric24a_num_total),
+         # metric24a_overall_denom_total=sum(metric1_total),
+         # metric24a_global_rate=metric24a_overall_num_total/metric24a_overall_denom_total, 
+         # metric24a_upper_ci_global=(1/metric24a_overall_denom_total)*((sqrt(metric24a_overall_num_total)*1.96)+metric24a_overall_num_total),
+         # metric24a_lower_ci_global=(1/metric24a_overall_denom_total)*((sqrt(metric24a_overall_num_total)*1.96)-metric24a_overall_num_total),
+         # metric24b_overall_num_total=sum(metric24b_num_total),
+         # metric24b_overall_denom_total=sum(metric1_total),
+         # metric24b_global_rate=metric24b_overall_num_total/metric24b_overall_denom_total, 
+         # metric24b_upper_ci_global=(1/metric24b_overall_denom_total)*((sqrt(metric24b_overall_num_total)*1.96)+metric24b_overall_num_total),
+         # metric24b_lower_ci_global=(1/metric24b_overall_denom_total)*((sqrt(metric24b_overall_num_total)*1.96)-metric24b_overall_num_total),
+         # 
+         # 
          metric25_overall_num_total=sum(metric25_num_total),
          metric25_overall_denom_total=sum(metric1_total),
          metric25_global_rate=metric25_overall_num_total/metric25_overall_denom_total,

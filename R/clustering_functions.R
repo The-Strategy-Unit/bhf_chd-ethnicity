@@ -337,8 +337,7 @@ get_cluster2_14_eth_chart <- function(clustered_gp_and_metrics,cluster_num){
     ylim(0,25) +
     labs(title="Median Percent by Ethnicity") +
     theme(axis.text.y=element_text(size=6))+
-    guides(fill = "none") 
-  
+    guides(fill = "none")
   return(cluster2_14_eth_chart)
   
 }

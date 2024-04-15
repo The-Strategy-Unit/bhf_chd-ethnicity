@@ -367,7 +367,7 @@ rate_chart <- rate_chart_data|>
   geom_bar(stat = "identity") +
   geom_errorbar( aes(x=as.factor(cluster2), ymin=lower_ci, ymax=upper_ci), width=0.4, colour="grey", alpha=0.9, size=0.5) +
   scale_fill_manual(values = palette)+
-  scale_y_continuous(comma(rate,digits=4,format="g"))+#added this line
+ # scale_y_continuous(comma(rate,digits=4,format="g"))+#added this line
   theme_light() +
   theme(legend.position="none")+
   xlab("Cluster (1=Least diverse, 5=Most diverse)") +

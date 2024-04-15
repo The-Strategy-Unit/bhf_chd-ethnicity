@@ -427,13 +427,13 @@ The chart below presents the metrics along the CHD pathway from risk factor and 
 ::: callout-tip
 ## Key Findings
 
--   The greatest disparity along the CHD pathway is flu vaccinations for patients aged 65+ where the relative index of disparity is 16.70% (95% ci - 16.64%, 16.70%), indicating that 16.7% of activity needs to be redistributed so that rates reflect need.
+-   The greatest disparity along the CHD pathway is flu vaccinations for patients aged 65+ where the relative index of disparity is 17.14% (95% ci - 17.11%, 17.17%), indicating that 17.1% of activity needs to be redistributed so that rates reflect need.
 
 -   The most equitably distributed metric is blood pressure checks within the last 5 years for patients aged 45+ with a relative index of disparity of 0.8% (95% ci - 0.82%, 0.78%).
 
 -   There are 7 metrics where the index of disparity is less than 5%, as well as blood pressure checks, these include metrics such as referrals to outpatient cardiology, outpatient DNAs and waiting times for elective procedures.
 
--   Out of the 33 metrics along the CHD pathway, 10 have an index of disparity of greater than 10%.
+-   Out of the 33 metrics along the CHD pathway, 11 have an index of disparity of greater than 10%.
 
 -   In general (but not exclusively) these greater levels of disparity occur in the disease identification and secondary prevention pathway domains and consequently the outcome metrics related to deaths from CHD.
 :::
@@ -458,13 +458,15 @@ A previous Strategy Unit report "Strategies to reduce inequalities in access to 
 
 |  Cluster  | Number of vaccinations | CHD synthetic prevalence | Rate (No. of vaccinations / CHD synthetic prevalence) | Global rate | Change in number of vaccinations to match global rate |
 |:---------:|-----------------------:|-------------------------:|:-----------------------------------------------------:|:-----------:|:-----------------------------------------------------:|
-|           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                     *(r-gr) x d*                      |
-|     1     |              3,356,002 |                1,026,826 |                         3.27                          |    2.33     |                       -961,239                        |
-|     2     |              2,638,698 |                  924,088 |                         2.86                          |    2.33     |                       -483,540                        |
-|     3     |              1,862,430 |                  958,825 |                         1.94                          |    2.33     |                       +373,741                        |
-|     4     |                476,616 |                  478,728 |                         1.00                          |    2.33     |                       +639,873                        |
-|     5     |                332,728 |                  327,542 |                         1.02                          |    2.33     |                       +431,166                        |
-| **Total** |          **8,666,474** |            **3,716,009** |                       **2.33**                        |             |                         **0**                         |
+
+|           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                     *(gr-r) x d*                      |
+|     1     |              3,356,002 |                1,228,453 |                         2.73                          |    1.92     |                      -1,001,284                       |
+|     2     |              2,638,698 |                1,124,040 |                         2.35                          |    1.92     |                       -484,121                        |
+|     3     |              1,862,430 |                1,181,796 |                         1.58                          |    1.92     |                        402,855                        |
+|     4     |                476,616 |                  571,049 |                         0.83                          |    1.92     |                        617,979                        |
+|     5     |                332,728 |                  415,950 |                         0.80                          |    1.92     |                        464,571                        |
+| **Total** |          **8,666,474** |            **4,521,288** |                         1.92                          |             |                         **0**                         |
+
 
 In reality, in attempting to achieve equity for this metric, it is unlikely that the offer of vaccination would be removed from patients whose practice is in clusters 1 and 2. More likely would be an approach to focus public health and vaccination roll-out campaigns on practices in clusters 3, 4 and 5.
 
