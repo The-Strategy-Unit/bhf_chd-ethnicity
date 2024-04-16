@@ -371,7 +371,10 @@ tar_target(metric22_data,get_one_metric(activity_by_type_clusters_stg6,"metric22
              rename(numerator=metric22_total,denominator=metric1_total)),
 tar_target(metric23_data,get_one_metric(activity_by_type_clusters_stg6,"metric23","metric1_total")|>
              rename(numerator=metric23_total,denominator=metric1_total)),
-#24
+tar_target(metric24a_data,get_one_metric(activity_by_type_clusters_stg6,"metric24a","metric1_total")|>
+             rename(numerator=metric24a_num_total,denominator=metric1_total)),
+tar_target(metric24b_data,get_one_metric(activity_by_type_clusters_stg6,"metric24b","metric1_total")|>
+             rename(numerator=metric24b_num_total,denominator=metric1_total)),
 tar_target(metric25_data,get_one_metric(activity_by_type_clusters_stg6,"metric25","metric1_total")|>
              rename(numerator=metric25_num_total,denominator=metric1_total)),
 tar_target(metric26_data,get_one_metric(activity_by_type_clusters_stg6,"metric26","metric1_total")|>
@@ -420,7 +423,8 @@ tar_target(metric20_rates_per_cluster,get_rates_per_cluster(metric20_data)),
 tar_target(metric21_rates_per_cluster,get_rates_per_cluster(metric21_data)),
 tar_target(metric22_rates_per_cluster,get_rates_per_cluster(metric22_data)),
 tar_target(metric23_rates_per_cluster,get_rates_per_cluster(metric23_data)),
-#24 tar_target(metric24_rates_per_cluster,xxxxxx(metric24_data)),
+tar_target(metric24a_rates_per_cluster,get_rates_per_cluster(metric24a_data)),
+tar_target(metric24b_rates_per_cluster,get_rates_per_cluster(metric24b_data)),
 tar_target(metric25_rates_per_cluster,get_rates_per_cluster(metric25_data)),
 tar_target(metric26_rates_per_cluster,get_rates_per_cluster(metric26_data)),
 tar_target(metric27_rates_per_cluster,get_rates_per_cluster(metric27_data)),
@@ -455,7 +459,8 @@ tar_target(iod_with_ci_metric20,get_ci_iod_together(metric20_rates_per_cluster,"
 tar_target(iod_with_ci_metric21,get_ci_iod_together(metric21_rates_per_cluster,"metric21",metric21_data)),
 tar_target(iod_with_ci_metric22,get_ci_iod_together(metric22_rates_per_cluster,"metric22",metric22_data)),
 tar_target(iod_with_ci_metric23,get_ci_iod_together(metric23_rates_per_cluster,"metric23",metric23_data)),
-#24
+tar_target(iod_with_ci_metric24a,get_ci_iod_together(metric24a_rates_per_cluster,"metric24a",metric24a_data)),
+tar_target(iod_with_ci_metric24b,get_ci_iod_together(metric24b_rates_per_cluster,"metric24b",metric24b_data)),
 tar_target(iod_with_ci_metric25,get_ci_iod_together(metric25_rates_per_cluster,"metric25",metric25_data)),
 tar_target(iod_with_ci_metric26,get_ci_iod_together(metric26_rates_per_cluster,"metric26",metric26_data)),
 tar_target(iod_with_ci_metric27,get_ci_iod_together(metric27_rates_per_cluster,"metric27",metric27_data)),
@@ -475,7 +480,9 @@ tar_target(iod_with_ci,iod_with_ci_metric2|>bind_rows(iod_with_ci_metric5,iod_wi
                                                       iod_with_ci_metric14,iod_with_ci_metric15,iod_with_ci_metric16,
                                                      # iod_with_ci_metric17,
                                                       iod_with_ci_metric18,iod_with_ci_metric19,iod_with_ci_metric20,iod_with_ci_metric21,
-                                                      iod_with_ci_metric22,iod_with_ci_metric23,iod_with_ci_metric25,iod_with_ci_metric26,
+                                                      iod_with_ci_metric22,iod_with_ci_metric23,
+                                                     iod_with_ci_metric24a,iod_with_ci_metric24b,
+                                                      iod_with_ci_metric25,iod_with_ci_metric26,
                                                       iod_with_ci_metric27,iod_with_ci_metric28,iod_with_ci_metric28b,iod_with_ci_metric29,
                                                       iod_with_ci_metric29b,iod_with_ci_metric31,
                                                      # iod_with_ci_metric32,
@@ -505,7 +512,7 @@ tar_target(regional_charts,region_clustered_gp_and_metrics |>
              #group_split(comm_region_code)|>
              split(region_clustered_gp_and_metrics$comm_region_code)|>
              map(\(df) process_metrics(df) )|>
-             map(\(df) calc_iod_rate(df) )|>
+             map(\(df) calc_iod_rate(df,metric24_processed) )|>
              map(\(df) calc_iod_global_rate(df) )|>
              map(\(df) calc_iod_diff_rate(df) )|>
              map(\(df) calc_iod_diff(df) )|>
@@ -525,7 +532,7 @@ tar_target(icb_charts,icb_clustered_gp_and_metrics |>
              #group_split(icb_name)|>
              split(icb_clustered_gp_and_metrics$icb_name) |>
              map(\(df) process_metrics(df) )|>
-             map(\(df) calc_iod_rate(df) )|>
+             map(\(df) calc_iod_rate(df,metric24_processed) )|>
              map(\(df) calc_iod_global_rate(df) )|>
              map(\(df) calc_iod_diff_rate(df) )|>
              map(\(df) calc_iod_diff(df) )|>

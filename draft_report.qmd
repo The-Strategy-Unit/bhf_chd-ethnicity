@@ -175,12 +175,6 @@ metrics_table |>
 
 ```
 
-::: {.callout-note icon="false"}
-## Cardiac rehabilitation metrics
-
-Cardiac rehabilitation metrics will be added once they become available from NACR (expected before 31/3/24)
-:::
-
 # Clustering
 
 In this analysis we used the k-medoids clustering method to group practices. Each practice was assigned to one of a small number of groups such that practices within the group have similar distributions of patients over ethnic groups. In order to obtain data on the ethnicity of a practice's registered population we imputed it based on the Lower Super Output Area (LSOA) of residence of GP registrants and the ethnicity distribution of patients living in those LSOAs using the Census 2021 data. Further detailed explanations of the method can be found in the appendix.
@@ -385,7 +379,8 @@ tar_read(rate_chart_second_prevent)
 ::: callout-tip
 ## Key Findings
 
--   All 4 tertiary prevention metrics follow the same pattern of activity rates with the highest rates being in the least diverse cluster (cluster 1), followed by clusters 2 and then cluster 5 (the most diverse) and cluster 3. Cluster 4 has the lowest activity rates.
+-   All the tertiary prevention metrics, except waiting time for elective PCI/CABG, follow broadly the same pattern of activity rates with the highest rates being in the least diverse cluster (cluster 1), followed by cluster 2 and then clusters 5 (the most diverse) and 3. Cluster 4 has the lowest activity rates.
+-   The rate for waiting time for elective PCI/CABG is greatest in the most diverse cluster (cluster 5) and lowest in cluster 4, although overall there is little variation between the clusters.
 :::
 
 ```{r}
@@ -457,7 +452,7 @@ A previous Strategy Unit report "Strategies to reduce inequalities in access to 
 *Table 2 - achieving equity via zero-sum redistribution*
 
 |  Cluster  | Number of vaccinations | CHD synthetic prevalence | Rate (No. of vaccinations / CHD synthetic prevalence) | Global rate | Change in number of vaccinations to match global rate |
-|:---------:|-----------------------:|-------------------------:|:-----------------------------------------------------:|:-----------:|:-----------------------------------------------------:|
+|:---------:|----------:|----------:|:------------:|:---------:|:------------:|
 |           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                     *(gr-r) x d*                      |
 |     1     |              3,356,002 |                1,228,453 |                         2.73                          |    1.92     |                      -1,001,284                       |
 |     2     |              2,638,698 |                1,124,040 |                         2.35                          |    1.92     |                       -484,121                        |
