@@ -518,6 +518,7 @@ tar_target(regional_charts,region_clustered_gp_and_metrics |>
              map(\(df) calc_iod_diff(df) )|>
              map(\(df) calc_abs_iod(df) )|>
              map(\(df) get_rel_iod_data_for_chart(df) )|>
+             map(\(df) remove_metric24_for_regional_charts(df))|>
              map(\(df) get_rel_iod_chart(df) )),
 tar_target(region_cluster_chart_data,get_region_cluster_chart_data(region_clustered_gp_and_metrics)),
 tar_target(region_cluster_charts,region_cluster_chart_data|>
@@ -538,6 +539,7 @@ tar_target(icb_charts,icb_clustered_gp_and_metrics |>
              map(\(df) calc_iod_diff(df) )|>
              map(\(df) calc_abs_iod(df) )|>
              map(\(df) get_rel_iod_data_for_chart(df) )|>
+             map(\(df) remove_metric24_for_regional_charts(df))|>
              map(\(df) get_rel_iod_chart(df) ))
 
 )

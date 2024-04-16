@@ -9,6 +9,12 @@ get_rel_iod_data_for_chart <- function(activity_by_type_clusters_stg6){
 return(chart_iod_data)
 }
 
+remove_metric24_for_regional_charts <- function(data){
+  data <- data|>
+    filter(metric!=("metric24a_rel_iod"))|>
+    filter(metric!=("metric24b_rel_iod"))
+  return(data)
+}
 
 get_rel_iod_chart <- function(chart_iod_data){
 

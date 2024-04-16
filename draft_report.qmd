@@ -428,9 +428,9 @@ The chart below presents the metrics along the CHD pathway from risk factor and 
 
 -   There are 7 metrics where the index of disparity is less than 5%, as well as blood pressure checks, these include metrics such as referrals to outpatient cardiology, outpatient DNAs and waiting times for elective procedures.
 
--   Out of the 33 metrics along the CHD pathway, 11 have an index of disparity of greater than 10%.
+-   Out of the 33 metrics along the CHD pathway, 13 have an index of disparity of greater than 10%.
 
--   In general (but not exclusively) these greater levels of disparity occur in the disease identification and secondary prevention pathway domains and consequently the outcome metrics related to deaths from CHD.
+-   In general (but not exclusively) these greater levels of disparity occur in the disease identification and secondary and tertiary prevention pathway domains and consequently the outcome metrics related to deaths from CHD.
 :::
 
 ```{r}
@@ -452,7 +452,7 @@ A previous Strategy Unit report "Strategies to reduce inequalities in access to 
 *Table 2 - achieving equity via zero-sum redistribution*
 
 |  Cluster  | Number of vaccinations | CHD synthetic prevalence | Rate (No. of vaccinations / CHD synthetic prevalence) | Global rate | Change in number of vaccinations to match global rate |
-|:---------:|----------:|----------:|:------------:|:---------:|:------------:|
+|:---------:|-----------------------:|-------------------------:|:-----------------------------------------------------:|:-----------:|:-----------------------------------------------------:|
 |           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                     *(gr-r) x d*                      |
 |     1     |              3,356,002 |                1,228,453 |                         2.73                          |    1.92     |                      -1,001,284                       |
 |     2     |              2,638,698 |                1,124,040 |                         2.35                          |    1.92     |                       -484,121                        |
