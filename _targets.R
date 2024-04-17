@@ -8,7 +8,7 @@ library(targets)
 # Set target options:
 tar_option_set(
   packages = c("tibble","fingertipsR","readxl","tidyverse","utils","janitor","forcats",
-               "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder",
+               "readr","visNetwork","odbc","stringr","MLID","sf","tidygeocoder","gt",
                "cluster","factoextra","purrr","broom","glue","RColorBrewer","leaflet","treemapify"), # packages that your targets need to run
   format = "rds"
 

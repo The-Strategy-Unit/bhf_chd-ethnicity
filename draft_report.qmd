@@ -285,6 +285,79 @@ tar_read(cluster2_eth_chart_5)
 ```
 :::
 
+## Age, Sex and Deprivation Profile of Clusters
+
+describe
+
+```{r}
+gp_reg_pat_prac_sing_age_female<- tar_read(gp_reg_pat_prac_sing_age_female)|>as_tibble()
+gp_reg_pat_prac_sing_age_male<- tar_read(gp_reg_pat_prac_sing_age_male)|>as_tibble()
+clusters_for_nacr <- tar_read(clusters_for_nacr)|>as_tibble()
+
+females_gp_reg_pat <- gp_reg_pat_prac_sing_age_female |>
+  filter(age != "ALL") |>
+  mutate(age=as.numeric(case_when(age=="95+" ~ 95,
+                                  .default = as.numeric(age))))|>
+  mutate(age_group=case_when(age<18~'<18',
+                             age>=18 & age <45 ~'18-44',
+                             age>=45 & age <65 ~'45-64',
+                             age>=65 & age <75 ~'65-74',
+                             age>=75 ~'75+'))|>
+  select(-age)|>
+  mutate(sex=2)
+
+males_gp_reg_pat <- gp_reg_pat_prac_sing_age_male |>
+  filter(age != "ALL") |>
+  mutate(age=as.numeric(case_when(age=="95+" ~ 95,
+                                  .default = as.numeric(age))))|>
+  mutate(age_group=case_when(age<18~'<18',
+                             age>=18 & age <45 ~'18-44',
+                             age>=45 & age <65 ~'45-64',
+                             age>=65 & age <75 ~'65-74',
+                             age>=75 ~'75+'))|>
+  select(-age)|>
+  mutate(sex=1)
+
+all_gp_reg_pat <- males_gp_reg_pat|>
+  rbind(females_gp_reg_pat)|>
+  rename(gp_practice_code=org_code)|>
+  group_by(sex,age_group,gp_practice_code)|>
+  summarise(number_of_patients=sum(number_of_patients))|>
+  ungroup()|>
+  left_join(clusters_for_nacr|>select(gp_practice_code,cluster))|>
+  group_by(sex,age_group,cluster)|>
+  summarise(number_of_patients=sum(number_of_patients))|>
+  ungroup()|>
+  mutate(sex_name=case_when(sex==1~'Male',
+                            sex==2~'Female'))|>
+  select(-sex)|>
+  group_by(cluster)|>
+  mutate(patients_total_cluster=sum(number_of_patients))|>
+  mutate(perc=number_of_patients/patients_total_cluster)|>
+  select(-number_of_patients,-patients_total_cluster)
+
+all_gp_reg_pat |>
+    pivot_wider(names_from=c(cluster,sex_name),
+                names_sep = "_",
+                values_from = perc
+                )|>
+    select(age_group, starts_with("1"), starts_with("2"), starts_with("3"),starts_with("4"),starts_with("5")) |>
+  arrange(factor(age_group, 
+                 levels = c("<18","18-44","45-64","65-74","75+")))|>
+    gt(rowname_col = "age_group")|>
+    tab_spanner_delim(delim = "_") |>
+    tab_stubhead(label=md("**Age Group**"))|>
+    tab_options(heading.title.font.size = 18,
+                heading.title.font.weight = "bolder",
+                column_labels.font.weight = "bold")|>
+    fmt_percent(decimals = 2)|>
+    tab_header(title = md("**Table 2** - *Age / Sex Breakdown by Cluster*"))
+
+
+```
+
+Table 3 = imd
+
 ## Clustered GP Practices
 
 The interactive map below presents each GP practice coloured according to their assigned cluster. Cluster 1 (red) is the least diverse and cluster 5 (orange) is the most diverse.
@@ -449,10 +522,10 @@ A previous Strategy Unit report "Strategies to reduce inequalities in access to 
 
 [^4]: <https://www.midlandsdecisionsupport.nhs.uk/knowledge-library/strategies-to-reduce-inequalities-in-access-to-planned-hospital-procedures/>
 
-*Table 2 - achieving equity via zero-sum redistribution*
+*Table 4 - achieving equity via zero-sum redistribution*
 
 |  Cluster  | Number of vaccinations | CHD synthetic prevalence | Rate (No. of vaccinations / CHD synthetic prevalence) | Global rate | Change in number of vaccinations to match global rate |
-|:---------:|----------:|----------:|:------------:|:---------:|:------------:|
+|:----------:|-----------:|-----------:|:----------:|:----------:|:----------:|
 |           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                     *(gr-r) x d*                      |
 |     1     |              3,356,002 |                1,228,453 |                         2.73                          |    1.92     |                      -1,001,284                       |
 |     2     |              2,638,698 |                1,124,040 |                         2.35                          |    1.92     |                       -484,121                        |
@@ -637,7 +710,7 @@ definition=c("Provided directly by OHID (formerly indicator 92847 in FingertipsR
 metrics_table |>
     gt()|>
     tab_header(
-    title = md("**Table 3** - *Metric definitions and data sources*"))|>
+    title = md("**Table 5** - *Metric definitions and data sources*"))|>
     cols_label(name_metric=md("**Metric**"),
              metric_domain=md("**Domain**"),
              data_source=md("**Data Source**"),
@@ -653,11 +726,11 @@ Metrics taken from the QOF data via Fingertips have been extracted by GP practic
 
 ### SUS data
 
-SUS data was extracted using Transact-SQL and using relevant OPCS, ICD10, HRG, and Treatment function codes as detailed in table 2 above.
+SUS data was extracted using Transact-SQL and using relevant OPCS, ICD10, HRG, and Treatment function codes as detailed in table 5 above.
 
 ### Cardiac rehabilitation
 
-This data was supplied by NACR from an extract taken in March 2024. The data wasn’t available by GP Practice, so an alternative method was followed. NACR was supplied with a list of practices, ICBs and the cluster to which they had been allocated by the Strategy Unit (SU). The data was then supplied to the SU aggregated into clusters and ICBs. The data relates to patients who started rehabilitation in 2021 or 2022 calendar years and were ACS or HF according to the NHS England reporting. These two years are the most recent complete years, and following changes in the way rehabilitation has been delivered due to the Covid pandemic, most closely reflect the rehabilitation model now in place. Patients needed to have GP Practice code recorded to be matched to a cluster. Those that didn't equated to 42637 patients that had either NO GP CODE completed, no matching GP Code or GMC Number added, representing 48% of patient records. Within the data included in this analysis, there are 11 clusters across 9 ICBs that have no rehabilitation data despite there being practices in the cluster. Due to these high levels of missing data the two cardiac rehabilitation metrics have been included in the presentations of the index of disparity and activity rates at a national level, but excluded from the regional and ICB level presentations.
+This data was supplied by NACR from an extract taken in March 2024. The data wasn’t available by GP Practice, so an alternative method was followed. NACR was supplied with a list of practices, ICBs and the cluster to which they had been allocated by the Strategy Unit (SU). The data was then supplied to the SU aggregated into clusters and ICBs. The data relates to patients who started rehabilitation in 2021 or 2022 calendar years and were ACS or HF according to the NHS England reporting. These two years are the most recent complete years, and following changes in the way rehabilitation has been delivered due to the Covid pandemic, most closely reflect the rehabilitation model now in place. Patients needed to have GP Practice code recorded to be matched to a cluster. Those that didn't equated to 42,637 patients that had either NO GP CODE completed, no matching GP Code or GMC Number added, representing 48% of patient records. Within the data included in this analysis, there are 11 clusters across 9 ICBs that have no rehabilitation data despite there being practices in the cluster. Due to these high levels of missing data the two cardiac rehabilitation metrics have been included in the presentations of the index of disparity and activity rates at a national level, but excluded from the regional and ICB level presentations.
 
 ### Readmission within 30 days
 
@@ -723,7 +796,7 @@ In conclusion, the final version selected, and presented here, used the percenta
 tar_read(elbow_plot)
 ```
 
-Table 3 shows the number of GP practices assigned to each of the 5 clusters and the characteristics of the clusters are described in the main body of the report above.
+Table 6 shows the number of GP practices assigned to each of the 5 clusters and the characteristics of the clusters are described in the main body of the report above.
 
 ```{r}
 final_data_full_cats_percent_5_clusters <- tar_read(final_data_full_cats_percent_5_clusters) |> as_tibble()
@@ -734,7 +807,7 @@ final_data_full_cats_percent_5_clusters |>
   ungroup() |>
   select(cluster,n)|>
   gt()|>
-    tab_header(title = md("**Table 4** - *Number of practices per cluster*"))|>
+    tab_header(title = md("**Table 6** - *Number of practices per cluster*"))|>
     cols_label(cluster=md("**Cluster**"),
              n=md("**Number of practices**"))
 ```

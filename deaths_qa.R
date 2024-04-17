@@ -290,5 +290,32 @@ all_gp_reg_pat <- males_gp_reg_pat|>
   select(-sex)|>
   group_by(cluster)|>
   mutate(patients_total_cluster=sum(number_of_patients))|>
-  mutate(perc=number_of_patients/patients_total_cluster)
+  mutate(perc=number_of_patients/patients_total_cluster)|>
+  select(-number_of_patients,-patients_total_cluster)
+  
+  all_gp_reg_pat|>
+  gt(rowname_col = "age_group")|>
+  tab_stubhead(label=md("**Age Group**")) |>
+  tab_spanner(label = "Cluster", columns = matches("cluster")) |>
+  cols_label(
+    perc = md("**Percentage**"),
+    sex_name = md("**Sex**"))|>
+  fmt_number(columns = "perc", decimals = 2)
 
+library(gt)
+  
+  all_gp_reg_pat |>
+    pivot_wider(names_from=c(cluster,sex_name),
+                names_sep = "_",
+                values_from = perc
+                )|>
+    select(age_group, starts_with("1"), starts_with("2"), starts_with("3"),starts_with("4"),starts_with("5")) |>
+    gt(rowname_col = "age_group")|>
+    tab_spanner_delim(delim = "_") |>
+    tab_stubhead(label=md("**Age Group**"))|>
+    tab_options(heading.title.font.size = 18,
+                heading.title.font.weight = "bolder",
+                column_labels.font.weight = "bold")|>
+    fmt_percent(decimals = 2)|>
+    tab_header(title = "Age / Sex Breakdown by Cluster")
+  
