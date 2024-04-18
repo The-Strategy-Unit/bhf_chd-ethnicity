@@ -287,7 +287,7 @@ tar_read(cluster2_eth_chart_5)
 
 ## Age, Sex and Deprivation Profile of Clusters
 
-describe
+Table 2 shows that the most diverse clusters are younger and the least diverse clusters are older. In particular almost one quarter of cluster 5 are under 18, compared to 19% of cluster 1 and 12% of cluster 1 are aged 75+ compared to only 4% of clusters 4 and 5.
 
 ```{r}
 gp_reg_pat_prac_sing_age_female<- tar_read(gp_reg_pat_prac_sing_age_female)|>as_tibble()
@@ -356,7 +356,30 @@ all_gp_reg_pat |>
 
 ```
 
-Table 3 = imd
+Table 3 shows that ...
+
+```{r}
+source("R/get_imd_data_by_gpprac.R")
+
+patientweighted_practice_imd |>
+  mutate(gp_imd_quantile = case_when(gp_imd_decile<=2 ~ 1,
+                                     gp_imd_decile==3 ~2,
+                                     gp_imd_decile==4 ~2,
+                                     gp_imd_decile==5 ~3,
+                                     gp_imd_decile==6 ~3,
+                                     gp_imd_decile==7 ~4,
+                                     gp_imd_decile==8 ~4,
+                                     gp_imd_decile>=9 ~5,
+                                     .default = 0
+  ))|>
+  group_by(gp_imd_quantile,cluster)|>
+  summarise(patients=sum(patients))|>
+  ungroup()|>
+  group_by(cluster)|>
+  mutate(cluster_total=sum(patients),
+         perc=patients/cluster_total)|>
+  gt()
+```
 
 ## Clustered GP Practices
 
