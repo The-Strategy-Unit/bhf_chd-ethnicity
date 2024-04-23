@@ -6,7 +6,10 @@ library(tidyverse)
 
 GPpatients_by_LSOA <- read_excel(here::here("data", "patients by LSOA to GP.xlsx"))
 gp_reg_pat_prac_lsoa <-tar_read(gp_reg_pat_prac_lsoa)|>as_tibble()
+<<<<<<< HEAD
 clusters_for_nacr <- tar_read(clusters_for_nacr)|>as_tibble()
+=======
+>>>>>>> 49354d3e4cd309302906afba47f11c705a0d55ee
 
 imd2019 <- read_excel(here::here("data", "IMD2019.xlsx"))
 
