@@ -346,6 +346,7 @@ all_gp_reg_pat |>
                  levels = c("<18","18-44","45-64","65-74","75+")))|>
     gt(rowname_col = "age_group")|>
     tab_spanner_delim(delim = "_") |>
+    tab_spanner(label = "Cluster", columns = c(starts_with("1"), starts_with("2"), starts_with("3"),starts_with("4"),starts_with("5")))|>
     tab_stubhead(label=md("**Age Group**"))|>
     tab_options(heading.title.font.size = 18,
                 heading.title.font.weight = "bolder",
@@ -356,7 +357,7 @@ all_gp_reg_pat |>
 
 ```
 
-Table 3 shows that
+Table 3 shows that the most diverse cluster has the greatest proportion of patients in practices in the most deprived quantile. Cluster 2 has the greatest proportion of patients in practices in the least deprived quantile.
 
 ```{r}
 source("R/get_imd_data_by_gpprac.R")
@@ -393,27 +394,9 @@ patientweighted_practice_imd |>
               heading.title.font.weight = "bolder",
               column_labels.font.weight = "bold")|>
     tab_stubhead(label=md("**IMD Quantile**"))|>
+  tab_spanner(label = "Cluster", columns = c(starts_with("1"), starts_with("2"), starts_with("3"),starts_with("4"),starts_with("5")))|>
   fmt_percent(columns=c(starts_with("1"), starts_with("2"), starts_with("3"),starts_with("4"),starts_with("5")),decimals = 2)|>
   tab_header(title = md("**Table 3** - *Index of Multiple Deprivation Breakdown by Cluster*"))
-```
-
-```{r}
-source("R/get_imd_data_by_gpprac.R")
-
-patientweighted_practice_imd |>
-  mutate(gp_imd_quantile = case_when(gp_imd_decile<=2 ~ 1,
-                                     gp_imd_decile==3 ~2,
-                                     gp_imd_decile==4 ~2,
-                                     gp_imd_decile==5 ~3,
-                                     gp_imd_decile==6 ~3,
-                                     gp_imd_decile==7 ~4,
-                                     gp_imd_decile==8 ~4,
-                                     gp_imd_decile>=9 ~5,
-                                     .default = 0
-  ))|>
-  group_by(gp_imd_quantile,cluster)|>
-  summarise(patients=sum(patients))|>
-  gt()
 ```
 
 ## Clustered GP Practices
