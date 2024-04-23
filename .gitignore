@@ -57,6 +57,9 @@ data/
 #csv files
 *.csv
 
+#png files
+*.png
+
 #xlsx files
 *.xlsx
 data/*.xlsx
