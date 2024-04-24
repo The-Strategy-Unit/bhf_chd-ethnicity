@@ -1,0 +1,29 @@
+---
+title: "deaths_explanation"
+format: html
+editor: visual
+---
+
+## Question
+
+Why are the rates of CHD deaths and CHD hospital deaths lower in the 2 most diverse clusters, yet, "South Asians living in the UK have a higher rate of [coronary heart disease](https://www.bhf.org.uk/informationsupport/conditions/coronary-heart-disease "https://www.bhf.org.uk/informationsupport/conditions/coronary-heart-disease") and [diabetes](https://www.bhf.org.uk/informationsupport/risk-factors/diabetes "https://www.bhf.org.uk/informationsupport/risk-factors/diabetes") compared to White Europeans".
+
+This study refers to the incidence rate.
+
+The method of rate calculation is simply to take the amount of activity in the metric and divide this by the number of patients on the gp list expected to have CHD (calculated by multiplying the PHE synthetic prevalence estimate % by the GP list size). 
+
+The PHE synthetic prevalence calculations take ethnicity and age and sex into account in their methodology...
+
+We have calculated Age and Sex Standardised Mortality Rates (direct) for each of the clusters for CHD Deaths and All Cause deaths. These calculations used the same death data as was used in the numerator of the rates from the project.
+
+SC - Prevalent population of the most diverse clusters is younger then would expect fewer deaths.
+
+SC - Prevalence is a function of incidence and mortality and survival is a curve
+
+![](secret/asmrchdprojrates.png){fig-align="center"}
+
+JG - This little table on the right shows the CHD deaths (same data that forms the numerator of my project calculation) as a crude rate per 10,000 population, as well as all cause deaths as  crude rate. The table on the left is mortality rates age and sex standardised using census population. So, if the age and sex standardised mortality rates show the most diverse cluster to have the highest rate then why do the project rates using need not follow the same pattern?
+
+SC - The standardised rate is saying if the populations have no difference in age and sex then cluster 5 is higher than you would expect, too many deaths for its age/sex profile. It is comparing to the total population whether people have the condition or not.
+
+SC -The project chd rate is a case fatality rate, deaths in those that have the condition, this is saying that the highest observed deaths per person with the condition is in cluster 1. It's not comparing like with like and it's not age standardised so could be argued that cluster 1 could be higher because its prevalent population are older.

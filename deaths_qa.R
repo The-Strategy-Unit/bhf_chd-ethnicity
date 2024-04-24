@@ -175,7 +175,7 @@ all_cause_deaths_2223_gp_prac <- all_cause_deaths_2223|>
   summarise(deaths=sum(deaths))
 
 all_cause_deaths_2223|>filter(gp_practice_code!="NULL")|>
-  group_by(gp_practice_code)|>summarise(deaths=sum(deaths))
+  group_by(gp_practice_code)|>summarise(deaths=sum(num_deaths))
 
 #Cluster population data from gp lists
 
@@ -275,6 +275,8 @@ males_gp_reg_pat <- gp_reg_pat_prac_sing_age_male |>
   select(-age)|>
   mutate(sex=1)
 
+library(gt)
+
 all_gp_reg_pat <- males_gp_reg_pat|>
   rbind(females_gp_reg_pat)|>
   rename(gp_practice_code=org_code)|>
@@ -302,7 +304,7 @@ all_gp_reg_pat <- males_gp_reg_pat|>
     sex_name = md("**Sex**"))|>
   fmt_number(columns = "perc", decimals = 2)
 
-library(gt)
+
   
   all_gp_reg_pat |>
     pivot_wider(names_from=c(cluster,sex_name),
@@ -318,4 +320,5 @@ library(gt)
                 column_labels.font.weight = "bold")|>
     fmt_percent(decimals = 2)|>
     tab_header(title = "Age / Sex Breakdown by Cluster")
+  
   
