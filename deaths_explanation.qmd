@@ -10,9 +10,41 @@ Why are the rates of CHD deaths and CHD hospital deaths lower in the 2 most dive
 
 This study refers to the incidence rate.
 
+## Project
+
 The method of rate calculation is simply to take the amount of activity in the metric and divide this by the number of patients on the gp list expected to have CHD (calculated by multiplying the PHE synthetic prevalence estimate % by the GP list size). 
 
-The PHE synthetic prevalence calculations take ethnicity and age and sex into account in their methodology...
+The PHE synthetic prevalence calculations take ethnicity and age and sex into account in their methodology.
+
+The factors controlled for in the prevalence model are:
+
+-   age
+
+-   sex
+
+-   ethnicity
+
+-   hypertension
+
+-   diabetes
+
+-   dyslipidemia
+
+-   obesity
+
+-   smoking
+
+-   CKD
+
+-   physical activity
+
+-   family history
+
+-   area deprivation (townsend score)
+
+SW - Ethnicity is a covariate in the prevalence model although the variable only has two levels, white / non-white.  The effect is quite large.  They estimate that a non-white individual is 33% more likely to develop CHD than a white person with similar risk factors (age, sex, family history, etc etc).
+
+Since their prevalence estimates account for the fact that a non-white patient would have 33% higher likelihood of developing CHD then this feeds into the denominator of our calculations and the larger denominator leads to a lower rate. This increased risk of developing CHD offsets the lower age profile of ethnic minority populatons (which is why the distribution of list size over the clusters is similar to the distribution of prevalent cases).  But we are still saying that having controlled for prevalence, the more diverse clusters have lower death rates.  We might have expected that more diverse clusters would have similar or higher death rates having controlled for prevalence.
 
 We have calculated Age and Sex Standardised Mortality Rates (direct) for each of the clusters for CHD Deaths and All Cause deaths. These calculations used the same death data as was used in the numerator of the rates from the project.
 
@@ -30,7 +62,9 @@ SC - The standardised rate is saying if the populations have no difference in ag
 
 SC -The project chd rate is a case fatality rate, deaths in those that have the condition, this is saying that the highest observed deaths per person with the condition is in cluster 1. It's not comparing like with like and it's not age standardised so could be argued that cluster 1 could be higher because its prevalent population are older.
 
-SC - higher incidence and better survival?
+SC - higher incidence but better survival is possible
+
+SC - \*\*the project rates are different to asmr because the asmr are population age standardised but the case fatality in the project that we are comparing to are not \*\* . It's complicated by not comparing like with like as the first is a measure of the rate death from CHD occurs in the population and the second is a measure of how many people already with the condition die.
 
 On register:
 
@@ -39,3 +73,15 @@ On register:
 Deaths:
 
 ![](secret/deaths.png){fig-align="center"}
+
+Ecological Fallacy:
+
+link to Robinson's paradox
+
+ASMR only accounts for age and sex, it is partial and biased, doesnt account for need. CHD prevalence as a need denominator does control for other influencing factors such as deprivation, ethnicity etc.
+
+Next steps
+
+Take 2 practices and examine
+
+Under 75 mortality and another indicator split it by deprivation and by clusters
