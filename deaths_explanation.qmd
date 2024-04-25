@@ -84,4 +84,6 @@ Next steps
 
 Take 2 practices and examine
 
+Examining in more detail, in particular clusters 1 and 5, it can be seen that the % of need (CHD prevalence) is much higher in in cluster 5 and this gives rise to rates which are lower even when the % activity volume is the same as cluster 1
+
 Under 75 mortality and another indicator split it by deprivation and by clusters
