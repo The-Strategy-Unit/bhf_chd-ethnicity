@@ -327,7 +327,7 @@ all_gp_reg_pat <- males_gp_reg_pat|>
 #  cluster 1 practive B83033 gp_imd_decile=5 middle
 # cluster 5 practice B83052 gp_imd_decile=1 most deprived
   
-test_practices <-  clustered_gp_and_metrics |>
+examine_clusters <-  clustered_gp_and_metrics |>
   filter(metric1 != "NA") |>
   filter(cluster2==1|cluster2==5)|>
  # filter(gp_practice_code=="B83033"|gp_practice_code=="B83052")|>
@@ -356,4 +356,38 @@ test_practices <-  clustered_gp_and_metrics |>
          metric29b_listrate=metric29b_total/listsize_total
   )
 
+test_practices <-  clustered_gp_and_metrics |>
+  filter(metric1 != "NA") |>
+  filter(cluster2==1|cluster2==5)|>
+  # filter(gp_practice_code=="B83033"|gp_practice_code=="B83052")|>
+  select(gp_practice_code,cluster2,metric20,metric29b,list_size,metric1)|>
+  mutate(list_size = replace_na(list_size, 0)) |>
+  mutate(metric1 = replace_na(metric1, 0)) |>
+  mutate(metric20 = replace_na(metric20, 0)) |>
+  mutate(metric29b = replace_na(metric29b, 0)) |>
+  mutate(need=metric1/list_size,
+         metric20_needrate=metric20/metric1,
+         metric29b_needrate=metric29b/metric1,
+         metric20_listrate=metric20/list_size,
+         metric29b_listrate=metric29b/list_size
+  )|>
+  left_join(patientweighted_practice_imd)|>
+  select(-comm_region_code,-comm_region_name,-icb_name,-icb_code,-practice_name,-cluster)
+
+
+dist_20 <- test_practices|>
+  group_by(metric20)|>
+  count(gp_practice_code)|>
+  ungroup()|>
+  group_by(metric20)|>
+  summarise(n=sum(n))|>
+  print(n=24)
+
+dist_29b <- test_practices|>
+  group_by(metric29b,cluster2)|>
+  count(gp_practice_code)|>
+  ungroup()|>
+  group_by(metric29b,cluster2)|>
+  summarise(n=sum(n))|>
+  print(n=29)
 
