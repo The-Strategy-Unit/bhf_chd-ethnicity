@@ -530,7 +530,7 @@ tar_read(rate_chart_full_out)
 ```
 
 ::: {.callout-note appearance="minimal"}
-Work led by Professor Sir Michael Marmot and colleagues in the late 1980s revealed that first-generation South Asians living in the UK have a higher rate of coronary heart disease and diabetes compared to White Europeans[^4]. This gives rise to the question, why are the death rates lower in the more diverse clusters? There are a number of factors to consider in understanding this including; the age/sex profile of the clusters, the methodology for calculating the CHD synthetic prevalence (the measure of need in this project), and incidence rates vs mortality rates. This is examined further in the appendix.
+Work led by Professor Sir Michael Marmot and colleagues in the late 1980s revealed that first-generation South Asians living in the UK have a higher rate of coronary heart disease and diabetes compared to White Europeans[^4]. This gives rise to the question, why are the death rates lower in the more diverse clusters? There are a number of factors to consider in understanding this including; the age/sex profile of the clusters, the methodology for calculating the CHD synthetic prevalence (the measure of need in this project), and age and sex standardised mortality rates (ASMR) compared to the project CHD mortality rates. These are examined further in the appendix.
 :::
 
 [^4]: <https://www.bhf.org.uk/what-we-do/our-research/research-successes/ethnicity-and-heart-disease>
@@ -574,7 +574,7 @@ A previous Strategy Unit report "Strategies to reduce inequalities in access to 
 *Table 4 - achieving equity via zero-sum redistribution*
 
 |  Cluster  | Number of vaccinations | CHD synthetic prevalence | Rate (No. of vaccinations / CHD synthetic prevalence) | Global rate | Change in number of vaccinations to match global rate |
-|:----------:|-----------:|-----------:|:----------:|:----------:|:----------:|
+|:---------:|-----------------------:|-------------------------:|:-----------------------------------------------------:|:-----------:|:-----------------------------------------------------:|
 |           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                     *(gr-r) x d*                      |
 |     1     |              3,356,002 |                1,228,453 |                         2.73                          |    1.92     |                      -1,001,284                       |
 |     2     |              2,638,698 |                1,124,040 |                         2.35                          |    1.92     |                       -484,121                        |
@@ -897,9 +897,9 @@ An explanation of bootstrap theory and confidence intervals is available in Prac
 
 [^16]: <https://www.oreilly.com/library/view/practical-statistics-for/9781491952955/>
 
-## CHD death rates
+## CHD mortality rates
 
-In examining the findings of this project the question arises, why are the death rates lower in the more diverse clusters? There are a number of factors to consider in understanding this:
+In examining the findings of this project the question arises, why are the mortality rates lower in the more diverse clusters? There are a number of factors to consider in understanding this:
 
 ::: {.callout-note appearance="minimal" icon="false"}
 ##### Age/Sex profile of the clusters
@@ -908,53 +908,47 @@ The age/sex profile of the clusters can be seen in table 2. This shows that the 
 :::
 
 ::: {.callout-note appearance="minimal" icon="false"}
-## Methodology for calculating CHD synthetic prevalence
+##### Methodology for calculating CHD synthetic prevalence
 
-The measure of need used in this project to calculate the activity rates is the PHE synthetic prevalence estimates of CHD. The prevalence calculations take ethnicity and age and sex into account in their methodology. Other factors include: hypertension, diabetes, dyslipidemia, obesity, smoking, CKD, physical activity, family history, and area deprivation (townsend score). Ethnicity is a covariate in the prevalence model (although the variable only has two levels, white / non-white).  It is estimated that a non-white individual is 33% more likely to develop CHD than a white person with similar risk factors (age, sex, family history, etc etc). The prevalence estimates account for the fact that a non-white patient would have a higher likelihood of developing CHD which feeds into the denominator of the project calculations and the larger denominator leads to a lower rate.
+The measure of need used in this project to calculate the activity rates is the PHE synthetic prevalence estimate of CHD. The prevalence calculations take ethnicity and age and sex into account in their methodology. Other factors include: hypertension, diabetes, dyslipidemia, obesity, smoking, CKD, physical activity, family history, and area deprivation (townsend score). Ethnicity is a covariate in the prevalence model (although the variable only has two levels, white / non-white).  It is estimated that a non-white individual is 33% more likely to develop CHD than a white person with similar risk factors (age, sex, family history, etc etc). The prevalence estimates account for the fact that a non-white patient would have a higher likelihood of developing CHD which feeds into the denominator of the project calculations and the larger denominator leads to a lower rate.
 
-Examining clusters 1 and 5 in more detail, the % CHD prevalence (need) is much higher in cluster 5 (most diverse) and this gives rise to activity rates which are lower even when the % activity volume is the same as cluster 1. This is illustrated with sample data in table 7 below.
+Examining clusters 1 and 5 in more detail, the % CHD prevalence (need) is much higher in cluster 5 (most diverse) and this gives rise to activity rates which are lower even when the % activity volume is the same as cluster 1. This is illustrated with example data in table 7 below.
 :::
 
 | Cluster       | CHD Prevalence (%) |  List size | CHD Prevalence | CHD Deaths (% of list size) | Activity rate (CHD Deaths/Prevalence) |
-|------------|:----------:|--------:|----------:|:----------:|:-------------:|
+|---------------|:------------------:|-----------:|---------------:|:---------------------------:|:-------------------------------------:|
 | Least diverse |        8.7%        | 14,000,000 |      1,218,000 |        6000 (0.043%)        |                0.00492                |
 | Most diverse  |       10.6%        |  4,000,000 |        424,000 |        1714 (0.043%)        |                0.00404                |
 
-: **Table 7**- Example data to illustrate the effect of higher prevalence on activity rates
+: **Table 7**- *Example data to illustrate the effect of higher prevalence on activity rates*
 
 ::: {.callout-note appearance="minimal"}
-## Incidence rates vs mortality rates
+##### Mortality rates
 
-The Age and Sex Standardised Mortality Rates (direct) for each of the clusters for CHD Deaths and All Cause deaths have been calculated. These calculations used the same death data as was used in the numerator of the activity rate calculations. Table 8 . Are they dying of other causes? = No
+The Age and Sex Standardised Mortality Rates (direct) for each of the clusters for CHD Deaths and All Cause deaths have been calculated. These calculations use the same death data as was used in the numerator of the activity rate calculations. They are a measure of the rate death from CHD occurs in the population, if the populations have no difference in age and sex then the more diverse clusters are higher than would be expected. It is comparing to the total population whether those in that population have the condition or not.
+
+These rates can be seen in table 8 below, alongside the CHD deaths crude rate from this project and an all cause deaths crude rate also calculated by dividing the number of deaths by the CHD prevalence and showing per 10,000 population. These crude rates are a measure of how many people already with CHD die.
 :::
 
-![](images/clipboard-3667502623.png)
+| Cluster | Population | ASMR - All cause | ASMR - CHD | Rate - All Cause (All deaths / Prevalence) | Rate - CHD (CHD deaths / Prevalence) |
+|:-------:|-----------:|-----------------:|-----------:|-------------------------------------------:|-------------------------------------:|
+|    1    | 16,914,882 |            913.5 |       93.9 |                                     1188.4 |                                123.1 |
+|    2    | 15,788,339 |            894.3 |       87.6 |                                     1029.5 |                                100.5 |
+|    3    | 16,416,864 |            935.4 |       93.3 |                                      813.7 |                                 80.6 |
+|    4    |  7,883,280 |            773.7 |       82.2 |                                      431.4 |                                 45.9 |
+|    5    |  4,961,545 |            868.2 |      105.8 |                                      511.1 |                                 62.7 |
 
-| Cluster | Population | ASMR - All cause | ASMR - CHD | Rate - All Cause | Rate CHD |
-|:-------:|------------|------------------|------------|------------------|----------|
-|    1    |            |                  |            |                  |          |
-|    2    |            |                  |            |                  |          |
-|    3    |            |                  |            |                  |          |
-|    4    |            |                  |            |                  |          |
-|    5    |            |                  |            |                  |          |
+: **Table 8** - *ASMR and Activity Rate*
 
-: **Table 8** - ASMR
+Having controlled for prevalence, the more diverse clusters have lower death rates.  We might have expected that more diverse clusters would have similar or higher death rates. There are a number of factors potentially contributing to this finding. The CHD deaths crude rate is a case fatality rate, deaths in those that have CHD. The highest observed deaths per person with CHD is in the least diverse cluster. It is not age standardised so it could be argued that the rate is higher in this cluster because its prevalent population are older and in the more diverse clusters it is younger so fewer deaths would be expected.
 
-JG - The table on the right shows the CHD deaths (same data that forms the numerator of the project calculation) as a crude rate per 10,000 population, as well as all cause deaths as crude rate. The table on the left is mortality rates age and sex standardised using census population. So, if the age and sex standardised mortality rates show the most diverse cluster to have the highest rate then why do the project rates using need not follow the same pattern?
+In July 2021 ONS produced an experimental analysis of ethnic differences in life-expectancy and cause-specific mortality rates[^17]. The analysis found that White and Mixed ethnic groups had lower life expectancy than all other ethnic groups, while the Black African ethnic group had statistically significant higher life expectancy than most groups. However, the analysis also found that ischaemic heart disease mortality was highest in the Bangladeshi, Pakistani and Indian ethnic groups and lowest among Black ethnic groups. The analysis revealed complex patterns in life expectancy and mortality by ethnic group. Potential reasons are offered for the higher life expectancy found in Black African and Asian Other ethnic groups including that they contain a greater proportion of more recent migrants than other ethnic groups and it also cites previous research showing that people who migrate tend to be healthier than others. The ONS report also suggests that Asian and Black ethnic groups engage less in harmful health-related behaviours. These findings show some similarities to research in the USA into what has been termed the Hispanic paradox, where most Hispanic groups are characterised by low economic status and a high prevalence of cardiovascular disease risk factors, but better than expected health and mortality outcomes[^18]. Possible explanations for the Hispanic paradox include the healthy migrant hypothesis (those who migrate tend to be younger and healthier), the presence of nuclear families and high levels of social support, and dietary factors.
 
-Show the charts with the deaths by age group and gender for each cluster - Stacey
+[^17]: <https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/articles/ethnicdifferencesinlifeexpectancyandmortalityfromselectedcausesinenglandandwales/2011to2014>
 
-Having controlled for prevalence, the more diverse clusters have lower death rates.  We might have expected that more diverse clusters would have similar or higher death rates having controlled for prevalence.
+[^18]: <https://www.sciencedirect.com/science/article/abs/pii/S0033062014001339?via%3Dihub>
 
-SC - Prevalent population of the most diverse clusters is younger then would expect fewer deaths.
-
-SC - Prevalence is a function of incidence and mortality and survival is a curve
-
-SC - The standardised rate is saying if the populations have no difference in age and sex then cluster 5 is higher than you would expect, too many deaths for its age/sex profile. It is comparing to the total population whether people have the condition or not.
-
-SC -The project chd rate is a case fatality rate, deaths in those that have the condition, this is saying that the highest observed deaths per person with the condition is in cluster 1. It's not comparing like with like and it's not age standardised so could be argued that cluster 1 could be higher because its prevalent population are older.
-
-SC - \*\*the project rates are different to asmr because the asmr are population age standardised but the case fatality in the project that we are comparing to are not \*\* . It's complicated by not comparing like with like as the first is a measure of the rate death from CHD occurs in the population and the second is a measure of how many people already with the condition die.
+In this project the more diverse clusters comprise of a mixture of different ethnic groups, in particular clusters 4 and 5 (most diverse). It is possible that a combination of factors described above are giving rise to the mortality by cluster and that the Black ethnic group in cluster 4, with the lowest mortality, is offsetting the higher mortality of the Asian ethnic group, alongside the higher CHD prevalence in the denominator and the younger age profile, as well as factors such as the healthy migrant hypothesis, and higher levels of social support.
 
 ## Integrated Care Board (ICB) Analysis
 
@@ -1011,6 +1005,6 @@ icb_charts[42]
 
 ## R code on Github
 
-All the code used in this project is available on the Strategy Unit GitHub[^17].
+All the code used in this project is available on the Strategy Unit GitHub[^19].
 
-[^17]: <https://github.com/The-Strategy-Unit/bhf_chd-ethnicity>
+[^19]: <https://github.com/The-Strategy-Unit/bhf_chd-ethnicity>

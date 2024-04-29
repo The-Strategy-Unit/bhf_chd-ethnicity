@@ -16,7 +16,7 @@ calc_iod_diff_rate|function|2250c85732e8a46f|||||||||||||||
 calc_iod_global_rate|function|99305cd244a7d53d|||||||||||||||
 calc_iod_rate|function|4fd36e9c7d210791|||||||||||||||
 chart_iod_data|stem|51d83f2678cec091|64a0c7d646096793|184ff4874d53222c|85269323||t19829.4411927817s|49b5fca74495725e|564|rds|local|vector|||0.02||
-ci_iod_chart|stem|2f2975d101347abe|dc7caf851cc86df5|a2ec97bae106b5ba|177855813||t19829.4541785836s|a59e69b4154256a2|119696|rds|local|vector|||0.05||
+ci_iod_chart|stem|7dc4989c40d01bfe|dc7caf851cc86df5|b510061108071653|177855813||t19842.5036045223s|f9023cd3975a0201|119032|rds|local|vector|||0.09||
 cluster_plot|stem|50d336def5f6033b|ce4e06ca053deb5b|8c886f37e4143d14|292947156||t19755.5083268239s|604e396c996e1c51|8781748|rds|local|vector|||0.11||
 cluster_plot_over45|stem|b649f699884cbb26|f73801c020993d93|3998fe057db27695|-1531622237||t19755.5083360959s|127857b7b4836ed9|8762320|rds|local|vector|||0.06||
 cluster_plot_region|stem|114a4362752ffc57|9dc9cc822f15757e|b3b3f69c1a8fe7a5|1028772277||t19759.5124211042s|ae474793dd8a2ad4|1833656|rds|local|vector|||0.03||
@@ -86,7 +86,7 @@ full_cats_percents_over45|stem|5c70be79861d362d|96a1c76dab8166bc|a708397a40fc3b1
 full_cats_percents_region|stem|e679c9f7a703cf86|62d9450df912286a|e6d9c215839a52f6|-467528888||t19759.5123871966s|cdd9af73ce8efa83|150821|rds|local|vector|||0.25||
 get_45over_list|function|0d83447c6bb85505|||||||||||||||
 get_allage_list|function|a6617a9c56205f61|||||||||||||||
-get_ci_iod_chart|function|c47a71680d1d2dfe|||||||||||||||
+get_ci_iod_chart|function|6ad2ae3c463eb353|||||||||||||||
 get_ci_iod_together|function|b93332871b925f75|||||||||||||||
 get_cluster_map|function|697e5b376ca88835|||||||||||||||
 get_cluster_plot|function|800c803ff5b1d507|||||||||||||||
@@ -147,9 +147,11 @@ gp_over45_perc|stem|653ba9b5c1e3e2e0|d78112d5f316b6af|02b931455cf77bfa|-11655587
 gp_reg_pat_prac_lsoa|stem|79c68c31967a37db|7f1951eaacacc5d8|4101d168c19880d7|-620301967||t19691.698627679s|68d4964e7abcb33a|2694148|rds|local|vector|||0.85||
 gp_reg_pat_prac_sing_age_female|stem|2cc85d420f4ecfea|e570b239ed9a384d|2825ee30f143fb57|-2010966184||t19747.8098915844s|b169455902611087|952425|rds|local|vector|||0.57||
 gp_reg_pat_prac_sing_age_male|stem|856db12304cb044a|a85e010038bab71c|096186f173331ed2|-729996257||t19747.8099023049s|b0bc242a0bf4c40a|954356|rds|local|vector|||0.5||
+GPpatients_by_LSOA|object|f984cb4ceda15449|||||||||||||||
 i|object|3a9a7d4ce430bc57|||||||||||||||
 icb_charts|stem|7202b1d2d98a0d5b|f9a03bc1442b9949|13405df62cfc00fb|1641162239||t19829.6715098596s|98253cf70ba056b0|911170|rds|local|vector|||7.23||
 icb_clustered_gp_and_metrics|stem|fee3c985b10db39b|2797e0c57b31c3a0|fcfcc7691d326b19|1134288029||t19827.646348425s|7838b606fcc9c9ed|1730247|rds|local|vector|||0.01||
+imd2019|object|c89b08e59f985958|||||||||||||||
 iod_with_ci|stem|de4c34502b5b1c93|b61383fd1671645f|93bb6bb4f84b21d2|1474657023||t19829.4541772373s|9b0a700db7cb1eb0|1099|rds|local|vector|||0||
 iod_with_ci_metric11|stem|971fc9ea786b58cc|e34b3cd115942be8|b3a7669c61bebec9|1206424029||t19827.65142587s|458efa8352f0a1fc|195|rds|local|vector|||0.01||
 iod_with_ci_metric12|stem|05c329b496d8c3d3|face8d9004d0cdd3|2d3a61fc23fcb6c9|2040427848||t19827.6514262052s|c784844629387e6b|197|rds|local|vector|||0.01||
@@ -316,6 +318,7 @@ ncdes_data|stem|f5be308d097c3649|a5d362f152775310|7501dfc52f463647|-1043310607||
 pams_full_cats_percents|stem|bd21c70b9676bcc6|37bd4a7e7bca5adb|bbbc16b66d8d8a83|-185320845||t19755.4952868443s|28ea596b49a18e5f|804720|rds|local|vector|||6.33||
 pams_full_cats_percents_over45|stem|3d82fb582c4fae28|95faf50fd986d4c5|117353d2dbc0dbb8|1515173774||t19755.4999896394s|4048754da202911f|852367|rds|local|vector|||12.26||
 pams_full_cats_percents_region|stem|a3579b9325c690bf|410022bb52750c9e|571d820bfc5f1f89|-535406907||t19759.5124190417s|d310c57449bbedb3|164072|rds|local|vector|||0.13||
+patientweighted_practice_imd|object|2a65dff1148af32a|||||||||||||||
 pred_df|object|11c6e02b16e28fe5|||||||||||||||
 process_census21data|function|03e15213a3a00e1c|||||||||||||||
 process_gpdata|function|06e3f8cced409ee3|||||||||||||||

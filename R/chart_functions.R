@@ -220,8 +220,8 @@ get_ci_iod_chart <- function(iod_with_ci){
     )) |>
     ggplot() +
     geom_segment( aes(x=metric_long_name, xend=metric_long_name, y=lower_ci*100, yend=upper_ci*100), color="#686f73") +
-    geom_point( aes(x=metric_long_name, y=lower_ci*100), color="#686f73", size=2.5 ) +
-    geom_point( aes(x=metric_long_name, y=upper_ci*100), color="#686f73", size=2.5 ) +
+    #geom_point( aes(x=metric_long_name, y=lower_ci*100), color="#686f73", size=2.5 ) +
+    #geom_point( aes(x=metric_long_name, y=upper_ci*100), color="#686f73", size=2.5 ) +
     geom_point( aes(x=metric_long_name, y=iod*100), color="#f9bf07", size=2.5 ) +
     coord_flip()+
     facet_grid(rows = factor(pathway_level,levels=c('Risk', 'Risk identif.', '1°c prevent', 'Dis. ident','2°c prevent',
