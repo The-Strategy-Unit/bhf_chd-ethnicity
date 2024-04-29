@@ -73,7 +73,11 @@ In our previous work, visualising socio-economic inequalities, our units of anal
 
 Assessing inequalities across ethnic groups is more challenging, since unlike deprivation, ethnicity cannot be expresseed as a set of ordered groups. The distribution of patients across ethnic groups is unique to each practice. There is no meaningful way to numerically aggregate these distributions into a single variable (e.g. % BME) without significant loss of information. An alternative method of grouping practices according to the distribution of its patients over ethnic group was required. We have used k-medoids clustering to assign practices to one of a small number of groups such that practices within a group have similar distributions of patients over ethnic groups. K-medoids is an established, and commonly used unsupervised machine learning technique. This clustering approach required data on the ethnicity of a practices registered population. We imputed it based on the Lower Super Output Area (LSOA) of residence of GP registrants and the ethnicity distribution of patients living in these LSOAs using the Census 2021 data.
 
-Ethnicity, unlike deprivation, is not an ordered variable. The approach in our previous work used the relative index of inequality to measure the degree of inequality. This measure relies on the ordered quality of the socio-economic deprivation variable. To handle the categorical nature of the ethnicity variable we have used the relative index of disparity to indicate the extent to which the rate of an activity or event varies across groups. The index estimates the proportion of events (e.g., admissions) that would need to be redistributed between clusters in order that event rates follow levels of need. Further detailed explanations of the methods used in the analysis can be found in the appendix.
+Ethnicity, unlike deprivation, is not an ordered variable. The approach in our previous work used the relative index of inequality to measure the degree of inequality. This measure relies on the ordered quality of the socio-economic deprivation variable. To handle the categorical nature of the ethnicity variable we have used the relative index of disparity[^4] to indicate the extent to which the rate of an activity or event varies across groups. The index estimates the proportion of events (e.g., admissions) that would need to be redistributed between clusters in order that event rates follow levels of need. Further detailed explanations of the methods used in the analysis can be found in the appendix.
+
+[^4]: *Pearcy J, Keppel K, A Summary Measure of Health Disparity, Public Health Reports, Vol 117, May-June 2002*
+
+    [*https://open.umich.edu/sites/default/files/downloads/PublicHealthRep-Pearcy.pdf*](https://gbr01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fopen.umich.edu%2Fsites%2Fdefault%2Ffiles%2Fdownloads%2FPublicHealthRep-Pearcy.pdf&data=05%7C02%7Cjacqueline.grout1%40nhs.net%7Ca9c82e4d3cc94a72de8408dc68333fc0%7C37c354b285b047f5b22207b48d774ee3%7C0%7C0%7C638499816545595235%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=ddk0rdD6HnQ1524JNCsTfr3AoiBePESeckGAAnQPSA4%3D&reserved=0)
 
 # CHD Metrics
 
@@ -530,10 +534,10 @@ tar_read(rate_chart_full_out)
 ```
 
 ::: {.callout-note appearance="minimal"}
-Work led by Professor Sir Michael Marmot and colleagues in the late 1980s revealed that first-generation South Asians living in the UK have a higher rate of coronary heart disease and diabetes compared to White Europeans[^4]. This gives rise to the question, why are the death rates lower in the more diverse clusters? There are a number of factors to consider in understanding this including; the age/sex profile of the clusters, the methodology for calculating the CHD synthetic prevalence (the measure of need in this project), and age and sex standardised mortality rates (ASMR) compared to the project CHD mortality rates. These are examined further in the appendix.
+Work led by Professor Sir Michael Marmot and colleagues in the late 1980s revealed that first-generation South Asians living in the UK have a higher rate of coronary heart disease and diabetes compared to White Europeans[^5]. This gives rise to the question, why are the death rates lower in the more diverse clusters? There are a number of factors to consider in understanding this including; the age/sex profile of the clusters, the methodology for calculating the CHD synthetic prevalence (the measure of need in this project), and age and sex standardised mortality rates (ASMR) compared to the project CHD mortality rates. These are examined further in the appendix.
 :::
 
-[^4]: <https://www.bhf.org.uk/what-we-do/our-research/research-successes/ethnicity-and-heart-disease>
+[^5]: <https://www.bhf.org.uk/what-we-do/our-research/research-successes/ethnicity-and-heart-disease>
 
 # Relative Index of Disparity
 
@@ -556,6 +560,8 @@ The chart below presents the metrics along the CHD pathway from risk factor and 
 :::
 
 ```{r}
+#| out-height: 600px
+
 tar_read(ci_iod_chart)
 ```
 
@@ -567,14 +573,14 @@ Confidence intervals are shown in grey. There is 95% confidence that the index o
 
 ## Routes to equity
 
-A previous Strategy Unit report "Strategies to reduce inequalities in access to planned hospital procedures"[^5] highlights in chapter 1, three of the many routes from inequity to equity: levelling-up, levelling-down and zero-sum redistribution. Using the zero-sum redistribution route as an example, along with the metric flu vaccinations for patients aged 65+, the illustration below shows how equity could be achieved by increasing and decreasing the number of vaccinations delivered in each cluster to give the same activity rate per cluster.
+A previous Strategy Unit report "Strategies to reduce inequalities in access to planned hospital procedures"[^6] highlights in chapter 1, three of the many routes from inequity to equity: levelling-up, levelling-down and zero-sum redistribution. Using the zero-sum redistribution route as an example, along with the metric flu vaccinations for patients aged 65+, the illustration below shows how equity could be achieved by increasing and decreasing the number of vaccinations delivered in each cluster to give the same activity rate per cluster.
 
-[^5]: <https://www.midlandsdecisionsupport.nhs.uk/knowledge-library/strategies-to-reduce-inequalities-in-access-to-planned-hospital-procedures/>
+[^6]: <https://www.midlandsdecisionsupport.nhs.uk/knowledge-library/strategies-to-reduce-inequalities-in-access-to-planned-hospital-procedures/>
 
 *Table 4 - achieving equity via zero-sum redistribution*
 
 |  Cluster  | Number of vaccinations | CHD synthetic prevalence | Rate (No. of vaccinations / CHD synthetic prevalence) | Global rate | Change in number of vaccinations to match global rate |
-|:---------:|-----------------------:|-------------------------:|:-----------------------------------------------------:|:-----------:|:-----------------------------------------------------:|
+|:---------:|----------:|----------:|:------------:|:---------:|:------------:|
 |           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                     *(gr-r) x d*                      |
 |     1     |              3,356,002 |                1,228,453 |                         2.73                          |    1.92     |                      -1,001,284                       |
 |     2     |              2,638,698 |                1,124,040 |                         2.35                          |    1.92     |                       -484,121                        |
@@ -657,6 +663,7 @@ region_cluster_charts[4]
 ## London
 
 ```{r}
+#| out-height: 600px
 regional_charts <- tar_read(regional_charts)
 regional_charts[1]
 ```
@@ -664,36 +671,42 @@ regional_charts[1]
 ## South West
 
 ```{r}
+#| out-height: 600px
 regional_charts[2]
 ```
 
 ## South East
 
 ```{r}
+#| out-height: 600px
 regional_charts[3]
 ```
 
 ## Midlands
 
 ```{r}
+#| out-height: 600px
 regional_charts[4]
 ```
 
 ## East of England
 
 ```{r}
+#| out-height: 600px
 regional_charts[5]
 ```
 
 ## North West
 
 ```{r}
+#| out-height: 600px
 regional_charts[6]
 ```
 
 ## North East and Yorkshire
 
 ```{r}
+#| out-height: 600px
 regional_charts[7]
 ```
 :::
@@ -783,9 +796,9 @@ This data was supplied by NACR from an extract taken in March 2024. The data was
 
 ### Readmission within 30 days
 
-The methodology used for this metric follows, as far as possible, that detailed by NHS Digital[^6]. The readmissions counted relate to those who had an elective PCI / CABG in the period 1/3/2022 to 28/2/2023.
+The methodology used for this metric follows, as far as possible, that detailed by NHS Digital[^7]. The readmissions counted relate to those who had an elective PCI / CABG in the period 1/3/2022 to 28/2/2023.
 
-[^6]: <https://digital.nhs.uk/data-and-information/publications/statistical/ccg-outcomes-indicator-set/specifications/3.2-emergency-readmissions-within-30-days-of-discharge-from-hospital_1_4>
+[^7]: <https://digital.nhs.uk/data-and-information/publications/statistical/ccg-outcomes-indicator-set/specifications/3.2-emergency-readmissions-within-30-days-of-discharge-from-hospital_1_4>
 
 ### ONS Death records
 
@@ -793,9 +806,9 @@ ONS death records contain an encrypted HES ID which was used to link to outpatie
 
 ### CHD synthetic prevalence estimates
 
-Public Health England (PHE) CHD synthetic prevalence estimates data was previously available from OHID via Fingertips. This data has now been removed from Fingertips and archived, however OHID supplied it via email for this project following a request. This data is for 7564 practices from 2015, of which 6297 are current practices. In order to assign a prevalence for practices with missing data a nearest neighbours methodology was used to impute the prevalence by taking an average of the prevalence of each practice within a 1.5km radius of the practice without data. Further details, including code with sample data, for this methodology are available in a blog post on the Strategy Unit Data Science website[^7].
+Public Health England (PHE) CHD synthetic prevalence estimates data was previously available from OHID via Fingertips. This data has now been removed from Fingertips and archived, however OHID supplied it via email for this project following a request. This data is for 7564 practices from 2015, of which 6297 are current practices. In order to assign a prevalence for practices with missing data a nearest neighbours methodology was used to impute the prevalence by taking an average of the prevalence of each practice within a 1.5km radius of the practice without data. Further details, including code with sample data, for this methodology are available in a blog post on the Strategy Unit Data Science website[^8].
 
-[^7]: <https://the-strategy-unit.github.io/data_science/blogs/posts/2024-01-17_nearest_neighbour.html>
+[^8]: <https://the-strategy-unit.github.io/data_science/blogs/posts/2024-01-17_nearest_neighbour.html>
 
 ### Ethnicity by GP practice
 
@@ -803,17 +816,17 @@ Ethnicity by GP practice was imputed based on the Lower Super Output Area (LSOA)
 
 #### GP list size by LSOA
 
-Since metric data is mainly from the 2022/23 year, the October 2022 list size data was taken from the NHS Digital Patients Registered at a GP practice dataset[^8] as this is the data closest to the mid point in the 22/23 year. The GP to ICB mapping file was also downloaded and joined to the list size to easily create analysis by ICB and region.
+Since metric data is mainly from the 2022/23 year, the October 2022 list size data was taken from the NHS Digital Patients Registered at a GP practice dataset[^9] as this is the data closest to the mid point in the 22/23 year. The GP to ICB mapping file was also downloaded and joined to the list size to easily create analysis by ICB and region.
 
-[^8]: <https://digital.nhs.uk/data-and-information/publications/statistical/patients-registered-at-a-gp-practice/october-2022>
+[^9]: <https://digital.nhs.uk/data-and-information/publications/statistical/patients-registered-at-a-gp-practice/october-2022>
 
 #### Census 2021 Ethnicity by LSOA
 
-The 2021 Census Ethnicity data was downloaded from the .gov.uk website.[^9] Summary details of the census ethnicity data is also available and this includes descriptions of the standardised list of ethnic groups and the differences from the 2011 ethnic groups.[^10]
+The 2021 Census Ethnicity data was downloaded from the .gov.uk website.[^10] Summary details of the census ethnicity data is also available and this includes descriptions of the standardised list of ethnic groups and the differences from the 2011 ethnic groups.[^11]
 
-[^9]: <https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/#download-the-data>
+[^10]: <https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/#download-the-data>
 
-[^10]: <https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/>
+[^11]: <https://www.ethnicity-facts-figures.service.gov.uk/uk-population-by-ethnicity/demographics/age-groups/latest/>
 
 The 2021 Census Ethnicity data by LSOA uses the 2021 LSOAs. The GP list size data uses the 2011 LSOAs. This results in gaps when the datasets are combined. To overcome this the following method was used:
 
@@ -823,19 +836,19 @@ The 2021 Census Ethnicity data by LSOA uses the 2021 LSOAs. The GP list size dat
 
 -   Where the LSOAs in 2021 have a child LSOA in 2011 then we applied the ethnicity % for the 2021 parent to the 2011 children (this is when several LSOAs have been combined into one new LSOA).
 
-Further details about item editing and imputation processes for Census 2021, England and Wales are available on the ONS website. This details techniques used by ONS with the aim of arriving at a fully populated clean database. These techniques include manual imputation and nearest neighbour donor imputation. For the England and Wales Census 2021 the imputation rate for ethnic group was 1.3%.[^11]
+Further details about item editing and imputation processes for Census 2021, England and Wales are available on the ONS website. This details techniques used by ONS with the aim of arriving at a fully populated clean database. These techniques include manual imputation and nearest neighbour donor imputation. For the England and Wales Census 2021 the imputation rate for ethnic group was 1.3%.[^12]
 
-[^11]: <https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/itemeditingandimputationprocessforcensus2021englandandwales>
+[^12]: <https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/methodologies/itemeditingandimputationprocessforcensus2021englandandwales>
 
 ### K-Medoids Clustering
 
 K-medoids is an established, and commonly used unsupervised machine learning technique. This clustering approach required data on the ethnicity of a practices registered population which was obtained as per the methodology explained above (Ethnicity by GP practice). The data used in the clustering was the % of patients in each ethnic group per practice, such that for each practice all the ethnic group %'s added to 100%.
 
-The K-medoids clustering was performed using the {cluster} package[^12] in R using partitioning (clustering) of the data into k clusters "around medoids" (PAM), which is a more robust version of K-means. The algorithm is based on the search for k representative objects or medoids among the observations of the dataset. After finding a set of k medoids, k clusters are constructed by assigning each observation to the nearest medoid. The goal is to find k representative objects which minimise the sum of the dissimilarities of the observations to their closest representative object.[^13]
+The K-medoids clustering was performed using the {cluster} package[^13] in R using partitioning (clustering) of the data into k clusters "around medoids" (PAM), which is a more robust version of K-means. The algorithm is based on the search for k representative objects or medoids among the observations of the dataset. After finding a set of k medoids, k clusters are constructed by assigning each observation to the nearest medoid. The goal is to find k representative objects which minimise the sum of the dissimilarities of the observations to their closest representative object.[^14]
 
-[^12]: Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2023). *cluster: Cluster Analysis Basics and Extensions*. R package version 2.1.6 — For new features, see the 'NEWS' and the 'Changelog' file in the package source), [https://CRAN.R-project.org/package=cluster](https://cran.r-project.org/package=cluster).
+[^13]: Maechler M, Rousseeuw P, Struyf A, Hubert M, Hornik K (2023). *cluster: Cluster Analysis Basics and Extensions*. R package version 2.1.6 — For new features, see the 'NEWS' and the 'Changelog' file in the package source), [https://CRAN.R-project.org/package=cluster](https://cran.r-project.org/package=cluster).
 
-[^13]: <https://cran.r-project.org/web/packages/cluster/cluster.pdf>
+[^14]: <https://cran.r-project.org/web/packages/cluster/cluster.pdf>
 
 Clustering experiments were conducted using a variety of different combinations of ethnic breakdowns, such as 14 ethnic groups and 5 ethnic groups, as well as variations that excluded the % of White British patients or factored in age group. Techniques were also used to attempt to determine the optimal number of clusters such as the elbow method, gap plots, and scree plots. Consideration was given to combining some ethnic groups and in doing so a correlation matrix was produced to identify ethnic groups that commonly featured together. It was also important to seek a number of clusters that could be defined easily, where characteristics did not overlap each other so that resulting clusters were too similar to each other. It was also necessary to ensure that there was a sufficient number of practices in each cluster, too few practices in a cluster could result in issues with small amounts of metric data when calculating activity rates and consequently lead to wide confidence intervals in the index of disparity calculations.
 
@@ -879,23 +892,23 @@ Index of disparity = (𝚺 \| r~(1–n)~ - R\| / n) / R\*100
 
 where r = group rate and R = total population rate
 
-A report by Pearcy and Keppel (2002) presents the Index of Disparity as a summary measure of disparity across population groups and advocates its use for groups defined in terms of categories such as ethnicity.[^14]
+A report by Pearcy and Keppel (2002) presents the Index of Disparity as a summary measure of disparity across population groups and advocates its use for groups defined in terms of categories such as ethnicity.[^15]
 
-[^14]: <https://journals.sagepub.com/doi/epdf/10.1093/phr/117.3.273>
+[^15]: <https://journals.sagepub.com/doi/epdf/10.1093/phr/117.3.273>
 
 ### Confidence Intervals
 
 Confidence intervals of 95% are presented in the national charts presented in this report. Confidence intervals have been used, rather than calculations of statistical significance as this presents a clearer picture of the likelihood of the disparity and due to concerns with the suitability in this case of statistical significance.
 
-> "Practitioners need to be aware that statistical significance differs from practical importance in that statistical significance is highly dependent upon sample size. For a large sample, a statistically significant result is likely to be obtained even when the actual magnitude of an effect is small and of little or no practical importance. On the other hand, for a small sample, it is quite likely that insufficient evidence of a statistically significant result will be obtained – even when there is, indeed, an effect of practical importance." (Hahn, G. J., Doganaksoy, N., Meeker, W. Q., 2019)[^15]
+> "Practitioners need to be aware that statistical significance differs from practical importance in that statistical significance is highly dependent upon sample size. For a large sample, a statistically significant result is likely to be obtained even when the actual magnitude of an effect is small and of little or no practical importance. On the other hand, for a small sample, it is quite likely that insufficient evidence of a statistically significant result will be obtained – even when there is, indeed, an effect of practical importance." (Hahn, G. J., Doganaksoy, N., Meeker, W. Q., 2019)[^16]
 
-[^15]: <https://academic.oup.com/jrssig/article/16/4/20/7038025>
+[^16]: <https://academic.oup.com/jrssig/article/16/4/20/7038025>
 
 In order to estimate the confidence intervals for the index of disparity, a bootstrap method was adopted, assuming independence, generating 1000 random samples for each metric for which an index of disparity was calculated. The 2.5th and 97.5th percentiles were then taken for each metric to give the upper and lower limits of the 95% confidence interval for each.
 
-An explanation of bootstrap theory and confidence intervals is available in Practical Statistics for Data Scientists (Bruce, P. and Bruce, A., 2017)[^16]
+An explanation of bootstrap theory and confidence intervals is available in Practical Statistics for Data Scientists (Bruce, P. and Bruce, A., 2017)[^17]
 
-[^16]: <https://www.oreilly.com/library/view/practical-statistics-for/9781491952955/>
+[^17]: <https://www.oreilly.com/library/view/practical-statistics-for/9781491952955/>
 
 ## CHD mortality rates
 
@@ -916,7 +929,7 @@ Examining clusters 1 and 5 in more detail, the % CHD prevalence (need) is much h
 :::
 
 | Cluster       | CHD Prevalence (%) |  List size | CHD Prevalence | CHD Deaths (% of list size) | Activity rate (CHD Deaths/Prevalence) |
-|---------------|:------------------:|-----------:|---------------:|:---------------------------:|:-------------------------------------:|
+|------------|:----------:|-----------:|-----------:|:----------:|:-------------:|
 | Least diverse |        8.7%        | 14,000,000 |      1,218,000 |        6000 (0.043%)        |                0.00492                |
 | Most diverse  |       10.6%        |  4,000,000 |        424,000 |        1714 (0.043%)        |                0.00404                |
 
@@ -931,7 +944,7 @@ These rates can be seen in table 8 below, alongside the CHD deaths crude rate fr
 :::
 
 | Cluster | Population | ASMR - All cause | ASMR - CHD | Rate - All Cause (All deaths / Prevalence) | Rate - CHD (CHD deaths / Prevalence) |
-|:-------:|-----------:|-----------------:|-----------:|-------------------------------------------:|-------------------------------------:|
+|:---------:|----------:|----------:|----------:|---------------:|------------:|
 |    1    | 16,914,882 |            913.5 |       93.9 |                                     1188.4 |                                123.1 |
 |    2    | 15,788,339 |            894.3 |       87.6 |                                     1029.5 |                                100.5 |
 |    3    | 16,416,864 |            935.4 |       93.3 |                                      813.7 |                                 80.6 |
@@ -942,11 +955,11 @@ These rates can be seen in table 8 below, alongside the CHD deaths crude rate fr
 
 Having controlled for prevalence, the more diverse clusters have lower death rates.  We might have expected that more diverse clusters would have similar or higher death rates. There are a number of factors potentially contributing to this finding. The CHD deaths crude rate is a case fatality rate, deaths in those that have CHD. The highest observed deaths per person with CHD is in the least diverse cluster. It is not age standardised so it could be argued that the rate is higher in this cluster because its prevalent population are older and in the more diverse clusters it is younger so fewer deaths would be expected.
 
-In July 2021 ONS produced an experimental analysis of ethnic differences in life-expectancy and cause-specific mortality rates[^17]. The analysis found that White and Mixed ethnic groups had lower life expectancy than all other ethnic groups, while the Black African ethnic group had statistically significant higher life expectancy than most groups. However, the analysis also found that ischaemic heart disease mortality was highest in the Bangladeshi, Pakistani and Indian ethnic groups and lowest among Black ethnic groups. The analysis revealed complex patterns in life expectancy and mortality by ethnic group. Potential reasons are offered for the higher life expectancy found in Black African and Asian Other ethnic groups including that they contain a greater proportion of more recent migrants than other ethnic groups and it also cites previous research showing that people who migrate tend to be healthier than others. The ONS report also suggests that Asian and Black ethnic groups engage less in harmful health-related behaviours. These findings show some similarities to research in the USA into what has been termed the Hispanic paradox, where most Hispanic groups are characterised by low economic status and a high prevalence of cardiovascular disease risk factors, but better than expected health and mortality outcomes[^18]. Possible explanations for the Hispanic paradox include the healthy migrant hypothesis (those who migrate tend to be younger and healthier), the presence of nuclear families and high levels of social support, and dietary factors.
+In July 2021 ONS produced an experimental analysis of ethnic differences in life-expectancy and cause-specific mortality rates[^18]. The analysis found that White and Mixed ethnic groups had lower life expectancy than all other ethnic groups, while the Black African ethnic group had statistically significant higher life expectancy than most groups. However, the analysis also found that ischaemic heart disease mortality was highest in the Bangladeshi, Pakistani and Indian ethnic groups and lowest among Black ethnic groups. The analysis revealed complex patterns in life expectancy and mortality by ethnic group. Potential reasons are offered for the higher life expectancy found in Black African and Asian Other ethnic groups including that they contain a greater proportion of more recent migrants than other ethnic groups and it also cites previous research showing that people who migrate tend to be healthier than others. The ONS report also suggests that Asian and Black ethnic groups engage less in harmful health-related behaviours. These findings show some similarities to research in the USA into what has been termed the Hispanic paradox, where most Hispanic groups are characterised by low economic status and a high prevalence of cardiovascular disease risk factors, but better than expected health and mortality outcomes[^19]. Possible explanations for the Hispanic paradox include the healthy migrant hypothesis (those who migrate tend to be younger and healthier), the presence of nuclear families and high levels of social support, and dietary factors.
 
-[^17]: <https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/articles/ethnicdifferencesinlifeexpectancyandmortalityfromselectedcausesinenglandandwales/2011to2014>
+[^18]: <https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/articles/ethnicdifferencesinlifeexpectancyandmortalityfromselectedcausesinenglandandwales/2011to2014>
 
-[^18]: <https://www.sciencedirect.com/science/article/abs/pii/S0033062014001339?via%3Dihub>
+[^19]: <https://www.sciencedirect.com/science/article/abs/pii/S0033062014001339?via%3Dihub>
 
 In this project the more diverse clusters comprise of a mixture of different ethnic groups, in particular clusters 4 and 5 (most diverse). It is possible that a combination of factors described above are giving rise to the mortality by cluster and that the Black ethnic group in cluster 4, with the lowest mortality, is offsetting the higher mortality of the Asian ethnic group, alongside the higher CHD prevalence in the denominator and the younger age profile, as well as factors such as the healthy migrant hypothesis, and higher levels of social support.
 
@@ -1005,6 +1018,6 @@ icb_charts[42]
 
 ## R code on Github
 
-All the code used in this project is available on the Strategy Unit GitHub[^19].
+All the code used in this project is available on the Strategy Unit GitHub[^20].
 
-[^19]: <https://github.com/The-Strategy-Unit/bhf_chd-ethnicity>
+[^20]: <https://github.com/The-Strategy-Unit/bhf_chd-ethnicity>
