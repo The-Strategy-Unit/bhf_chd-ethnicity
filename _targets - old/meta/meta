@@ -57,7 +57,7 @@ data_path23|stem|c0f512ffd4f2e1c5|01f3fd459367bbaf|ef46db3751d8e999|-80826563|da
 data_path24|stem|7c5b062aa49ef422|c5f584ef158f94c4|ef46db3751d8e999|1126940470|data/20231201_92847.xlsx|t19692.5600013174s|a12e39dd86b2d9e4|962035|file|local|vector|||1.76|package visNetwork was built under R version 4.3.2|
 data_path25|stem|c9e8426e17a8c7c0|1f419fb299fe19a6|ef46db3751d8e999|1364810641|data/epraccur_gp.csv|t19711.7237592967s|fd3e5d08c0bed0de|1379048|file|local|vector|||1|package visNetwork was built under R version 4.3.2|
 data_path26|stem|57f37d62e26187bf|f7e4eae6302c9eef|ef46db3751d8e999|-1778326305|data/gp-reg-pat-prac-sing-age-female.csv|t19747.8034010173s|6c539b356afda9e2|33600934|file|local|vector|||3.22|package visNetwork was built under R version 4.3.2|
-data_path27|stem|bebea67b6ad9654e|0bbe3cdc44f5bfbd|ef46db3751d8e999|1656760137|data/gp-reg-pat-prac-sing-age-male.csv|t19747.803369722s||32337490|file|local|vector|||1.99|no nonmissing arguments to max returning Inf|could not find packages fingertipsR, leaflet, treemapify in library paths
+data_path27|stem|bebea67b6ad9654e|0bbe3cdc44f5bfbd|ef46db3751d8e999|600998020|data/gp-reg-pat-prac-sing-age-male.csv|t19747.803369722s|a2706d47dd6d3c24|32337490|file|local|vector|||0||
 data_path28|stem|0803366c04fc2a54|2d2679de8119af2e|ef46db3751d8e999|2020420024|data/metric9.csv|t19752.7405453059s|c6bc163109e32b9a|155646|file|local|vector|||3.59|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
 data_path29|stem|f169acb22f71738d|4e321f630851b5e7|ef46db3751d8e999|-2064104754|data/2223_trimpoints.xlsx|t19753.5891203704s|b26ea4a9a507650f|242179|file|local|vector|||1.85|package visNetwork was built under R version 4.3.2. package cluster was built under R version 4.3.2|
 data_path3|stem|2c42f991bd4b46cf|8a969e7282c3efc3|ef46db3751d8e999|22104772|data/metric18.csv|t19677.4290195977s|6833527d5267de4b|89871|file|local|vector|||0||
@@ -364,74 +364,3 @@ sum_ethnicities|function|bb48a8ef2dcef8b1|||||||||||||||
 sum_ethnicities_region|function|fa8bd4494b1da56f|||||||||||||||
 test_data|object|b2e38604ec1666d4|||||||||||||||
 variables|object|eafbb505685dd05d|||||||||||||||
-get_cluster1_chart|function|09dfb88af1b2e6b7
-get_rates_per_cluster|function|1134af60b4b55adf
-get_data_via_server|function|9c10f73bd4a34656
-get_gp_list_summary|function|23ecea55354c20f0
-get_clusters|function|71ec9ee390003971
-get_gp_history_short|function|e1407f28485fa4ff
-get_elbow_plot|function|01f63381963ca1b0
-patientweighted_practice_imd|object|2a65dff1148af32a
-process_metrics|function|b6c6adb36ae100e2
-get_allage_list|function|a6617a9c56205f61
-get_region_cluster_chart_data|function|7403aa100c9a975c
-get_scale_full_cats_percents_over45|function|de63cfed36141b5e
-process_census21data|function|03e15213a3a00e1c
-get_joined_gp_history_and_chd_prev|function|a138ff6200577514
-imd2019|object|c89b08e59f985958
-join_over45_to_gp_lsoa_with_eth_sum|function|641a2b5c1437f3ac
-read_qof_excel_file|function|53d417490cd71d74
-get_cluster2_14_eth_chart|function|0db0587ef443f236
-calc_iod_rate|function|4fd36e9c7d210791
-get_cluster2_map|function|46803f7d2b130a36
-read_csv_file|function|dcd254c5bba0254b
-get_over45_perc|function|eac7e0de845aeffa
-get_rel_iod_chart|function|88ca45ca80fe3a5d
-metric23_below_trimpoint|function|0fdb4be6f14dd0d6
-calc_iod_global_rate|function|99305cd244a7d53d
-get_my_fingertips_gp_data|function|c1da8d293777399c
-calc_iod_diff|function|4783e783fcfa4c4b
-get_ci_iod_chart|function|6ad2ae3c463eb353
-get_clusters_for_nacr|function|207aaa64e5878784
-metric24_process|function|b9f818dd84d53722
-get_cluster1_map|function|1002aa50204d05fa
-get_full_cats_percents|function|9586f03af586fcc8
-sum_ethnicities_region|function|fa8bd4494b1da56f
-compute_iod|function|333bdd2d59c349f4
-get_gp_16andover_pop|function|c6bc8fdd16cc1e81
-join_gp_and_eth|function|2e6f63ec4d88ce4e
-get_cluster2_treemap_data|function|de479273d4bada0b
-remove_metric24_for_regional_charts|function|ea6523266acd288f
-calc_iod_diff_rate|function|2250c85732e8a46f
-sum_eth_by_lsoa11|function|09d98eedc1fbb58f
-GPpatients_by_LSOA|object|f984cb4ceda15449
-add_all_metrics|function|63b4029adee99099
-get_cluster2_treemap_1|function|447b27755decc539
-get_rel_iod_data_for_chart|function|c1ce6d76418a4e6a
-get_my_fingertips_gp_data_count|function|4dee013fab430f3f
-process_gpdata|function|06e3f8cced409ee3
-get_cluster2_treemap_2|function|508b39ce07c792ae
-get_45over_list|function|0d83447c6bb85505
-get_full_cats_percents_over45|function|9abcd05abb788dbf
-get_rate_chart_data|function|59b1c7d639c89ada
-get_cluster2_treemap_3|function|50358924afeb3cb4
-get_cluster2_treemap_4|function|c8c3d9bede311494
-get_cluster2_treemap_5|function|e9f55afb390ad591
-read_excel_file|function|061c16961cfbd703
-get_cluster_plot|function|800c803ff5b1d507
-get_geocoded_data|function|f006eab941f5e1dc
-get_region_cluster_chart|function|5ab40d8436436d0c
-show_in_excel|function|6fb1a74867b26e22
-sum_ethnicities|function|bb48a8ef2dcef8b1
-calc_abs_iod|function|b7583f09c331d072
-get_scale_full_cats_percents|function|80fddd22d9a65248
-get_pams|function|a81dc3b5eaea487f
-get_one_metric|function|c41e67e642290829
-get_missing_chd_prevalence|function|1890b29cbc6c2b67
-get_rate_chart|function|e7133adeb673c622
-get_cluster2_chart|function|53b6a802139c155a
-get_ci_iod_together|function|b93332871b925f75
-data_path27|stem|bebea67b6ad9654e|0bbe3cdc44f5bfbd|ef46db3751d8e999|1656760137|data/gp-reg-pat-prac-sing-age-male.csv|t19747.803369722s|a2706d47dd6d3c24|32337490|file|local|vector|||1.59||
-data_path24|stem|7c5b062aa49ef422|c5f584ef158f94c4|ef46db3751d8e999|-983057846|data/20231201_92847.xlsx|t19692.5600013174s|a12e39dd86b2d9e4|962035|file|local|vector|||0||
-data_path30|stem|fd31059d3e9ffe56|79a6b97345e4990e|ef46db3751d8e999|-1781241288|data/gp_survey_smoking_prevalence.xlsx|t19772.706099739s|9bc9eeedf81fcfc5|816422|file|local|vector|||0||
-data_path17|stem|a63418159811d834|63ceec6f8c52026f|ef46db3751d8e999|-1173179947|data/gp-reg-pat-prac-map.csv|t19691.6787142247s|0c9d0253ecc0bc0e|1551138|file|local|vector|||0||

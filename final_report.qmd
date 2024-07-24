@@ -42,6 +42,7 @@ library(gt)
 library(tidyverse)
 library(grid)
 library(gridExtra)
+library(downloadthis)
 
 ```
 
@@ -539,6 +540,74 @@ Work led by Professor Sir Michael Marmot and colleagues in the late 1980s reveal
 
 [^5]: <https://www.bhf.org.uk/what-we-do/our-research/research-successes/ethnicity-and-heart-disease>
 
+::: {.callout-tip collapse="true" appearance="minimal" icon="false"}
+## Activity rates data
+
+```{r}
+rate_chart_data <- tar_read(rate_chart_data) |> as_tibble()
+
+rate_chart_data |> 
+  dplyr::rename(cluster=cluster2)|>
+  dplyr::select(-name) |>
+  gt::gt() |>
+  gt::cols_move(columns = c(rate,lower_ci,upper_ci, global_rate),
+                after = metric_name) |>
+  gt::fmt_number(columns=c(rate,lower_ci,upper_ci, global_rate),
+                 decimals=3) |>
+  gt::cols_label(cluster =gt::md("**Cluster**"),
+                 pathway = gt::md("**Pathway**"),
+                 metric_name = gt::md("**Metric**"),
+                 rate= gt::md("**Rate**"),
+                 lower_ci = gt::md("**Lower CI**"),
+                 upper_ci = gt::md("**Upper CI**"),
+                 global_rate = gt::md("**Global Rate**")) |>
+  gt::tab_row_group(
+    label = gt::md("**Full outcomes**"),
+    rows = pathway == "Full outcomes"
+  ) |>
+  gt::tab_row_group(
+    label = gt::md("**Intermediate outcome**"),
+    rows = pathway == "Intermediate outcome"
+  ) |>
+  gt::tab_row_group(
+    label = gt::md("**Tertiary prevention**"),
+    rows = pathway == "Tertiary prevention"
+  ) |>
+  gt::tab_row_group(
+    label = gt::md("**Secondary prevention**"),
+    rows = pathway == "Secondary prevention"
+  ) |>
+  gt::tab_row_group(
+    label = gt::md("**Disease identification**"),
+    rows = pathway == "Disease identification"
+  ) |>
+  gt::tab_row_group(
+    label = gt::md("**Primary prevention**"),
+    rows = pathway == "Primary prevention"
+  ) |>
+  gt::tab_row_group(
+    label = gt::md("**Risk factor identification**"),
+    rows = pathway == "Risk factor identification"
+  ) |>
+  gt::tab_row_group(
+    label = gt::md("**Risk factors**"),
+    rows = pathway == "Risk factors"
+  ) 
+```
+:::
+
+```{r}
+rate_chart_data %>%
+  download_this(
+    output_name = "rate_data",
+    output_extension = ".xlsx",
+    button_label = "Download activity rate data",
+    button_type = "default",
+    has_icon = TRUE,
+    icon = "fa fa-save"
+  )
+```
+
 # Relative Index of Disparity
 
 The relative index of disparity for the metric is expressed here as a %, such that the % indicates the amount of activity that would need to be redistributed between clusters in order that event rates follow levels of need. The detail of the methodology used for its calculation can be found in the appendix.
@@ -565,10 +634,16 @@ The chart below presents the metrics along the CHD pathway from risk factor and 
 tar_read(ci_iod_chart)
 ```
 
-```{r}
-#| code-fold: true
-#| code-summary: "Data"
+::: {.callout-tip icon="false"}
+## Confidence Intervals
 
+Confidence intervals are shown in grey. There is 95% confidence that the index of disparity is within this range. The confidence interval estimation methods are detailed in the appendix.
+:::
+
+::: {.callout-tip collapse="true" appearance="minimal" icon="false"}
+## Index of Disparity data
+
+```{r}
 rate_chart_data <- tar_read(rate_chart_data) |> as_tibble()
 iod_with_ci <- tar_read(iod_with_ci) |> as_tibble()
 
@@ -625,12 +700,19 @@ disparity_data |>
              lower_ci = md("**Lower CI**"),
              upper_ci = md("**Upper CI**"))
 ```
-
-::: {.callout-tip icon="false"}
-## Confidence Intervals
-
-Confidence intervals are shown in grey. There is 95% confidence that the index of disparity is within this range. The confidence interval estimation methods are detailed in the appendix.
 :::
+
+```{r}
+disparity_data %>%
+  download_this(
+    output_name = "iod_data",
+    output_extension = ".xlsx",
+    button_label = "Download iod data",
+    button_type = "default",
+    has_icon = TRUE,
+    icon = "fa fa-save"
+  )
+```
 
 ## Routes to equity
 
@@ -641,7 +723,7 @@ A previous Strategy Unit report "Strategies to reduce inequalities in access to 
 *Table 4 - achieving equity via zero-sum redistribution*
 
 |  Cluster  | Number of vaccinations | CHD synthetic prevalence | Rate (No. of vaccinations / CHD synthetic prevalence) | Global rate | Change in number of vaccinations to match global rate |
-|:----------:|-----------:|-----------:|:----------:|:----------:|:----------:|
+|:---------:|----------:|----------:|:------------:|:---------:|:------------:|
 |           |                    *n* |                      *d* |                        *r=n/d*                        | *gr=𝚺n/𝚺d*  |                     *(gr-r) x d*                      |
 |     1     |              3,356,002 |                1,228,453 |                         2.73                          |    1.92     |                      -1,001,284                       |
 |     2     |              2,638,698 |                1,124,040 |                         2.35                          |    1.92     |                       -484,121                        |
@@ -1018,7 +1100,7 @@ Examining clusters 1 and 5 in more detail, the % CHD prevalence (need) is much h
 :::
 
 | Cluster       | CHD Prevalence (%) |  List size | CHD Prevalence | CHD Deaths (% of list size) | Activity rate (CHD Deaths/Prevalence) |
-|------------|:----------:|-----------:|-----------:|:----------:|:----------:|
+|------------|:----------:|-----------:|-----------:|:----------:|:-------------:|
 | Least diverse |        8.7%        | 14,000,000 |      1,218,000 |        6000 (0.043%)        |                0.00492                |
 | Most diverse  |       10.6%        |  4,000,000 |        424,000 |        1714 (0.043%)        |                0.00404                |
 
@@ -1033,7 +1115,7 @@ These rates can be seen in table 8 below, alongside the CHD deaths crude rate fr
 :::
 
 | Cluster | Population | ASMR - All cause | ASMR - CHD | Rate - All Cause (All deaths / Prevalence) | Rate - CHD (CHD deaths / Prevalence) |
-|:----------:|-----------:|-----------:|-----------:|-----------:|-----------:|
+|:---------:|----------:|----------:|----------:|---------------:|------------:|
 |    1    | 16,914,882 |            913.5 |       93.9 |                                     1188.4 |                                123.1 |
 |    2    | 15,788,339 |            894.3 |       87.6 |                                     1029.5 |                                100.5 |
 |    3    | 16,416,864 |            935.4 |       93.3 |                                      813.7 |                                 80.6 |
@@ -1067,6 +1149,21 @@ purrr::iwalk(icb_charts, \(plot, name) {
   cat("\n\n#####", name, "\n\n")
   print(plot)
 })
+```
+
+```{r}
+
+all_icb_data <- purrr::map(icb_charts, "data") |> dplyr::bind_rows(.id = "icb") 
+
+all_icb_data %>%
+  download_this(
+    output_name = "iod_icb_data",
+    output_extension = ".xlsx",
+    button_label = "Download ICB IoD data",
+    button_type = "default",
+    has_icon = TRUE,
+    icon = "fa fa-save"
+  )
 ```
 
 ## R code on Github
